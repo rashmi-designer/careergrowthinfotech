@@ -1,0 +1,58 @@
+:root {
+    --primary-color: #0d6efd;
+    --primary-soft: #eaf2ff;
+    --dark-color: #0f172a;
+    --text-muted: #6c757d;
+    --page-bg: #f8fafc;
+}
+
+body {
+    background-color: var(--page-bg);
+    color: var(--dark-color);
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.hero-section {
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(13, 110, 253, 0.08), rgba(13, 110, 253, 0.02));
+    pointer-events: none;
+}
+
+.hero-section .container {
+    position: relative;
+    z-index: 1;
+}
+
+.brand-logo {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #0d6efd, #0a58ca);
+    box-shadow: 0 8px 20px rgba(13, 110, 253, 0.2);
+    font-size: 0.9rem;
+}
+
+.feature-icon {
+    width: 60px;
+    height: 60px;
+    font-size: 1.5rem;
+}
+
+.py-lg-6 {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+}
+
+@media (max-width: 991.98px) {
+    .hero-section {
+        padding-top: 4rem;
+        padding-bottom: 4rem;
+    }
+}

@@ -1,13 +1,23 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm sticky-top">
+<?php
+$basePath = $basePath ?? '';
+$currentPage = basename($_SERVER['SCRIPT_NAME'] ?? 'index.php');
+$navItems = [
+    ['label' => 'Home', 'file' => 'index.php', 'href' => $basePath . 'index.php'],
+    ['label' => 'About', 'file' => 'about.php', 'href' => $basePath . 'about.php'],
+    ['label' => 'Services', 'file' => 'services.php', 'href' => $basePath . 'services.php'],
+    ['label' => 'Jobs', 'file' => 'jobs.php', 'href' => $basePath . 'jobs.php'],
+    ['label' => 'Contact', 'file' => 'contact.php', 'href' => $basePath . 'contact.php'],
+];
+?>
+<nav class="navbar navbar-expand-lg sticky-top" aria-label="Main navigation">
     <div class="container">
-        <a class="navbar-brand d-flex align-items-center gap-3" href="index.php">
-            <div class="brand-logo d-flex align-items-center justify-content-center text-white fw-bold">
-                CG
-            </div>
-            <div>
-                <div class="fw-bold text-dark">Career Grow</div>
-                <small class="text-muted">Infotech Pvt. Ltd.</small>
-            </div>
+        <a class="navbar-brand" href="<?php echo htmlspecialchars($basePath, ENT_QUOTES, 'UTF-8'); ?>index.php" aria-label="Career Grow Infotech home">
+            <span class="brand-mark">
+                <img src="<?php echo htmlspecialchars($basePath, ENT_QUOTES, 'UTF-8'); ?>assets/images/logo.webp" alt="Career Grow Infotech logo" width="42" height="42" loading="lazy">
+            </span>
+            <span class="brand-text visually-hidden">
+                <span class="brand-title">Career Grow Infotech Pvt. Ltd.</span>
+            </span>
         </a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -15,17 +25,26 @@
         </button>
 
         <div class="collapse navbar-collapse" id="mainNavbar">
-            <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-3">
-                <li class="nav-item"><a class="nav-link active" href="index.php">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Jobs</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Employers</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">About</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+            <ul class="navbar-nav mx-auto align-items-lg-center">
+                <?php foreach ($navItems as $item): ?>
+                    <?php $isActive = ($currentPage === $item['file']); ?>
+                    <li class="nav-item">
+                        <a class="nav-link <?php echo $isActive ? 'active' : ''; ?>" href="<?php echo htmlspecialchars($item['href'], ENT_QUOTES, 'UTF-8'); ?>" <?php echo $isActive ? 'aria-current="page"' : ''; ?>>
+                            <?php echo htmlspecialchars($item['label'], ENT_QUOTES, 'UTF-8'); ?>
+                        </a>
+                    </li>
+                <?php endforeach; ?>
             </ul>
 
-            <div class="ms-lg-3 d-flex gap-2 mt-3 mt-lg-0">
-                <a href="#" class="btn btn-outline-primary">Login</a>
-                <a href="#" class="btn btn-primary">Register</a>
+            <div class="navbar-actions d-flex align-items-center gap-2 mt-3 mt-lg-0">
+                <a href="<?php echo htmlspecialchars($basePath, ENT_QUOTES, 'UTF-8'); ?>login.php" class="btn btn-primary btn-sm" aria-label="Login to Career Grow Infotech">
+                    <i class="bi bi-box-arrow-in-right" aria-hidden="true"></i>
+                    <span class="d-none d-sm-inline ms-1">Login</span>
+                </a>
+                <a href="<?php echo htmlspecialchars($basePath, ENT_QUOTES, 'UTF-8'); ?>admin/login.php" class="btn btn-outline-secondary btn-sm admin-login-btn" aria-label="Admin login">
+                    <i class="bi bi-shield-lock" aria-hidden="true"></i>
+                    <span class="d-none d-lg-inline ms-1">Admin</span>
+                </a>
             </div>
         </div>
     </div>

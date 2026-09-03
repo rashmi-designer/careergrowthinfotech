@@ -4,7 +4,7 @@ function getDbConnection()
 {
     $host = 'localhost';
     $username = 'root';
-    $password = '';
+    $password = 'Ankit@123';
     $database = 'job_portal';
 
     $connection = new mysqli($host, $username, $password, $database);

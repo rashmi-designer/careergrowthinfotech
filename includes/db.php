@@ -2,12 +2,19 @@
 
 function getDbConnection()
 {
-    $host = 'localhost';
+    $host = '127.0.0.1';
+    $port = 3307;
     $username = 'root';
-    $password = 'Ankit@123';
+    $password = '';
     $database = 'job_portal';
 
-    $connection = new mysqli($host, $username, $password, $database);
+    $connection = new mysqli(
+        $host,
+        $username,
+        $password,
+        $database,
+        $port
+    );
 
     if ($connection->connect_error) {
         die('Database connection failed: ' . $connection->connect_error);

@@ -73,7 +73,10 @@ body.scrolled .navbar {
     width: 42px;
     height: 42px;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--cg-primary), var(--cg-primary-dark));
+    padding: 3px;
+    overflow: hidden;
+    background: var(--cg-white);
+    border: 2px solid var(--cg-primary);
     color: var(--cg-white);
     font-size: 0.78rem;
     letter-spacing: 0.08em;
@@ -84,6 +87,7 @@ body.scrolled .navbar {
 .brand-mark-sm {
     width: 34px;
     height: 34px;
+    padding: 2px;
     font-size: 0.70rem;
 }
 
@@ -96,12 +100,7 @@ body.scrolled .navbar {
     object-fit: contain;
     display: block;
     border-radius: 50%;
-}
-
-/* Ensure the small footer mark keeps its size and image fit */
-.footer-brand .brand-mark img {
-    width: 34px;
-    height: 34px;
+    transform: scale(1.16);
 }
 
 .brand-text {

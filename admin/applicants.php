@@ -54,31 +54,26 @@ $kpis = [
     'rejected' => 0,
 ];
 
-foreach ($statusValues as $status) {
-    $normalized = strtolower(trim($status));
-    if (str_contains($normalized, 'new') || str_contains($normalized, 'applied')) {
-        $kpis['pending'] += safe_count($conn, "SELECT COUNT(*) FROM applications WHERE LOWER(status) = '" . $conn->real_escape_string($normalized) . "'");
-    } elseif (str_contains($normalized, 'shortlist')) {
-        $kpis['shortlisted'] += safe_count($conn, "SELECT COUNT(*) FROM applications WHERE LOWER(status) = '" . $conn->real_escape_string($normalized) . "'");
-    } elseif (str_contains($normalized, 'select') || str_contains($normalized, 'hire') || str_contains($normalized, 'offer')) {
-        $kpis['selected'] += safe_count($conn, "SELECT COUNT(*) FROM applications WHERE LOWER(status) = '" . $conn->real_escape_string($normalized) . "'");
-    } elseif (str_contains($normalized, 'reject')) {
-        $kpis['rejected'] += safe_count($conn, "SELECT COUNT(*) FROM applications WHERE LOWER(status) = '" . $conn->real_escape_string($normalized) . "'");
+// Count applications by status using prepared statement and GROUP BY
+$statusCountStmt = $conn->prepare('SELECT status, COUNT(*) AS cnt FROM applications GROUP BY status');
+if ($statusCountStmt) {
+    $statusCountStmt->execute();
+    $statusCountResult = $statusCountStmt->get_result();
+    while ($row = $statusCountResult->fetch_assoc()) {
+        $status = strtolower(trim((string)($row['status'] ?? '')));
+        $count = (int)($row['cnt'] ?? 0);
+        
+        if (str_contains($status, 'new') || str_contains($status, 'applied')) {
+            $kpis['pending'] += $count;
+        } elseif (str_contains($status, 'shortlist')) {
+            $kpis['shortlisted'] += $count;
+        } elseif (str_contains($status, 'select') || str_contains($status, 'hire') || str_contains($status, 'offer')) {
+            $kpis['selected'] += $count;
+        } elseif (str_contains($status, 'reject')) {
+            $kpis['rejected'] += $count;
+        }
     }
-}
-
-// Fallback if the live schema uses only one of the common statuses
-if ($kpis['pending'] === 0 && in_array('New Applied', $statusValues, true)) {
-    $kpis['pending'] = safe_count($conn, "SELECT COUNT(*) FROM applications WHERE status = 'New Applied'");
-}
-if ($kpis['shortlisted'] === 0 && in_array('Shortlisted', $statusValues, true)) {
-    $kpis['shortlisted'] = safe_count($conn, "SELECT COUNT(*) FROM applications WHERE status = 'Shortlisted'");
-}
-if ($kpis['selected'] === 0 && in_array('Selected', $statusValues, true)) {
-    $kpis['selected'] = safe_count($conn, "SELECT COUNT(*) FROM applications WHERE status = 'Selected'");
-}
-if ($kpis['rejected'] === 0 && in_array('Rejected', $statusValues, true)) {
-    $kpis['rejected'] = safe_count($conn, "SELECT COUNT(*) FROM applications WHERE status = 'Rejected'");
+    $statusCountStmt->close();
 }
 
 $search = trim((string)($_GET['q'] ?? ''));
@@ -778,7 +773,7 @@ $conn->close();
                                     <td><?php echo htmlspecialchars((string)($application['applied_at'] ?? '-'), ENT_QUOTES, 'UTF-8'); ?></td>
                                     <td>
                                         <?php if (!empty($application['resume'])): ?>
-                                            <a href="../uploads/resumes/<?php echo rawurlencode((string)$application['resume']); ?>" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-secondary">View Resume</a>
+                                            <a href="../<?php echo htmlspecialchars((string)$application['resume'], ENT_QUOTES, 'UTF-8'); ?>" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-secondary">View Resume</a>
                                         <?php else: ?>
                                             <span class="text-muted">Not available</span>
                                         <?php endif; ?>

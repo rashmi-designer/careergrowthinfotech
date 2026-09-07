@@ -17,6 +17,7 @@ $success = false;
 // initialize fields
 $fields = [
     'title' => '',
+    'company' => '',
     'description' => '',
     'skills_required' => '',
     'location' => '',
@@ -48,6 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // validation
     if ($fields['title'] === '') { $errors[] = 'Job title is required.'; }
+    if ($fields['company'] === '') { $errors[] = 'Company name is required.'; }
     if ($fields['location'] === '') { $errors[] = 'Location is required.'; }
     if ($fields['job_type'] === '') { $errors[] = 'Job type is required.'; }
     if ($fields['experience_level'] === '') { $errors[] = 'Experience level is required.'; }
@@ -57,13 +59,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($errors)) {
         $conn = getDbConnection();
 
-        $sql = "INSERT INTO jobs (title, description, skills_required, location, job_type, experience_level, salary_min, salary_max, openings, last_date, status) VALUES (?,?,?,?,?,?,NULLIF(?,''),NULLIF(?,''),?,?,?)";
+        $sql = "INSERT INTO jobs (title, company, description, skills_required, location, job_type, experience_level, salary_min, salary_max, openings, last_date, status) VALUES (?,?,?,?,?,?,?,NULLIF(?,''),NULLIF(?,''),?,?,?)";
         $stmt = $conn->prepare($sql);
         if ($stmt) {
-            // 11 placeholders total: 8 strings, 1 integer, 2 strings
-            $types = 'ssssssssiss';
+            // Columns: title, company, description, skills_required, location, job_type, experience_level, salary_min, salary_max, openings, last_date, status
+            $types = 'sssssssssiss';
             $bindParams = [
                 $fields['title'],
+                $fields['company'],
                 $fields['description'],
                 $fields['skills_required'],
                 $fields['location'],
@@ -92,7 +95,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $conn->close();
             }
         } else {
-            $errors[] = 'Failed to prepare database statement.';
+            $dbErr = $conn->error ?? 'unknown error';
+            error_log('Add Job prepare failed: ' . $dbErr);
+            $errors[] = 'Failed to prepare database statement: ' . htmlspecialchars($dbErr, ENT_QUOTES, 'UTF-8');
             $conn->close();
         }
     }
@@ -138,13 +143,18 @@ function val(array $fields, string $key): string { return htmlspecialchars($fiel
             <div class="row g-3 mt-2">
                 <div class="col-md-8">
                     <label class="form-label">Job Title <span class="required">*</span></label>
-                    <input name="title" value="<?php echo val($fields,'title'); ?>" class="form-control" required>
+                        <input name="title" value="<?php echo val($fields,'title'); ?>" class="form-control" required>
                 </div>
 
-                <div class="col-md-4">
-                    <label class="form-label">Location <span class="required">*</span></label>
-                    <input name="location" value="<?php echo val($fields,'location'); ?>" class="form-control" required>
-                </div>
+                    <div class="col-md-8">
+                        <label class="form-label">Company Name <span class="required">*</span></label>
+                        <input name="company" value="<?php echo val($fields,'company'); ?>" class="form-control" required>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">Location <span class="required">*</span></label>
+                        <input name="location" value="<?php echo val($fields,'location'); ?>" class="form-control" required>
+                    </div>
 
                 <div class="col-md-4">
                     <label class="form-label">Job Type <span class="required">*</span></label>

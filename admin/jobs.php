@@ -90,7 +90,7 @@ if ($countStmt) {
 
 $totalPages = max(1, (int)ceil($totalJobs / $perPage));
 
-$sql = "SELECT j.id, j.title, j.location, j.job_type, j.experience_level, j.openings, j.status, j.created_at, COUNT(a.id) AS app_count
+$sql = "SELECT j.id, j.title, j.company, j.location, j.job_type, j.experience_level, j.openings, j.status, j.created_at, COUNT(a.id) AS app_count
         FROM jobs j
         LEFT JOIN applications a ON a.job_id = j.id
         $whereSql
@@ -670,6 +670,7 @@ $conn->close();
                             <thead>
                                 <tr>
                                     <th>Job Title</th>
+                                    <th>Company</th>
                                     <th>Location</th>
                                     <th>Job Type</th>
                                     <th>Status</th>
@@ -680,6 +681,7 @@ $conn->close();
                             </thead>
                             <tbody>
                                 <?php foreach ($jobs as $job): ?>
+                                    <?php $companyName = trim((string)($job['company'] ?? '')); $companyDisplay = $companyName !== '' ? $companyName : 'Career Grow Infotech'; ?>
                                     <tr>
                                         <td class="job-cell">
                                             <div class="job-title"><?php echo htmlspecialchars((string)($job['title'] ?? '-'), ENT_QUOTES, 'UTF-8'); ?></div>
@@ -691,6 +693,7 @@ $conn->close();
                                                 <span><?php echo htmlspecialchars((string)($job['openings'] ?? '0'), ENT_QUOTES, 'UTF-8'); ?> openings</span>
                                             </div>
                                         </td>
+                                        <td><?php echo htmlspecialchars($companyDisplay, ENT_QUOTES, 'UTF-8'); ?></td>
                                         <td><?php echo htmlspecialchars((string)($job['location'] ?? '-'), ENT_QUOTES, 'UTF-8'); ?></td>
                                         <td><?php echo htmlspecialchars((string)($job['job_type'] ?? '-'), ENT_QUOTES, 'UTF-8'); ?></td>
                                         <td>

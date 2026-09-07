@@ -15,6 +15,43 @@ $conn = getDbConnection();
 $userId = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 $appId = isset($_GET['application_id']) ? (int)$_GET['application_id'] : 0;
 
+// Handle admin status update POST
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'update_status') {
+    $postedAppId = isset($_POST['application_id']) ? (int)$_POST['application_id'] : 0;
+    $postedStatus = isset($_POST['status']) ? trim((string)$_POST['status']) : '';
+
+    // Define allowed statuses based on existing project usage
+    $allowedStatuses = [
+        'New Applied',
+        'Reviewed',
+        'Shortlisted',
+        'Accepted',
+        'Rejected',
+    ];
+
+    if ($postedAppId > 0 && in_array($postedStatus, $allowedStatuses, true)) {
+        $updateStmt = $conn->prepare('UPDATE applications SET status = ? WHERE id = ? LIMIT 1');
+        if ($updateStmt) {
+            $updateStmt->bind_param('si', $postedStatus, $postedAppId);
+            $updateStmt->execute();
+            $updateStmt->close();
+        } else {
+            error_log('candidate-details status update prepare failed: ' . $conn->error);
+        }
+    }
+
+    // Redirect back to avoid form resubmission and to show updated value
+    $redirectUrl = 'candidate-details.php?id=' . urlencode((string)$userId);
+    // Prefer redirecting to the application that was updated
+    if ($postedAppId > 0) {
+        $redirectUrl .= '&application_id=' . urlencode((string)$postedAppId);
+    } elseif ($appId > 0) {
+        $redirectUrl .= '&application_id=' . urlencode((string)$appId);
+    }
+    header('Location: ' . $redirectUrl);
+    exit;
+}
+
 $user = null;
 $application = null;
 $resumeFile = null;
@@ -568,7 +605,25 @@ $profileResumeLink = safe_resume_path($resumeFile ?? null);
                     <div>
                         <?php $statusValue = trim((string)($application['status'] ?? '')); ?>
                         <?php $badgeType = format_status_badge($statusValue); ?>
-                        <span class="badge-status <?php echo htmlspecialchars($badgeType, ENT_QUOTES, 'UTF-8'); ?>"><?php echo htmlspecialchars($statusValue !== '' ? $statusValue : 'Unknown', ENT_QUOTES, 'UTF-8'); ?></span>
+                        <div style="display:flex;gap:0.75rem;align-items:center;flex-wrap:wrap;">
+                            <span class="badge-status <?php echo htmlspecialchars($badgeType, ENT_QUOTES, 'UTF-8'); ?>"><?php echo htmlspecialchars($statusValue !== '' ? $statusValue : 'Unknown', ENT_QUOTES, 'UTF-8'); ?></span>
+
+                            <!-- Admin status update form -->
+                            <form method="post" style="display:inline-flex;gap:0.5rem;align-items:center;">
+                                <input type="hidden" name="action" value="update_status">
+                                <input type="hidden" name="application_id" value="<?php echo (int)($application['application_id'] ?? $appId); ?>">
+                                <select name="status" class="form-select form-select-sm" style="min-width:170px;">
+                                    <?php
+                                    $allowedStatuses = ['New Applied','Reviewed','Shortlisted','Accepted','Rejected'];
+                                    foreach ($allowedStatuses as $opt):
+                                        $sel = ($opt === $statusValue) ? 'selected' : '';
+                                    ?>
+                                        <option value="<?php echo htmlspecialchars($opt, ENT_QUOTES, 'UTF-8'); ?>" <?php echo $sel; ?>><?php echo htmlspecialchars($opt, ENT_QUOTES, 'UTF-8'); ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                                <button type="submit" class="btn btn-sm btn-primary">Update</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -17,7 +17,7 @@ if ($id <= 0) {
     $job = null;
 } else {
     $conn = getDbConnection();
-    $stmt = $conn->prepare('SELECT id, title, description, skills_required, location, job_type, experience_level, salary_min, salary_max, openings, last_date, status FROM jobs WHERE id = ? LIMIT 1');
+    $stmt = $conn->prepare('SELECT id, title, company, description, skills_required, location, job_type, experience_level, salary_min, salary_max, openings, last_date, status FROM jobs WHERE id = ? LIMIT 1');
     if ($stmt) {
         $stmt->bind_param('i', $id);
         $stmt->execute();
@@ -48,6 +48,7 @@ if (empty($job)) {
 // initialize fields from DB
 $fields = [
     'title' => (string)($job['title'] ?? ''),
+    'company' => (string)($job['company'] ?? ''),
     'description' => (string)($job['description'] ?? ''),
     'skills_required' => (string)($job['skills_required'] ?? ''),
     'location' => (string)($job['location'] ?? ''),
@@ -90,24 +91,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (empty($errors)) {
         $conn = getDbConnection();
-        $sql = "UPDATE jobs SET title = ?, description = ?, skills_required = ?, location = ?, job_type = ?, experience_level = ?, salary_min = NULLIF(?,''), salary_max = NULLIF(?,''), openings = ?, last_date = ?, status = ? WHERE id = ? LIMIT 1";
+            $sql = "UPDATE jobs SET title = ?, company = ?, description = ?, skills_required = ?, location = ?, job_type = ?, experience_level = ?, salary_min = NULLIF(?,''), salary_max = NULLIF(?,''), openings = ?, last_date = ?, status = ? WHERE id = ? LIMIT 1";
         $stmt = $conn->prepare($sql);
         if ($stmt) {
-            $types = 'ssssssssissi'; // 8s, i, s, s, i (total 12)
-            $bindParams = [
-                $fields['title'],
-                $fields['description'],
-                $fields['skills_required'],
-                $fields['location'],
-                $fields['job_type'],
-                $fields['experience_level'],
-                $fields['salary_min'],
-                $fields['salary_max'],
-                (int)$fields['openings'],
-                $fields['last_date'],
-                $fields['status'],
-                $id
-            ];
+                $types = 'sssssssssissi';
+                $bindParams = [
+                    $fields['title'],
+                    $fields['company'],
+                    $fields['description'],
+                    $fields['skills_required'],
+                    $fields['location'],
+                    $fields['job_type'],
+                    $fields['experience_level'],
+                    $fields['salary_min'],
+                    $fields['salary_max'],
+                    (int)$fields['openings'],
+                    $fields['last_date'],
+                    $fields['status'],
+                    $id
+                ];
             $stmt->bind_param($types, ...$bindParams);
             $ok = $stmt->execute();
             if ($ok) {
@@ -168,6 +170,11 @@ function val(array $fields, string $key): string { return htmlspecialchars($fiel
                 <div class="col-md-8">
                     <label class="form-label">Job Title <span class="required">*</span></label>
                     <input name="title" value="<?php echo val($fields,'title'); ?>" class="form-control" required>
+                </div>
+
+                <div class="col-md-8">
+                    <label class="form-label">Company Name <span class="required">*</span></label>
+                    <input name="company" value="<?php echo val($fields,'company'); ?>" class="form-control" required>
                 </div>
 
                 <div class="col-md-4">

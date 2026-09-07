@@ -14,7 +14,14 @@ if (session_status() === PHP_SESSION_NONE) {
 
 // Check if candidate is authenticated
 if (empty($_SESSION['user_id']) || empty($_SESSION['user_role']) || $_SESSION['user_role'] !== 'candidate') {
-    header('Location: ' . ($_SESSION['user_role'] === 'admin' ? '/admin/login.php' : '/login.php'));
+    // Preserve the originally requested URI so users can be redirected back after login.
+    $requestUri = $_SERVER['REQUEST_URI'] ?? '/';
+    $next = rawurlencode($requestUri);
+    if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin') {
+        header('Location: /admin/login.php');
+    } else {
+        header('Location: /login.php?next=' . $next);
+    }
     exit;
 }
 
@@ -45,7 +52,9 @@ if ($stmt) {
             );
         }
         session_destroy();
-        header('Location: /login.php');
+        // Preserve return target if available
+        $requestUri = $_SERVER['REQUEST_URI'] ?? '/';
+        header('Location: /login.php?next=' . rawurlencode($requestUri));
         exit;
     }
 } else {

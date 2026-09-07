@@ -37,14 +37,42 @@ $navItems = [
             </ul>
 
             <div class="navbar-actions d-flex align-items-center gap-2 mt-3 mt-lg-0">
-                <a href="<?php echo htmlspecialchars($basePath, ENT_QUOTES, 'UTF-8'); ?>login.php" class="btn btn-primary btn-sm" aria-label="Login to Career Grow Infotech">
-                    <i class="bi bi-box-arrow-in-right" aria-hidden="true"></i>
-                    <span class="d-none d-sm-inline ms-1">Login</span>
-                </a>
-                <a href="<?php echo htmlspecialchars($basePath, ENT_QUOTES, 'UTF-8'); ?>admin/login.php" class="btn btn-outline-secondary btn-sm admin-login-btn" aria-label="Admin login">
-                    <i class="bi bi-shield-lock" aria-hidden="true"></i>
-                    <span class="d-none d-lg-inline ms-1">Admin</span>
-                </a>
+                <?php
+                if (session_status() === PHP_SESSION_NONE) {
+                    session_start();
+                }
+
+                $userRole = $_SESSION['user_role'] ?? '';
+                $isCandidate = !empty($_SESSION['user_id']) && $userRole === 'candidate';
+                $isAdmin = !empty($_SESSION['user_id']) && $userRole === 'admin';
+
+                if ($isCandidate):
+                ?>
+                    <a href="<?php echo htmlspecialchars($basePath, ENT_QUOTES, 'UTF-8'); ?>candidate/dashboard.php" class="btn btn-primary btn-sm" aria-label="Candidate dashboard">
+                        <i class="bi bi-person-circle" aria-hidden="true"></i>
+                        <span class="d-none d-sm-inline ms-1">Dashboard</span>
+                    </a>
+                    <a href="<?php echo htmlspecialchars($basePath, ENT_QUOTES, 'UTF-8'); ?>candidate/profile.php" class="btn btn-outline-secondary btn-sm" aria-label="Candidate profile">
+                        <i class="bi bi-person" aria-hidden="true"></i>
+                        <span class="d-none d-sm-inline ms-1">Profile</span>
+                    </a>
+                    <a href="<?php echo htmlspecialchars($basePath, ENT_QUOTES, 'UTF-8'); ?>logout.php" class="btn btn-outline-danger btn-sm" aria-label="Logout">
+                        <i class="bi bi-box-arrow-right" aria-hidden="true"></i>
+                        <span class="d-none d-sm-inline ms-1">Logout</span>
+                    </a>
+                <?php else: ?>
+                    <a href="<?php echo htmlspecialchars($basePath, ENT_QUOTES, 'UTF-8'); ?>login.php" class="btn btn-primary btn-sm" aria-label="Login to Career Grow Infotech">
+                        <i class="bi bi-box-arrow-in-right" aria-hidden="true"></i>
+                        <span class="d-none d-sm-inline ms-1">Login</span>
+                    </a>
+                <?php endif; ?>
+
+                <?php if (!$isCandidate): // Do not show Admin link to candidates; visible to guests and admins ?>
+                    <a href="<?php echo htmlspecialchars($basePath, ENT_QUOTES, 'UTF-8'); ?>admin/login.php" class="btn btn-outline-secondary btn-sm admin-login-btn" aria-label="Admin login">
+                        <i class="bi bi-shield-lock" aria-hidden="true"></i>
+                        <span class="d-none d-lg-inline ms-1">Admin</span>
+                    </a>
+                <?php endif; ?>
             </div>
         </div>
     </div>

@@ -6,6 +6,10 @@ require_once __DIR__ . '/includes/db.php';
 require_once __DIR__ . '/includes/header.php';
 require_once __DIR__ . '/includes/navbar.php';
 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 $pageTitle = 'Job Details - Career Grow Infotech';
 
 $rawId = $_GET['id'] ?? '';
@@ -23,7 +27,7 @@ $salaryText = 'Not disclosed';
 
 if ($jobId > 0) {
     $publicStatus = 'active';
-    $stmt = $conn->prepare('SELECT id, title, description, skills_required, location, job_type, experience_level, salary_min, salary_max, openings, last_date, status, created_at FROM jobs WHERE id = ? AND status = ? AND (last_date IS NULL OR last_date >= CURDATE()) LIMIT 1');
+    $stmt = $conn->prepare('SELECT id, title, company, description, skills_required, location, job_type, experience_level, salary_min, salary_max, openings, last_date, status, created_at FROM jobs WHERE id = ? AND status = ? AND (last_date IS NULL OR last_date >= CURDATE()) LIMIT 1');
     if ($stmt) {
         $stmt->bind_param('is', $jobId, $publicStatus);
         $stmt->execute();
@@ -279,7 +283,8 @@ function renderSafeText(?string $value): string
 
                 <div class="job-detail-shell">
                     <div class="job-detail-header">
-                        <div class="job-company-tag"><i class="bi bi-building me-1"></i>Career Grow Infotech</div>
+                        <?php $jobCompany = trim((string)($job['company'] ?? '')); ?>
+                        <div class="job-company-tag"><i class="bi bi-building me-1"></i><?php echo htmlspecialchars($jobCompany !== '' ? $jobCompany : 'Career Grow Infotech', ENT_QUOTES, 'UTF-8'); ?></div>
                         <h1><?php echo htmlspecialchars((string)$job['title'], ENT_QUOTES, 'UTF-8'); ?></h1>
                         <div class="job-header-meta">
                             <span><i class="bi bi-geo-alt"></i><?php echo htmlspecialchars((string)($job['location'] ?? ''), ENT_QUOTES, 'UTF-8'); ?></span>

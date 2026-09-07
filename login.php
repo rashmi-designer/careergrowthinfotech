@@ -10,6 +10,16 @@ $pageTitle = 'Candidate Login - Career Grow Infotech';
 
 // Redirect already authenticated candidate
 if (!empty($_SESSION['user_id']) && !empty($_SESSION['user_role']) && $_SESSION['user_role'] === 'candidate') {
+    // If a safe next target was provided, redirect there; otherwise go to dashboard.
+    $nextParam = isset($_GET['next']) ? (string)$_GET['next'] : '';
+    if ($nextParam !== '') {
+        $decodedNext = rawurldecode($nextParam);
+        $isLocal = (parse_url($decodedNext, PHP_URL_SCHEME) === null) && (parse_url($decodedNext, PHP_URL_HOST) === null) && (strpos($decodedNext, '//') !== 0) && str_starts_with($decodedNext, '/');
+        if ($isLocal) {
+            header('Location: ' . $decodedNext);
+            exit;
+        }
+    }
     header('Location: candidate/dashboard.php');
     exit;
 }
@@ -52,12 +62,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $_SESSION['user_email'] = $user['email'];
                         $_SESSION['user_role'] = $user['role'];
 
-                        // Redirect to job application if job_id was provided
-                        $redirectJobId = isset($_GET['job_id']) ? (int)$_GET['job_id'] : 0;
-                        if ($redirectJobId > 0) {
-                            header('Location: candidate/apply.php?job_id=' . $redirectJobId);
-                        } else {
-                            header('Location: candidate/dashboard.php');
+                        // Prefer a validated 'next' return target if provided (prevents open redirects)
+                        $nextParam = isset($_GET['next']) ? (string)$_GET['next'] : '';
+                        $redirected = false;
+                        if ($nextParam !== '') {
+                            $decodedNext = rawurldecode($nextParam);
+                            $isLocal = (parse_url($decodedNext, PHP_URL_SCHEME) === null) && (parse_url($decodedNext, PHP_URL_HOST) === null) && (strpos($decodedNext, '//') !== 0) && str_starts_with($decodedNext, '/');
+                            if ($isLocal) {
+                                header('Location: ' . $decodedNext);
+                                $redirected = true;
+                            }
+                        }
+
+                        if (!$redirected) {
+                            // Fallback: support legacy job_id param to redirect directly to apply flow
+                            $redirectJobId = isset($_GET['job_id']) ? (int)$_GET['job_id'] : 0;
+                            if ($redirectJobId > 0) {
+                                header('Location: candidate/apply.php?job_id=' . $redirectJobId);
+                            } else {
+                                header('Location: candidate/dashboard.php');
+                            }
                         }
                         exit;
                     } else {

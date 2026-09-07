@@ -773,7 +773,7 @@ $conn->close();
                                     <td><?php echo htmlspecialchars((string)($application['applied_at'] ?? '-'), ENT_QUOTES, 'UTF-8'); ?></td>
                                     <td>
                                         <?php if (!empty($application['resume'])): ?>
-                                            <a href="../uploads/resumes/<?php echo rawurlencode((string)$application['resume']); ?>" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-secondary">View Resume</a>
+                                            <a href="../<?php echo htmlspecialchars((string)$application['resume'], ENT_QUOTES, 'UTF-8'); ?>" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-secondary">View Resume</a>
                                         <?php else: ?>
                                             <span class="text-muted">Not available</span>
                                         <?php endif; ?>

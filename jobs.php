@@ -109,7 +109,7 @@ if ($page > $totalPages) {
 }
 
 $jobs = [];
-$sql = 'SELECT id, title, location, job_type, experience_level, salary_min, salary_max, last_date, created_at FROM jobs ' . $whereSql . ' AND (last_date IS NULL OR last_date >= CURDATE()) ORDER BY created_at DESC LIMIT ? OFFSET ?';
+$sql = 'SELECT id, title, company, location, job_type, experience_level, salary_min, salary_max, last_date, created_at FROM jobs ' . $whereSql . ' AND (last_date IS NULL OR last_date >= CURDATE()) ORDER BY created_at DESC LIMIT ? OFFSET ?';
 $stmt = $conn->prepare($sql);
 if ($stmt) {
     $bindValues = $params;
@@ -480,7 +480,8 @@ $emptyStateText = $hasFilters
                     <article class="job-card">
                         <div class="d-flex flex-column flex-md-row justify-content-between gap-3">
                             <div class="flex-grow-1">
-                                <span class="job-company">Career Grow Infotech</span>
+                                <?php $cardCompany = trim((string)($job['company'] ?? '')); ?>
+                                <span class="job-company"><?php echo htmlspecialchars($cardCompany !== '' ? $cardCompany : 'Career Grow Infotech', ENT_QUOTES, 'UTF-8'); ?></span>
                                 <h3><a href="job-details.php?id=<?php echo $jobId; ?>"><?php echo htmlspecialchars($jobTitle, ENT_QUOTES, 'UTF-8'); ?></a></h3>
                             </div>
                             <?php if ($jobType !== ''): ?>

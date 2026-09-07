@@ -30,26 +30,60 @@ if ($statusFilter !== '') {
 $query .= ' ORDER BY a.applied_at DESC';
 
 $stmt = $conn->prepare($query);
+$applications = [];
 if ($stmt) {
     $stmt->bind_param($types, ...$params);
     $stmt->execute();
+
     $result = $stmt->get_result();
-    $applications = [];
-    while ($row = $result->fetch_assoc()) {
-        $applications[] = $row;
+    if ($result !== false) {
+        while ($row = $result->fetch_assoc()) {
+            $applications[] = $row;
+        }
+    } else {
+        // Fallback for environments without mysqlnd/get_result(): use bind_result
+        $stmt->store_result();
+        $stmt->bind_result($col_id, $col_job_id, $col_status, $col_applied_at, $col_title, $col_location, $col_job_type);
+        while ($stmt->fetch()) {
+            $applications[] = [
+                'id' => $col_id,
+                'job_id' => $col_job_id,
+                'status' => $col_status,
+                'applied_at' => $col_applied_at,
+                'title' => $col_title,
+                'location' => $col_location,
+                'job_type' => $col_job_type,
+            ];
+        }
     }
     $stmt->close();
+} else {
+    error_log('applications.php prepare failed: ' . $conn->error);
 }
 
 // Get status counts
-$statusStmt = $conn->prepare('SELECT a.status, COUNT(*) as count FROM applications a WHERE a.user_id = ? GROUP BY a.status');
-$statusStmt->bind_param('i', $userId);
-$statusStmt->execute();
 $statusCounts = [];
-while ($row = $statusStmt->get_result()->fetch_assoc()) {
-    $statusCounts[$row['status']] = $row['count'];
+$statusStmt = $conn->prepare('SELECT a.status, COUNT(*) as count FROM applications a WHERE a.user_id = ? GROUP BY a.status');
+if ($statusStmt) {
+    $statusStmt->bind_param('i', $userId);
+    $statusStmt->execute();
+
+    $statusResult = $statusStmt->get_result();
+    if ($statusResult !== false) {
+        while ($row = $statusResult->fetch_assoc()) {
+            $statusCounts[$row['status']] = $row['count'];
+        }
+    } else {
+        $statusStmt->store_result();
+        $statusStmt->bind_result($s_status, $s_count);
+        while ($statusStmt->fetch()) {
+            $statusCounts[$s_status] = $s_count;
+        }
+    }
+    $statusStmt->close();
+} else {
+    error_log('applications.php status prepare failed: ' . $conn->error);
 }
-$statusStmt->close();
 $conn->close();
 ?>
 

@@ -1,5 +1,13 @@
 <?php
 $basePath = $basePath ?? '';
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+$candidateApplicationsHref = (isset($_SESSION['user_id'], $_SESSION['user_role']) && $_SESSION['user_role'] === 'candidate')
+    ? $basePath . 'candidate/applications.php'
+    : $basePath . 'login.php?next=' . rawurlencode('/candidate/applications.php');
 ?>
 <footer class="site-footer mt-auto">
     <div class="container py-5">
@@ -33,7 +41,7 @@ $basePath = $basePath ?? '';
                     <li><a href="<?php echo htmlspecialchars($basePath, ENT_QUOTES, 'UTF-8'); ?>jobs.php">Find Jobs</a></li>
                     <li><a href="<?php echo htmlspecialchars($basePath, ENT_QUOTES, 'UTF-8'); ?>login.php">Candidate Login</a></li>
                     <li><a href="<?php echo htmlspecialchars($basePath, ENT_QUOTES, 'UTF-8'); ?>register.php">Register</a></li>
-                    <li><a href="<?php echo htmlspecialchars($basePath, ENT_QUOTES, 'UTF-8'); ?>candidate/applications.php">My Applications</a></li>
+                    <li><a href="<?php echo htmlspecialchars($candidateApplicationsHref, ENT_QUOTES, 'UTF-8'); ?>">My Applications</a></li>
                 </ul>
             </div>
 

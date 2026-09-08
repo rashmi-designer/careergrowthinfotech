@@ -53,37 +53,51 @@ if ($job && $sessionActive && !empty($_SESSION['user_id']) && !empty($_SESSION['
 
 $conn->close();
 
-function formatMoney(?string $value): string
-{
-    if ($value === null || trim($value) === '') {
-        return 'Not disclosed';
-    }
+if (!function_exists('cg_format_money')) {
+    function cg_format_money(?string $value): string
+    {
+        if ($value === null || trim($value) === '') {
+            return 'Not disclosed';
+        }
 
-    $amount = (float)$value;
-    if ($amount <= 0) {
-        return 'Not disclosed';
-    }
+        $amount = (float)$value;
+        if ($amount <= 0) {
+            return 'Not disclosed';
+        }
 
-    return '₹' . number_format($amount, 0, '.', ',');
+        return '₹' . number_format($amount, 0, '.', ',');
+    }
 }
 
-function formatDate(?string $value, string $fallback = 'N/A'): string
-{
-    if ($value === null || trim($value) === '') {
-        return $fallback;
-    }
+if (!function_exists('cg_format_date')) {
+    function cg_format_date(?string $value, string $fallback = 'N/A'): string
+    {
+        if ($value === null || trim($value) === '') {
+            return $fallback;
+        }
 
-    $timestamp = strtotime((string)$value);
-    if ($timestamp === false) {
-        return $fallback;
-    }
+        $timestamp = strtotime((string)$value);
+        if ($timestamp === false) {
+            return $fallback;
+        }
 
-    return date('d M Y', $timestamp);
+        return date('d M Y', $timestamp);
+    }
 }
 
-function renderSafeText(?string $value): string
-{
-    return nl2br(htmlspecialchars((string)($value ?? ''), ENT_QUOTES, 'UTF-8'));
+if (!function_exists('cg_get_job_company_name')) {
+    function cg_get_job_company_name(mixed $value): string
+    {
+        $company = trim((string)($value ?? ''));
+        return $company !== '' ? $company : 'Career Grow Infotech';
+    }
+}
+
+if (!function_exists('cg_render_safe_text')) {
+    function cg_render_safe_text(?string $value): string
+    {
+        return nl2br(htmlspecialchars((string)($value ?? ''), ENT_QUOTES, 'UTF-8'));
+    }
 }
 ?>
 
@@ -283,13 +297,13 @@ function renderSafeText(?string $value): string
 
                 <div class="job-detail-shell">
                     <div class="job-detail-header">
-                        <?php $jobCompany = trim((string)($job['company'] ?? '')); ?>
-                        <div class="job-company-tag"><i class="bi bi-building me-1"></i><?php echo htmlspecialchars($jobCompany !== '' ? $jobCompany : 'Career Grow Infotech', ENT_QUOTES, 'UTF-8'); ?></div>
+                        <?php $jobCompany = cg_get_job_company_name($job['company'] ?? ''); ?>
+                        <div class="job-company-tag"><i class="bi bi-building me-1"></i><?php echo htmlspecialchars($jobCompany, ENT_QUOTES, 'UTF-8'); ?></div>
                         <h1><?php echo htmlspecialchars((string)$job['title'], ENT_QUOTES, 'UTF-8'); ?></h1>
                         <div class="job-header-meta">
                             <span><i class="bi bi-geo-alt"></i><?php echo htmlspecialchars((string)($job['location'] ?? ''), ENT_QUOTES, 'UTF-8'); ?></span>
                             <span><i class="bi bi-briefcase"></i><?php echo htmlspecialchars((string)($job['job_type'] ?? ''), ENT_QUOTES, 'UTF-8'); ?></span>
-                            <span><i class="bi bi-calendar3"></i>Posted <?php echo htmlspecialchars(formatDate((string)($job['created_at'] ?? '')), ENT_QUOTES, 'UTF-8'); ?></span>
+                            <span><i class="bi bi-calendar3"></i>Posted <?php echo htmlspecialchars(cg_format_date((string)($job['created_at'] ?? '')), ENT_QUOTES, 'UTF-8'); ?></span>
                             <?php if (!empty($job['experience_level'])): ?>
                                 <span><i class="bi bi-person-workspace"></i><?php echo htmlspecialchars((string)$job['experience_level'], ENT_QUOTES, 'UTF-8'); ?></span>
                             <?php endif; ?>
@@ -302,14 +316,14 @@ function renderSafeText(?string $value): string
                                 <?php if (!empty($job['description'])): ?>
                                     <div class="detail-section">
                                         <h3>Job Description</h3>
-                                        <p><?php echo renderSafeText((string)$job['description']); ?></p>
+                                        <p><?php echo cg_render_safe_text((string)$job['description']); ?></p>
                                     </div>
                                 <?php endif; ?>
 
                                 <?php if (!empty($job['skills_required'])): ?>
                                     <div class="detail-section">
                                         <h3>Skills & Requirements</h3>
-                                        <p><?php echo renderSafeText((string)$job['skills_required']); ?></p>
+                                        <p><?php echo cg_render_safe_text((string)$job['skills_required']); ?></p>
                                     </div>
                                 <?php endif; ?>
 
@@ -321,9 +335,9 @@ function renderSafeText(?string $value): string
                                             $minValue = isset($job['salary_min']) ? trim((string)$job['salary_min']) : '';
                                             $maxValue = isset($job['salary_max']) ? trim((string)$job['salary_max']) : '';
                                             if ($minValue !== '' || $maxValue !== '') {
-                                                $salaryText = formatMoney($minValue);
+                                                $salaryText = cg_format_money($minValue);
                                                 if ($maxValue !== '' && $minValue !== '' && (float)$minValue > 0) {
-                                                    $salaryText .= ' - ' . formatMoney($maxValue);
+                                                    $salaryText .= ' - ' . cg_format_money($maxValue);
                                                 }
                                             }
                                             echo htmlspecialchars($salaryText, ENT_QUOTES, 'UTF-8');
@@ -356,9 +370,9 @@ function renderSafeText(?string $value): string
                                         <li><strong>Type</strong><span><?php echo htmlspecialchars((string)($job['job_type'] ?? 'N/A'), ENT_QUOTES, 'UTF-8'); ?></span></li>
                                         <li><strong>Experience</strong><span><?php echo htmlspecialchars((string)($job['experience_level'] ?? 'N/A'), ENT_QUOTES, 'UTF-8'); ?></span></li>
                                         <li><strong>Openings</strong><span><?php echo (int)($job['openings'] ?? 0); ?></span></li>
-                                        <li><strong>Posted</strong><span><?php echo htmlspecialchars(formatDate((string)($job['created_at'] ?? '')), ENT_QUOTES, 'UTF-8'); ?></span></li>
+                                        <li><strong>Posted</strong><span><?php echo htmlspecialchars(cg_format_date((string)($job['created_at'] ?? '')), ENT_QUOTES, 'UTF-8'); ?></span></li>
                                         <?php if (!empty($job['last_date'])): ?>
-                                            <li><strong>Last Date</strong><span><?php echo htmlspecialchars(formatDate((string)$job['last_date']), ENT_QUOTES, 'UTF-8'); ?></span></li>
+                                            <li><strong>Last Date</strong><span><?php echo htmlspecialchars(cg_format_date((string)$job['last_date']), ENT_QUOTES, 'UTF-8'); ?></span></li>
                                         <?php endif; ?>
                                         <li><strong>Salary</strong><span><?php echo htmlspecialchars((string)($salaryText ?? 'Not disclosed'), ENT_QUOTES, 'UTF-8'); ?></span></li>
                                     </ul>

@@ -443,6 +443,7 @@ $conn->close();
             <a href="jobs.php" class="nav-link-admin"><i class="bi bi-briefcase"></i> Jobs</a>
             <a href="applicants.php" class="nav-link-admin"><i class="bi bi-people"></i> Applicants</a>
             <a href="candidate-details.php" class="nav-link-admin"><i class="bi bi-person-badge"></i> Candidates</a>
+            <a href="contact-messages.php" class="nav-link-admin"><i class="bi bi-envelope-paper"></i> Contact Messages</a>
             <a href="settings.php" class="nav-link-admin active"><i class="bi bi-gear"></i> Settings</a>
         </nav>
 

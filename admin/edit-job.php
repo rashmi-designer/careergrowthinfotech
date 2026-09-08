@@ -81,6 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Server-side validation
     if ($fields['title'] === '') { $errors[] = 'Job title is required.'; }
+    if ($fields['company'] === '') { $errors[] = 'Company name is required.'; }
     if ($fields['location'] === '') { $errors[] = 'Location is required.'; }
     if ($fields['job_type'] === '') { $errors[] = 'Job type is required.'; }
     if ($fields['experience_level'] === '') { $errors[] = 'Experience level is required.'; }

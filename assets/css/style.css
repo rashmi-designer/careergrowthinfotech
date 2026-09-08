@@ -85,10 +85,17 @@ body.scrolled .navbar {
 }
 
 .brand-mark-sm {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     width: 34px;
     height: 34px;
     padding: 2px;
+    overflow: hidden;
+    background: var(--cg-white);
+    border: 2px solid var(--cg-primary);
     font-size: 0.70rem;
+    box-shadow: var(--cg-shadow-soft);
 }
 
 /* Use existing logo image for branding while keeping aspect ratio and responsiveness.
@@ -99,8 +106,8 @@ body.scrolled .navbar {
     height: 100%;
     object-fit: contain;
     display: block;
-    border-radius: 50%;
-    transform: scale(1.16);
+    border-radius: 0;
+    transform: none;
 }
 
 .brand-text {

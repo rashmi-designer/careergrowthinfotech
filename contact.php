@@ -183,6 +183,12 @@ require_once __DIR__ . '/includes/navbar.php';
 
     .faq-item {
         padding: 1.2rem 1.3rem;
+        height: 100%;
+        width: 100%;
+    }
+
+    .faq-grid > [class*="col-"] {
+        display: flex;
     }
 
     .contact-cta {
@@ -279,13 +285,14 @@ require_once __DIR__ . '/includes/navbar.php';
                             </div>
                         <?php endif; ?>
 
-                        <form method="post" action="contact.php" novalidate>
+                        <form method="post" action="contact.php" id="contactForm" novalidate>
                             <input type="hidden" name="contact_form_token" value="<?php echo htmlspecialchars($_SESSION['contact_form_token'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
+                            <div id="contactValidationSummary" class="alert alert-danger d-none" role="alert" aria-live="polite"></div>
 
                             <div class="row g-3">
                                 <div class="col-md-6">
                                     <label for="name" class="form-label">Full Name</label>
-                                    <input type="text" id="name" name="name" class="form-control" value="<?php echo htmlspecialchars($formValues['name'], ENT_QUOTES, 'UTF-8'); ?>" required>
+                                    <input type="text" id="name" name="name" class="form-control" value="<?php echo htmlspecialchars($formValues['name'], ENT_QUOTES, 'UTF-8'); ?>" minlength="2" pattern="[A-Za-z][A-Za-z .'-]{1,99}" title="Enter a name using letters, spaces, apostrophes, periods, or hyphens." required>
                                 </div>
 
                                 <div class="col-md-6">
@@ -295,17 +302,17 @@ require_once __DIR__ . '/includes/navbar.php';
 
                                 <div class="col-md-6">
                                     <label for="phone" class="form-label">Phone Number</label>
-                                    <input type="tel" id="phone" name="phone" class="form-control" value="<?php echo htmlspecialchars($formValues['phone'], ENT_QUOTES, 'UTF-8'); ?>">
+                                    <input type="tel" id="phone" name="phone" class="form-control" value="<?php echo htmlspecialchars($formValues['phone'], ENT_QUOTES, 'UTF-8'); ?>" pattern="[0-9()+ -]{7,20}" title="Enter a valid phone number using 7 to 20 digits and standard phone characters.">
                                 </div>
 
                                 <div class="col-md-6">
                                     <label for="subject" class="form-label">Subject</label>
-                                    <input type="text" id="subject" name="subject" class="form-control" value="<?php echo htmlspecialchars($formValues['subject'], ENT_QUOTES, 'UTF-8'); ?>" required>
+                                    <input type="text" id="subject" name="subject" class="form-control" value="<?php echo htmlspecialchars($formValues['subject'], ENT_QUOTES, 'UTF-8'); ?>" minlength="3" pattern=".*\S.*" title="Enter a subject with at least 3 characters." required>
                                 </div>
 
                                 <div class="col-12">
                                     <label for="message" class="form-label">Message</label>
-                                    <textarea id="message" name="message" class="form-control" rows="6" required><?php echo htmlspecialchars($formValues['message'], ENT_QUOTES, 'UTF-8'); ?></textarea>
+                                    <textarea id="message" name="message" class="form-control" rows="6" minlength="10" pattern=".*\S.*" title="Enter a message with at least 10 characters." required><?php echo htmlspecialchars($formValues['message'], ENT_QUOTES, 'UTF-8'); ?></textarea>
                                 </div>
 
                                 <div class="col-12">
@@ -339,7 +346,7 @@ require_once __DIR__ . '/includes/navbar.php';
                 <h2 class="fw-bold mb-0">Frequently asked questions</h2>
             </div>
 
-            <div class="row g-3">
+            <div class="row g-3 faq-grid">
                 <div class="col-lg-6">
                     <div class="faq-item">
                         <h6 class="fw-semibold mb-2">How do I apply for a job?</h6>
@@ -390,5 +397,43 @@ require_once __DIR__ . '/includes/navbar.php';
         </div>
     </section>
 </main>
+
+<script>
+document.getElementById('contactForm').addEventListener('submit', function (event) {
+    var form = this;
+    var summary = document.getElementById('contactValidationSummary');
+    var fields = [
+        { input: form.elements.name, label: 'Full Name', valid: function (value) { return /^[A-Za-z][A-Za-z .\'-]{1,99}$/.test(value); } },
+        { input: form.elements.email, label: 'Email Address', valid: function (value) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value); } },
+        { input: form.elements.phone, label: 'Phone Number', valid: function (value) { return value === '' || /^[0-9()+ -]{7,20}$/.test(value); } },
+        { input: form.elements.subject, label: 'Subject', valid: function (value) { return value.length >= 3 && /\S/.test(value); } },
+        { input: form.elements.message, label: 'Message', valid: function (value) { return value.length >= 10 && /\S/.test(value); } }
+    ];
+    var invalidFields = [];
+
+    fields.forEach(function (field) {
+        var value = field.input.value.trim();
+        field.input.classList.remove('is-invalid');
+        field.input.removeAttribute('aria-invalid');
+        if ((field.input.required && value === '') || (value !== '' && !field.valid(value))) {
+            invalidFields.push(field);
+            field.input.classList.add('is-invalid');
+            field.input.setAttribute('aria-invalid', 'true');
+        }
+    });
+
+    if (invalidFields.length === 0) {
+        summary.classList.add('d-none');
+        return;
+    }
+
+    event.preventDefault();
+    summary.textContent = 'Please correct: ' + invalidFields.map(function (field) {
+        return field.label;
+    }).join(', ') + '.';
+    summary.classList.remove('d-none');
+    invalidFields[0].input.focus();
+});
+</script>
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>

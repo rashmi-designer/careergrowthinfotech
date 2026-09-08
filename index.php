@@ -719,7 +719,9 @@ require_once __DIR__ . '/includes/navbar.php';
                         </div>
 
                         <div class="mt-4 text-end">
-                            <img src="assets/images/logo.webp" alt="Career Grow Infotech logo" style="height:34px;opacity:0.9">
+                            <span class="brand-mark brand-mark-sm">
+                                <img src="assets/images/logo.webp" alt="Career Grow Infotech logo" width="34" height="34" loading="lazy" style="opacity:0.9">
+                            </span>
                         </div>
                     </div>
                 </div>

@@ -334,6 +334,13 @@ $emptyStateText = $hasFilters
         min-width: 150px;
     }
 
+    .job-actions .btn-primary:hover,
+    .job-actions .btn-primary:focus,
+    .job-actions .btn-outline-primary:hover,
+    .job-actions .btn-outline-primary:focus {
+        color: var(--cg-white);
+    }
+
     .empty-state {
         background: var(--cg-white);
         border: 1px solid var(--cg-border);
@@ -413,16 +420,16 @@ $emptyStateText = $hasFilters
                         <div class="eyebrow">Career Opportunities</div>
                         <h1>Find the right role for your next step</h1>
                     </div>
-                    <div class="badge bg-primary-subtle text-primary px-3 py-2 rounded-pill">
+                    <a href="index.php" class="badge bg-primary-subtle text-primary px-3 py-2 rounded-pill text-decoration-none">
                         <i class="bi bi-briefcase me-2"></i>Career Grow Infotech
-                    </div>
+                    </a>
                 </div>
                 <p>Explore current openings from Career Grow Infotech and discover roles that match your skills, location, and career goals.</p>
             </div>
 
             <div class="jobs-toolbar">
                 <form method="get" class="row g-3 align-items-center">
-                    <div class="col-lg-4 col-md-6">
+                    <div class="col-lg-3 col-md-6">
                         <label class="form-label visually-hidden" for="search">Search jobs</label>
                         <input id="search" type="text" name="search" class="form-control" value="<?php echo htmlspecialchars($search, ENT_QUOTES, 'UTF-8'); ?>" placeholder="Search by job title or location">
                     </div>
@@ -453,7 +460,7 @@ $emptyStateText = $hasFilters
                             <?php endforeach; ?>
                         </select>
                     </div>
-                    <div class="col-lg-2 col-md-12 d-flex gap-2">
+                    <div class="col-lg-3 col-md-12 d-flex gap-2">
                         <button type="submit" class="btn btn-primary flex-fill">Search</button>
                         <a href="jobs.php" class="btn btn-outline-secondary">Clear</a>
                     </div>
@@ -473,7 +480,7 @@ $emptyStateText = $hasFilters
             <?php else: ?>
                 <div class="page-toolbar">
                     <div>Showing <?php echo (int)count($jobs); ?> of <?php echo (int)$totalJobs; ?> active opportunities</div>
-                    <div><?php echo htmlspecialchars((string)$publicStatus, ENT_QUOTES, 'UTF-8'); ?> roles</div>
+                    <div><?php echo htmlspecialchars(ucfirst((string)$publicStatus), ENT_QUOTES, 'UTF-8'); ?> roles</div>
                 </div>
 
                 <?php foreach ($jobs as $job): ?>
@@ -491,7 +498,7 @@ $emptyStateText = $hasFilters
                     $cardCompany = cg_get_job_company_name($job['company'] ?? '');
                     ?>
                     <article class="job-card">
-                        <div class="d-flex flex-column flex-md-row justify-content-between gap-3">
+                        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-start gap-3">
                             <div class="flex-grow-1">
                                 <span class="job-company"><?php echo htmlspecialchars($cardCompany, ENT_QUOTES, 'UTF-8'); ?></span>
                                 <h3><a href="job-details.php?id=<?php echo $jobId; ?>"><?php echo htmlspecialchars($jobTitle, ENT_QUOTES, 'UTF-8'); ?></a></h3>

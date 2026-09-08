@@ -43,7 +43,7 @@ require_once __DIR__ . '/includes/navbar.php';
         </style>
 
         <div class="slider" role="region" aria-label="Homepage hero slider">
-            <div class="slide" data-index="0" style="background: linear-gradient(120deg, rgba(6,34,72,0.7), rgba(10,64,103,0.6)), linear-gradient(180deg, rgba(3,7,18,0.25), rgba(3,7,18,0.25));">
+            <div class="slide" data-index="0" style="background-image: url('assets/images/hero4.jpg');">
                 <div class="slide-bg-zoom" style="position:absolute;inset:0;background-image:linear-gradient(0deg, rgba(13,110,253,0.15), rgba(13,110,253,0.05));"></div>
                 <div class="container">
                     <div class="slide-content">
@@ -58,7 +58,7 @@ require_once __DIR__ . '/includes/navbar.php';
                 </div>
             </div>
 
-            <div class="slide" data-index="1" style="background: linear-gradient(120deg, rgba(27,43,92,0.7), rgba(8,39,76,0.6));">
+            <div class="slide" data-index="1" style="background-image: url('assets/images/hero5.jpg');">
                 <div class="slide-bg-zoom" style="position:absolute;inset:0;background-image:linear-gradient(0deg, rgba(2,132,199,0.12), rgba(2,132,199,0.04));"></div>
                 <div class="container">
                     <div class="slide-content">
@@ -73,7 +73,7 @@ require_once __DIR__ . '/includes/navbar.php';
                 </div>
             </div>
 
-            <div class="slide" data-index="2" style="background: linear-gradient(120deg, rgba(33,25,62,0.7), rgba(70,18,90,0.6));">
+            <div class="slide" data-index="2" style="background-image: url('assets/images/hero6.jpg');">
                 <div class="slide-bg-zoom" style="position:absolute;inset:0;background-image:linear-gradient(0deg, rgba(99,102,241,0.10), rgba(99,102,241,0.02));"></div>
                 <div class="container">
                     <div class="slide-content">
@@ -194,8 +194,8 @@ require_once __DIR__ . '/includes/navbar.php';
             <div class="search-card card rounded-soft shadow-sm border-0" id="searchCard">
                 <div class="card-body p-3 p-md-4">
                     <form id="homeSearchForm" method="get" action="jobs.php" class="search-form">
-                        <div class="row g-3 align-items-end">
-                            <div class="col-lg-5">
+                        <div class="row g-3">
+                            <div class="col-lg-6">
                                 <label for="keyword" class="form-label small mb-2 fw-semibold">Keyword</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="bi bi-search" aria-hidden="true"></i></span>
@@ -203,7 +203,7 @@ require_once __DIR__ . '/includes/navbar.php';
                                 </div>
                             </div>
 
-                            <div class="col-lg-3">
+                            <div class="col-lg-6">
                                 <label for="location" class="form-label small mb-2 fw-semibold">Location</label>
                                 <div class="input-group">
                                     <span class="input-group-text"><i class="bi bi-geo-alt" aria-hidden="true"></i></span>
@@ -211,16 +211,10 @@ require_once __DIR__ . '/includes/navbar.php';
                                 </div>
                             </div>
 
-                            <div class="col-lg-2 d-grid">
-                                <label for="submitSearch" class="form-label small mb-2 fw-semibold visually-hidden">Find Jobs</label>
-                                <button id="submitSearch" type="submit" class="btn btn-primary btn-lg w-100">
-                                    <i class="bi bi-search me-2" aria-hidden="true"></i>Find Jobs
-                                </button>
-                            </div>
                         </div>
 
-                        <div class="row g-3 mt-1">
-                            <div class="col-md-4">
+                        <div class="row g-3 mt-1 align-items-end">
+                            <div class="col-lg-3 col-md-6">
                                 <label for="job_type" class="form-label small mb-2 fw-semibold">Job Type</label>
                                 <select id="job_type" name="job_type" class="form-select">
                                     <option value="">Select job type</option>
@@ -231,7 +225,7 @@ require_once __DIR__ . '/includes/navbar.php';
                                     <option value="Remote">Remote</option>
                                 </select>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-lg-3 col-md-6">
                                 <label for="salary" class="form-label small mb-2 fw-semibold">Monthly Salary</label>
                                 <select id="salary" name="salary" class="form-select">
                                     <option value="">Select salary range</option>
@@ -242,7 +236,7 @@ require_once __DIR__ . '/includes/navbar.php';
                                     <option value="50_plus">₹50K+</option>
                                 </select>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-lg-3 col-md-6">
                                 <label for="experience" class="form-label small mb-2 fw-semibold">Years of Experience</label>
                                 <select id="experience" name="experience" class="form-select">
                                     <option value="">Select experience</option>
@@ -253,6 +247,12 @@ require_once __DIR__ . '/includes/navbar.php';
                                     <option value="5-8">5-8 Years</option>
                                     <option value="8_plus">8+ Years</option>
                                 </select>
+                            </div>
+                            <div class="col-lg-3 col-md-6 d-grid">
+                                <label for="submitSearch" class="form-label small mb-2 fw-semibold visually-hidden">Find Jobs</label>
+                                <button id="submitSearch" type="submit" class="btn btn-primary btn-lg w-100">
+                                    <i class="bi bi-search me-2" aria-hidden="true"></i>Find Jobs
+                                </button>
                             </div>
                         </div>
                     </form>
@@ -296,9 +296,6 @@ require_once __DIR__ . '/includes/navbar.php';
                 <div class="how-step card rounded-soft p-3 reveal" data-index="0">
                     <div class="d-flex align-items-start gap-3">
                         <div>
-                            <div class="how-number">01</div>
-                        </div>
-                        <div>
                             <div class="how-icon bg-soft rounded-circle d-inline-flex align-items-center justify-content-center mb-2">
                                 <i class="bi bi-person-plus text-primary" aria-hidden="true"></i>
                             </div>
@@ -311,9 +308,6 @@ require_once __DIR__ . '/includes/navbar.php';
                 <!-- Step 2 -->
                 <div class="how-step card rounded-soft p-3 reveal" data-index="1">
                     <div class="d-flex align-items-start gap-3">
-                        <div>
-                            <div class="how-number">02</div>
-                        </div>
                         <div>
                             <div class="how-icon bg-soft rounded-circle d-inline-flex align-items-center justify-content-center mb-2">
                                 <i class="bi bi-search text-primary" aria-hidden="true"></i>
@@ -328,9 +322,6 @@ require_once __DIR__ . '/includes/navbar.php';
                 <div class="how-step card rounded-soft p-3 reveal" data-index="2">
                     <div class="d-flex align-items-start gap-3">
                         <div>
-                            <div class="how-number">03</div>
-                        </div>
-                        <div>
                             <div class="how-icon bg-soft rounded-circle d-inline-flex align-items-center justify-content-center mb-2">
                                 <i class="bi bi-file-earmark-person text-primary" aria-hidden="true"></i>
                             </div>
@@ -343,9 +334,6 @@ require_once __DIR__ . '/includes/navbar.php';
                 <!-- Step 4 -->
                 <div class="how-step card rounded-soft p-3 reveal" data-index="3">
                     <div class="d-flex align-items-start gap-3">
-                        <div>
-                            <div class="how-number">04</div>
-                        </div>
                         <div>
                             <div class="how-icon bg-soft rounded-circle d-inline-flex align-items-center justify-content-center mb-2">
                                 <i class="bi bi-emoji-smile-upside-down text-primary" aria-hidden="true"></i>
@@ -802,7 +790,7 @@ require_once __DIR__ . '/includes/navbar.php';
                 <p class="text-muted mb-0">Whether you are looking for your next career opportunity or searching for the right talent, Career Grow Infotech is here to help.</p>
             </div>
 
-            <div class="row g-3 mt-4">
+            <div class="row g-3 mt-4 justify-content-center">
                 <div class="col-md-6">
                     <div class="cta-panel card h-100 rounded-soft p-4 reveal" data-index="0">
                         <div class="d-flex align-items-start gap-3 h-100">
@@ -822,24 +810,6 @@ require_once __DIR__ . '/includes/navbar.php';
                     </div>
                 </div>
 
-                <div class="col-md-6">
-                    <div class="cta-panel card h-100 rounded-soft p-4 reveal" data-index="1">
-                        <div class="d-flex align-items-start gap-3 h-100">
-                            <div class="cta-icon me-2 d-flex align-items-center justify-content-center bg-soft rounded-circle" aria-hidden="true">
-                                <i class="bi bi-building text-primary" style="font-size:1.6rem"></i>
-                            </div>
-                            <div class="flex-fill">
-                                <div class="small text-uppercase text-muted">FOR EMPLOYERS</div>
-                                <h4 class="fw-bold mb-2">Find the Right Talent for Your Team</h4>
-                                <p class="text-muted">Connect with professionals and get recruitment support for your organization's hiring requirements.</p>
-                                <div class="mt-3">
-                                    <a href="contact.php" class="btn btn-primary me-2">Contact Us</a>
-                                    <a href="services.php" class="btn btn-outline-primary">Explore Services</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
         <script>

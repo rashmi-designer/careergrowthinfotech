@@ -698,13 +698,22 @@ body.scrolled .navbar {
 .final-cta-card {
     position: relative;
     z-index: 1;
-    background: linear-gradient(135deg, rgba(255,255,255,0.96), rgba(248,250,252,0.96));
+    background: linear-gradient(90deg, rgba(245,249,255,0.99) 0%, rgba(235,242,252,0.97) 56%, rgba(11,31,51,0.58) 100%), url('../images/nextchapter.jpg') center / cover no-repeat;
     border: 1px solid var(--cg-border);
     box-shadow: 0 18px 48px rgba(15,23,42,0.06);
     border-radius: 1.2rem;
     padding: clamp(1.75rem, 3vw, 3rem);
     overflow: hidden;
 }
+
+.final-cta-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(11,31,51,0.08);
+    pointer-events: none;
+}
+
 .final-cta-card::after {
     content: "";
     position: absolute;
@@ -718,7 +727,17 @@ body.scrolled .navbar {
 .final-cta-inner {
     position: relative;
     z-index: 1;
+    max-width: 920px;
+    margin: 0 auto;
+    padding: clamp(1.25rem, 2.5vw, 2rem);
+    border: 1px solid rgba(255,255,255,0.38);
+    border-radius: .85rem;
+    background: rgba(255,255,255,0.34);
+    -webkit-backdrop-filter: blur(3px);
+    backdrop-filter: blur(3px);
+    box-shadow: 0 8px 24px rgba(11,31,51,0.04);
 }
+.final-cta-inner h2 { color: var(--cg-accent); }
 .final-cta-copy {
     max-width: 700px;
     color: var(--cg-muted);

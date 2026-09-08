@@ -596,6 +596,7 @@ $conn->close();
             <a href="jobs.php" class="nav-link-admin"><i class="bi bi-briefcase"></i> Jobs</a>
             <a href="applicants.php" class="nav-link-admin active"><i class="bi bi-people"></i> Applicants</a>
             <a href="candidate-details.php" class="nav-link-admin"><i class="bi bi-person-badge"></i> Candidates</a>
+            <a href="contact-messages.php" class="nav-link-admin"><i class="bi bi-envelope-paper"></i> Contact Messages</a>
             <a href="settings.php" class="nav-link-admin"><i class="bi bi-gear"></i> Settings</a>
         </nav>
 
@@ -780,7 +781,7 @@ $conn->close();
                                     </td>
                                     <td class="text-end">
                                         <div class="table-actions">
-                                            <a href="candidate-details.php?id=<?php echo (int)($application['user_id'] ?? 0); ?>" class="btn btn-sm btn-primary">View</a>
+                                            <a href="candidate-details.php?id=<?php echo (int)($application['user_id'] ?? 0); ?>&application_id=<?php echo (int)($application['id'] ?? 0); ?>" class="btn btn-sm btn-primary">View</a>
                                         </div>
                                     </td>
                                 </tr>

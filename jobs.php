@@ -127,32 +127,44 @@ if ($stmt) {
 
 $conn->close();
 
-function formatMoney(?string $value): string
-{
-    if ($value === null || trim($value) === '') {
-        return 'Not disclosed';
+if (!function_exists('cg_get_job_company_name')) {
+    function cg_get_job_company_name(mixed $value): string
+    {
+        $company = trim((string)($value ?? ''));
+        return $company !== '' ? $company : 'Career Grow Infotech';
     }
-
-    $amount = (float)$value;
-    if ($amount <= 0) {
-        return 'Not disclosed';
-    }
-
-    return '₹' . number_format($amount, 0, '.', ',');
 }
 
-function formatDate(?string $value, string $fallback = 'N/A'): string
-{
-    if ($value === null || trim($value) === '') {
-        return $fallback;
-    }
+if (!function_exists('cg_format_money')) {
+    function cg_format_money(?string $value): string
+    {
+        if ($value === null || trim($value) === '') {
+            return 'Not disclosed';
+        }
 
-    $timestamp = strtotime((string)$value);
-    if ($timestamp === false) {
-        return $fallback;
-    }
+        $amount = (float)$value;
+        if ($amount <= 0) {
+            return 'Not disclosed';
+        }
 
-    return date('d M Y', $timestamp);
+        return '₹' . number_format($amount, 0, '.', ',');
+    }
+}
+
+if (!function_exists('cg_format_date')) {
+    function cg_format_date(?string $value, string $fallback = 'N/A'): string
+    {
+        if ($value === null || trim($value) === '') {
+            return $fallback;
+        }
+
+        $timestamp = strtotime((string)$value);
+        if ($timestamp === false) {
+            return $fallback;
+        }
+
+        return date('d M Y', $timestamp);
+    }
 }
 
 $hasFilters = $search !== '' || $jobTypeFilter !== '' || $locationFilter !== '' || $experienceFilter !== '';
@@ -474,14 +486,14 @@ $emptyStateText = $hasFilters
                     $salaryMin = isset($job['salary_min']) && $job['salary_min'] !== null ? (string)$job['salary_min'] : null;
                     $salaryMax = isset($job['salary_max']) && $job['salary_max'] !== null ? (string)$job['salary_max'] : null;
                     $salaryText = $salaryMin !== null || $salaryMax !== null
-                        ? (formatMoney($salaryMin) . ($salaryMax !== null && trim((string)$salaryMax) !== '' && (float)$salaryMin > 0 ? ' - ' . formatMoney($salaryMax) : ''))
+                        ? (cg_format_money($salaryMin) . ($salaryMax !== null && trim((string)$salaryMax) !== '' && (float)$salaryMin > 0 ? ' - ' . cg_format_money($salaryMax) : ''))
                         : 'Salary not disclosed';
+                    $cardCompany = cg_get_job_company_name($job['company'] ?? '');
                     ?>
                     <article class="job-card">
                         <div class="d-flex flex-column flex-md-row justify-content-between gap-3">
                             <div class="flex-grow-1">
-                                <?php $cardCompany = trim((string)($job['company'] ?? '')); ?>
-                                <span class="job-company"><?php echo htmlspecialchars($cardCompany !== '' ? $cardCompany : 'Career Grow Infotech', ENT_QUOTES, 'UTF-8'); ?></span>
+                                <span class="job-company"><?php echo htmlspecialchars($cardCompany, ENT_QUOTES, 'UTF-8'); ?></span>
                                 <h3><a href="job-details.php?id=<?php echo $jobId; ?>"><?php echo htmlspecialchars($jobTitle, ENT_QUOTES, 'UTF-8'); ?></a></h3>
                             </div>
                             <?php if ($jobType !== ''): ?>
@@ -495,7 +507,7 @@ $emptyStateText = $hasFilters
                                 <span><i class="bi bi-person-workspace"></i><?php echo htmlspecialchars($experience, ENT_QUOTES, 'UTF-8'); ?></span>
                             <?php endif; ?>
                             <?php if (!empty($job['last_date'])): ?>
-                                <span><i class="bi bi-calendar3"></i>Last date: <?php echo htmlspecialchars(formatDate((string)$job['last_date']), ENT_QUOTES, 'UTF-8'); ?></span>
+                                <span><i class="bi bi-calendar3"></i>Last date: <?php echo htmlspecialchars(cg_format_date((string)$job['last_date']), ENT_QUOTES, 'UTF-8'); ?></span>
                             <?php endif; ?>
                         </div>
 
@@ -506,7 +518,7 @@ $emptyStateText = $hasFilters
 
                         <div class="job-actions">
                             <div class="job-status">
-                                <i class="bi bi-clock-history me-1"></i>Posted <?php echo htmlspecialchars(formatDate((string)($job['created_at'] ?? '')), ENT_QUOTES, 'UTF-8'); ?>
+                                <i class="bi bi-clock-history me-1"></i>Posted <?php echo htmlspecialchars(cg_format_date((string)($job['created_at'] ?? '')), ENT_QUOTES, 'UTF-8'); ?>
                             </div>
                             <div class="d-flex gap-2">
                                 <a href="job-details.php?id=<?php echo $jobId; ?>" class="btn btn-outline-primary">View Details</a>

@@ -55,6 +55,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 $user = null;
 $application = null;
 $resumeFile = null;
+$candidateList = [];
+$candidateApplications = [];
+$showCandidateList = ($userId === 0 && $appId === 0);
+
+if ($showCandidateList) {
+    $candidatesStmt = $conn->prepare('SELECT u.id, u.name, u.email, u.phone, cp.location, cp.qualification, cp.experience, COUNT(a.id) AS application_count FROM users u LEFT JOIN candidate_profiles cp ON cp.user_id = u.id LEFT JOIN applications a ON a.user_id = u.id WHERE u.role = ? GROUP BY u.id, u.name, u.email, u.phone, cp.location, cp.qualification, cp.experience ORDER BY u.name ASC');
+    if ($candidatesStmt) {
+        $candidateRole = 'candidate';
+        $candidatesStmt->bind_param('s', $candidateRole);
+        $candidatesStmt->execute();
+        $candidateListResult = $candidatesStmt->get_result();
+        while ($row = $candidateListResult->fetch_assoc()) {
+            $candidateList[] = $row;
+        }
+        $candidatesStmt->close();
+    }
+}
 
 if ($appId > 0) {
     $appStmt = $conn->prepare('SELECT a.id AS application_id, a.user_id, a.job_id, a.resume AS application_resume, a.status, a.applied_at, u.id AS user_id_value, u.name, u.email, u.phone, cp.skills, cp.location AS profile_location, cp.qualification, cp.experience, cp.resume AS profile_resume, j.title AS job_title, j.location AS job_location, j.job_type, j.status AS job_status FROM applications a LEFT JOIN users u ON u.id = a.user_id LEFT JOIN candidate_profiles cp ON cp.user_id = u.id LEFT JOIN jobs j ON j.id = a.job_id WHERE a.id = ? LIMIT 1');
@@ -70,7 +87,7 @@ if ($appId > 0) {
     }
 }
 
-if ($userId > 0 && empty($application)) {
+if ($userId > 0 && empty($user)) {
     $userStmt = $conn->prepare('SELECT u.id, u.name, u.email, u.phone, cp.skills, cp.location, cp.qualification, cp.experience, cp.resume, cp.created_at FROM users u LEFT JOIN candidate_profiles cp ON cp.user_id = u.id WHERE u.id = ? AND u.role = ? LIMIT 1');
     if ($userStmt) {
         $candidateRole = 'candidate';
@@ -79,24 +96,18 @@ if ($userId > 0 && empty($application)) {
         $user = $userStmt->get_result()->fetch_assoc();
         $userStmt->close();
     }
+}
 
-    if ($user) {
-        $appStmt = $conn->prepare('SELECT a.id AS application_id, a.user_id, a.job_id, a.resume AS application_resume, a.status, a.applied_at, j.title AS job_title, j.location AS job_location, j.job_type, j.status AS job_status FROM applications a LEFT JOIN jobs j ON j.id = a.job_id WHERE a.user_id = ? ORDER BY a.applied_at DESC LIMIT 1');
-        if ($appStmt) {
-            $appStmt->bind_param('i', $userId);
-            $appStmt->execute();
-            $application = $appStmt->get_result()->fetch_assoc();
-            $appStmt->close();
+if ($userId > 0 && $appId === 0 && $user) {
+    $appsStmt = $conn->prepare('SELECT a.id AS application_id, a.user_id, a.job_id, a.resume AS application_resume, a.status, a.applied_at, j.title AS job_title, j.company AS job_company, j.location AS job_location, j.job_type, j.status AS job_status FROM applications a LEFT JOIN jobs j ON j.id = a.job_id WHERE a.user_id = ? ORDER BY a.applied_at DESC');
+    if ($appsStmt) {
+        $appsStmt->bind_param('i', $userId);
+        $appsStmt->execute();
+        $appsResult = $appsStmt->get_result();
+        while ($row = $appsResult->fetch_assoc()) {
+            $candidateApplications[] = $row;
         }
-    }
-} elseif ($userId > 0 && empty($user)) {
-    $userStmt = $conn->prepare('SELECT u.id, u.name, u.email, u.phone, cp.skills, cp.location, cp.qualification, cp.experience, cp.resume, cp.created_at FROM users u LEFT JOIN candidate_profiles cp ON cp.user_id = u.id WHERE u.id = ? AND u.role = ? LIMIT 1');
-    if ($userStmt) {
-        $candidateRole = 'candidate';
-        $userStmt->bind_param('is', $userId, $candidateRole);
-        $userStmt->execute();
-        $user = $userStmt->get_result()->fetch_assoc();
-        $userStmt->close();
+        $appsStmt->close();
     }
 }
 
@@ -113,21 +124,31 @@ if (empty($user) && $userId > 0) {
 $conn->close();
 
 function safe_resume_path(?string $fileName): ?string {
-    if ($fileName === null || trim($fileName) === '') {
+    if ($fileName === null) {
         return null;
     }
 
-    $baseName = basename($fileName);
-    if ($baseName === '' || $baseName !== $fileName) {
+    $rawPath = trim((string)$fileName);
+    if ($rawPath === '') {
         return null;
     }
 
-    $fullPath = __DIR__ . '/../uploads/resumes/' . $baseName;
+    $normalized = str_replace('\\', '/', $rawPath);
+    if (strpos($normalized, '..') !== false) {
+        return null;
+    }
+
+    $relativePath = $normalized;
+    if (preg_match('#^uploads/resumes/#', $relativePath) !== 1) {
+        $relativePath = 'uploads/resumes/' . basename($relativePath);
+    }
+
+    $fullPath = __DIR__ . '/../' . $relativePath;
     if (!is_file($fullPath)) {
         return null;
     }
 
-    return '../uploads/resumes/' . rawurlencode($baseName);
+    return '../' . $relativePath;
 }
 
 function format_status_badge(string $status): string {
@@ -153,6 +174,7 @@ function format_status_badge(string $status): string {
 }
 
 $profileResumeLink = safe_resume_path($resumeFile ?? null);
+$candidateProfileResumeLink = safe_resume_path((string)($user['resume'] ?? ''));
 ?>
 
 <style>
@@ -535,8 +557,9 @@ $profileResumeLink = safe_resume_path($resumeFile ?? null);
         <nav class="sidebar-nav" aria-label="Sidebar navigation">
             <a href="dashboard.php" class="nav-link-admin"><i class="bi bi-speedometer2"></i> Dashboard</a>
             <a href="jobs.php" class="nav-link-admin"><i class="bi bi-briefcase"></i> Jobs</a>
-            <a href="applicants.php" class="nav-link-admin active"><i class="bi bi-people"></i> Applicants</a>
-            <a href="candidate-details.php" class="nav-link-admin"><i class="bi bi-person-badge"></i> Candidates</a>
+            <a href="applicants.php" class="nav-link-admin"><i class="bi bi-people"></i> Applicants</a>
+            <a href="candidate-details.php" class="nav-link-admin active"><i class="bi bi-person-badge"></i> Candidates</a>
+            <a href="contact-messages.php" class="nav-link-admin"><i class="bi bi-envelope-paper"></i> Contact Messages</a>
             <a href="settings.php" class="nav-link-admin"><i class="bi bi-gear"></i> Settings</a>
         </nav>
 
@@ -561,150 +584,349 @@ $profileResumeLink = safe_resume_path($resumeFile ?? null);
             </div>
         </div>
 
-        <?php if ($notFound || empty($user)): ?>
+        <?php if ($showCandidateList): ?>
             <div class="card-panel header-panel">
-                <div class="page-kicker"><i class="bi bi-person-x"></i> Admin / Applicants / Candidate Details</div>
+                <div class="page-kicker"><i class="bi bi-people"></i> Admin / Candidates</div>
+                <div class="d-flex justify-content-between align-items-center gap-3 flex-wrap">
+                    <div>
+                        <h2>Candidate Directory</h2>
+                        <p>Review registered candidate profiles and their application activity.</p>
+                    </div>
+                    <a href="applicants.php" class="btn btn-outline-secondary">View Applicants</a>
+                </div>
+            </div>
+
+            <div class="card-panel" style="padding: 1rem;">
+                <?php if (empty($candidateList)): ?>
+                    <div class="empty-box">
+                        <div class="icon"><i class="bi bi-people"></i></div>
+                        <h4>No candidates found</h4>
+                        <p class="mb-3">No candidate accounts are currently registered in the system.</p>
+                    </div>
+                <?php else: ?>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Candidate</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Location</th>
+                                    <th>Applications</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($candidateList as $candidate): ?>
+                                    <tr>
+                                        <td>
+                                            <div class="fw-semibold"><?php echo htmlspecialchars((string)($candidate['name'] ?? 'Candidate'), ENT_QUOTES, 'UTF-8'); ?></div>
+                                            <div class="text-muted small"><?php echo htmlspecialchars((string)($candidate['qualification'] ?? 'Profile pending'), ENT_QUOTES, 'UTF-8'); ?></div>
+                                        </td>
+                                        <td><?php echo htmlspecialchars((string)($candidate['email'] ?? 'N/A'), ENT_QUOTES, 'UTF-8'); ?></td>
+                                        <td><?php echo htmlspecialchars((string)($candidate['phone'] ?? 'N/A'), ENT_QUOTES, 'UTF-8'); ?></td>
+                                        <td><?php echo htmlspecialchars((string)($candidate['location'] ?? 'N/A'), ENT_QUOTES, 'UTF-8'); ?></td>
+                                        <td><?php echo (int)($candidate['application_count'] ?? 0); ?></td>
+                                        <td>
+                                            <a href="candidate-details.php?id=<?php echo (int)($candidate['id'] ?? 0); ?>" class="btn btn-sm btn-primary">View</a>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                <?php endif; ?>
+            </div>
+        <?php elseif ($notFound || empty($user)): ?>
+            <div class="card-panel header-panel">
+                <div class="page-kicker"><i class="bi bi-person-x"></i> Admin / Candidates / Candidate Details</div>
                 <div class="empty-box">
                     <div class="icon"><i class="bi bi-person-x"></i></div>
                     <h4>Candidate not found</h4>
-                    <p class="mb-3">The requested candidate or application could not be found.</p>
-                    <a href="applicants.php" class="btn btn-primary">Back to Applicants</a>
+                    <p class="mb-3">The requested candidate could not be found.</p>
+                    <a href="candidate-details.php" class="btn btn-primary">Back to Candidates</a>
                 </div>
             </div>
         <?php else: ?>
-            <div class="card-panel header-panel">
-                <div class="page-kicker"><i class="bi bi-person-lines-fill"></i> Admin / Applicants / Candidate Details</div>
-                <div class="d-flex justify-content-between align-items-center gap-3 flex-wrap">
-                    <div>
-                        <h2>Candidate Details</h2>
-                        <p>Professional overview of the candidate and their application.</p>
-                    </div>
-                    <a href="applicants.php" class="btn btn-outline-secondary">Back to Applicants</a>
-                </div>
-            </div>
-
-            <div class="card-panel profile-card">
-                <div class="profile-avatar"><?php echo htmlspecialchars(strtoupper(substr((string)($user['name'] ?? 'C'), 0, 1)), ENT_QUOTES, 'UTF-8'); ?></div>
-                <div>
-                    <h3 class="profile-name"><?php echo htmlspecialchars((string)($user['name'] ?? 'Candidate'), ENT_QUOTES, 'UTF-8'); ?></h3>
-                    <div class="profile-meta">
-                        <?php if (!empty($user['email'])): ?><span><i class="bi bi-envelope"></i> <?php echo htmlspecialchars((string)$user['email'], ENT_QUOTES, 'UTF-8'); ?></span><?php endif; ?>
-                        <?php if (!empty($user['phone'])): ?><span><i class="bi bi-telephone"></i> <?php echo htmlspecialchars((string)$user['phone'], ENT_QUOTES, 'UTF-8'); ?></span><?php endif; ?>
-                        <?php if (!empty($user['location'])): ?><span><i class="bi bi-geo-alt"></i> <?php echo htmlspecialchars((string)$user['location'], ENT_QUOTES, 'UTF-8'); ?></span><?php endif; ?>
+            <?php if ($appId > 0): ?>
+                <div class="card-panel header-panel">
+                    <div class="page-kicker"><i class="bi bi-person-lines-fill"></i> Admin / Applicants / Candidate Details</div>
+                    <div class="d-flex justify-content-between align-items-center gap-3 flex-wrap">
+                        <div>
+                            <h2>Candidate Details</h2>
+                            <p>Professional overview of the selected application.</p>
+                        </div>
+                        <a href="applicants.php" class="btn btn-outline-secondary">Back to Applicants</a>
                     </div>
                 </div>
-            </div>
 
-            <div class="summary-grid">
-                <div class="summary-box">
-                    <label>Applied Job</label>
-                    <h4><?php echo htmlspecialchars((string)($application['job_title'] ?? 'N/A'), ENT_QUOTES, 'UTF-8'); ?></h4>
-                </div>
-                <div class="summary-box">
-                    <label>Application Status</label>
+                <div class="card-panel profile-card">
+                    <div class="profile-avatar"><?php echo htmlspecialchars(strtoupper(substr((string)($user['name'] ?? 'C'), 0, 1)), ENT_QUOTES, 'UTF-8'); ?></div>
                     <div>
-                        <?php $statusValue = trim((string)($application['status'] ?? '')); ?>
-                        <?php $badgeType = format_status_badge($statusValue); ?>
-                        <div style="display:flex;gap:0.75rem;align-items:center;flex-wrap:wrap;">
-                            <span class="badge-status <?php echo htmlspecialchars($badgeType, ENT_QUOTES, 'UTF-8'); ?>"><?php echo htmlspecialchars($statusValue !== '' ? $statusValue : 'Unknown', ENT_QUOTES, 'UTF-8'); ?></span>
+                        <h3 class="profile-name"><?php echo htmlspecialchars((string)($user['name'] ?? 'Candidate'), ENT_QUOTES, 'UTF-8'); ?></h3>
+                        <div class="profile-meta">
+                            <?php if (!empty($user['email'])): ?><span><i class="bi bi-envelope"></i> <?php echo htmlspecialchars((string)$user['email'], ENT_QUOTES, 'UTF-8'); ?></span><?php endif; ?>
+                            <?php if (!empty($user['phone'])): ?><span><i class="bi bi-telephone"></i> <?php echo htmlspecialchars((string)$user['phone'], ENT_QUOTES, 'UTF-8'); ?></span><?php endif; ?>
+                            <?php if (!empty($user['location'])): ?><span><i class="bi bi-geo-alt"></i> <?php echo htmlspecialchars((string)$user['location'], ENT_QUOTES, 'UTF-8'); ?></span><?php endif; ?>
+                        </div>
+                    </div>
+                </div>
 
-                            <!-- Admin status update form -->
-                            <form method="post" style="display:inline-flex;gap:0.5rem;align-items:center;">
-                                <input type="hidden" name="action" value="update_status">
-                                <input type="hidden" name="application_id" value="<?php echo (int)($application['application_id'] ?? $appId); ?>">
-                                <select name="status" class="form-select form-select-sm" style="min-width:170px;">
-                                    <?php
-                                    $allowedStatuses = ['New Applied','Reviewed','Shortlisted','Accepted','Rejected'];
-                                    foreach ($allowedStatuses as $opt):
-                                        $sel = ($opt === $statusValue) ? 'selected' : '';
-                                    ?>
-                                        <option value="<?php echo htmlspecialchars($opt, ENT_QUOTES, 'UTF-8'); ?>" <?php echo $sel; ?>><?php echo htmlspecialchars($opt, ENT_QUOTES, 'UTF-8'); ?></option>
+                <div class="summary-grid">
+                    <div class="summary-box">
+                        <label>Applied Job</label>
+                        <h4><?php echo htmlspecialchars((string)($application['job_title'] ?? 'N/A'), ENT_QUOTES, 'UTF-8'); ?></h4>
+                    </div>
+                    <div class="summary-box">
+                        <label>Application Status</label>
+                        <div>
+                            <?php $statusValue = trim((string)($application['status'] ?? '')); ?>
+                            <?php $badgeType = format_status_badge($statusValue); ?>
+                            <div style="display:flex;gap:0.75rem;align-items:center;flex-wrap:wrap;">
+                                <span class="badge-status <?php echo htmlspecialchars($badgeType, ENT_QUOTES, 'UTF-8'); ?>"><?php echo htmlspecialchars($statusValue !== '' ? $statusValue : 'Unknown', ENT_QUOTES, 'UTF-8'); ?></span>
+
+                                <form method="post" style="display:inline-flex;gap:0.5rem;align-items:center;">
+                                    <input type="hidden" name="action" value="update_status">
+                                    <input type="hidden" name="application_id" value="<?php echo (int)($application['application_id'] ?? $appId); ?>">
+                                    <select name="status" class="form-select form-select-sm" style="min-width:170px;">
+                                        <?php
+                                        $allowedStatuses = ['New Applied','Reviewed','Shortlisted','Accepted','Rejected'];
+                                        foreach ($allowedStatuses as $opt):
+                                            $sel = ($opt === $statusValue) ? 'selected' : '';
+                                        ?>
+                                            <option value="<?php echo htmlspecialchars($opt, ENT_QUOTES, 'UTF-8'); ?>" <?php echo $sel; ?>><?php echo htmlspecialchars($opt, ENT_QUOTES, 'UTF-8'); ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                    <button type="submit" class="btn btn-sm btn-primary">Update</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3>Personal Information</h3>
+                        <div class="detail-list">
+                            <div class="detail-item">
+                                <label>Full Name</label>
+                                <div><?php echo htmlspecialchars((string)($user['name'] ?? 'N/A'), ENT_QUOTES, 'UTF-8'); ?></div>
+                            </div>
+                            <div class="detail-item">
+                                <label>Email</label>
+                                <div><?php echo htmlspecialchars((string)($user['email'] ?? 'N/A'), ENT_QUOTES, 'UTF-8'); ?></div>
+                            </div>
+                            <div class="detail-item">
+                                <label>Phone</label>
+                                <div><?php echo htmlspecialchars((string)($user['phone'] ?? 'N/A'), ENT_QUOTES, 'UTF-8'); ?></div>
+                            </div>
+                            <div class="detail-item">
+                                <label>Location</label>
+                                <div><?php echo htmlspecialchars((string)($user['location'] ?? 'N/A'), ENT_QUOTES, 'UTF-8'); ?></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>Application Details</h3>
+                        <div class="detail-list">
+                            <div class="detail-item">
+                                <label>Applied Job</label>
+                                <div><?php echo htmlspecialchars((string)($application['job_title'] ?? 'N/A'), ENT_QUOTES, 'UTF-8'); ?></div>
+                            </div>
+                            <div class="detail-item">
+                                <label>Job Location</label>
+                                <div><?php echo htmlspecialchars((string)($application['job_location'] ?? 'N/A'), ENT_QUOTES, 'UTF-8'); ?></div>
+                            </div>
+                            <div class="detail-item">
+                                <label>Applied Date</label>
+                                <div><?php echo htmlspecialchars((string)($application['applied_at'] ?? 'N/A'), ENT_QUOTES, 'UTF-8'); ?></div>
+                            </div>
+                            <div class="detail-item">
+                                <label>Current Status</label>
+                                <div><?php echo htmlspecialchars((string)($application['status'] ?? 'N/A'), ENT_QUOTES, 'UTF-8'); ?></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3>Professional Information</h3>
+                        <div class="detail-list">
+                            <div class="detail-item">
+                                <label>Qualification</label>
+                                <div><?php echo htmlspecialchars((string)($user['qualification'] ?? 'N/A'), ENT_QUOTES, 'UTF-8'); ?></div>
+                            </div>
+                            <div class="detail-item">
+                                <label>Experience</label>
+                                <div><?php echo htmlspecialchars((string)($user['experience'] ?? 'N/A'), ENT_QUOTES, 'UTF-8'); ?></div>
+                            </div>
+                            <div class="detail-item">
+                                <label>Skills</label>
+                                <div><?php echo htmlspecialchars((string)($user['skills'] ?? 'N/A'), ENT_QUOTES, 'UTF-8'); ?></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>Resume</h3>
+                        <?php if ($profileResumeLink): ?>
+                            <div class="resume-box">
+                                <p class="mb-3">Candidate resume is available for review.</p>
+                                <a href="<?php echo htmlspecialchars($profileResumeLink, ENT_QUOTES, 'UTF-8'); ?>" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View Resume</a>
+                            </div>
+                        <?php else: ?>
+                            <div class="resume-box text-muted">Resume not available.</div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            <?php else: ?>
+                <div class="card-panel header-panel">
+                    <div class="page-kicker"><i class="bi bi-person-lines-fill"></i> Admin / Candidates / Candidate Details</div>
+                    <div class="d-flex justify-content-between align-items-center gap-3 flex-wrap">
+                        <div>
+                            <h2>Candidate Details</h2>
+                            <p>Profile overview and complete application history.</p>
+                        </div>
+                        <a href="candidate-details.php" class="btn btn-outline-secondary">Back to Candidates</a>
+                    </div>
+                </div>
+
+                <div class="card-panel profile-card">
+                    <div class="profile-avatar"><?php echo htmlspecialchars(strtoupper(substr((string)($user['name'] ?? 'C'), 0, 1)), ENT_QUOTES, 'UTF-8'); ?></div>
+                    <div>
+                        <h3 class="profile-name"><?php echo htmlspecialchars((string)($user['name'] ?? 'Candidate'), ENT_QUOTES, 'UTF-8'); ?></h3>
+                        <div class="profile-meta">
+                            <?php if (!empty($user['email'])): ?><span><i class="bi bi-envelope"></i> <?php echo htmlspecialchars((string)$user['email'], ENT_QUOTES, 'UTF-8'); ?></span><?php endif; ?>
+                            <?php if (!empty($user['phone'])): ?><span><i class="bi bi-telephone"></i> <?php echo htmlspecialchars((string)$user['phone'], ENT_QUOTES, 'UTF-8'); ?></span><?php endif; ?>
+                            <?php if (!empty($user['location'])): ?><span><i class="bi bi-geo-alt"></i> <?php echo htmlspecialchars((string)$user['location'], ENT_QUOTES, 'UTF-8'); ?></span><?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="summary-grid">
+                    <div class="summary-box">
+                        <label>Total Applications</label>
+                        <h4><?php echo count($candidateApplications); ?></h4>
+                    </div>
+                    <div class="summary-box">
+                        <label>Profile Status</label>
+                        <h4><?php echo !empty($user['resume']) ? 'Resume Available' : 'Resume Not Uploaded'; ?></h4>
+                    </div>
+                </div>
+
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3>Personal Information</h3>
+                        <div class="detail-list">
+                            <div class="detail-item">
+                                <label>Full Name</label>
+                                <div><?php echo htmlspecialchars((string)($user['name'] ?? 'N/A'), ENT_QUOTES, 'UTF-8'); ?></div>
+                            </div>
+                            <div class="detail-item">
+                                <label>Email</label>
+                                <div><?php echo htmlspecialchars((string)($user['email'] ?? 'N/A'), ENT_QUOTES, 'UTF-8'); ?></div>
+                            </div>
+                            <div class="detail-item">
+                                <label>Phone</label>
+                                <div><?php echo htmlspecialchars((string)($user['phone'] ?? 'N/A'), ENT_QUOTES, 'UTF-8'); ?></div>
+                            </div>
+                            <div class="detail-item">
+                                <label>Location</label>
+                                <div><?php echo htmlspecialchars((string)($user['location'] ?? 'N/A'), ENT_QUOTES, 'UTF-8'); ?></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <h3>Professional Information</h3>
+                        <div class="detail-list">
+                            <div class="detail-item">
+                                <label>Qualification</label>
+                                <div><?php echo htmlspecialchars((string)($user['qualification'] ?? 'N/A'), ENT_QUOTES, 'UTF-8'); ?></div>
+                            </div>
+                            <div class="detail-item">
+                                <label>Experience</label>
+                                <div><?php echo htmlspecialchars((string)($user['experience'] ?? 'N/A'), ENT_QUOTES, 'UTF-8'); ?></div>
+                            </div>
+                            <div class="detail-item">
+                                <label>Skills</label>
+                                <div><?php echo htmlspecialchars((string)($user['skills'] ?? 'N/A'), ENT_QUOTES, 'UTF-8'); ?></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-grid">
+                    <div class="info-card" style="grid-column: 1 / -1;">
+                        <h3>Resume</h3>
+                        <?php if ($candidateProfileResumeLink): ?>
+                            <div class="resume-box">
+                                <p class="mb-3">Candidate resume is available for review.</p>
+                                <a href="<?php echo htmlspecialchars($candidateProfileResumeLink, ENT_QUOTES, 'UTF-8'); ?>" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View Resume</a>
+                            </div>
+                        <?php else: ?>
+                            <div class="resume-box text-muted">Resume not available.</div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+
+                <div class="card-panel header-panel" style="margin-top: 1rem;">
+                    <div class="page-kicker"><i class="bi bi-journal-text"></i> Admin / Candidates / Application History</div>
+                    <div class="d-flex justify-content-between align-items-center gap-3 flex-wrap">
+                        <div>
+                            <h2>Applications</h2>
+                            <p>All applications submitted by this candidate.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <?php if (empty($candidateApplications)): ?>
+                    <div class="card-panel empty-box">
+                        <div class="icon"><i class="bi bi-file-earmark-text"></i></div>
+                        <h4>No applications found</h4>
+                        <p class="mb-3">This candidate has not applied to any jobs yet.</p>
+                    </div>
+                <?php else: ?>
+                    <div class="card-panel" style="padding: 1rem;">
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Job Title</th>
+                                        <th>Company</th>
+                                        <th>Location</th>
+                                        <th>Applied</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($candidateApplications as $candidateApplication): ?>
+                                        <?php
+                                            $candidateAppStatus = trim((string)($candidateApplication['status'] ?? ''));
+                                            $candidateAppBadge = format_status_badge($candidateAppStatus);
+                                            $jobCompany = trim((string)($candidateApplication['job_company'] ?? ''));
+                                            $displayCompany = $jobCompany !== '' ? $jobCompany : 'Career Grow Infotech';
+                                        ?>
+                                        <tr>
+                                            <td><?php echo htmlspecialchars((string)($candidateApplication['job_title'] ?? 'N/A'), ENT_QUOTES, 'UTF-8'); ?></td>
+                                            <td><?php echo htmlspecialchars($displayCompany, ENT_QUOTES, 'UTF-8'); ?></td>
+                                            <td><?php echo htmlspecialchars((string)($candidateApplication['job_location'] ?? 'N/A'), ENT_QUOTES, 'UTF-8'); ?></td>
+                                            <td><?php echo htmlspecialchars((string)($candidateApplication['applied_at'] ?? 'N/A'), ENT_QUOTES, 'UTF-8'); ?></td>
+                                            <td><span class="badge-status <?php echo htmlspecialchars($candidateAppBadge, ENT_QUOTES, 'UTF-8'); ?>"><?php echo htmlspecialchars($candidateAppStatus !== '' ? $candidateAppStatus : 'Unknown', ENT_QUOTES, 'UTF-8'); ?></span></td>
+                                            <td>
+                                                <a href="candidate-details.php?id=<?php echo (int)$userId; ?>&application_id=<?php echo (int)($candidateApplication['application_id'] ?? 0); ?>" class="btn btn-sm btn-primary">View Application</a>
+                                            </td>
+                                        </tr>
                                     <?php endforeach; ?>
-                                </select>
-                                <button type="submit" class="btn btn-sm btn-primary">Update</button>
-                            </form>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <div class="info-grid">
-                <div class="info-card">
-                    <h3>Personal Information</h3>
-                    <div class="detail-list">
-                        <div class="detail-item">
-                            <label>Full Name</label>
-                            <div><?php echo htmlspecialchars((string)($user['name'] ?? 'N/A'), ENT_QUOTES, 'UTF-8'); ?></div>
-                        </div>
-                        <div class="detail-item">
-                            <label>Email</label>
-                            <div><?php echo htmlspecialchars((string)($user['email'] ?? 'N/A'), ENT_QUOTES, 'UTF-8'); ?></div>
-                        </div>
-                        <div class="detail-item">
-                            <label>Phone</label>
-                            <div><?php echo htmlspecialchars((string)($user['phone'] ?? 'N/A'), ENT_QUOTES, 'UTF-8'); ?></div>
-                        </div>
-                        <div class="detail-item">
-                            <label>Location</label>
-                            <div><?php echo htmlspecialchars((string)($user['location'] ?? 'N/A'), ENT_QUOTES, 'UTF-8'); ?></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="info-card">
-                    <h3>Application Details</h3>
-                    <div class="detail-list">
-                        <div class="detail-item">
-                            <label>Applied Job</label>
-                            <div><?php echo htmlspecialchars((string)($application['job_title'] ?? 'N/A'), ENT_QUOTES, 'UTF-8'); ?></div>
-                        </div>
-                        <div class="detail-item">
-                            <label>Job Location</label>
-                            <div><?php echo htmlspecialchars((string)($application['job_location'] ?? 'N/A'), ENT_QUOTES, 'UTF-8'); ?></div>
-                        </div>
-                        <div class="detail-item">
-                            <label>Applied Date</label>
-                            <div><?php echo htmlspecialchars((string)($application['applied_at'] ?? 'N/A'), ENT_QUOTES, 'UTF-8'); ?></div>
-                        </div>
-                        <div class="detail-item">
-                            <label>Current Status</label>
-                            <div><?php echo htmlspecialchars((string)($application['status'] ?? 'N/A'), ENT_QUOTES, 'UTF-8'); ?></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="info-grid">
-                <div class="info-card">
-                    <h3>Professional Information</h3>
-                    <div class="detail-list">
-                        <div class="detail-item">
-                            <label>Qualification</label>
-                            <div><?php echo htmlspecialchars((string)($user['qualification'] ?? 'N/A'), ENT_QUOTES, 'UTF-8'); ?></div>
-                        </div>
-                        <div class="detail-item">
-                            <label>Experience</label>
-                            <div><?php echo htmlspecialchars((string)($user['experience'] ?? 'N/A'), ENT_QUOTES, 'UTF-8'); ?></div>
-                        </div>
-                        <div class="detail-item">
-                            <label>Skills</label>
-                            <div><?php echo htmlspecialchars((string)($user['skills'] ?? 'N/A'), ENT_QUOTES, 'UTF-8'); ?></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="info-card">
-                    <h3>Resume</h3>
-                    <?php if ($profileResumeLink): ?>
-                        <div class="resume-box">
-                            <p class="mb-3">Candidate resume is available for review.</p>
-                            <a href="<?php echo htmlspecialchars($profileResumeLink, ENT_QUOTES, 'UTF-8'); ?>" target="_blank" rel="noopener noreferrer" class="btn btn-primary">View Resume</a>
-                        </div>
-                    <?php else: ?>
-                        <div class="resume-box text-muted">Resume not available.</div>
-                    <?php endif; ?>
-                </div>
-            </div>
+                <?php endif; ?>
+            <?php endif; ?>
         <?php endif; ?>
     </section>
 </main>

@@ -6,6 +6,45 @@ require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/admin-auth.php';
 require_admin();
 
+if (empty($_SESSION['job_status_token'])) {
+    $_SESSION['job_status_token'] = bin2hex(random_bytes(16));
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && (($_POST['action'] ?? '') === 'toggle_job_status')) {
+    $token = $_POST['job_status_token'] ?? '';
+    if (!hash_equals($_SESSION['job_status_token'] ?? '', (string)$token)) {
+        $_SESSION['job_status_message'] = 'Invalid form submission.';
+        header('Location: jobs.php');
+        exit;
+    }
+
+    $jobId = isset($_POST['job_id']) ? (int)$_POST['job_id'] : 0;
+    $newStatus = isset($_POST['new_status']) ? trim((string)$_POST['new_status']) : '';
+    $allowedStatuses = ['active', 'inactive'];
+
+    if ($jobId <= 0 || !in_array($newStatus, $allowedStatuses, true)) {
+        $_SESSION['job_status_message'] = 'Invalid job status update.';
+        header('Location: jobs.php');
+        exit;
+    }
+
+    $conn = getDbConnection();
+    $stmt = $conn->prepare('UPDATE jobs SET status = ? WHERE id = ? LIMIT 1');
+    if ($stmt) {
+        $stmt->bind_param('si', $newStatus, $jobId);
+        $stmt->execute();
+        $stmt->close();
+        $_SESSION['job_status_message'] = 'Job status updated successfully.';
+    } else {
+        error_log('jobs.php status update prepare failed: ' . $conn->error);
+        $_SESSION['job_status_message'] = 'Unable to update job status.';
+    }
+    $conn->close();
+
+    header('Location: jobs.php');
+    exit;
+}
+
 $pageTitle = 'Jobs Management - Admin';
 require_once __DIR__ . '/../includes/header.php';
 
@@ -545,6 +584,7 @@ $conn->close();
             <a href="jobs.php" class="nav-link-admin active"><i class="bi bi-briefcase"></i> Jobs</a>
             <a href="applicants.php" class="nav-link-admin"><i class="bi bi-people"></i> Applicants</a>
             <a href="candidate-details.php" class="nav-link-admin"><i class="bi bi-person-badge"></i> Candidates</a>
+            <a href="contact-messages.php" class="nav-link-admin"><i class="bi bi-envelope-paper"></i> Contact Messages</a>
             <a href="settings.php" class="nav-link-admin"><i class="bi bi-gear"></i> Settings</a>
         </nav>
 
@@ -580,6 +620,13 @@ $conn->close();
                     <a href="add-job.php" class="btn btn-primary">Add New Job</a>
                 </div>
             </div>
+
+            <?php if (!empty($_SESSION['job_status_message'])): ?>
+                <div class="alert alert-info mx-3 mb-3">
+                    <?php echo htmlspecialchars((string)$_SESSION['job_status_message'], ENT_QUOTES, 'UTF-8'); ?>
+                </div>
+                <?php unset($_SESSION['job_status_message']); ?>
+            <?php endif; ?>
 
             <div class="kpi-grid">
                 <div class="kpi-card">
@@ -704,7 +751,15 @@ $conn->close();
                                         <td class="text-end"><?php echo htmlspecialchars((string)($job['app_count'] ?? 0), ENT_QUOTES, 'UTF-8'); ?></td>
                                         <td class="text-end">
                                             <div class="table-actions">
-                                                <a href="../job-details.php?id=<?php echo (int)($job['id'] ?? 0); ?>" class="btn btn-sm btn-outline-secondary">View</a>
+                                                <form method="post" action="jobs.php" style="display: inline;">
+                                                    <input type="hidden" name="action" value="toggle_job_status">
+                                                    <input type="hidden" name="job_status_token" value="<?php echo htmlspecialchars($_SESSION['job_status_token'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
+                                                    <input type="hidden" name="job_id" value="<?php echo (int)($job['id'] ?? 0); ?>">
+                                                    <?php $status = strtolower((string)($job['status'] ?? 'inactive')); $toggleStatus = $status === 'active' ? 'inactive' : 'active'; $toggleLabel = $status === 'active' ? 'Deactivate' : 'Activate'; ?>
+                                                    <input type="hidden" name="new_status" value="<?php echo htmlspecialchars($toggleStatus, ENT_QUOTES, 'UTF-8'); ?>">
+                                                    <button type="submit" class="btn btn-sm btn-outline-secondary"><?php echo htmlspecialchars($toggleLabel, ENT_QUOTES, 'UTF-8'); ?></button>
+                                                </form>
+                                                <a href="job-details.php?id=<?php echo (int)($job['id'] ?? 0); ?>" class="btn btn-sm btn-outline-secondary">View</a>
                                                 <a href="edit-job.php?id=<?php echo (int)($job['id'] ?? 0); ?>" class="btn btn-sm btn-primary">Edit</a>
                                             </div>
                                         </td>

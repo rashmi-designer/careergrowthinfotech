@@ -948,34 +948,26 @@ require_once __DIR__ . '/includes/navbar.php';
     <!-- Career Growth -->
     <section class="career-growth py-5">
         <div class="container">
-            <div class="row g-4 align-items-center">
+            <div class="career-growth-shell">
+                <div class="career-growth-heading text-center">
+                    <p class="text-uppercase text-primary fw-semibold small mb-2">BUILD YOUR CAREER</p>
+                    <h2 class="fw-bold mb-2">Take the Next Step in Your Career</h2>
+                    <p class="text-muted mb-0">Your skills, experience and goals can open the door to new opportunities.</p>
+                </div>
+
+                <div class="row g-4 align-items-center">
                 <div class="col-lg-5">
-                    <div class="career-growth-visual card border-0 rounded-soft p-4 reveal" data-index="0">
-                        <div class="d-flex align-items-center mb-3 gap-3">
-                            <div class="career-growth-icon bg-soft rounded-circle d-flex align-items-center justify-content-center">
-                                <i class="bi bi-graph-up-arrow text-primary" aria-hidden="true"></i>
-                            </div>
-                            <div>
-                                <p class="text-uppercase text-primary fw-semibold small mb-0">BUILD YOUR CAREER</p>
-                            </div>
-                        </div>
-
-                        <div class="career-quote-box p-3 rounded-soft mb-3">
-                            <p class="mb-0 fw-medium">"Your next career opportunity can start with the right search."</p>
-                        </div>
-
-                        <div class="career-growth-badge d-inline-flex align-items-center gap-2 px-3 py-2 rounded-pill bg-soft text-primary fw-semibold">
-                            <i class="bi bi-stars" aria-hidden="true"></i>
-                            <span>Career Growth</span>
+                    <div class="career-growth-visual reveal" data-index="0">
+                        <div class="career-growth-media">
+                            <img src="assets/images/buildcareer1.jpg" alt="Professional preparing for the next career opportunity" class="career-growth-image">
+                            <div class="career-growth-kicker">BUILD YOUR CAREER</div>
+                            <div class="career-growth-media-label"><i class="bi bi-stars" aria-hidden="true"></i> Your next move starts here</div>
                         </div>
                     </div>
                 </div>
 
                 <div class="col-lg-7">
                     <div class="career-heading reveal" data-index="1">
-                        <p class="text-uppercase text-primary fw-semibold mb-2">BUILD YOUR CAREER</p>
-                        <h2 class="fw-bold mb-2">Take the Next Step in Your Career</h2>
-                        <p class="text-muted mb-0">Your skills, experience and goals can open the door to new opportunities. Explore relevant roles and keep moving forward in your professional journey.</p>
                     </div>
 
                     <div class="career-points mt-4">
@@ -1025,6 +1017,7 @@ require_once __DIR__ . '/includes/navbar.php';
                         <a href="register.php" class="btn btn-outline-primary">Create Your Profile</a>
                     </div>
                 </div>
+            </div>
             </div>
         </div>
 

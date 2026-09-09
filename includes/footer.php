@@ -1,6 +1,13 @@
 <?php
 $basePath = $basePath ?? '';
 
+// Allow pages to hide the public footer when rendering standalone auth pages.
+if (!empty($hidePublicLayout)) {
+    // close body/html if header was included but footer intentionally hidden
+    echo '</body>\n</html>';
+    return;
+}
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -8,6 +15,60 @@ if (session_status() === PHP_SESSION_NONE) {
 $candidateApplicationsHref = (isset($_SESSION['user_id'], $_SESSION['user_role']) && $_SESSION['user_role'] === 'candidate')
     ? $basePath . 'candidate/applications.php'
     : $basePath . 'login.php?next=' . rawurlencode('/candidate/applications.php');
+
+// If this is an authenticated admin page, render the admin-specific footer (UI-only)
+$scriptPath = $_SERVER['SCRIPT_NAME'] ?? '';
+if (strpos($scriptPath, '/admin/') !== false && !empty($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin') {
+    ?>
+    <style>
+        .admin-footer { background: #ffffff; border-top: 0; padding: 0; }
+        .admin-footer .top-accent { height: 2px; background: var(--cg-primary, #0d6efd); width:100%; display:block }
+        .admin-footer .footer-inner { padding: 10px 16px; }
+        .admin-footer .footer-inner .container { max-width: calc(100% - 32px) }
+        .admin-footer .left-block { display:flex; gap:10px; align-items:center; }
+        .admin-footer .left-block img { width:40px;height:auto; display:block }
+        .admin-footer .left-block .copyright { line-height:1.05; }
+        .admin-footer .copyright .main { font-size:0.95rem; font-weight:600; color:var(--cg-text, #0f172a); }
+        .admin-footer .copyright .small-muted { color:var(--cg-muted); font-size:0.85rem }
+        .admin-footer .right-block { text-align:right }
+        .admin-footer .right-block .label { font-size:0.72rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--cg-muted); margin-bottom:2px }
+        .admin-footer .right-block .dev-link { font-weight:600; color:var(--cg-primary); text-decoration:none }
+        .admin-footer .right-block .dev-link:hover{ text-decoration:underline }
+        @media (max-width: 767.98px) {
+            .admin-footer .footer-inner{display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+            .admin-footer .right-block{text-align:left}
+        }
+    </style>
+
+    <footer class="admin-footer">
+        <div class="top-accent" aria-hidden="true"></div>
+        <div class="footer-inner">
+            <div class="container">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="left-block">
+                        <img src="<?php echo htmlspecialchars($basePath, ENT_QUOTES, 'UTF-8'); ?>assets/images/logo.webp" alt="Career Grow Infotech logo" width="40" height="40" loading="lazy">
+                        <div class="copyright">
+                            <div>© 2026 Career Grow Infotech Pvt. Ltd.</div>
+                            <div class="small-muted">All rights reserved.</div>
+                        </div>
+                    </div>
+
+                    <div class="right-block">
+                        <div class="label">Software Developed &amp; Managed By</div>
+                        <div><a class="dev-link" href="https://kavyainfoweb.com/" target="_blank" rel="noopener noreferrer">Kavya Infoweb Pvt. Ltd.</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="<?php echo htmlspecialchars($basePath, ENT_QUOTES, 'UTF-8'); ?>assets/js/main.js"></script>
+</body>
+</html>
+    <?php
+    return;
+}
 ?>
 <footer class="site-footer mt-auto">
     <div class="container py-5">

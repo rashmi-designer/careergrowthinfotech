@@ -570,19 +570,11 @@ $candidateProfileResumeLink = safe_resume_path((string)($user['resume'] ?? ''));
     </aside>
 
     <section class="main-panel">
-        <div class="topbar">
-            <div class="topbar-title">
-                <h1>Candidate Details</h1>
-                <div class="topbar-subtitle">Application and profile overview</div>
-            </div>
-            <div class="user-pill">
-                <div class="avatar"><i class="bi bi-person-circle"></i></div>
-                <div>
-                    <div class="fw-semibold">Administrator</div>
-                    <div class="text-muted small">Admin</div>
-                </div>
-            </div>
-        </div>
+        <?php
+        $pageH1 = 'Candidate Details';
+        $pageSubtitle = 'Application and profile overview';
+        require_once __DIR__ . '/../includes/admin-header.php';
+        ?>
 
         <?php if ($showCandidateList): ?>
             <div class="card-panel header-panel">

@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 if (session_status() === PHP_SESSION_NONE) {
@@ -15,22 +14,21 @@ require_once __DIR__ . '/../includes/header.php';
 
 $conn = getDbConnection();
 
-$statusColumnExists = false;
-$statusCheckStmt = $conn->prepare("SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'contact_messages' AND COLUMN_NAME = 'status'");
-if ($statusCheckStmt) {
-    $statusCheckStmt->execute();
-    $statusCheckResult = $statusCheckStmt->get_result();
-    $statusRow = $statusCheckResult->fetch_row();
-    $statusColumnExists = ((int)($statusRow[0] ?? 0)) > 0;
-    $statusCheckStmt->close();
+// Handle mark as read when viewing a message
+$detailId = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+if ($detailId > 0) {
+    // Mark this message as read
+    $readStmt = $conn->prepare('UPDATE contact_messages SET is_read = 1 WHERE id = ?');
+    if ($readStmt) {
+        $readStmt->bind_param('i', $detailId);
+        $readStmt->execute();
+        $readStmt->close();
+    }
 }
 
+// Fetch all messages
 $messages = [];
-$sql = 'SELECT id, name, email, phone, subject, message, created_at';
-if ($statusColumnExists) {
-    $sql .= ', status';
-}
-$sql .= ' FROM contact_messages ORDER BY created_at DESC';
+$sql = 'SELECT id, name, email, phone, subject, message, created_at, is_read FROM contact_messages ORDER BY created_at DESC';
 
 $stmt = $conn->prepare($sql);
 if ($stmt) {
@@ -42,16 +40,21 @@ if ($stmt) {
     $stmt->close();
 }
 
-$detailId = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+// Count unread messages
+$unreadCount = 0;
+$countStmt = $conn->prepare('SELECT COUNT(*) FROM contact_messages WHERE is_read = 0');
+if ($countStmt) {
+    $countStmt->execute();
+    $countResult = $countStmt->get_result();
+    $countRow = $countResult->fetch_row();
+    $unreadCount = (int)($countRow[0] ?? 0);
+    $countStmt->close();
+}
+
+// Fetch selected message details
 $selectedMessage = null;
-
 if ($detailId > 0) {
-    $detailSql = 'SELECT id, name, email, phone, subject, message, created_at';
-    if ($statusColumnExists) {
-        $detailSql .= ', status';
-    }
-    $detailSql .= ' FROM contact_messages WHERE id = ?';
-
+    $detailSql = 'SELECT id, name, email, phone, subject, message, created_at, is_read FROM contact_messages WHERE id = ?';
     $detailStmt = $conn->prepare($detailSql);
     if ($detailStmt) {
         $detailStmt->bind_param('i', $detailId);
@@ -166,6 +169,20 @@ $conn->close();
         margin-bottom: 0.5rem;
     }
 
+    .unread-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.25rem 0.6rem;
+        border-radius: 0.4rem;
+        font-size: 0.7rem;
+        font-weight: 700;
+        background: rgba(13, 110, 253, 0.15);
+        color: var(--cg-primary);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
     .user-pill {
         display: flex;
         align-items: center;
@@ -224,6 +241,20 @@ $conn->close();
         width: 100%;
     }
 
+    .message-row.unread {
+        background-color: rgba(13, 110, 253, 0.05);
+    }
+
+    .message-row.unread td:first-child,
+    .message-row.unread td:nth-child(4) {
+        font-weight: 700;
+        color: var(--cg-text);
+    }
+
+    .message-row.read td {
+        color: var(--cg-text);
+    }
+
     .status-badge {
         display: inline-flex;
         align-items: center;
@@ -233,6 +264,28 @@ $conn->close();
         font-weight: 700;
         background: rgba(13,110,253,0.08);
         color: var(--cg-primary);
+    }
+
+    .read-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .read-status.unread {
+        color: var(--cg-primary);
+    }
+
+    .read-status.unread::before {
+        content: '●';
+    }
+
+    .read-status.read {
+        color: var(--cg-muted);
     }
 
     @media (max-width: 991.98px) {
@@ -276,19 +329,11 @@ $conn->close();
     </aside>
 
     <section class="main-panel">
-        <div class="topbar">
-            <div class="topbar-title">
-                <h1>Contact Messages</h1>
-                <div class="topbar-subtitle">Review inbound inquiries and recruitment-related messages</div>
-            </div>
-            <div class="user-pill">
-                <div class="avatar"><i class="bi bi-person-circle"></i></div>
-                <div>
-                    <div class="fw-semibold">Administrator</div>
-                    <div class="text-muted small">Admin</div>
-                </div>
-            </div>
-        </div>
+        <?php
+        $pageH1 = 'Contact Messages';
+        $pageSubtitle = 'Review inbound inquiries and recruitment-related messages';
+        require_once __DIR__ . '/../includes/admin-header.php';
+        ?>
 
         <div class="card-panel">
             <div class="page-kicker"><i class="bi bi-envelope-paper"></i> Admin / Contact Messages</div>
@@ -297,7 +342,12 @@ $conn->close();
                     <h2 class="mb-1">Inbound Messages</h2>
                     <p class="mb-0 text-muted">Messages submitted through the public contact form are listed here.</p>
                 </div>
-                <div class="fw-semibold text-primary"><?php echo htmlspecialchars((string)count($messages), ENT_QUOTES, 'UTF-8'); ?> total</div>
+                <div class="d-flex align-items-center gap-3">
+                    <div class="fw-semibold text-muted"><?php echo htmlspecialchars((string)count($messages), ENT_QUOTES, 'UTF-8'); ?> total</div>
+                    <?php if ($unreadCount > 0): ?>
+                        <div class="unread-badge"><i class="bi bi-dot"></i> <?php echo htmlspecialchars((string)$unreadCount, ENT_QUOTES, 'UTF-8'); ?> unread</div>
+                    <?php endif; ?>
+                </div>
             </div>
         </div>
 
@@ -337,12 +387,12 @@ $conn->close();
                         <div class="fw-semibold"><?php echo htmlspecialchars((string)($selectedMessage['created_at'] ?? '-'), ENT_QUOTES, 'UTF-8'); ?></div>
                     </div>
 
-                    <?php if ($statusColumnExists): ?>
-                        <div class="detail-item">
-                            <div class="label">Status</div>
-                            <span class="status-badge"><?php echo htmlspecialchars((string)($selectedMessage['status'] ?? 'Pending'), ENT_QUOTES, 'UTF-8'); ?></span>
-                        </div>
-                    <?php endif; ?>
+                    <div class="detail-item">
+                        <div class="label">Status</div>
+                        <span class="read-status <?php echo ((int)($selectedMessage['is_read'] ?? 0)) === 0 ? 'unread' : 'read'; ?>">
+                            <?php echo ((int)($selectedMessage['is_read'] ?? 0)) === 0 ? 'Unread' : 'Read'; ?>
+                        </span>
+                    </div>
                 </div>
 
                 <div class="detail-item mt-3">
@@ -370,22 +420,24 @@ $conn->close();
                                 <th>Subject</th>
                                 <th>Message</th>
                                 <th>Date / Time</th>
-                                <?php if ($statusColumnExists): ?><th>Status</th><?php endif; ?>
+                                <th>Status</th>
                                 <th class="text-end">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach ($messages as $message): ?>
-                                <tr>
+                                <tr class="message-row <?php echo ((int)($message['is_read'] ?? 0)) === 0 ? 'unread' : 'read'; ?>">
                                     <td><?php echo htmlspecialchars((string)($message['name'] ?? '-'), ENT_QUOTES, 'UTF-8'); ?></td>
                                     <td><?php echo htmlspecialchars((string)($message['email'] ?? '-'), ENT_QUOTES, 'UTF-8'); ?></td>
                                     <td><?php echo htmlspecialchars((string)($message['phone'] ?? 'Not provided'), ENT_QUOTES, 'UTF-8'); ?></td>
                                     <td><?php echo htmlspecialchars((string)($message['subject'] ?? '-'), ENT_QUOTES, 'UTF-8'); ?></td>
                                     <td><?php echo htmlspecialchars(mb_substr((string)($message['message'] ?? ''), 0, 90, 'UTF-8') . (mb_strlen((string)($message['message'] ?? ''), 'UTF-8') > 90 ? '...' : ''), ENT_QUOTES, 'UTF-8'); ?></td>
                                     <td><?php echo htmlspecialchars((string)($message['created_at'] ?? '-'), ENT_QUOTES, 'UTF-8'); ?></td>
-                                    <?php if ($statusColumnExists): ?>
-                                        <td><span class="status-badge"><?php echo htmlspecialchars((string)($message['status'] ?? 'Pending'), ENT_QUOTES, 'UTF-8'); ?></span></td>
-                                    <?php endif; ?>
+                                    <td>
+                                        <span class="read-status <?php echo ((int)($message['is_read'] ?? 0)) === 0 ? 'unread' : 'read'; ?>">
+                                            <?php echo ((int)($message['is_read'] ?? 0)) === 0 ? 'Unread' : 'Read'; ?>
+                                        </span>
+                                    </td>
                                     <td class="text-end">
                                         <a href="contact-messages.php?id=<?php echo (int)($message['id'] ?? 0); ?>" class="btn btn-sm btn-primary">View</a>
                                     </td>
@@ -398,3 +450,4 @@ $conn->close();
         </div>
     </section>
 </main>
+<?php require_once __DIR__ . '/../includes/footer.php'; ?>

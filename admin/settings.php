@@ -454,19 +454,11 @@ $conn->close();
     </aside>
 
     <section class="main-panel">
-        <div class="topbar">
-            <div class="topbar-title">
-                <h1>Settings</h1>
-                <div class="topbar-subtitle">Manage your administrator account preferences</div>
-            </div>
-            <div class="user-pill">
-                <div class="avatar"><i class="bi bi-person-circle"></i></div>
-                <div>
-                    <div class="fw-semibold">Administrator</div>
-                    <div class="text-muted small">Admin</div>
-                </div>
-            </div>
-        </div>
+        <?php
+        $pageH1 = 'Settings';
+        $pageSubtitle = 'Administer your account and security settings';
+        require_once __DIR__ . '/../includes/admin-header.php';
+        ?>
 
         <div class="card-panel header-panel">
             <div class="page-kicker"><i class="bi bi-sliders"></i> Admin / Settings</div>

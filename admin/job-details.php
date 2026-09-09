@@ -329,19 +329,11 @@ function admin_badge(string $status): string
     </aside>
 
     <section class="main-panel">
-        <div class="topbar">
-            <div class="topbar-title">
-                <h1>Job Details</h1>
-                <div class="topbar-subtitle">Administrative view</div>
-            </div>
-            <div class="user-pill">
-                <div class="avatar"><i class="bi bi-person-circle"></i></div>
-                <div>
-                    <div class="fw-semibold">Administrator</div>
-                    <div class="text-muted small">Admin</div>
-                </div>
-            </div>
-        </div>
+        <?php
+        $pageH1 = 'Job Details';
+        $pageSubtitle = 'Administrative view';
+        require_once __DIR__ . '/../includes/admin-header.php';
+        ?>
 
         <div class="card-panel header-panel">
             <div class="page-kicker"><i class="bi bi-diagram-3"></i> Admin / Jobs / Details</div>

@@ -16,6 +16,198 @@
     --cg-transition: 0.25s ease;
 }
 
+/* Admin Dark Mode Theme */
+html[data-theme="dark"] {
+    --cg-primary: #0d6efd;
+    --cg-accent: #e5e7eb;
+    --cg-text: #e5e7eb;
+    --cg-muted: #9ca3af;
+    --cg-light: #1f2937;
+    --cg-border: #374151;
+    --cg-white: #111827;
+    --cg-dark: #0f172a;
+    --cg-shadow: 0 14px 30px rgba(0, 0, 0, 0.3);
+    --cg-shadow-soft: 0 10px 22px rgba(0, 0, 0, 0.2);
+}
+
+/* Admin Dark Mode Body Styles */
+html[data-theme="dark"] body {
+    background-color: #0f172a;
+    color: var(--cg-text);
+}
+
+html[data-theme="dark"] .card {
+    background-color: #1f2937;
+    border-color: #374151;
+}
+
+html[data-theme="dark"] .form-control,
+html[data-theme="dark"] .form-select {
+    background-color: #1f2937;
+    border-color: #374151;
+    color: #e5e7eb;
+}
+
+html[data-theme="dark"] .form-control:focus,
+html[data-theme="dark"] .form-select:focus {
+    background-color: #1f2937;
+    border-color: #0d6efd;
+    color: #e5e7eb;
+}
+
+html[data-theme="dark"] .form-control::placeholder,
+html[data-theme="dark"] .form-select::placeholder {
+    color: #9ca3af;
+}
+
+html[data-theme="dark"] .table {
+    color: #e5e7eb;
+    border-color: #374151;
+}
+
+html[data-theme="dark"] .table thead th {
+    background-color: transparent;
+    border-bottom-color: #374151;
+    color: #9ca3af;
+}
+
+html[data-theme="dark"] .table tbody td {
+    border-bottom-color: #374151;
+}
+
+html[data-theme="dark"] .table tbody tr:hover {
+    background-color: rgba(13, 110, 253, 0.1);
+}
+
+html[data-theme="dark"] .list-group-item {
+    background-color: #1f2937;
+    border-color: #374151;
+    color: #e5e7eb;
+}
+
+html[data-theme="dark"] .list-group-item:hover {
+    background-color: rgba(13, 110, 253, 0.1);
+}
+
+html[data-theme="dark"] .dropdown-menu {
+    background-color: #1f2937;
+    border-color: #374151;
+}
+
+html[data-theme="dark"] .dropdown-item {
+    color: #e5e7eb;
+}
+
+html[data-theme="dark"] .dropdown-item:hover,
+html[data-theme="dark"] .dropdown-item:focus {
+    background-color: rgba(13, 110, 253, 0.2);
+    color: #0d6efd;
+}
+
+html[data-theme="dark"] .dropdown-divider {
+    border-color: #374151;
+}
+
+html[data-theme="dark"] .badge {
+    background-color: rgba(13, 110, 253, 0.2);
+    color: #60a5fa;
+}
+
+html[data-theme="dark"] .alert {
+    background-color: rgba(13, 110, 253, 0.1);
+    border-color: #0d6efd;
+    color: #93c5fd;
+}
+
+html[data-theme="dark"] .modal-content {
+    background-color: #1f2937;
+    border-color: #374151;
+    color: #e5e7eb;
+}
+
+html[data-theme="dark"] .modal-header {
+    border-bottom-color: #374151;
+}
+
+html[data-theme="dark"] .modal-footer {
+    border-top-color: #374151;
+}
+
+html[data-theme="dark"] input[type="text"],
+html[data-theme="dark"] input[type="email"],
+html[data-theme="dark"] input[type="password"],
+html[data-theme="dark"] input[type="search"],
+html[data-theme="dark"] textarea,
+html[data-theme="dark"] select {
+    background-color: #1f2937;
+    border-color: #374151;
+    color: #e5e7eb;
+}
+
+html[data-theme="dark"] input[type="text"]:focus,
+html[data-theme="dark"] input[type="email"]:focus,
+html[data-theme="dark"] input[type="password"]:focus,
+html[data-theme="dark"] input[type="search"]:focus,
+html[data-theme="dark"] textarea:focus,
+html[data-theme="dark"] select:focus {
+    background-color: #1f2937;
+    border-color: #0d6efd;
+    color: #e5e7eb;
+}
+
+html[data-theme="dark"] label {
+    color: #e5e7eb;
+}
+
+html[data-theme="dark"] h1,
+html[data-theme="dark"] h2,
+html[data-theme="dark"] h3,
+html[data-theme="dark"] h4,
+html[data-theme="dark"] h5,
+html[data-theme="dark"] h6 {
+    color: #e5e7eb;
+}
+
+html[data-theme="dark"] .text-muted {
+    color: #9ca3af !important;
+}
+
+html[data-theme="dark"] .text-soft {
+    color: #9ca3af !important;
+}
+
+html[data-theme="dark"] .text-primary {
+    color: #0d6efd !important;
+}
+
+html[data-theme="dark"] .text-danger {
+    color: #ef4444 !important;
+}
+
+html[data-theme="dark"] .btn-outline-secondary {
+    border-color: #374151;
+    color: #9ca3af;
+}
+
+html[data-theme="dark"] .btn-outline-secondary:hover,
+html[data-theme="dark"] .btn-outline-secondary:focus {
+    background-color: rgba(55, 65, 81, 0.2);
+    border-color: #4b5563;
+    color: #e5e7eb;
+}
+
+html[data-theme="dark"] hr {
+    border-top-color: #374151;
+}
+
+html[data-theme="dark"] .close {
+    color: #e5e7eb;
+}
+
+html[data-theme="dark"] .text-end {
+    color: #e5e7eb;
+}
+
 html {
     scroll-behavior: smooth;
 }

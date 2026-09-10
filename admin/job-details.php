@@ -323,7 +323,7 @@ function admin_badge(string $status): string
         </nav>
 
         <div class="sidebar-footer">
-            <a href="../index.php" class="nav-link-admin"><i class="bi bi-house"></i> Back to Website</a>
+            <a href="../index.php" class="nav-link-admin"><i class="bi bi-house"></i> Back to Homepage</a>
             <a href="../logout.php" class="nav-link-admin"><i class="bi bi-box-arrow-right"></i> Logout</a>
         </div>
     </aside>

@@ -347,13 +347,19 @@ $conn->close();
     width: 42px;
     height: 42px;
     border-radius: 0.75rem;
-    background: rgba(13,110,253,0.08);
-    color: var(--cg-primary);
+    background: #eaf1ff;
+    color: #2763d7;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.1rem;
 }
+
+/* Use the same dashboard KPI palette for quick visual scanning. */
+.kpi-card.kpi-green .icon { background: #e7f8f0; color: #08976b; }
+.kpi-card.kpi-purple .icon { background: #f2ebff; color: #8856d8; }
+.kpi-card.kpi-orange .icon { background: #fff3df; color: #d88020; }
+.kpi-card.kpi-red .icon { background: #feeceb; color: #d64745; }
 
 .toolbar-panel {
     padding: 1rem;
@@ -577,6 +583,9 @@ $conn->close();
         text-align: left;
     }
 }
+/* Shared admin visual language: presentation-only overrides. */
+.admin-root { gap:24px; padding:24px; background:#f4f7fb; }.admin-root .sidebar { width:248px; min-height:calc(100vh - 48px); height:auto; align-self:flex-start; padding:18px 14px; border:1px solid rgba(255,255,255,.14); border-radius:20px; background:linear-gradient(155deg,#102c54 0%,#16497f 56%,#0c8879 130%) !important; box-shadow:0 18px 42px rgba(20,57,102,.22); }.sidebar .brand-wrap { gap:11px; padding:4px 8px 18px; border-color:rgba(255,255,255,.18); }.sidebar .brand-mark-sm { display:inline-flex; align-items:center; justify-content:center; width:42px; height:42px; padding:4px; border-radius:12px; background:#fff; }.sidebar .brand-title { color:#fff; font-size:.92rem; font-weight:800; }.sidebar .brand-subtitle { color:rgba(232,244,255,.72); }.sidebar .sidebar-nav { gap:4px; margin-top:20px; }.sidebar .nav-link-admin { position:relative; gap:12px; padding:11px 12px; border-radius:11px; color:rgba(235,246,255,.8); font-size:.92rem; font-weight:650; transition:background .2s ease,color .2s ease,transform .2s ease; }.sidebar .nav-link-admin i { width:20px; font-size:1.08rem; text-align:center; }.sidebar .nav-link-admin:hover,.sidebar .nav-link-admin:focus { color:#fff; background:rgba(255,255,255,.12); transform:translateX(2px); }.sidebar .nav-link-admin.active { color:#fff; background:rgba(255,255,255,.18); box-shadow:inset 0 1px 0 rgba(255,255,255,.12); }.sidebar .nav-link-admin.active::before { content:""; position:absolute; left:0; width:4px; height:24px; border-radius:0 5px 5px 0; background:#54e2a6; }.sidebar .sidebar-footer { margin-top:20px; padding-top:14px; border-color:rgba(255,255,255,.18); }.sidebar .sidebar-footer .nav-link-admin:last-child { color:#ffd0cd; }.sidebar .sidebar-footer .nav-link-admin:last-child:hover { color:#fff; background:rgba(220,38,38,.2); }.main-panel .admin-topbar { min-height:73px; padding:4px 0 20px; margin-bottom:8px; border:0; }.main-panel .admin-topbar .title-area h1 { color:#12213d; font-size:1.65rem; letter-spacing:-.04em; }.main-panel .admin-topbar .subtitle { color:#77849a; }.main-panel .header-search,.main-panel .header-clock,.main-panel .dark-toggle,.main-panel .profile-control { border-color:#e0e8f2; border-radius:12px; box-shadow:0 5px 16px rgba(29,59,101,.04); }.main-panel .profile-control .avatar { color:#fff; background:linear-gradient(135deg,#1e40af,#3b82f6); }.card-panel { border-color:#e4ebf4; border-radius:17px; box-shadow:0 9px 26px rgba(31,54,88,.05); }.header-panel { padding:22px 24px; }.page-kicker { color:#2563eb; }.header-panel h2 { color:#12213d; font-weight:800; }.table-panel .table thead th { color:#77849a; font-size:.72rem; letter-spacing:.06em; text-transform:uppercase; }.btn { border-radius:10px; }@media (max-width:991.98px) { .admin-root { padding:16px; gap:16px; }.admin-root .sidebar { width:100%; min-height:0; } }
+.main-panel > .header-panel { position:relative; overflow:hidden; border-color:transparent; color:#fff; background:linear-gradient(118deg,#102c54 0%,#16497f 56%,#0c8879 130%); box-shadow:0 18px 34px rgba(20,57,102,.18); }.main-panel > .header-panel::after { content:""; position:absolute; right:48px; top:-88px; width:230px; height:230px; border:1px solid rgba(255,255,255,.15); border-radius:50%; }.main-panel > .header-panel > * { position:relative; z-index:1; }.main-panel > .header-panel .page-kicker { color:#c7ece4; }.main-panel > .header-panel h2 { color:#fff; }.main-panel > .header-panel p { color:rgba(235,247,255,.82); }.main-panel > .header-panel .text-primary { color:#d8fff0 !important; }
 </style>
 
 <main class="container-fluid admin-root">
@@ -601,7 +610,7 @@ $conn->close();
         </nav>
 
         <div class="sidebar-footer">
-            <a href="../index.php" class="nav-link-admin"><i class="bi bi-house"></i> Back to Website</a>
+            <a href="../index.php" class="nav-link-admin"><i class="bi bi-house"></i> Back to Homepage</a>
             <a href="../logout.php" class="nav-link-admin"><i class="bi bi-box-arrow-right"></i> Logout</a>
         </div>
     </aside>
@@ -625,7 +634,7 @@ $conn->close();
         </div>
 
         <div class="kpi-grid">
-            <div class="kpi-card">
+            <div class="kpi-card kpi-blue">
                 <div class="meta">
                     <div>
                         <div class="label">Total Applications</div>
@@ -635,7 +644,7 @@ $conn->close();
                 </div>
             </div>
 
-            <div class="kpi-card">
+            <div class="kpi-card kpi-orange">
                 <div class="meta">
                     <div>
                         <div class="label">Pending</div>
@@ -645,7 +654,7 @@ $conn->close();
                 </div>
             </div>
 
-            <div class="kpi-card">
+            <div class="kpi-card kpi-purple">
                 <div class="meta">
                     <div>
                         <div class="label">Shortlisted</div>
@@ -655,7 +664,7 @@ $conn->close();
                 </div>
             </div>
 
-            <div class="kpi-card">
+            <div class="kpi-card kpi-green">
                 <div class="meta">
                     <div>
                         <div class="label">Selected</div>
@@ -665,7 +674,7 @@ $conn->close();
                 </div>
             </div>
 
-            <div class="kpi-card">
+            <div class="kpi-card kpi-red">
                 <div class="meta">
                     <div>
                         <div class="label">Rejected</div>

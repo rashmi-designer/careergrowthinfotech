@@ -173,7 +173,7 @@ html,body{height:100dvh;margin:0}
                         </div>
 
                         <div class="d-flex justify-content-between align-items-center">
-                            <a href="../index.php" class="back-link">&larr; Back to Website</a>
+                            <a href="../index.php" class="back-link">&larr; Back to Homepage</a>
                             <button type="submit" class="btn btn-primary">Sign In</button>
                         </div>
                     </form>

@@ -170,6 +170,9 @@ html,body{height:100dvh;margin:0}
                                 <input type="password" id="password" name="password" class="form-control" placeholder="Enter your password" required>
                                 <button type="button" class="btn btn-outline-secondary show-pass" id="togglePass" aria-label="Show password"><i class="bi bi-eye"></i></button>
                             </div>
+                            <div class="d-flex justify-content-end mt-2">
+                                <a href="../forgot-password.php" class="small text-primary text-decoration-none fw-bold">Forgot Password?</a>
+                            </div>
                         </div>
 
                         <div class="d-flex justify-content-between align-items-center">

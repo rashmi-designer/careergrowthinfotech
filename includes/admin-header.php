@@ -97,6 +97,7 @@ html[data-theme="dark"] .search-result-item:hover { background: rgba(13,110,253,
                     </div>
                 </li>
                 <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="<?php echo htmlspecialchars($basePath ?? '', ENT_QUOTES, 'UTF-8'); ?>admin/dashboard.php"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a></li>
                 <li><a class="dropdown-item" href="<?php echo htmlspecialchars($basePath ?? '', ENT_QUOTES, 'UTF-8'); ?>admin/profile.php"><i class="bi bi-person me-2"></i>Profile</a></li>
                 <li><a class="dropdown-item" href="<?php echo htmlspecialchars($basePath ?? '', ENT_QUOTES, 'UTF-8'); ?>admin/settings.php"><i class="bi bi-gear me-2"></i>Settings</a></li>
                 <li><a class="dropdown-item text-danger" href="<?php echo htmlspecialchars($basePath ?? '', ENT_QUOTES, 'UTF-8'); ?>logout.php"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>

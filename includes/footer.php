@@ -8,6 +8,8 @@ if (session_status() === PHP_SESSION_NONE) {
 $candidateApplicationsHref = (isset($_SESSION['user_id'], $_SESSION['user_role']) && $_SESSION['user_role'] === 'candidate')
     ? $basePath . 'candidate/applications.php'
     : $basePath . 'login.php?next=' . rawurlencode('/candidate/applications.php');
+$whatsappMessage = 'Hello Career Grow Infotech, I am interested in your job hiring services. Please share suitable job opportunities and application details.';
+$whatsappHref = 'https://wa.me/919850340340?text=' . rawurlencode($whatsappMessage);
 ?>
 <footer class="site-footer mt-auto">
     <div class="container py-5">
@@ -52,7 +54,7 @@ $candidateApplicationsHref = (isset($_SESSION['user_id'], $_SESSION['user_role']
                     <li>Chhatrapati Sambhajinagar</li>
                     <li><a href="tel:+919850340340">+91 98503 40340</a></li>
                     <li><a href="mailto:info@careergrowinfotech.com">info@careergrowinfotech.com</a></li>
-                    <li><a href="https://wa.me/919850340340" target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
+                    <li><a href="<?php echo htmlspecialchars($whatsappHref, ENT_QUOTES, 'UTF-8'); ?>" target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
                 </ul>
             </div>
         </div>
@@ -69,6 +71,10 @@ $candidateApplicationsHref = (isset($_SESSION['user_id'], $_SESSION['user_role']
 <button type="button" class="back-to-top" id="backToTop" aria-label="Back to top">
     <i class="bi bi-arrow-up"></i>
 </button>
+
+<a class="whatsapp-float" href="<?php echo htmlspecialchars($whatsappHref, ENT_QUOTES, 'UTF-8'); ?>" target="_blank" rel="noopener noreferrer" aria-label="Contact us on WhatsApp" title="Contact us on WhatsApp">
+    <span class="whatsapp-float-icon"><i class="bi bi-whatsapp" aria-hidden="true"></i></span>
+</a>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="<?php echo htmlspecialchars($basePath, ENT_QUOTES, 'UTF-8'); ?>assets/js/main.js"></script>

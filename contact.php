@@ -158,6 +158,63 @@ require_once __DIR__ . '/includes/navbar.php';
     .reason-card {
         padding: 1.5rem;
         height: 100%;
+        overflow: hidden;
+    }
+
+    .reason-visual {
+        position: relative;
+        height: 145px;
+        margin: -0.25rem -0.25rem 1.25rem;
+        overflow: hidden;
+        border-radius: 0.8rem;
+        background: var(--cg-light);
+    }
+
+    .reason-visual img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+        object-position: center;
+    }
+
+    .reason-visual::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, rgba(8, 24, 42, 0.68), rgba(8, 24, 42, 0.08));
+        pointer-events: none;
+    }
+
+    .reason-visual-label {
+        position: absolute;
+        right: 1rem;
+        bottom: 0.85rem;
+        left: 1rem;
+        z-index: 1;
+        color: var(--cg-white);
+        font-size: 0.9rem;
+        font-weight: 700;
+    }
+
+    .reason-next {
+        display: grid;
+        gap: 0.7rem;
+        margin-top: 1.4rem;
+        padding-top: 1.15rem;
+        border-top: 1px solid var(--cg-border);
+    }
+
+    .reason-next-item {
+        display: flex;
+        gap: 0.7rem;
+        align-items: flex-start;
+    }
+
+    .reason-next-item i {
+        flex: 0 0 auto;
+        color: var(--cg-primary);
+        margin-top: 0.15rem;
     }
 
     .reason-list {
@@ -255,7 +312,6 @@ require_once __DIR__ . '/includes/navbar.php';
                         <ul class="list-unstyled text-muted mb-0">
                             <li class="mb-2">Pune</li>
                             <li class="mb-2">Chhatrapati Sambhajinagar</li>
-                            <li><a href="https://wa.me/919850340340" class="text-decoration-none" target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
                         </ul>
                     </div>
                 </div>
@@ -325,14 +381,24 @@ require_once __DIR__ . '/includes/navbar.php';
 
                 <div class="col-lg-5">
                     <div class="reason-card h-100">
+                        <div class="reason-visual">
+                            <img src="assets/images/contactUs.jpg" alt="Contact and career support workspace" loading="lazy">
+                            <div class="reason-visual-label">Let’s find the right next step.</div>
+                        </div>
                         <p class="text-uppercase text-primary fw-semibold small mb-2">Why contact us</p>
-                        <h3 class="fw-bold mb-4">We can help with</h3>
+                        <h3 class="fw-bold mb-3">We can help with</h3>
+                        <p class="text-muted mb-4">Tell us what you need, and our team will guide you toward the right career or recruitment support.</p>
                         <ul class="reason-list">
                             <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i><span>Job-related queries and career guidance.</span></li>
                             <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i><span>Application-related questions and follow-up support.</span></li>
                             <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i><span>Employer and recruitment requirements.</span></li>
                             <li><i class="bi bi-check-circle-fill" aria-hidden="true"></i><span>General website assistance and support queries.</span></li>
                         </ul>
+                        <div class="reason-next">
+                            <div class="small text-uppercase text-primary fw-semibold">What happens next</div>
+                            <div class="reason-next-item"><i class="bi bi-chat-dots-fill" aria-hidden="true"></i><span class="small text-muted">We review your message and understand your needs.</span></div>
+                            <div class="reason-next-item"><i class="bi bi-person-check-fill" aria-hidden="true"></i><span class="small text-muted">Our team responds with the most relevant next steps.</span></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -343,7 +409,7 @@ require_once __DIR__ . '/includes/navbar.php';
         <div class="container">
             <div class="text-center mb-4">
                 <p class="text-uppercase text-primary fw-semibold small mb-2">Helpful information</p>
-                <h2 class="fw-bold mb-0">Frequently asked questions</h2>
+                <h2 class="fw-bold mb-0">Frequently Asked Questions</h2>
             </div>
 
             <div class="row g-3 faq-grid">
@@ -397,6 +463,32 @@ require_once __DIR__ . '/includes/navbar.php';
         </div>
     </section>
 </main>
+
+<script>
+(function () {
+    var formShell = document.querySelector('.form-shell');
+    var reasonCard = document.querySelector('.reason-card');
+    var desktopQuery = window.matchMedia('(min-width: 992px)');
+
+    if (!formShell || !reasonCard) {
+        return;
+    }
+
+    function matchPanelHeight() {
+        if (desktopQuery.matches) {
+            reasonCard.style.setProperty('height', formShell.getBoundingClientRect().height + 'px', 'important');
+        } else {
+            reasonCard.style.removeProperty('height');
+        }
+    }
+
+    matchPanelHeight();
+    window.addEventListener('resize', matchPanelHeight);
+    if (window.ResizeObserver) {
+        new ResizeObserver(matchPanelHeight).observe(formShell);
+    }
+})();
+</script>
 
 <script>
 document.getElementById('contactForm').addEventListener('submit', function (event) {

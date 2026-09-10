@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($errors)) {
         try {
             $connection = getDbConnection();
-            $stmt = $connection->prepare('INSERT INTO contact_messages (name, email, phone, subject, message) VALUES (?, ?, ?, ?, ?)');
+            $stmt = $connection->prepare('INSERT INTO contact_messages (name, email, phone, subject, message, is_read) VALUES (?, ?, ?, ?, ?, 0)');
 
             if ($stmt === false) {
                 throw new RuntimeException('Unable to prepare contact message submission.');

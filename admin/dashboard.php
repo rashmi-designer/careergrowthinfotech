@@ -34,7 +34,7 @@ try {
     $kpis['jobs'] = safe_count($conn, 'SELECT COUNT(*) FROM jobs');
     $kpis['candidates'] = safe_count($conn, "SELECT COUNT(*) FROM users WHERE role = 'candidate'");
     $kpis['applications'] = safe_count($conn, 'SELECT COUNT(*) FROM applications');
-    $kpis['messages'] = safe_count($conn, 'SELECT COUNT(*) FROM contact_messages');
+    $kpis['messages'] = safe_count($conn, 'SELECT COUNT(*) FROM contact_messages WHERE is_read = 0');
 } catch (Throwable $e) {
     // keep zeros on error, do not expose DB errors
 }
@@ -73,19 +73,33 @@ $conn->close();
 ?>
 
 <style>
-/* Dashboard local styles */
-.admin-root { min-height:100vh; display:flex; gap:1.5rem; padding:2rem; background: linear-gradient(180deg, rgba(13,110,253,0.02), rgba(255,255,255,0)); }
-.sidebar { width:260px; background:var(--cg-white); border:1px solid var(--cg-border); border-radius:.75rem; padding:1rem; box-shadow: 0 12px 30px rgba(15,23,42,0.04); height:calc(100vh - 4rem); position:sticky; top:1rem; }
+/* Dashboard local styles - premium admin look */
+:root{--admin-gap:1rem;--kpi-radius:14px;--card-radius:14px}
+.admin-root { min-height:100vh; display:flex; gap:1.5rem; padding:1.5rem; background:var(--cg-bg,#f6f8fb); }
+.sidebar { width:240px; background:var(--cg-white); border:1px solid var(--cg-border); border-radius:var(--card-radius); padding:1rem; box-shadow: 0 8px 20px rgba(15,23,42,0.04); height:calc(100vh - 3rem); position:sticky; top:1rem; }
 .sidebar .brand { display:flex; gap:.75rem; align-items:center; padding: .5rem 0 .75rem 0; }
-.nav-link-admin { display:flex; align-items:center; gap:.75rem; padding:.55rem .6rem; border-radius:.6rem; color:var(--cg-accent); font-weight:600; }
+.nav-link-admin { display:flex; align-items:center; gap:.75rem; padding:.5rem .65rem; border-radius:.6rem; color:var(--cg-accent); font-weight:600; }
 .nav-link-admin.active, .nav-link-admin:hover { background: rgba(13,110,253,0.04); color:var(--cg-primary); text-decoration:none; }
 .topbar { background: transparent; margin-bottom:1rem; display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+.page-title { margin:0; font-size:1.25rem; font-weight:700 }
+.page-sub { color:var(--cg-muted); font-size:0.95rem }
+.welcome { border-radius:var(--card-radius); background:var(--cg-white); border:1px solid var(--cg-border); box-shadow:0 8px 30px rgba(15,23,42,0.04); }
 .kpi-grid { display:grid; grid-template-columns: repeat(4,1fr); gap:1rem; margin-bottom:1rem; }
-.kpi { background:var(--cg-white); border:1px solid var(--cg-border); border-radius:.75rem; padding:1rem; box-shadow: 0 10px 30px rgba(15,23,42,0.04); }
-.kpi .num { font-size:1.6rem; font-weight:800; }
-.card { border-radius:.75rem; }
+.kpi { background:var(--cg-white); border:1px solid var(--cg-border); border-radius:var(--kpi-radius); padding:1rem 1.15rem; box-shadow: 0 8px 24px rgba(15,23,42,0.04); display:flex; align-items:center; justify-content:space-between; }
+.kpi .num { font-size:1.5rem; font-weight:800; color:var(--cg-text, #0f172a); }
+.kpi .kpi-meta { display:flex; gap:0.75rem; align-items:center }
+.kpi .kpi-icon { width:44px;height:44px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(13,110,253,0.08), rgba(13,110,253,0.03)); color:var(--cg-primary); font-size:1.25rem }
+.card { border-radius:var(--card-radius); }
 .table-responsive { overflow:auto; }
-@media (max-width: 991.98px) { .sidebar { position:static; width:100%; height:auto; } .kpi-grid { grid-template-columns: repeat(2,1fr); } }
+.table thead th{ border-bottom:1px solid var(--cg-border); font-weight:700; background:transparent }
+.table tbody tr:hover{ background: rgba(15,23,42,0.02) }
+.status-badge{ display:inline-block; padding:.35rem .6rem; border-radius:999px; font-size:.85rem; font-weight:700; background:rgba(15,23,42,0.03); color:var(--cg-text); }
+.status-active{ background: rgba(34,197,94,0.1); color: #16a34a }
+.status-inactive{ background: rgba(234,88,12,0.06); color:#ea580c }
+.action-btn{ border-radius:10px; padding:.35rem .6rem }
+.list-activity .list-group-item{ border:0; padding:.6rem .75rem }
+.list-activity .list-group-item:hover{ background: rgba(15,23,42,0.02) }
+@media (max-width: 1199.98px) { .kpi-grid { grid-template-columns: repeat(2,1fr); } .sidebar{display:none} }
 @media (max-width: 575.98px) { .kpi-grid { grid-template-columns: 1fr; } }
 </style>
 
@@ -115,31 +129,11 @@ $conn->close();
     </aside>
 
     <section style="flex:1 1 auto;">
-        <div class="topbar">
-            <div>
-                <h3 class="mb-0">Dashboard</h3>
-                <div class="text-soft small">Overview of your recruitment activity</div>
-            </div>
-            <div class="d-flex align-items-center gap-3">
-                <div class="text-end">
-                    <div class="fw-semibold">Administrator</div>
-                    <div class="text-soft small">Admin</div>
-                </div>
-                <div class="brand-mark-sm"><i class="bi bi-person-circle fs-2 text-primary"></i></div>
-            </div>
-        </div>
-
-        <div class="welcome card mb-3 p-3">
-            <div class="d-flex align-items-center justify-content-between">
-                <div>
-                    <h4 class="mb-1">Welcome back, Administrator</h4>
-                    <p class="text-soft mb-0">Here's an overview of your recruitment platform.</p>
-                </div>
-                <div class="text-primary">
-                    <i class="bi bi-graph-up-arrow fs-3"></i>
-                </div>
-            </div>
-        </div>
+        <?php
+        $pageH1 = 'Dashboard';
+        $pageSubtitle = 'Overview of your recruitment activity';
+        require_once __DIR__ . '/../includes/admin-header.php';
+        ?>
 
         <div class="kpi-grid mb-3">
             <div class="kpi">
@@ -185,40 +179,43 @@ $conn->close();
 
         <div class="row g-3">
             <div class="col-lg-7">
-                <div class="card p-3">
-                    <h5 class="mb-3">Recent Jobs</h5>
-                    <div class="table-responsive">
-                        <?php if (count($recentJobs) === 0): ?>
-                            <div class="text-muted">No jobs have been added yet. <a href="add-job.php">Add New Job</a></div>
-                        <?php else: ?>
-                            <table class="table table-borderless align-middle mb-0">
-                                <thead>
-                                    <tr>
-                                        <th>Job Title</th>
-                                        <th>Location</th>
-                                        <th>Status</th>
-                                        <th>Posted</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                <?php foreach ($recentJobs as $job): ?>
-                                    <tr>
-                                        <td><?php echo htmlspecialchars($job['title'], ENT_QUOTES, 'UTF-8'); ?></td>
-                                        <td><?php echo htmlspecialchars($job['location'], ENT_QUOTES, 'UTF-8'); ?></td>
-                                        <td><?php echo htmlspecialchars($job['status'], ENT_QUOTES, 'UTF-8'); ?></td>
-                                        <td><?php echo htmlspecialchars($job['created_at'], ENT_QUOTES, 'UTF-8'); ?></td>
-                                        <td>
-                                            <a href="../job-details.php?id=<?php echo (int)$job['id']; ?>" class="btn btn-sm btn-outline-secondary">View</a>
-                                            <a href="edit-job.php?id=<?php echo (int)$job['id']; ?>" class="btn btn-sm btn-primary">Edit</a>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-                                </tbody>
-                            </table>
-                        <?php endif; ?>
+                    <div class="card p-3">
+                        <h5 class="mb-3">Recent Jobs</h5>
+                        <div class="table-responsive">
+                            <?php if (count($recentJobs) === 0): ?>
+                                <div class="text-muted">No jobs have been added yet. <a href="add-job.php">Add New Job</a></div>
+                            <?php else: ?>
+                                <table class="table table-borderless align-middle mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Job Title</th>
+                                            <th>Location</th>
+                                            <th>Status</th>
+                                            <th>Posted</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php foreach ($recentJobs as $job): ?>
+                                        <tr>
+                                            <td class="fw-semibold"><?php echo htmlspecialchars($job['title'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                            <td><?php echo htmlspecialchars($job['location'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                            <td>
+                                                <?php $status = strtolower((string)$job['status']); ?>
+                                                <span class="status-badge <?php echo $status === 'active' ? 'status-active' : ($status === 'inactive' ? 'status-inactive' : ''); ?>"><?php echo htmlspecialchars($job['status'], ENT_QUOTES, 'UTF-8'); ?></span>
+                                            </td>
+                                            <td><?php echo htmlspecialchars($job['created_at'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                            <td>
+                                                <a href="../job-details.php?id=<?php echo (int)$job['id']; ?>" class="btn btn-sm btn-outline-primary action-btn">View</a>
+                                                <a href="edit-job.php?id=<?php echo (int)$job['id']; ?>" class="btn btn-sm btn-primary action-btn">Edit</a>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                    </tbody>
+                                </table>
+                            <?php endif; ?>
+                        </div>
                     </div>
-                </div>
             </div>
 
             <div class="col-lg-5">
@@ -227,16 +224,19 @@ $conn->close();
                     <?php if (count($recentApps) === 0): ?>
                         <div class="text-muted">No applications yet.</div>
                     <?php else: ?>
-                        <ul class="list-group list-group-flush">
+                        <ul class="list-group list-group-flush list-activity">
                             <?php foreach ($recentApps as $app): ?>
                                 <li class="list-group-item d-flex align-items-center justify-content-between">
-                                    <div>
-                                        <div class="fw-semibold"><?php echo htmlspecialchars($app['candidate'], ENT_QUOTES, 'UTF-8'); ?></div>
-                                        <div class="text-soft small"><?php echo htmlspecialchars($app['job_title'], ENT_QUOTES, 'UTF-8'); ?></div>
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="rounded-circle bg-light d-flex align-items-center justify-content-center" style="width:44px;height:44px"><i class="bi bi-person-fill text-primary"></i></div>
+                                        <div>
+                                            <div class="fw-semibold"><?php echo htmlspecialchars($app['candidate'], ENT_QUOTES, 'UTF-8'); ?></div>
+                                            <div class="text-soft small"><?php echo htmlspecialchars($app['job_title'], ENT_QUOTES, 'UTF-8'); ?></div>
+                                        </div>
                                     </div>
                                     <div class="text-end">
                                         <div class="small text-soft"><?php echo htmlspecialchars($app['applied_at'], ENT_QUOTES, 'UTF-8'); ?></div>
-                                        <div class="mt-1"><a href="candidate-details.php?id=<?php echo (int)$app['user_id']; ?>" class="btn btn-sm btn-outline-secondary">View</a></div>
+                                        <div class="mt-1"><a href="candidate-details.php?id=<?php echo (int)$app['user_id']; ?>" class="btn btn-sm btn-outline-primary action-btn">View</a></div>
                                     </div>
                                 </li>
                             <?php endforeach; ?>

@@ -607,19 +607,11 @@ $conn->close();
     </aside>
 
     <section class="main-panel">
-        <div class="topbar">
-            <div class="topbar-title">
-                <h1>Applicants</h1>
-                <div class="topbar-subtitle">Manage candidate applications and recruitment workflow</div>
-            </div>
-            <div class="user-pill">
-                <div class="avatar"><i class="bi bi-person-circle"></i></div>
-                <div>
-                    <div class="fw-semibold">Administrator</div>
-                    <div class="text-muted small">Admin</div>
-                </div>
-            </div>
-        </div>
+        <?php
+        $pageH1 = 'Applicants';
+        $pageSubtitle = 'Manage candidate applications and recruitment workflow';
+        require_once __DIR__ . '/../includes/admin-header.php';
+        ?>
 
         <div class="card-panel header-panel">
             <div class="page-kicker"><i class="bi bi-people"></i> Admin / Applicants</div>

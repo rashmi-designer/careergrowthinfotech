@@ -69,113 +69,86 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <?php
 // Include header after processing so redirects work; do not include public navbar for admin login
+// Hide public footer/header for this standalone admin login page
+$hidePublicLayout = true;
 require_once __DIR__ . '/../includes/header.php';
 ?>
 
 <style>
-/* Admin login page local styles — full-screen split layout */
-html,body { height:100%; }
-.admin-login-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 0; }
-.admin-panel { width: 100%; max-width: 1200px; display: grid; grid-template-columns: 52% 48%; gap: 2.5rem; padding: 3.5rem; align-items: center; }
-.admin-left { background: linear-gradient(180deg, rgba(13,110,253,0.04), rgba(13,110,253,0.01)); border-radius: 1rem; padding: 2.5rem; display:flex; flex-direction:column; gap:1.5rem; justify-content:center; }
-.admin-left .brand { display:flex; gap:1rem; align-items:center; }
-.admin-left h1 { font-size: clamp(1.6rem, 2.8vw, 2.4rem); margin:0; font-weight:800; }
-.admin-left p.lead { color:var(--cg-muted); max-width:56ch; line-height:1.6; }
-.visual-box { margin-top:1rem; display:flex; gap:1rem; align-items:flex-start; }
-.visual-card { background:var(--cg-white); border:1px solid var(--cg-border); border-radius:.75rem; padding:1rem; box-shadow: 0 14px 36px rgba(15,23,42,0.06); width:100%; }
-.visual-row { display:flex; gap:.75rem; align-items:center; }
-.visual-avatar { width:44px; height:44px; border-radius:8px; background: linear-gradient(135deg,var(--cg-primary),var(--cg-primary-dark)); color:#fff; display:inline-flex; align-items:center; justify-content:center; font-weight:700; }
+/* Admin login page local styles — premium split layout */
+*,*::before,*::after{box-sizing:border-box}
+html,body{height:100dvh;margin:0}
+.admin-login-wrap{min-height:100dvh;display:flex;align-items:stretch;justify-content:center;background:var(--cg-bg,#f6f8fb)}
+.admin-panel{width:100%;max-width:1200px;display:grid;grid-template-columns:46% 54%;gap:2rem;padding:2.25rem;align-items:stretch}
+.admin-left{position:relative;border-radius:1rem;overflow:hidden;background-image:url('../assets/images/buildcareer1.jpg');background-size:cover;background-position:center;display:flex;flex-direction:column;justify-content:center;color:#fff}
+.admin-left::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg, rgba(6,18,42,0.55), rgba(6,18,42,0.55));}
+.admin-left-inner{position:relative;z-index:2;padding:clamp(20px,4vw,48px)}
+.brand-pill{display:inline-flex;align-items:center;gap:12px;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,0.06);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,0.08);box-shadow:0 6px 18px rgba(2,6,23,0.28)}
+.brand-pill img{height:36px;width:auto;display:block}
+.pill-text{font-weight:600;font-size:1rem;color:#fff}
+.admin-eyebrow{margin-top:12px;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,0.9)}
+.admin-head{font-size:clamp(1.8rem,3.6vw,2.6rem);line-height:1.02;margin:12px 0 8px;font-weight:800}
+.admin-desc{color:rgba(255,255,255,0.9);max-width:48ch;margin-bottom:1rem}
+.admin-features{display:flex;flex-direction:column;gap:10px;margin-top:8px}
+.feature-row{display:flex;gap:10px;align-items:flex-start}
+.feature-dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.12);margin-top:6px}
+.feature-text{color:rgba(255,255,255,0.95);font-weight:600}
 
-/* stat tiles inside visual */
-.stat-tiles { display:flex; gap: .75rem; margin-bottom: .8rem; }
-.stat-tile { flex:1 1 0; background: linear-gradient(180deg, rgba(13,110,253,0.03), rgba(13,110,253,0.01)); border:1px solid rgba(13,110,253,0.06); border-radius:.6rem; padding:.65rem; text-align:left; }
-.stat-tile .num { font-weight:800; color:var(--cg-accent); font-size:1.25rem; }
-.stat-tile .label { color:var(--cg-muted); font-size:.85rem; }
+.admin-right{display:flex;align-items:center;justify-content:center}
+.admin-login-card{background:var(--cg-white);border:1px solid var(--cg-border);border-radius:18px;padding:2rem;box-shadow:0 28px 60px rgba(15,23,42,0.08);width:100%;max-width:520px}
+.card-brand{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.card-brand img{height:38px;width:auto}
+.card-brand .brand-title{font-weight:700}
+.login-title{display:flex;align-items:center;gap:12px}
+.login-title .icon-circle{width:48px;height:48px;border-radius:50%;background:linear-gradient(180deg, rgba(13,110,253,0.08), rgba(13,110,253,0.03));display:inline-flex;align-items:center;justify-content:center;font-size:1.25rem;color:var(--cg-primary)}
+.admin-login-card h4{margin:0;font-weight:800}
+.admin-login-card p.small-note{color:var(--cg-muted);margin:0 0 1rem}
+.form-label.small{font-weight:700}
+.form-control{height:52px;border-radius:12px;padding:.6rem 0.9rem}
+.btn-sign{height:54px;border-radius:10px;font-weight:800}
+.small-note-muted{color:var(--cg-muted)}
+.back-link{color:var(--cg-muted);text-decoration:none}
 
-.match-row { margin-top:.6rem; border-top:1px dashed rgba(15,23,42,0.04); padding-top:.6rem; }
-.match-row .match-item { display:flex; gap:.6rem; align-items:center; }
-.match-row .match-item .role { font-weight:700; }
-.match-row .badge-suit { background: rgba(13,110,253,0.08); color:var(--cg-primary); border-radius:.5rem; padding:.18rem .5rem; font-size:.8rem; }
+@media (max-width:991.98px){.admin-panel{grid-template-columns:1fr;padding:1rem;gap:1rem}.admin-left{min-height:320px}.admin-login-card{padding:1.25rem}}
 
-/* subtle entrance animations */
-.fade-in { animation: fadeInUp .6s ease both; }
-@keyframes fadeInUp { from { opacity:0; transform: translateY(8px);} to { opacity:1; transform:none; } }
-@media (prefers-reduced-motion: reduce) { .fade-in { animation: none; } }
-
-.admin-right { display:flex; align-items:center; justify-content:center; }
-.admin-login-card { background: var(--cg-white); border:1px solid var(--cg-border); border-radius: 1rem; padding: 2.25rem; box-shadow: 0 22px 48px rgba(15,23,42,0.08); width:100%; }
-.admin-login-card h4 { font-weight:700; }
-.admin-login-card p.small-note { color:var(--cg-muted); margin-bottom:1rem; }
-.form-label.small { font-weight:700; }
-.input-group .form-control { min-height:48px; }
-.show-pass { cursor:pointer; border-left:0; }
-.back-link { color:var(--cg-muted); }
-
-@media (max-width: 991.98px) {
-    .admin-panel { grid-template-columns: 1fr; padding: 1.5rem; gap: 1.25rem; }
-    .admin-left { padding: 1.5rem; }
-    .admin-login-card { padding: 1.25rem; }
-}
 </style>
 
 <main class="admin-login-wrap">
     <div class="container">
         <div class="admin-panel">
             <div class="admin-left">
-                <div class="brand">
-                    <span class="brand-mark-sm"><img src="../assets/images/logo.webp" alt="Career Grow Infotech logo" width="48" height="48"></span>
-                    <div>
-                        <div class="brand-title">Career Grow Infotech</div>
-                        <div class="brand-subtitle small-note">Administrator Workspace</div>
+                <div class="admin-left-inner">
+                    <div class="brand-pill">
+                        <img src="../assets/images/logo.webp" alt="Career Grow Infotech logo">
+                        <span class="pill-text">Career Grow Infotech</span>
                     </div>
-                </div>
 
-                <h1>Welcome to Admin Portal</h1>
-                <p class="lead">Manage jobs, candidates and recruitment activities from one secure workspace.</p>
+                    <div class="admin-eyebrow">ADMIN PORTAL</div>
+                    <h1 class="admin-head">Manage Opportunities. <br>Build Better Careers.</h1>
+                    <p class="admin-desc">Securely manage jobs, applications and candidate relationships from your administration portal.</p>
 
-                <div class="visual-box">
-                    <div class="visual-card">
-                        <div class="d-flex justify-content-between align-items-start mb-2">
-                            <div>
-                                <div class="fw-semibold">Talent Overview</div>
-                                <div class="text-soft small">UI illustration — not real data</div>
-                            </div>
-                            <i class="bi bi-graph-up-arrow text-primary fs-4"></i>
-                        </div>
-
-                        <div class="stat-tiles">
-                            <div class="stat-tile">
-                                <div class="num">24</div>
-                                <div class="label">Candidates</div>
-                            </div>
-                            <div class="stat-tile">
-                                <div class="num">12</div>
-                                <div class="label">Open Jobs</div>
-                            </div>
-                            <div class="stat-tile">
-                                <div class="num">48</div>
-                                <div class="label">Applications</div>
-                            </div>
-                        </div>
-
-                        <div class="match-row">
-                            <div class="match-item">
-                                <div class="visual-avatar">AD</div>
-                                <div>
-                                    <div class="role">Candidate Profile — PHP Developer</div>
-                                    <div class="text-soft small">Skills: PHP · MySQL · JavaScript</div>
-                                </div>
-                                <div class="ms-auto"><span class="badge-suit">Suitable Match</span></div>
-                            </div>
-                        </div>
+                    <div class="admin-features">
+                        <div class="feature-row"><div class="feature-dot"></div><div class="feature-text">Secure access for administrators</div></div>
+                        <div class="feature-row"><div class="feature-dot"></div><div class="feature-text">Manage jobs, candidates and applications</div></div>
+                        <div class="feature-row"><div class="feature-dot"></div><div class="feature-text">Fast and reliable administration tools</div></div>
                     </div>
                 </div>
             </div>
 
             <div class="admin-right">
                 <div class="admin-login-card">
-                    <h4 class="mb-1">ADMIN PORTAL</h4>
-                    <p class="small-note mb-3">Administrator Sign In</p>
+                    <div class="card-brand">
+                        <img src="../assets/images/logo.webp" alt="Career Grow Infotech logo">
+                        <div class="brand-title">Career Grow Infotech <div class="small text-muted">Admin Portal</div></div>
+                    </div>
+
+                    <div class="login-title mb-2">
+                        <div class="icon-circle"><i class="bi bi-shield-lock-fill"></i></div>
+                        <div>
+                            <h4 class="mb-0">Admin Login</h4>
+                            <div class="small-note-muted">Sign in to access the administration portal.</div>
+                        </div>
+                    </div>
 
                     <?php if (!empty($errors)): ?>
                         <div class="alert alert-danger" role="alert">

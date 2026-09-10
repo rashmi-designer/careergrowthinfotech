@@ -595,19 +595,11 @@ $conn->close();
     </aside>
 
     <section class="main-panel">
-        <div class="topbar">
-            <div class="topbar-title">
-                <h1>Jobs</h1>
-                <div class="topbar-subtitle">Recruitment pipeline overview</div>
-            </div>
-            <div class="user-pill">
-                <div class="avatar"><i class="bi bi-person-circle"></i></div>
-                <div>
-                    <div class="fw-semibold">Administrator</div>
-                    <div class="text-muted small">Admin</div>
-                </div>
-            </div>
-        </div>
+        <?php
+        $pageH1 = 'Jobs';
+        $pageSubtitle = 'Recruitment pipeline overview';
+        require_once __DIR__ . '/../includes/admin-header.php';
+        ?>
 
         <div class="page-shell">
             <div class="card-panel header-panel">

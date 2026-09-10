@@ -82,6 +82,8 @@ $navItems = [
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="<?php echo htmlspecialchars($basePath, ENT_QUOTES, 'UTF-8'); ?>candidate/dashboard.php"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a></li>
                             <li><a class="dropdown-item" href="<?php echo htmlspecialchars($basePath, ENT_QUOTES, 'UTF-8'); ?>candidate/profile.php"><i class="bi bi-person me-2"></i>Profile</a></li>
+                            <li><a class="dropdown-item" href="<?php echo htmlspecialchars($basePath, ENT_QUOTES, 'UTF-8'); ?>candidate/applications.php"><i class="bi bi-list-check me-2"></i>My Applications</a></li>
+                            <li><a class="dropdown-item" href="<?php echo htmlspecialchars($basePath, ENT_QUOTES, 'UTF-8'); ?>candidate/change-password.php"><i class="bi bi-lock me-2"></i>Change Password</a></li>
                             <li><a class="dropdown-item text-danger" href="<?php echo htmlspecialchars($basePath, ENT_QUOTES, 'UTF-8'); ?>logout.php"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
                         </ul>
                     </div>

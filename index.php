@@ -296,8 +296,8 @@ require_once __DIR__ . '/includes/navbar.php';
                 <div class="how-step card rounded-soft p-3 reveal" data-index="0">
                     <div class="d-flex align-items-start gap-3">
                         <div>
-                            <div class="how-icon bg-soft rounded-circle d-inline-flex align-items-center justify-content-center mb-2">
-                                <i class="bi bi-person-plus text-primary" aria-hidden="true"></i>
+                            <div class="how-icon d-inline-flex align-items-center justify-content-center mb-2">
+                                <i class="bi bi-person-plus" aria-hidden="true"></i>
                             </div>
                             <h5 class="mb-1"><a href="register.php">Create Your Profile</a></h5>
                             <p class="small text-muted mb-0">Register and build your professional profile with your skills, qualifications and career details.</p>
@@ -309,8 +309,8 @@ require_once __DIR__ . '/includes/navbar.php';
                 <div class="how-step card rounded-soft p-3 reveal" data-index="1">
                     <div class="d-flex align-items-start gap-3">
                         <div>
-                            <div class="how-icon bg-soft rounded-circle d-inline-flex align-items-center justify-content-center mb-2">
-                                <i class="bi bi-search text-primary" aria-hidden="true"></i>
+                            <div class="how-icon d-inline-flex align-items-center justify-content-center mb-2">
+                                <i class="bi bi-search" aria-hidden="true"></i>
                             </div>
                             <h5 class="mb-1"><a href="jobs.php">Explore Opportunities</a></h5>
                             <p class="small text-muted mb-0">Browse available job opportunities and use relevant search options to find suitable roles.</p>
@@ -322,8 +322,8 @@ require_once __DIR__ . '/includes/navbar.php';
                 <div class="how-step card rounded-soft p-3 reveal" data-index="2">
                     <div class="d-flex align-items-start gap-3">
                         <div>
-                            <div class="how-icon bg-soft rounded-circle d-inline-flex align-items-center justify-content-center mb-2">
-                                <i class="bi bi-file-earmark-person text-primary" aria-hidden="true"></i>
+                            <div class="how-icon d-inline-flex align-items-center justify-content-center mb-2">
+                                <i class="bi bi-file-earmark-person" aria-hidden="true"></i>
                             </div>
                             <h5 class="mb-1"><a href="jobs.php">Apply for Jobs</a></h5>
                             <p class="small text-muted mb-0">Review job details and submit your application for opportunities that match your profile.</p>
@@ -335,8 +335,8 @@ require_once __DIR__ . '/includes/navbar.php';
                 <div class="how-step card rounded-soft p-3 reveal" data-index="3">
                     <div class="d-flex align-items-start gap-3">
                         <div>
-                            <div class="how-icon bg-soft rounded-circle d-inline-flex align-items-center justify-content-center mb-2">
-                                <i class="bi bi-emoji-smile-upside-down text-primary" aria-hidden="true"></i>
+                            <div class="how-icon d-inline-flex align-items-center justify-content-center mb-2">
+                                <i class="bi bi-emoji-smile-upside-down" aria-hidden="true"></i>
                             </div>
                             <h5 class="mb-1">Move Forward</h5>
                             <p class="small text-muted mb-0">Stay connected with your applications and take the next step toward your career goals.</p>
@@ -382,7 +382,7 @@ require_once __DIR__ . '/includes/navbar.php';
                         <div class="card category-card h-100 p-3 reveal" data-index="0">
                             <div class="d-flex align-items-start gap-3">
                                 <div class="cat-icon bg-soft rounded p-2 d-flex align-items-center justify-content-center">
-                                    <i class="bi bi-laptop text-primary" aria-hidden="true" style="font-size:1.25rem"></i>
+                                    <img class="category-role-icon" src="assets/images/category-icons/it-software.svg" alt="" aria-hidden="true">
                                 </div>
                                 <div>
                                     <h5 class="mb-1">IT &amp; Software</h5>
@@ -400,7 +400,7 @@ require_once __DIR__ . '/includes/navbar.php';
                         <div class="card category-card h-100 p-3 reveal" data-index="1">
                             <div class="d-flex align-items-start gap-3">
                                 <div class="cat-icon bg-soft rounded p-2 d-flex align-items-center justify-content-center">
-                                    <i class="bi bi-graph-up text-primary" aria-hidden="true" style="font-size:1.25rem"></i>
+                                    <img class="category-role-icon" src="assets/images/category-icons/sales-marketing.svg" alt="" aria-hidden="true">
                                 </div>
                                 <div>
                                     <h5 class="mb-1">Sales &amp; Marketing</h5>
@@ -418,7 +418,7 @@ require_once __DIR__ . '/includes/navbar.php';
                         <div class="card category-card h-100 p-3 reveal" data-index="2">
                             <div class="d-flex align-items-start gap-3">
                                 <div class="cat-icon bg-soft rounded p-2 d-flex align-items-center justify-content-center">
-                                    <i class="bi bi-people text-primary" aria-hidden="true" style="font-size:1.25rem"></i>
+                                    <img class="category-role-icon" src="assets/images/category-icons/human-resources.svg" alt="" aria-hidden="true">
                                 </div>
                                 <div>
                                     <h5 class="mb-1">Human Resources</h5>
@@ -436,7 +436,7 @@ require_once __DIR__ . '/includes/navbar.php';
                         <div class="card category-card h-100 p-3 reveal" data-index="3">
                             <div class="d-flex align-items-start gap-3">
                                 <div class="cat-icon bg-soft rounded p-2 d-flex align-items-center justify-content-center">
-                                    <i class="bi bi-currency-exchange text-primary" aria-hidden="true" style="font-size:1.25rem"></i>
+                                    <img class="category-role-icon" src="assets/images/category-icons/finance-accounting.svg" alt="" aria-hidden="true">
                                 </div>
                                 <div>
                                     <h5 class="mb-1">Finance &amp; Accounting</h5>
@@ -454,7 +454,7 @@ require_once __DIR__ . '/includes/navbar.php';
                         <div class="card category-card h-100 p-3 reveal" data-index="4">
                             <div class="d-flex align-items-start gap-3">
                                 <div class="cat-icon bg-soft rounded p-2 d-flex align-items-center justify-content-center">
-                                    <i class="bi bi-hammer text-primary" aria-hidden="true" style="font-size:1.25rem"></i>
+                                    <img class="category-role-icon" src="assets/images/category-icons/engineering.svg" alt="" aria-hidden="true">
                                 </div>
                                 <div>
                                     <h5 class="mb-1">Engineering</h5>
@@ -472,7 +472,7 @@ require_once __DIR__ . '/includes/navbar.php';
                         <div class="card category-card h-100 p-3 reveal" data-index="5">
                             <div class="d-flex align-items-start gap-3">
                                 <div class="cat-icon bg-soft rounded p-2 d-flex align-items-center justify-content-center">
-                                    <i class="bi bi-headset text-primary" aria-hidden="true" style="font-size:1.25rem"></i>
+                                    <img class="category-role-icon" src="assets/images/category-icons/customer-support.svg" alt="" aria-hidden="true">
                                 </div>
                                 <div>
                                     <h5 class="mb-1">Customer Support</h5>
@@ -490,7 +490,7 @@ require_once __DIR__ . '/includes/navbar.php';
                         <div class="card category-card h-100 p-3 reveal" data-index="6">
                             <div class="d-flex align-items-start gap-3">
                                 <div class="cat-icon bg-soft rounded p-2 d-flex align-items-center justify-content-center">
-                                    <i class="bi bi-kanban text-primary" aria-hidden="true" style="font-size:1.25rem"></i>
+                                    <img class="category-role-icon" src="assets/images/category-icons/operations-management.svg" alt="" aria-hidden="true">
                                 </div>
                                 <div>
                                     <h5 class="mb-1">Operations &amp; Management</h5>
@@ -508,7 +508,7 @@ require_once __DIR__ . '/includes/navbar.php';
                         <div class="card category-card h-100 p-3 reveal" data-index="7">
                             <div class="d-flex align-items-start gap-3">
                                 <div class="cat-icon bg-soft rounded p-2 d-flex align-items-center justify-content-center">
-                                    <i class="bi bi-briefcase text-primary" aria-hidden="true" style="font-size:1.25rem"></i>
+                                    <img class="category-role-icon" src="assets/images/category-icons/other-opportunities.svg" alt="" aria-hidden="true">
                                 </div>
                                 <div>
                                     <h5 class="mb-1">Other Opportunities</h5>
@@ -642,7 +642,7 @@ require_once __DIR__ . '/includes/navbar.php';
                 <div class="col-lg-6">
                     <div class="intro-content reveal">
                         <p class="text-uppercase text-primary fw-semibold small mb-2">ABOUT CAREER GROW INFOTECH</p>
-                        <h2 class="fw-bold mb-3">Connecting Talent With the Right Opportunities</h2>
+                        <h2 class="fw-bold mb-3">Connecting Talent With The Right Opportunities</h2>
                         <p class="text-muted mb-3">Career Grow Infotech Pvt. Ltd. is focused on helping job seekers discover meaningful career opportunities while supporting businesses in finding the right talent for their growing teams.</p>
                         <p class="text-muted mb-3">Our approach combines career guidance, recruitment support and a strong understanding of employer requirements to create better connections between professionals and organizations.</p>
                         <div class="d-flex gap-3 mt-3">
@@ -655,8 +655,8 @@ require_once __DIR__ . '/includes/navbar.php';
                 <div class="col-lg-6">
                     <div class="trust-card card rounded-soft border shadow-sm p-4 reveal">
                         <div class="d-flex align-items-center mb-3 gap-3">
-                            <div class="trust-icon bg-soft rounded-circle d-flex align-items-center justify-content-center" aria-hidden="true">
-                                <i class="bi bi-briefcase-fill" style="font-size:1.6rem;color:var(--cg-primary)"></i>
+                            <div class="trust-icon d-flex align-items-center justify-content-center" aria-hidden="true">
+                                <i class="bi bi-briefcase-fill"></i>
                             </div>
                             <div>
                                 <h5 class="mb-0 fw-semibold">Professional Recruitment Support</h5>
@@ -667,7 +667,7 @@ require_once __DIR__ . '/includes/navbar.php';
                         <div class="row g-2 mt-3">
                             <div class="col-12">
                                 <div class="trust-feature d-flex gap-3 p-3 rounded-sm border align-items-start">
-                                    <i class="bi bi-search fs-4 text-primary" aria-hidden="true"></i>
+                                    <span class="trust-feature-icon" aria-hidden="true"><i class="bi bi-search"></i></span>
                                     <div>
                                         <h6 class="mb-1">Career Opportunities</h6>
                                         <p class="small text-muted mb-0">Discover roles aligned with your skills and goals.</p>
@@ -677,7 +677,7 @@ require_once __DIR__ . '/includes/navbar.php';
 
                             <div class="col-12">
                                 <div class="trust-feature d-flex gap-3 p-3 rounded-sm border align-items-start">
-                                    <i class="bi bi-people fs-4 text-primary" aria-hidden="true"></i>
+                                    <span class="trust-feature-icon" aria-hidden="true"><i class="bi bi-people"></i></span>
                                     <div>
                                         <h6 class="mb-1">Recruitment Support</h6>
                                         <p class="small text-muted mb-0">Helping organizations connect with suitable professionals.</p>
@@ -687,7 +687,7 @@ require_once __DIR__ . '/includes/navbar.php';
 
                             <div class="col-12">
                                 <div class="trust-feature d-flex gap-3 p-3 rounded-sm border align-items-start">
-                                    <i class="bi bi-person-workspace fs-4 text-primary" aria-hidden="true"></i>
+                                    <span class="trust-feature-icon" aria-hidden="true"><i class="bi bi-person-workspace"></i></span>
                                     <div>
                                         <h6 class="mb-1">Professional Guidance</h6>
                                         <p class="small text-muted mb-0">A structured approach to career and recruitment needs.</p>
@@ -697,7 +697,7 @@ require_once __DIR__ . '/includes/navbar.php';
 
                             <div class="col-12">
                                 <div class="trust-feature d-flex gap-3 p-3 rounded-sm border align-items-start">
-                                    <i class="bi bi-globe fs-4 text-primary" aria-hidden="true"></i>
+                                    <span class="trust-feature-icon" aria-hidden="true"><i class="bi bi-globe"></i></span>
                                     <div>
                                         <h6 class="mb-1">Growing Network</h6>
                                         <p class="small text-muted mb-0">Connecting candidates and employers across India.</p>
@@ -733,7 +733,7 @@ require_once __DIR__ . '/includes/navbar.php';
         </script>
     </section>
 
-    <section class="py-5">
+    <section class="why-choose-section py-5">
         <div class="container">
             <div class="text-center mb-5">
                 <p class="text-uppercase text-primary fw-semibold mb-2">Why Choose Us</p>
@@ -742,36 +742,36 @@ require_once __DIR__ . '/includes/navbar.php';
 
             <div class="row g-4">
                 <div class="col-md-3">
-                    <div class="card h-100 border-0 rounded-soft p-3">
+                    <div class="card why-choose-card h-100 border-0 rounded-soft p-3">
                         <div class="card-body p-3 text-center">
-                            <i class="bi bi-award" style="font-size:1.6rem;color:var(--cg-primary)"></i>
+                            <div class="why-choose-icon" aria-hidden="true"><i class="bi bi-award"></i></div>
                             <h5 class="mt-3 mb-2">Right Opportunities</h5>
                             <p class="text-muted small mb-0">Curated listings to match candidate skills and employer needs.</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="card h-100 border-0 rounded-soft p-3">
+                    <div class="card why-choose-card h-100 border-0 rounded-soft p-3">
                         <div class="card-body p-3 text-center">
-                            <i class="bi bi-people" style="font-size:1.6rem;color:var(--cg-primary)"></i>
+                            <div class="why-choose-icon" aria-hidden="true"><i class="bi bi-people"></i></div>
                             <h5 class="mt-3 mb-2">Skilled Talent</h5>
                             <p class="text-muted small mb-0">Access to qualified candidates backed by clear profiles.</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="card h-100 border-0 rounded-soft p-3">
+                    <div class="card why-choose-card h-100 border-0 rounded-soft p-3">
                         <div class="card-body p-3 text-center">
-                            <i class="bi bi-life-preserver" style="font-size:1.6rem;color:var(--cg-primary)"></i>
+                            <div class="why-choose-icon" aria-hidden="true"><i class="bi bi-life-preserver"></i></div>
                             <h5 class="mt-3 mb-2">Candidate Support</h5>
                             <p class="text-muted small mb-0">Guidance for profile building and application tracking.</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="card h-100 border-0 rounded-soft p-3">
+                    <div class="card why-choose-card h-100 border-0 rounded-soft p-3">
                         <div class="card-body p-3 text-center">
-                            <i class="bi bi-graph-up" style="font-size:1.6rem;color:var(--cg-primary)"></i>
+                            <div class="why-choose-icon" aria-hidden="true"><i class="bi bi-graph-up"></i></div>
                             <h5 class="mt-3 mb-2">Career Growth</h5>
                             <p class="text-muted small mb-0">Opportunities that support long-term professional development.</p>
                         </div>
@@ -794,8 +794,8 @@ require_once __DIR__ . '/includes/navbar.php';
                 <div class="col-md-6">
                     <div class="cta-panel card h-100 rounded-soft p-4 reveal" data-index="0">
                         <div class="d-flex align-items-start gap-3 h-100">
-                            <div class="cta-icon me-2 d-flex align-items-center justify-content-center bg-soft rounded-circle" aria-hidden="true">
-                                <i class="bi bi-person-badge text-primary" style="font-size:1.6rem"></i>
+                            <div class="cta-icon me-2 d-flex align-items-center justify-content-center" aria-hidden="true">
+                                <i class="bi bi-person-badge"></i>
                             </div>
                             <div class="flex-fill">
                                 <div class="small text-uppercase text-muted">FOR JOB SEEKERS</div>
@@ -972,8 +972,8 @@ require_once __DIR__ . '/includes/navbar.php';
 
                     <div class="career-points mt-4">
                         <div class="career-point d-flex align-items-start gap-3 p-3 rounded-soft reveal" data-index="2">
-                            <div class="career-point-icon bg-soft rounded-circle d-flex align-items-center justify-content-center">
-                                <i class="bi bi-lightbulb text-primary" aria-hidden="true"></i>
+                            <div class="career-point-icon d-flex align-items-center justify-content-center">
+                                <i class="bi bi-lightbulb" aria-hidden="true"></i>
                             </div>
                             <div>
                                 <h5 class="mb-1">Discover Your Strengths</h5>
@@ -982,8 +982,8 @@ require_once __DIR__ . '/includes/navbar.php';
                         </div>
 
                         <div class="career-point d-flex align-items-start gap-3 p-3 rounded-soft reveal" data-index="3">
-                            <div class="career-point-icon bg-soft rounded-circle d-flex align-items-center justify-content-center">
-                                <i class="bi bi-search-heart text-primary" aria-hidden="true"></i>
+                            <div class="career-point-icon d-flex align-items-center justify-content-center">
+                                <i class="bi bi-search-heart" aria-hidden="true"></i>
                             </div>
                             <div>
                                 <h5 class="mb-1">Explore Relevant Roles</h5>
@@ -992,8 +992,8 @@ require_once __DIR__ . '/includes/navbar.php';
                         </div>
 
                         <div class="career-point d-flex align-items-start gap-3 p-3 rounded-soft reveal" data-index="4">
-                            <div class="career-point-icon bg-soft rounded-circle d-flex align-items-center justify-content-center">
-                                <i class="bi bi-person-check text-primary" aria-hidden="true"></i>
+                            <div class="career-point-icon d-flex align-items-center justify-content-center">
+                                <i class="bi bi-person-check" aria-hidden="true"></i>
                             </div>
                             <div>
                                 <h5 class="mb-1">Keep Your Profile Updated</h5>
@@ -1002,8 +1002,8 @@ require_once __DIR__ . '/includes/navbar.php';
                         </div>
 
                         <div class="career-point d-flex align-items-start gap-3 p-3 rounded-soft reveal" data-index="5">
-                            <div class="career-point-icon bg-soft rounded-circle d-flex align-items-center justify-content-center">
-                                <i class="bi bi-arrow-up-right-circle text-primary" aria-hidden="true"></i>
+                            <div class="career-point-icon d-flex align-items-center justify-content-center">
+                                <i class="bi bi-arrow-up-right-circle" aria-hidden="true"></i>
                             </div>
                             <div>
                                 <h5 class="mb-1">Keep Growing</h5>
@@ -1053,8 +1053,8 @@ require_once __DIR__ . '/includes/navbar.php';
                 <div class="col-md-6">
                     <div class="location-card card h-100 p-4 reveal" data-index="0">
                         <div class="d-flex align-items-center gap-3 mb-3">
-                            <div class="location-icon bg-soft rounded-circle d-flex align-items-center justify-content-center">
-                                <i class="bi bi-geo-alt-fill text-primary" aria-hidden="true"></i>
+                            <div class="location-icon d-flex align-items-center justify-content-center">
+                                <i class="bi bi-geo-alt-fill" aria-hidden="true"></i>
                             </div>
                             <div>
                                 <h4 class="mb-1">Pune</h4>
@@ -1068,8 +1068,8 @@ require_once __DIR__ . '/includes/navbar.php';
                 <div class="col-md-6">
                     <div class="location-card card h-100 p-4 reveal" data-index="1">
                         <div class="d-flex align-items-center gap-3 mb-3">
-                            <div class="location-icon bg-soft rounded-circle d-flex align-items-center justify-content-center">
-                                <i class="bi bi-geo-alt-fill text-primary" aria-hidden="true"></i>
+                            <div class="location-icon d-flex align-items-center justify-content-center">
+                                <i class="bi bi-geo-alt-fill" aria-hidden="true"></i>
                             </div>
                             <div>
                                 <h4 class="mb-1">Chhatrapati Sambhajinagar</h4>

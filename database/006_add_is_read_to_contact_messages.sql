@@ -7,3 +7,4 @@ ADD KEY idx_contact_messages_is_read (is_read);
 
 -- Set all existing messages as unread by default
 UPDATE contact_messages SET is_read = 0 WHERE is_read IS NULL;
+ 

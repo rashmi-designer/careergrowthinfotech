@@ -150,6 +150,28 @@ html,body{height:100%;}
   .auth-right{padding:28px}
   .auth-shell{min-height:100dvh}
 }
+
+/* Candidate login: a compact glass form over the career image. */
+@media (min-width:769px){
+  .auth-shell{position:relative;min-height:100dvh;display:block;isolation:isolate;background:#0b4279}
+  .auth-left{position:absolute;top:0;right:0;bottom:-64px;left:0;display:block;min-height:100%;background-position:center;background-size:cover}
+  .auth-left::before{background:linear-gradient(125deg,rgba(8,39,90,.93),rgba(13,101,153,.78) 55%,rgba(9,153,139,.68)),radial-gradient(circle at 85% 16%,rgba(130,89,239,.32),transparent 26%)}
+  .auth-left::after{content:'';position:absolute;width:360px;height:360px;right:-130px;top:-140px;border:44px solid rgba(255,255,255,.13);border-radius:50%;box-shadow:0 0 0 48px rgba(255,255,255,.06)}
+  .auth-left-inner{display:none}
+  .auth-right{position:relative;z-index:1;box-sizing:border-box;min-height:100dvh;display:flex;align-items:center;justify-content:center;padding:28px;background:transparent}
+  .login-card{width:min(100%,430px);max-width:430px;padding:30px 32px;border:1px solid rgba(212,244,255,.46);border-radius:22px;background:rgba(255,255,255,.9);box-shadow:0 24px 55px rgba(0,26,70,.3);backdrop-filter:blur(16px)}
+  .card-header{align-items:center;gap:7px;margin-bottom:20px;text-align:center}.card-logo-wrapper{gap:9px;padding:5px 9px;border-radius:10px;background:rgba(17,99,173,.07);border-color:rgba(17,99,173,.08)}.card-logo-wrapper img{height:32px}.card-logo-wrapper span{color:#143b6b;font-size:.85rem;font-weight:800}
+  .welcome{margin:5px 0 0;color:#113b70;font-size:1.62rem;letter-spacing:-.035em}.subtitle{margin:0;color:#60728b;font-size:.96rem}.form-label{color:#193b67;font-size:.83rem}.form-control{height:48px;padding:.7rem .85rem;border:1px solid #d7e4f3;border-radius:10px;background:#fbfdff}.form-control:focus{border-color:#30b99d;box-shadow:0 0 0 4px rgba(48,185,157,.13)}.form-group{margin-bottom:12px}.forgot-row{margin-top:-2px;margin-bottom:14px}.forgot-row a{color:#078e82;font-size:.9rem}.btn-login{height:48px;border:0;border-radius:10px;background:linear-gradient(135deg,#1b75d0,#14a99a);box-shadow:0 10px 20px rgba(13,119,169,.22)}.btn-login:hover{background:linear-gradient(135deg,#1463b5,#0c9183)}.divider{margin:15px 0;font-size:.9rem}.register-row{font-size:.92rem}.back-home{margin-top:9px;font-size:.9rem}
+}
+
+/* Compact dark-glass treatment over the image background. */
+@media (min-width:769px){
+  .login-card{position:relative;width:min(100%,380px);max-width:380px;padding:24px 26px;overflow:hidden;border:1px solid rgba(111,226,255,.72);border-radius:24px;background:linear-gradient(145deg,rgba(8,56,111,.66),rgba(8,87,121,.45));box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 0 0 1px rgba(20,216,218,.14),0 20px 46px rgba(0,20,63,.4);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+  .login-card::before{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,rgba(255,255,255,.16),transparent 28%)}
+  .login-card>*{position:relative;z-index:1}
+  .card-header{gap:5px;margin-bottom:16px}.card-logo-wrapper{padding:4px 8px;background:rgba(255,255,255,.12);border-color:rgba(181,243,255,.32)}.card-logo-wrapper span{color:#d7fffa;font-size:.78rem}.card-logo-wrapper img{height:28px}
+  .welcome{color:#fff;font-size:1.42rem;margin:3px 0 0}.subtitle{color:rgba(229,246,255,.8);font-size:.88rem}.form-label{color:#e9f8ff;font-size:.76rem}.form-control{height:44px;padding:.6rem .75rem;border-color:rgba(198,238,255,.4);border-radius:9px;background:rgba(255,255,255,.12);color:#fff}.form-control::placeholder{color:rgba(231,247,255,.66)}.form-control:focus{border-color:#72f0df;background:rgba(255,255,255,.17);box-shadow:0 0 0 3px rgba(78,231,216,.18);color:#fff}.form-group{margin-bottom:10px}.forgot-row{margin-top:0;margin-bottom:11px}.forgot-row a{color:#9bfff0;font-size:.82rem}.btn-login{height:44px;border-radius:9px;background:linear-gradient(135deg,#20cba6,#168dd8);box-shadow:0 9px 18px rgba(0,28,85,.32)}.divider{color:rgba(231,247,255,.7);margin:13px 0}.divider::before,.divider::after{background:rgba(211,243,255,.24)}.register-row{color:#eefaff;font-size:.84rem}.register-row a[style]{color:#9bfff0!important}.back-home{margin-top:8px;color:rgba(231,247,255,.8);font-size:.82rem}
+}
 </style>
 
 <main class="auth-shell">
@@ -188,7 +210,7 @@ html,body{height:100%;}
     <section class="auth-right">
         <div class="login-card" role="region" aria-label="Candidate login form">
             <div class="card-header">
-                <div class="card-logo-wrapper"><img src="assets/images/logo.webp" alt="Career Grow Infotech logo"></div>
+                <div class="card-logo-wrapper"><img src="assets/images/logo.webp" alt="Career Grow Infotech logo"><span>Career Grow Infotech</span></div>
                 <div class="welcome">Welcome Back</div>
                 <div class="subtitle">Login to continue to your account.</div>
             </div>

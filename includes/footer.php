@@ -4,7 +4,7 @@ $basePath = $basePath ?? '';
 // Allow pages to hide the public footer when rendering standalone auth pages.
 if (!empty($hidePublicLayout)) {
     // close body/html if header was included but footer intentionally hidden
-    echo '</body>\n</html>';
+    echo "</body>\n</html>";
     return;
 }
 

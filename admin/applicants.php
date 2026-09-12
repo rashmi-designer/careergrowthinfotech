@@ -711,7 +711,7 @@ $conn->close();
                 </select>
 
                 <button type="submit" class="btn btn-outline-primary">Apply</button>
-                <a href="applicants.php" class="btn btn-link text-decoration-none">Reset</a>
+                <a href="applicants.php" class="btn btn-outline-primary">Reset</a>
 
                 <div class="result-count">Showing <?php echo count($applications); ?> of <?php echo $totalApplications; ?> results</div>
             </form>

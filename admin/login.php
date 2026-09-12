@@ -172,7 +172,10 @@ html,body{height:100dvh;margin:0}
 }
 
 @media (min-width:992px){
-    .admin-login-card{border-color:rgba(111,226,255,.72);background:linear-gradient(145deg,rgba(8,56,111,.68),rgba(8,87,121,.48));box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 0 0 1px rgba(20,216,218,.14),0 0 28px rgba(41,219,228,.2),0 20px 46px rgba(0,20,63,.4)}
+    .admin-login-card{position:relative;isolation:isolate;overflow:hidden;border:1px solid transparent;background:linear-gradient(145deg,rgba(8,56,111,.68),rgba(8,87,121,.48)) padding-box,linear-gradient(145deg,rgba(173,244,255,.98),rgba(52,213,236,.72) 42%,rgba(38,180,207,.34) 78%,rgba(143,246,222,.9)) border-box;box-shadow:inset 0 1px 0 rgba(255,255,255,.28),inset 0 0 22px rgba(101,220,255,.08),0 0 0 1px rgba(20,216,218,.14),0 0 28px rgba(41,219,228,.2),0 20px 46px rgba(0,20,63,.4)}
+    .admin-login-card::before{content:'';position:absolute;inset:1px;border-radius:19px;pointer-events:none;background:linear-gradient(115deg,rgba(255,255,255,.2),transparent 18%,transparent 72%,rgba(112,239,207,.14));opacity:.85;z-index:-1}
+    .admin-login-card::after{content:'';position:absolute;inset:0;border-radius:19px;pointer-events:none;background:radial-gradient(ellipse 20px 82px at 1.5% 52%,rgba(194,249,255,1) 0%,rgba(77,224,250,.92) 20%,rgba(45,194,232,.38) 58%,transparent 100%),radial-gradient(ellipse 20px 82px at 98.5% 52%,rgba(194,249,255,1) 0%,rgba(77,224,250,.92) 20%,rgba(45,194,232,.38) 58%,transparent 100%),radial-gradient(ellipse 170px 46px at 50% 0%,rgba(149,242,255,.24),transparent 72%);filter:blur(4px);mix-blend-mode:screen;opacity:.98;z-index:0}
+    .admin-login-card > *{position:relative;z-index:1}
 }
 
 </style>

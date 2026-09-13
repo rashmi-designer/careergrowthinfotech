@@ -10,13 +10,15 @@ require_admin();
 $pageTitle = 'Settings - Admin';
 require_once __DIR__ . '/../includes/header.php';
 
+// Settings page - currently only has Appearance (Dark Mode) which is handled client-side
+// in admin-header.php using localStorage
 $conn = getDbConnection();
 $adminId = (int)($_SESSION['user_id'] ?? 0);
 $adminRole = 'admin';
 
 $admin = null;
 if ($adminId > 0) {
-    $adminStmt = $conn->prepare('SELECT id, name, email, phone, role, status, created_at FROM users WHERE id = ? AND role = ? LIMIT 1');
+    $adminStmt = $conn->prepare('SELECT id, name, email, role, status FROM users WHERE id = ? AND role = ? LIMIT 1');
     if ($adminStmt) {
         $adminStmt->bind_param('is', $adminId, $adminRole);
         $adminStmt->execute();
@@ -32,69 +34,8 @@ if (!$admin) {
     exit;
 }
 
-$profileErrors = [];
-$profileSuccess = '';
 $passwordErrors = [];
 $passwordSuccess = '';
-
-$profileValues = [
-    'name' => (string)($admin['name'] ?? ''),
-    'email' => (string)($admin['email'] ?? ''),
-    'phone' => (string)($admin['phone'] ?? ''),
-];
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['profile_update'])) {
-    $profileValues['name'] = trim((string)($_POST['name'] ?? ''));
-    $profileValues['email'] = trim((string)($_POST['email'] ?? ''));
-    $profileValues['phone'] = trim((string)($_POST['phone'] ?? ''));
-
-    if ($profileValues['name'] === '') {
-        $profileErrors[] = 'Name is required.';
-    }
-    if ($profileValues['email'] === '' || !filter_var($profileValues['email'], FILTER_VALIDATE_EMAIL)) {
-        $profileErrors[] = 'A valid email address is required.';
-    }
-    if ($profileValues['phone'] === '') {
-        $profileErrors[] = 'Phone number is required.';
-    }
-
-    if (empty($profileErrors)) {
-        $duplicateStmt = $conn->prepare('SELECT id FROM users WHERE email = ? AND id != ? LIMIT 1');
-        if ($duplicateStmt) {
-            $duplicateStmt->bind_param('si', $profileValues['email'], $adminId);
-            $duplicateStmt->execute();
-            $duplicateResult = $duplicateStmt->get_result();
-            $duplicateExists = $duplicateResult->fetch_assoc();
-            $duplicateStmt->close();
-
-            if ($duplicateExists) {
-                $profileErrors[] = 'This email address is already in use.';
-            }
-        }
-    }
-
-    if (empty($profileErrors)) {
-        $updateStmt = $conn->prepare('UPDATE users SET name = ?, email = ?, phone = ? WHERE id = ? AND role = ? LIMIT 1');
-        if ($updateStmt) {
-            $updateStmt->bind_param('sssis', $profileValues['name'], $profileValues['email'], $profileValues['phone'], $adminId, $adminRole);
-            $updated = $updateStmt->execute();
-            $updateStmt->close();
-
-            if ($updated) {
-                $_SESSION['user_name'] = $profileValues['name'];
-                $_SESSION['user_email'] = $profileValues['email'];
-                $profileSuccess = 'Your account details were updated successfully.';
-                $admin['name'] = $profileValues['name'];
-                $admin['email'] = $profileValues['email'];
-                $admin['phone'] = $profileValues['phone'];
-            } else {
-                $profileErrors[] = 'Unable to update your account details right now.';
-            }
-        } else {
-            $profileErrors[] = 'Unable to save your account details right now.';
-        }
-    }
-}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['password_update'])) {
     $currentPassword = trim((string)($_POST['current_password'] ?? ''));
@@ -307,45 +248,6 @@ $conn->close();
 
 .settings-layout {
     display: grid;
-    grid-template-columns: 280px minmax(0, 1fr);
-    gap: 1rem;
-}
-
-.settings-nav {
-    padding: 1rem;
-}
-
-.settings-nav .nav-title {
-    font-size: 0.8rem;
-    color: var(--cg-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    margin-bottom: 0.75rem;
-}
-
-.nav-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
-}
-
-.nav-list a {
-    display: flex;
-    align-items: center;
-    gap: 0.7rem;
-    padding: 0.7rem 0.8rem;
-    border-radius: 0.7rem;
-    color: var(--cg-accent);
-    font-weight: 600;
-}
-
-.nav-list a.active {
-    color: var(--cg-primary);
-    background: rgba(13,110,253,0.06);
-}
-
-.settings-content {
-    display: grid;
     gap: 1rem;
 }
 
@@ -364,36 +266,27 @@ $conn->close();
     margin-bottom: 1rem;
 }
 
-.form-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1rem;
+.settings-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    border: 1px solid var(--cg-border);
+    border-radius: 0.85rem;
+    background: rgba(13,110,253,0.01);
 }
 
-.form-field {
-    display: grid;
-    gap: 0.4rem;
+.settings-option-text h4 {
+    margin: 0 0 0.25rem;
+    color: var(--cg-accent);
+    font-size: 0.95rem;
+    font-weight: 600;
 }
 
-.form-field.full {
-    grid-column: 1 / -1;
-}
-
-.form-label {
-    font-size: 0.82rem;
+.settings-option-text p {
     color: var(--cg-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    font-weight: 700;
-}
-
-.form-control,
-.form-select {
-    min-height: 44px;
-}
-
-.alert {
-    margin-bottom: 1rem;
+    margin: 0;
+    font-size: 0.85rem;
 }
 
 @media (max-width: 991.98px) {
@@ -459,7 +352,7 @@ $conn->close();
     <section class="main-panel">
         <?php
         $pageH1 = 'Settings';
-        $pageSubtitle = 'Administer your account and security settings';
+        $pageSubtitle = 'Manage your preferences and security settings';
         require_once __DIR__ . '/../includes/admin-header.php';
         ?>
 
@@ -467,104 +360,115 @@ $conn->close();
             <div class="page-kicker"><i class="bi bi-sliders"></i> Admin / Settings</div>
             <div>
                 <h2>Settings</h2>
-                <p>Manage the authenticated administrator account and security details for the Career Grow Infotech portal.</p>
+                <p>Customize your preferences for the Career Grow Infotech admin portal.</p>
             </div>
         </div>
 
         <div class="settings-layout">
-            <aside class="card-panel settings-nav">
-                <div class="nav-title">Account</div>
-                <div class="nav-list">
-                    <a href="#profile" class="active"><i class="bi bi-person-circle"></i> Profile</a>
-                    <a href="#security"><i class="bi bi-shield-lock"></i> Security</a>
-                </div>
-            </aside>
+            <div class="card-panel settings-card">
+                <h3><i class="bi bi-palette me-2" style="color: var(--cg-primary);"></i>Appearance</h3>
+                <p>Adjust the visual appearance and theme of the admin portal.</p>
 
-            <div class="settings-content">
-                <div id="profile" class="card-panel settings-card">
-                    <h3>Account Information</h3>
-                    <p>Update the details for the current administrator account.</p>
-
-                    <?php if (!empty($profileErrors)): ?>
-                        <div class="alert alert-danger" role="alert">
-                            <?php foreach ($profileErrors as $error): ?>
-                                <div><?php echo htmlspecialchars($error, ENT_QUOTES, 'UTF-8'); ?></div>
-                            <?php endforeach; ?>
-                        </div>
-                    <?php endif; ?>
-
-                    <?php if (!empty($profileSuccess)): ?>
-                        <div class="alert alert-success" role="alert"><?php echo htmlspecialchars($profileSuccess, ENT_QUOTES, 'UTF-8'); ?></div>
-                    <?php endif; ?>
-
-                    <form method="post" novalidate>
-                        <input type="hidden" name="profile_update" value="1">
-                        <div class="form-grid">
-                            <div class="form-field">
-                                <label class="form-label" for="profile-name">Full Name</label>
-                                <input class="form-control" id="profile-name" type="text" name="name" value="<?php echo htmlspecialchars($profileValues['name'], ENT_QUOTES, 'UTF-8'); ?>" required>
-                            </div>
-
-                            <div class="form-field">
-                                <label class="form-label" for="profile-email">Email Address</label>
-                                <input class="form-control" id="profile-email" type="email" name="email" value="<?php echo htmlspecialchars($profileValues['email'], ENT_QUOTES, 'UTF-8'); ?>" required>
-                            </div>
-
-                            <div class="form-field full">
-                                <label class="form-label" for="profile-phone">Phone</label>
-                                <input class="form-control" id="profile-phone" type="tel" name="phone" value="<?php echo htmlspecialchars($profileValues['phone'], ENT_QUOTES, 'UTF-8'); ?>" required>
-                            </div>
-                        </div>
-
-                        <div class="mt-3 d-flex gap-2">
-                            <button type="submit" class="btn btn-primary">Save Changes</button>
-                            <a href="dashboard.php" class="btn btn-outline-secondary">Cancel</a>
-                        </div>
-                    </form>
-                </div>
-
-                <div id="security" class="card-panel settings-card">
-                    <h3>Security</h3>
-                    <p>Update your password for the current administrator account.</p>
-
-                    <?php if (!empty($passwordErrors)): ?>
-                        <div class="alert alert-danger" role="alert">
-                            <?php foreach ($passwordErrors as $error): ?>
-                                <div><?php echo htmlspecialchars($error, ENT_QUOTES, 'UTF-8'); ?></div>
-                            <?php endforeach; ?>
-                        </div>
-                    <?php endif; ?>
-
-                    <?php if (!empty($passwordSuccess)): ?>
-                        <div class="alert alert-success" role="alert"><?php echo htmlspecialchars($passwordSuccess, ENT_QUOTES, 'UTF-8'); ?></div>
-                    <?php endif; ?>
-
-                    <form method="post" novalidate>
-                        <input type="hidden" name="password_update" value="1">
-                        <div class="form-grid">
-                            <div class="form-field full">
-                                <label class="form-label" for="current-password">Current Password</label>
-                                <input class="form-control" id="current-password" type="password" name="current_password" placeholder="Enter your current password" required>
-                            </div>
-
-                            <div class="form-field full">
-                                <label class="form-label" for="new-password">New Password</label>
-                                <input class="form-control" id="new-password" type="password" name="new_password" placeholder="Enter a new password" required>
-                            </div>
-
-                            <div class="form-field full">
-                                <label class="form-label" for="confirm-password">Confirm New Password</label>
-                                <input class="form-control" id="confirm-password" type="password" name="confirm_password" placeholder="Re-enter new password" required>
-                            </div>
-                        </div>
-
-                        <div class="mt-3 d-flex gap-2">
-                            <button type="submit" class="btn btn-primary">Update Password</button>
-                            <button type="reset" class="btn btn-outline-secondary">Reset</button>
-                        </div>
-                    </form>
+                <div class="settings-option">
+                    <div class="settings-option-text">
+                        <h4>Dark Mode</h4>
+                        <p>Toggle between light and dark theme for the admin interface</p>
+                    </div>
+                    <button class="btn btn-sm" id="themeToggleBtn" style="min-width: 90px;">
+                        <i class="bi bi-moon-fill me-2"></i><span id="themeLabel">Enable</span>
+                    </button>
                 </div>
             </div>
+        </div>
+
+        <script>
+        // Dark Mode toggle for Settings page
+        function getAdminTheme() {
+            try {
+                return localStorage.getItem('admin-theme') || 'light';
+            } catch (e) {
+                return 'light';
+            }
+        }
+
+        function updateThemeLabel() {
+            const currentTheme = getAdminTheme();
+            const label = document.getElementById('themeLabel');
+            const btn = document.getElementById('themeToggleBtn');
+            
+            if (currentTheme === 'dark') {
+                label.textContent = 'Disable';
+                btn.className = 'btn btn-sm btn-primary';
+            } else {
+                label.textContent = 'Enable';
+                btn.className = 'btn btn-sm btn-outline-primary';
+            }
+        }
+
+        // Initialize label on page load
+        updateThemeLabel();
+
+        // Theme toggle handler
+        document.getElementById('themeToggleBtn').addEventListener('click', function(){
+            const currentTheme = getAdminTheme();
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            try {
+                localStorage.setItem('admin-theme', newTheme);
+            } catch (e) {
+                // localStorage may be unavailable; theme still works for current session
+            }
+            
+            if (newTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+            }
+            
+            updateThemeLabel();
+        });
+        </script>
+
+        <div class="card-panel settings-card" style="margin-top: 1rem;">
+            <h3><i class="bi bi-shield-lock me-2" style="color: var(--cg-primary);"></i>Security</h3>
+            <p>Update your password for the current administrator account.</p>
+
+            <?php if (!empty($passwordErrors)): ?>
+                <div class="alert alert-danger" role="alert">
+                    <?php foreach ($passwordErrors as $error): ?>
+                        <div><?php echo htmlspecialchars($error, ENT_QUOTES, 'UTF-8'); ?></div>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+
+            <?php if (!empty($passwordSuccess)): ?>
+                <div class="alert alert-success" role="alert"><?php echo htmlspecialchars($passwordSuccess, ENT_QUOTES, 'UTF-8'); ?></div>
+            <?php endif; ?>
+
+            <form method="post" novalidate>
+                <input type="hidden" name="password_update" value="1">
+                <div class="form-grid">
+                    <div class="form-field full">
+                        <label class="form-label" for="current-password">Current Password</label>
+                        <input class="form-control" id="current-password" type="password" name="current_password" placeholder="Enter your current password" required>
+                    </div>
+
+                    <div class="form-field full">
+                        <label class="form-label" for="new-password">New Password</label>
+                        <input class="form-control" id="new-password" type="password" name="new_password" placeholder="Enter a new password" required>
+                    </div>
+
+                    <div class="form-field full">
+                        <label class="form-label" for="confirm-password">Confirm New Password</label>
+                        <input class="form-control" id="confirm-password" type="password" name="confirm_password" placeholder="Re-enter new password" required>
+                    </div>
+                </div>
+
+                <div class="mt-3 d-flex gap-2">
+                    <button type="submit" class="btn btn-primary">Update Password</button>
+                    <button type="reset" class="btn btn-outline-secondary">Reset</button>
+                </div>
+            </form>
         </div>
     </section>
 </main>

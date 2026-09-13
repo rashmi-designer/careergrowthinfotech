@@ -32,11 +32,73 @@ if (!$admin) {
     exit;
 }
 
-$conn->close();
+$profileErrors = [];
+$profileSuccess = '';
+
+$profileValues = [
+    'name' => (string)($admin['name'] ?? ''),
+    'email' => (string)($admin['email'] ?? ''),
+    'phone' => (string)($admin['phone'] ?? ''),
+];
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['profile_update'])) {
+    $profileValues['name'] = trim((string)($_POST['name'] ?? ''));
+    $profileValues['email'] = trim((string)($_POST['email'] ?? ''));
+    $profileValues['phone'] = trim((string)($_POST['phone'] ?? ''));
+
+    if ($profileValues['name'] === '') {
+        $profileErrors[] = 'Name is required.';
+    }
+    if ($profileValues['email'] === '' || !filter_var($profileValues['email'], FILTER_VALIDATE_EMAIL)) {
+        $profileErrors[] = 'A valid email address is required.';
+    }
+    if ($profileValues['phone'] === '') {
+        $profileErrors[] = 'Phone number is required.';
+    }
+
+    if (empty($profileErrors)) {
+        $duplicateStmt = $conn->prepare('SELECT id FROM users WHERE email = ? AND id != ? LIMIT 1');
+        if ($duplicateStmt) {
+            $duplicateStmt->bind_param('si', $profileValues['email'], $adminId);
+            $duplicateStmt->execute();
+            $duplicateResult = $duplicateStmt->get_result();
+            $duplicateExists = $duplicateResult->fetch_assoc();
+            $duplicateStmt->close();
+
+            if ($duplicateExists) {
+                $profileErrors[] = 'This email address is already in use.';
+            }
+        }
+    }
+
+    if (empty($profileErrors)) {
+        $updateStmt = $conn->prepare('UPDATE users SET name = ?, email = ?, phone = ? WHERE id = ? AND role = ? LIMIT 1');
+        if ($updateStmt) {
+            $updateStmt->bind_param('sssis', $profileValues['name'], $profileValues['email'], $profileValues['phone'], $adminId, $adminRole);
+            $updated = $updateStmt->execute();
+            $updateStmt->close();
+
+            if ($updated) {
+                $_SESSION['user_name'] = $profileValues['name'];
+                $_SESSION['user_email'] = $profileValues['email'];
+                $profileSuccess = 'Your account details were updated successfully.';
+                $admin['name'] = $profileValues['name'];
+                $admin['email'] = $profileValues['email'];
+                $admin['phone'] = $profileValues['phone'];
+            } else {
+                $profileErrors[] = 'Unable to update your account details right now.';
+            }
+        } else {
+            $profileErrors[] = 'Unable to save your account details right now.';
+        }
+    }
+}
 
 $statusLabel = ((int)($admin['status'] ?? 0) === 1) ? 'Active' : 'Inactive';
 $roleLabel = ucfirst((string)($admin['role'] ?? 'admin'));
 $createdAt = !empty($admin['created_at']) ? date('M d, Y', strtotime((string)$admin['created_at'])) : 'N/A';
+
+$conn->close();
 ?>
 
 <style>
@@ -229,6 +291,53 @@ $createdAt = !empty($admin['created_at']) ? date('M d, Y', strtotime((string)$ad
     margin: 0;
 }
 
+.settings-card {
+    padding: 1.15rem 1.2rem;
+}
+
+.settings-card h3 {
+    margin: 0 0 0.65rem;
+    color: var(--cg-accent);
+    font-size: 1.08rem;
+}
+
+.settings-card p {
+    color: var(--cg-muted);
+    margin-bottom: 1rem;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.form-field {
+    display: grid;
+    gap: 0.4rem;
+}
+
+.form-field.full {
+    grid-column: 1 / -1;
+}
+
+.form-label {
+    font-size: 0.82rem;
+    color: var(--cg-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-weight: 700;
+}
+
+.form-control,
+.form-select {
+    min-height: 44px;
+}
+
+.alert {
+    margin-bottom: 1rem;
+}
+
 @media (max-width: 991.98px) {
     .admin-root {
         flex-direction: column;
@@ -284,7 +393,7 @@ $createdAt = !empty($admin['created_at']) ? date('M d, Y', strtotime((string)$ad
             <div class="page-kicker"><i class="bi bi-person-circle"></i> Admin / Profile</div>
             <div>
                 <h2>Profile</h2>
-                <p>Review your account details and manage your security settings.</p>
+                <p>Review and update your account and personal information.</p>
             </div>
         </div>
 
@@ -325,18 +434,48 @@ $createdAt = !empty($admin['created_at']) ? date('M d, Y', strtotime((string)$ad
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="card-panel profile-card security-panel">
-                <h3>Security</h3>
-                <p>Update your administrator password using the existing change-password workflow.</p>
+        <div class="card-panel settings-card" style="margin-top: 1rem;">
+            <h3>Edit Account Information</h3>
+            <p>Update the details for the current administrator account.</p>
 
-                <div class="security-box">
-                    <p>Use the existing password change form in the admin settings page to update your current password securely.</p>
-                    <a href="settings.php#security" class="btn btn-primary">
-                        <i class="bi bi-lock me-2"></i>Change Password
-                    </a>
+            <?php if (!empty($profileErrors)): ?>
+                <div class="alert alert-danger" role="alert">
+                    <?php foreach ($profileErrors as $error): ?>
+                        <div><?php echo htmlspecialchars($error, ENT_QUOTES, 'UTF-8'); ?></div>
+                    <?php endforeach; ?>
                 </div>
-            </div>
+            <?php endif; ?>
+
+            <?php if (!empty($profileSuccess)): ?>
+                <div class="alert alert-success" role="alert"><?php echo htmlspecialchars($profileSuccess, ENT_QUOTES, 'UTF-8'); ?></div>
+            <?php endif; ?>
+
+            <form method="post" novalidate>
+                <input type="hidden" name="profile_update" value="1">
+                <div class="form-grid">
+                    <div class="form-field">
+                        <label class="form-label" for="profile-name">Full Name</label>
+                        <input class="form-control" id="profile-name" type="text" name="name" value="<?php echo htmlspecialchars($profileValues['name'], ENT_QUOTES, 'UTF-8'); ?>" required>
+                    </div>
+
+                    <div class="form-field">
+                        <label class="form-label" for="profile-email">Email Address</label>
+                        <input class="form-control" id="profile-email" type="email" name="email" value="<?php echo htmlspecialchars($profileValues['email'], ENT_QUOTES, 'UTF-8'); ?>" required>
+                    </div>
+
+                    <div class="form-field full">
+                        <label class="form-label" for="profile-phone">Phone</label>
+                        <input class="form-control" id="profile-phone" type="tel" name="phone" value="<?php echo htmlspecialchars($profileValues['phone'], ENT_QUOTES, 'UTF-8'); ?>" required>
+                    </div>
+                </div>
+
+                <div class="mt-3 d-flex gap-2">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    <a href="dashboard.php" class="btn btn-outline-secondary">Cancel</a>
+                </div>
+            </form>
         </div>
     </section>
 </main>

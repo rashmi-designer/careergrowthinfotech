@@ -8,25 +8,46 @@ require_once __DIR__ . '/includes/navbar.php';
     <section id="heroSlider" class="position-relative">
         <style>
             /* Inline slider styles (kept in index.php per task restrictions) */
-            #heroSlider { overflow: hidden; }
-            .slider { position: relative; width: 100%; height: 600px; min-height: 420px; }
-            @media (max-width: 991.98px) { .slider { height: 540px; } }
-            @media (max-width: 767.98px) { .slider { height: 520px; min-height: 420px; } }
+            #heroSlider { overflow: hidden; background: #071a33; }
+            .slider { position: relative; width: 100%; height: clamp(500px, 34vw, 560px); min-height: 460px; }
+            @media (max-width: 991.98px) { .slider { height: 520px; } }
+            @media (max-width: 767.98px) { .slider { height: 500px; min-height: 430px; } }
             .slide { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: 0; transition: opacity 900ms ease; display: flex; align-items: center; }
+            .slide[data-index="1"] { background-position: center top; }
             .slide.active { opacity: 1; z-index: 2; }
-            .slide::before { content: ''; position: absolute; inset: 0; background: rgba(9,20,34,0.45); transition: transform 5s ease; }
+            .slide::before { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(4, 18, 39, .66) 0%, rgba(6, 29, 61, .54) 37%, rgba(7, 32, 65, .16) 68%, rgba(7, 32, 65, .08) 100%), linear-gradient(180deg, rgba(5, 18, 37, .03), rgba(5, 18, 37, .24)); }
             .slide .container { position: relative; z-index: 3; }
-            .slide-content { max-width: 54%; color: var(--cg-white); }
+            .slide-content { max-width: 640px; padding: 2.25rem 3rem; color: var(--cg-white); border: 1px solid rgba(255,255,255,.22); border-radius: 1.5rem; background: linear-gradient(135deg, rgba(8, 31, 63, .46), rgba(8, 31, 63, .22)); box-shadow: 0 24px 64px rgba(0, 10, 26, .16); backdrop-filter: blur(3px); }
             @media (max-width: 991.98px) { .slide-content { max-width: 90%; } }
-            .eyebrow { display: inline-block; background: rgba(255,255,255,0.08); padding: .35rem .7rem; border-radius: .5rem; color: rgba(255,255,255,0.95); font-weight:700; letter-spacing: .04em; }
-            .slide h2 { font-size: clamp(1.6rem, 3.2vw, 2.6rem); margin-top: 1rem; margin-bottom: .8rem; color: #fff; }
-            .slide p.lead { color: rgba(255,255,255,0.9); margin-bottom: 1rem; }
-            .slide .btn { margin-right: .5rem; }
-            .slider-nav { position: absolute; left: 0; right: 0; bottom: 1.25rem; display:flex; justify-content:center; gap:.5rem; z-index:6 }
-            .dot { width:10px; height:10px; border-radius:50%; background: rgba(255,255,255,0.35); cursor:pointer; transition: background .2s; }
-            .dot.active { background: var(--cg-white); }
-            .slider-arrows { position:absolute; top:50%; transform:translateY(-50%); left:1rem; right:1rem; display:flex; justify-content:space-between; z-index:6 }
-            .slider-arrow { background: rgba(0,0,0,0.35); color: #fff; border: none; width:44px; height:44px; border-radius: .5rem; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; }
+            .eyebrow { display: inline-flex; align-items: center; gap: .45rem; background: rgba(83, 158, 255, .16); border: 1px solid rgba(174, 213, 255, .28); padding: .45rem .8rem; border-radius: 999px; color: #eaf4ff; font-size: .76rem; font-weight: 700; letter-spacing: .09em; }
+            .eyebrow::before { width: .45rem; height: .45rem; border-radius: 50%; background: #68b4ff; box-shadow: 0 0 0 4px rgba(104,180,255,.15); content: ''; }
+            .slide h2 { max-width: 580px; font-size: clamp(2.1rem, 3.45vw, 3.7rem); line-height: 1.1; letter-spacing: -.035em; margin-top: 1.25rem; margin-bottom: 1rem; color: #fff; }
+            .slide p.lead { max-width: 520px; color: rgba(240,247,255,.88); font-size: clamp(1rem, 1.25vw, 1.15rem); line-height: 1.65; margin-bottom: 1.75rem; }
+            .slide .btn { min-width: 142px; margin-right: .55rem; padding: .78rem 1.15rem; border-radius: .75rem; font-weight: 700; transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease; }
+            .slide .btn-primary { box-shadow: 0 12px 28px rgba(0, 92, 230, .32); }
+            .slide .btn:hover { transform: translateY(-2px); }
+            .slide .btn-outline-light { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.65); }
+            .slide .btn-primary,
+            .slide .btn-primary:hover,
+            .slide .btn-primary:focus,
+            .slide .btn-primary:active,
+            .slide .btn-outline-light,
+            .slide .btn-outline-light:hover,
+            .slide .btn-outline-light:focus,
+            .slide .btn-outline-light:active { color: #fff !important; }
+            .slide .btn-primary:hover,
+            .slide .btn-primary:focus { background-color: #075bd3; border-color: #075bd3; box-shadow: 0 16px 32px rgba(0, 92, 230, .46); }
+            .slide .btn-primary:active { background-color: #064bac; border-color: #064bac; box-shadow: none; }
+            .slide .btn-outline-light:hover,
+            .slide .btn-outline-light:focus { background-color: rgba(31, 125, 255, .78); border-color: #65adff; box-shadow: 0 12px 28px rgba(0, 92, 230, .28); }
+            .slide .btn-outline-light:active { background-color: rgba(7, 91, 211, .92); border-color: #65adff; box-shadow: none; }
+            .slide .btn:focus-visible { outline: 3px solid rgba(151, 204, 255, .92); outline-offset: 3px; }
+            .slider-nav { position: absolute; left: 0; right: 0; bottom: 1.7rem; display:flex; justify-content:center; align-items:center; gap:.5rem; z-index:6; }
+            .dot { width: 9px; height: 9px; padding: 0; border: 0; border-radius: 999px; background: rgba(255,255,255,.42); cursor:pointer; transition: width .2s ease, background .2s ease; }
+            .dot.active { width: 30px; background: var(--cg-white); }
+            .slider-arrows { position:absolute; top:50%; transform:translateY(-50%); left:8px; right:8px; display:flex; justify-content:space-between; z-index:6; pointer-events:none; }
+            .slider-arrow { box-sizing:border-box; flex:0 0 34px; background: rgba(9, 30, 58, .48); color: #fff; border: 1px solid rgba(255,255,255,.24); width:34px; height:34px; padding:0; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; cursor:pointer; pointer-events:auto; transition: transform .2s ease, background-color .2s ease; }
+            .slider-arrow:hover { background: rgba(18, 103, 232, .85); transform: scale(1.04); }
             /* No logos inside hero per requirements; keep hero image area clean */
             /* Text animation states */
             .animate { opacity:0; transform: translateY(8px); transition: opacity .6s ease, transform .6s ease; }
@@ -37,6 +58,14 @@ require_once __DIR__ . '/includes/navbar.php';
             @media (prefers-reduced-motion: reduce) {
                 .slide-bg-zoom, .slide { transition: none !important; }
                 .animate { transition: none !important; }
+                .slide .btn, .slider-arrow, .dot { transition: none !important; }
+            }
+            @media (max-width: 767.98px) {
+                .slide { align-items: flex-end; padding-bottom: 3.75rem; background-position: 58% center; }
+                .slide-content { max-width: 100%; padding: 1.5rem; border-radius: 1.15rem; }
+                .slide h2 { font-size: clamp(2rem, 9vw, 2.75rem); }
+                .slide .btn { min-width: 0; margin-bottom: .5rem; }
+                .slider-arrows { display: none; }
             }
             /* spacing between hero and next sections */
             .hero-bottom-spacing { padding-bottom: 2.5rem; }

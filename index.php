@@ -1069,90 +1069,6 @@ require_once __DIR__ . '/includes/navbar.php';
         </script>
     </section>
 
-    <!-- Locations -->
-    <section class="locations-section py-5">
-        <div class="container">
-            <div class="text-center mb-4">
-                <p class="text-uppercase text-primary fw-semibold mb-2">OUR LOCATIONS</p>
-                <h2 class="fw-bold mb-2">Connecting Opportunities Across India</h2>
-                <p class="text-muted mb-0">Career Grow Infotech Pvt. Ltd. supports career and recruitment needs with a professional presence in Pune and Chhatrapati Sambhajinagar.</p>
-            </div>
-
-            <div class="row g-4 mt-3">
-                <div class="col-md-6">
-                    <div class="location-card card h-100 p-4 reveal" data-index="0">
-                        <div class="d-flex align-items-center gap-3 mb-3">
-                            <div class="location-icon d-flex align-items-center justify-content-center">
-                                <i class="bi bi-geo-alt-fill" aria-hidden="true"></i>
-                            </div>
-                            <div>
-                                <h4 class="mb-1">Pune</h4>
-                                <p class="small text-muted mb-0">Career &amp; Recruitment Support</p>
-                            </div>
-                        </div>
-                        <p class="text-muted mb-0">Connect with Career Grow Infotech for professional career opportunities and recruitment-related requirements.</p>
-                    </div>
-                </div>
-
-                <div class="col-md-6">
-                    <div class="location-card card h-100 p-4 reveal" data-index="1">
-                        <div class="d-flex align-items-center gap-3 mb-3">
-                            <div class="location-icon d-flex align-items-center justify-content-center">
-                                <i class="bi bi-geo-alt-fill" aria-hidden="true"></i>
-                            </div>
-                            <div>
-                                <h4 class="mb-1">Chhatrapati Sambhajinagar</h4>
-                                <p class="small text-muted mb-0">Career &amp; Recruitment Support</p>
-                            </div>
-                        </div>
-                        <p class="text-muted mb-0">Connect with Career Grow Infotech for professional career opportunities and recruitment-related requirements.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="contact-strip card rounded-soft border shadow-sm mt-4 p-3 reveal" data-index="2">
-                <div class="row g-3 align-items-center text-center text-md-start">
-                    <div class="col-md-4">
-                        <div class="d-flex align-items-center justify-content-center justify-content-md-start gap-2">
-                            <i class="bi bi-telephone text-primary"></i>
-                            <span><a href="tel:+919850340340" class="text-decoration-none">+91 98503 40340</a></span>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="d-flex align-items-center justify-content-center justify-content-md-start gap-2">
-                            <i class="bi bi-envelope text-primary"></i>
-                            <span><a href="mailto:info@careergrowinfotech.com" class="text-decoration-none">info@careergrowinfotech.com</a></span>
-                        </div>
-                    </div>
-                    <div class="col-md-4 text-center text-md-end">
-                        <div class="d-flex justify-content-center justify-content-md-end gap-2 flex-wrap">
-                            <a href="contact.php" class="btn btn-primary btn-sm">Contact Us</a>
-                            <a href="jobs.php" class="btn btn-outline-primary btn-sm">Explore Jobs</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <script>
-            (function(){
-                const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-                const items = Array.from(document.querySelectorAll('.locations-section .reveal'));
-                if (reduce) { items.forEach(el => el.classList.add('show')); return; }
-                const obs = new IntersectionObserver((entries, observer) => {
-                    entries.forEach((entry) => {
-                        if (entry.isIntersecting) {
-                            const idx = parseInt(entry.target.getAttribute('data-index') || '0', 10);
-                            setTimeout(() => entry.target.classList.add('show'), idx * 80);
-                            observer.unobserve(entry.target);
-                        }
-                    });
-                }, { threshold: 0.12 });
-                items.forEach(el => obs.observe(el));
-            })();
-        </script>
-    </section>
-
     <section class="final-cta-section py-5">
         <div class="container">
             <div class="final-cta-card card border-0 reveal text-center" data-index="0">
@@ -1189,6 +1105,96 @@ require_once __DIR__ . '/includes/navbar.php';
             })();
         </script>
     </section>
+
+    <!-- Locations -->
+    <section class="locations-section py-4">
+        <div class="container">
+            <div class="text-center mb-3">
+                <p class="text-uppercase text-primary fw-semibold mb-2">OUR LOCATIONS</p>
+                <h2 class="fw-bold mb-2">Visit Our Pune Office</h2>
+                <p class="text-muted mb-0">Career Grow Infotech Pvt. Ltd. supports career and recruitment needs from its Pune office.</p>
+            </div>
+
+            <div class="row mt-2">
+                <div class="col-12">
+                    <div class="location-card office-location-card card p-3 p-md-4 reveal" data-index="0">
+                        <div class="row g-3 align-items-center">
+                            <div class="col-lg-5">
+                                <div class="d-flex align-items-center gap-3 mb-3">
+                                    <div class="location-icon d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-geo-alt-fill" aria-hidden="true"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="mb-1">Pune</h4>
+                                        <p class="small text-muted mb-0">Career &amp; Recruitment Support</p>
+                                    </div>
+                                </div>
+                                <p class="text-muted mb-0">Connect with Career Grow Infotech for professional career opportunities and recruitment-related requirements.</p>
+                            </div>
+                            <div class="col-lg-7">
+                                <iframe
+                                    class="office-map"
+                                    title="Career Grow Infotech Pune office location"
+                                    src="https://www.google.com/maps?q=Pune%2C%20Maharashtra&z=13&output=embed"
+                                    loading="lazy"
+                                    referrerpolicy="no-referrer-when-downgrade"
+                                    allowfullscreen>
+                                </iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-strip card rounded-soft border shadow-sm mt-3 p-3 reveal" data-index="1">
+                <div class="row g-3 align-items-center text-center text-md-start">
+                    <div class="col-md-4">
+                        <div class="contact-strip-item d-flex align-items-center justify-content-center justify-content-md-start gap-3">
+                            <span class="contact-strip-icon" aria-hidden="true"><i class="bi bi-telephone-fill"></i></span>
+                            <div>
+                                <span class="contact-strip-label">Call us</span>
+                                <a href="tel:+919850340340" class="contact-strip-link">+91 98503 40340</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="contact-strip-item d-flex align-items-center justify-content-center justify-content-md-start gap-3">
+                            <span class="contact-strip-icon" aria-hidden="true"><i class="bi bi-envelope-fill"></i></span>
+                            <div>
+                                <span class="contact-strip-label">Email us</span>
+                                <a href="mailto:info@careergrowinfotech.com" class="contact-strip-link">info@careergrowinfotech.com</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-center text-md-end">
+                        <div class="contact-strip-actions d-flex justify-content-center justify-content-md-end gap-2 flex-wrap">
+                            <a href="contact.php" class="btn btn-primary btn-sm">Contact Us</a>
+                            <a href="jobs.php" class="btn btn-outline-primary btn-sm">Explore Jobs</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            (function(){
+                const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                const items = Array.from(document.querySelectorAll('.locations-section .reveal'));
+                if (reduce) { items.forEach(el => el.classList.add('show')); return; }
+                const obs = new IntersectionObserver((entries, observer) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            const idx = parseInt(entry.target.getAttribute('data-index') || '0', 10);
+                            setTimeout(() => entry.target.classList.add('show'), idx * 80);
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.12 });
+                items.forEach(el => obs.observe(el));
+            })();
+        </script>
+    </section>
+
 </main>
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>

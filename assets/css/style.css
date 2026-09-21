@@ -1224,7 +1224,7 @@ body.scrolled .navbar {
 /* Locations section */
 .locations-section { background: var(--cg-light); }
 .location-card {
-    background: var(--cg-white);
+    background: linear-gradient(115deg, #e7f6f4 0%, #ffffff 48%, #eaf2fb 100%);
     border: 1px solid var(--cg-border);
     box-shadow: 0 12px 30px rgba(15,23,42,0.04);
     transition: transform .22s ease, box-shadow .22s ease;
@@ -1241,13 +1241,56 @@ body.scrolled .navbar {
 }
 .location-icon i { color: var(--location-accent); font-size: 1.5rem; }
 .locations-section .row.mt-3 > div:nth-child(2) .location-icon { --location-accent: #e56f16; --location-rgb: 229, 111, 22; }
+.office-map {
+    display: block;
+    width: 100%;
+    height: 170px;
+    border: 0;
+    border-radius: 0.8rem;
+}
 .location-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 20px 46px rgba(15,23,42,0.08);
 }
 .contact-strip {
-    background: var(--cg-white);
-    border: 1px solid var(--cg-border);
+    background: linear-gradient(115deg, #e7f6f4 0%, #ffffff 48%, #eaf2fb 100%);
+    border: 1px solid rgba(18, 103, 232, 0.16) !important;
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08) !important;
+}
+.contact-strip-item { min-height: 48px; }
+.contact-strip-icon {
+    width: 44px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 44px;
+    color: var(--cg-primary);
+    background: rgba(18, 103, 232, 0.1);
+    border-radius: 50%;
+    font-size: 1rem;
+}
+.contact-strip-label {
+    display: block;
+    margin-bottom: 0.1rem;
+    color: #718096;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+.contact-strip .contact-strip-link {
+    display: block;
+    color: var(--cg-dark);
+    font-weight: 700;
+    line-height: 1.25;
+}
+.contact-strip .contact-strip-link:hover,
+.contact-strip .contact-strip-link:focus { color: var(--cg-primary); }
+.contact-strip-actions .btn {
+    min-width: 122px;
+    padding: 0.6rem 1rem;
+    font-weight: 700;
 }
 .contact-strip a {
     color: inherit;
@@ -1260,6 +1303,11 @@ body.scrolled .navbar {
 .contact-strip .btn-outline-primary { color: var(--cg-primary); }
 .contact-strip .btn-outline-primary:hover,
 .contact-strip .btn-outline-primary:focus { color: var(--cg-white); }
+
+@media (max-width: 767.98px) {
+    .contact-strip-item { justify-content: center; }
+    .contact-strip-actions { margin-top: 0.3rem; }
+}
 
 @media (prefers-reduced-motion: reduce) {
     .location-card { transition: none; }

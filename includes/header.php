@@ -18,6 +18,7 @@ $siteStylesheetVersion = (string) filemtime(__DIR__ . '/../assets/css/style.css'
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Career Grow Infotech Job Portal - connecting candidates with career opportunities.">
     <title><?php echo htmlspecialchars($pageTitle, ENT_QUOTES, 'UTF-8'); ?></title>
+    <link rel="icon" href="<?php echo htmlspecialchars($basePath, ENT_QUOTES, 'UTF-8'); ?>assets/images/logo.webp" type="image/webp">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="<?php echo htmlspecialchars($basePath, ENT_QUOTES, 'UTF-8'); ?>assets/css/style.css?v=<?php echo htmlspecialchars($siteStylesheetVersion, ENT_QUOTES, 'UTF-8'); ?>">

@@ -17,7 +17,7 @@ if ($id <= 0) {
     $job = null;
 } else {
     $conn = getDbConnection();
-    $stmt = $conn->prepare('SELECT id, title, company, description, skills_required, location, job_type, experience_level, salary_min, salary_max, openings, last_date, status FROM jobs WHERE id = ? LIMIT 1');
+    $stmt = $conn->prepare('SELECT id, title, company, description, skills_required, location, job_type, category, experience_level, salary_min, salary_max, openings, last_date, status FROM jobs WHERE id = ? LIMIT 1');
     if ($stmt) {
         $stmt->bind_param('i', $id);
         $stmt->execute();
@@ -53,6 +53,7 @@ $fields = [
     'skills_required' => (string)($job['skills_required'] ?? ''),
     'location' => (string)($job['location'] ?? ''),
     'job_type' => (string)($job['job_type'] ?? ''),
+    'category' => (string)($job['category'] ?? ''),
     'experience_level' => (string)($job['experience_level'] ?? ''),
     'salary_min' => (string)($job['salary_min'] ?? ''),
     'salary_max' => (string)($job['salary_max'] ?? ''),
@@ -84,6 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($fields['company'] === '') { $errors[] = 'Company name is required.'; }
     if ($fields['location'] === '') { $errors[] = 'Location is required.'; }
     if ($fields['job_type'] === '') { $errors[] = 'Job type is required.'; }
+    if ($fields['category'] === '') { $errors[] = 'Category is required.'; }
     if ($fields['experience_level'] === '') { $errors[] = 'Experience level is required.'; }
     if ($fields['openings'] === '' || !ctype_digit($fields['openings'])) { $errors[] = 'Vacancies must be a number.'; }
     // Validate status against expected values
@@ -92,10 +94,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (empty($errors)) {
         $conn = getDbConnection();
-            $sql = "UPDATE jobs SET title = ?, company = ?, description = ?, skills_required = ?, location = ?, job_type = ?, experience_level = ?, salary_min = NULLIF(?,''), salary_max = NULLIF(?,''), openings = ?, last_date = ?, status = ? WHERE id = ? LIMIT 1";
+            $sql = "UPDATE jobs SET title = ?, company = ?, description = ?, skills_required = ?, location = ?, job_type = ?, category = ?, experience_level = ?, salary_min = NULLIF(?,''), salary_max = NULLIF(?,''), openings = ?, last_date = ?, status = ? WHERE id = ? LIMIT 1";
         $stmt = $conn->prepare($sql);
         if ($stmt) {
-                $types = 'sssssssssissi';
+                $types = 'ssssssssssissi';
                 $bindParams = [
                     $fields['title'],
                     $fields['company'],
@@ -103,6 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $fields['skills_required'],
                     $fields['location'],
                     $fields['job_type'],
+                    $fields['category'],
                     $fields['experience_level'],
                     $fields['salary_min'],
                     $fields['salary_max'],
@@ -189,6 +192,16 @@ function val(array $fields, string $key): string { return htmlspecialchars($fiel
                         <option value="">Select job type</option>
                         <?php $types = ['Full Time','Part Time','Contract','Internship','Remote']; foreach($types as $t): ?>
                             <option value="<?php echo htmlspecialchars($t,ENT_QUOTES,'UTF-8'); ?>" <?php if ($fields['job_type']===$t) echo 'selected'; ?>><?php echo htmlspecialchars($t,ENT_QUOTES,'UTF-8'); ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Category <span class="required">*</span></label>
+                    <select name="category" class="form-select" required>
+                        <option value="">Select category</option>
+                        <?php $cats = ['IT & Software','Sales & Marketing','Human Resources','Finance & Accounting','Engineering','Customer Support','Operations & Management','Other Opportunities']; foreach($cats as $c): ?>
+                            <option value="<?php echo htmlspecialchars($c,ENT_QUOTES,'UTF-8'); ?>" <?php if ($fields['category']===$c) echo 'selected'; ?>><?php echo htmlspecialchars($c,ENT_QUOTES,'UTF-8'); ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>

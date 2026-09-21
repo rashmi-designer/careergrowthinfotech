@@ -12,6 +12,7 @@ $conn = getDbConnection();
 
 $search = trim((string)($_GET['search'] ?? ''));
 $jobTypeFilter = trim((string)($_GET['job_type'] ?? ''));
+$categoryFilter = trim((string)($_GET['category'] ?? ''));
 $locationFilter = trim((string)($_GET['location'] ?? ''));
 $experienceFilter = trim((string)($_GET['experience'] ?? ''));
 $page = max(1, (int)($_GET['page'] ?? 1));
@@ -72,6 +73,12 @@ if ($search !== '') {
 if ($jobTypeFilter !== '') {
     $where[] = 'job_type = ?';
     $params[] = $jobTypeFilter;
+    $types .= 's';
+}
+
+if ($categoryFilter !== '') {
+    $where[] = 'category = ?';
+    $params[] = $categoryFilter;
     $types .= 's';
 }
 
@@ -167,11 +174,16 @@ if (!function_exists('cg_format_date')) {
     }
 }
 
-$hasFilters = $search !== '' || $jobTypeFilter !== '' || $locationFilter !== '' || $experienceFilter !== '';
-$emptyStateTitle = $hasFilters ? 'No matching jobs found' : 'No jobs available right now';
-$emptyStateText = $hasFilters
-    ? 'Try adjusting your search or clearing the filters to explore all current opportunities.'
-    : 'New openings will appear here as soon as Career Grow Infotech publishes them.';
+$hasFilters = $search !== '' || $jobTypeFilter !== '' || $locationFilter !== '' || $experienceFilter !== '' || $categoryFilter !== '';
+if ($categoryFilter !== '') {
+    $emptyStateTitle = 'No jobs available in this category.';
+    $emptyStateText = 'There are currently no job listings in this category.';
+} else {
+    $emptyStateTitle = $hasFilters ? 'No matching jobs found' : 'No jobs available right now';
+    $emptyStateText = $hasFilters
+        ? 'Try adjusting your search or clearing the filters to explore all current opportunities.'
+        : 'New openings will appear here as soon as Career Grow Infotech publishes them.';
+}
 ?>
 
 <style>

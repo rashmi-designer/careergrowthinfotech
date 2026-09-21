@@ -22,6 +22,7 @@ $fields = [
     'skills_required' => '',
     'location' => '',
     'job_type' => '',
+    'category' => '',
     'experience_level' => '',
     'salary_min' => '',
     'salary_max' => '',
@@ -52,6 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($fields['company'] === '') { $errors[] = 'Company name is required.'; }
     if ($fields['location'] === '') { $errors[] = 'Location is required.'; }
     if ($fields['job_type'] === '') { $errors[] = 'Job type is required.'; }
+    if ($fields['category'] === '') { $errors[] = 'Category is required.'; }
     if ($fields['experience_level'] === '') { $errors[] = 'Experience level is required.'; }
     if ($fields['openings'] === '' || !ctype_digit($fields['openings'])) { $errors[] = 'Vacancies must be a number.'; }
     if ($fields['status'] === '') { $errors[] = 'Status is required.'; }
@@ -59,11 +61,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($errors)) {
         $conn = getDbConnection();
 
-        $sql = "INSERT INTO jobs (title, company, description, skills_required, location, job_type, experience_level, salary_min, salary_max, openings, last_date, status) VALUES (?,?,?,?,?,?,?,NULLIF(?,''),NULLIF(?,''),?,?,?)";
+        $sql = "INSERT INTO jobs (title, company, description, skills_required, location, job_type, category, experience_level, salary_min, salary_max, openings, last_date, status) VALUES (?,?,?,?,?,?,?, ?,NULLIF(?,''),NULLIF(?,''),?,?,?)";
         $stmt = $conn->prepare($sql);
         if ($stmt) {
             // Columns: title, company, description, skills_required, location, job_type, experience_level, salary_min, salary_max, openings, last_date, status
-            $types = 'sssssssssiss';
+            $types = 'ssssssssssiss';
             $bindParams = [
                 $fields['title'],
                 $fields['company'],
@@ -71,6 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $fields['skills_required'],
                 $fields['location'],
                 $fields['job_type'],
+                $fields['category'],
                 $fields['experience_level'],
                 $fields['salary_min'],
                 $fields['salary_max'],
@@ -162,6 +165,16 @@ function val(array $fields, string $key): string { return htmlspecialchars($fiel
                         <option value="">Select job type</option>
                         <?php $types = ['Full Time','Part Time','Contract','Internship','Remote']; foreach($types as $t): ?>
                             <option value="<?php echo htmlspecialchars($t,ENT_QUOTES,'UTF-8'); ?>" <?php if ($fields['job_type']===$t) echo 'selected'; ?>><?php echo htmlspecialchars($t,ENT_QUOTES,'UTF-8'); ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <label class="form-label">Category <span class="required">*</span></label>
+                    <select name="category" class="form-select" required>
+                        <option value="">Select category</option>
+                        <?php $cats = ['IT & Software','Sales & Marketing','Human Resources','Finance & Accounting','Engineering','Customer Support','Operations & Management','Other Opportunities']; foreach($cats as $c): ?>
+                            <option value="<?php echo htmlspecialchars($c,ENT_QUOTES,'UTF-8'); ?>" <?php if ($fields['category']===$c) echo 'selected'; ?>><?php echo htmlspecialchars($c,ENT_QUOTES,'UTF-8'); ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>

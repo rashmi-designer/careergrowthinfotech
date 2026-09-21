@@ -88,7 +88,9 @@ if (strpos($scriptPath, '/admin/') !== false && !empty($_SESSION['user_role']) &
             <div class="container">
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="left-block">
-                        <img src="<?php echo htmlspecialchars($basePath, ENT_QUOTES, 'UTF-8'); ?>assets/images/logo.webp" alt="Career Grow Infotech logo" width="40" height="40" loading="lazy">
+                        <a href="dashboard.php" aria-label="Admin dashboard">
+                            <img src="<?php echo htmlspecialchars($basePath, ENT_QUOTES, 'UTF-8'); ?>assets/images/logo.webp" alt="Career Grow Infotech logo" width="40" height="40" loading="lazy">
+                        </a>
                         <div class="copyright">
                             <div>© 2026 Career Grow Infotech Pvt. Ltd.</div>
                             <div class="small-muted">All rights reserved.</div>
@@ -116,10 +118,10 @@ if (strpos($scriptPath, '/admin/') !== false && !empty($_SESSION['user_role']) &
     <div class="container py-5">
         <div class="row g-4">
             <div class="col-lg-4 col-md-6">
-                <div class="footer-brand mb-3">
-                    <span class="brand-mark brand-mark-sm">
+                    <div class="footer-brand mb-3">
+                    <a class="brand-mark brand-mark-sm" href="<?php echo htmlspecialchars($basePath, ENT_QUOTES, 'UTF-8'); ?>index.php" aria-label="Career Grow Infotech home">
                         <img src="<?php echo htmlspecialchars($basePath, ENT_QUOTES, 'UTF-8'); ?>assets/images/logo.webp" alt="Career Grow Infotech logo" width="34" height="34" loading="lazy">
-                    </span>
+                    </a>
                     <span class="ms-2 fw-semibold">Career Grow Infotech Pvt. Ltd.</span>
                 </div>
                 <p class="footer-intro mb-0">
@@ -162,9 +164,8 @@ if (strpos($scriptPath, '/admin/') !== false && !empty($_SESSION['user_role']) &
     </div>
 
     <div class="footer-bottom border-top">
-        <div class="container py-3 d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
-            <p class="mb-0 text-secondary">© <span id="currentYear"></span> Career Grow Infotech Pvt. Ltd.</p>
-            <p class="mb-0 text-secondary">All rights reserved.</p>
+        <div class="container py-3 text-center">
+            <p class="mb-0 text-secondary footer-credit">© 2026 Career Grow Infotech Pvt. Ltd. All rights reserved. Software Developed &amp; Design By <a href="https://kavyainfoweb.com/" target="_blank" rel="noopener noreferrer">Kavya Infoweb Pvt. Ltd.</a></p>
         </div>
     </div>
 </footer>

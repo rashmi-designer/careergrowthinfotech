@@ -139,7 +139,7 @@ html[data-theme="dark"] .admin-root { --dash-ink:#e7edf8; --dash-surface:#172235
 <main class="container-fluid admin-root">
     <aside class="sidebar">
         <div class="brand">
-            <span class="brand-mark-sm"><img src="../assets/images/logo.webp" alt="logo" width="40" height="40"></span>
+            <a class="brand-mark-sm" href="dashboard.php" aria-label="Admin dashboard"><img src="../assets/images/logo.webp" alt="logo" width="40" height="40"></a>
             <div>
                 <div class="brand-title">Career Grow Infotech</div>
                 <div class="text-soft small">Admin Portal</div>

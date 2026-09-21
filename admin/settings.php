@@ -332,6 +332,9 @@ $conn->close();
                 <div class="brand-title">Career Grow Infotech</div>
                 <div class="brand-subtitle">Admin Portal</div>
             </div>
+                <a class="brand-mark-sm" href="dashboard.php" aria-label="Admin dashboard">
+                    <img src="../assets/images/logo.webp" alt="Career Grow Infotech logo" width="34" height="34" loading="lazy">
+                </a>
         </div>
 
         <nav class="sidebar-nav" aria-label="Sidebar navigation">

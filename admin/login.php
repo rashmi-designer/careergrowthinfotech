@@ -186,7 +186,7 @@ html,body{height:100dvh;margin:0}
             <div class="admin-left">
                 <div class="admin-left-inner">
                     <div class="brand-pill">
-                        <img src="../assets/images/logo.webp" alt="Career Grow Infotech logo">
+                        <a href="dashboard.php" aria-label="Admin dashboard"><img src="../assets/images/logo.webp" alt="Career Grow Infotech logo"></a>
                         <span class="pill-text">Career Grow Infotech</span>
                     </div>
 
@@ -198,7 +198,7 @@ html,body{height:100dvh;margin:0}
             <div class="admin-right">
                 <div class="admin-login-card">
                     <div class="login-brand">
-                        <img src="../assets/images/logo.webp" alt="Career Grow Infotech logo">
+                        <a href="dashboard.php" aria-label="Admin dashboard"><img src="../assets/images/logo.webp" alt="Career Grow Infotech logo"></a>
                         <span>Career Grow Infotech</span>
                     </div>
                     <div class="login-title mb-2">

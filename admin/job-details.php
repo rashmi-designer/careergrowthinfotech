@@ -404,7 +404,7 @@ function admin_badge(string $status): string
     <aside class="sidebar">
         <div class="brand-wrap">
             <span class="brand-mark brand-mark-sm">
-                <img src="../assets/images/logo.webp" alt="Career Grow Infotech logo" width="34" height="34" loading="lazy">
+                <a href="dashboard.php" aria-label="Admin dashboard"><img src="../assets/images/logo.webp" alt="Career Grow Infotech logo" width="34" height="34" loading="lazy"></a>
             </span>
             <div>
                 <div class="brand-title">Career Grow Infotech</div>

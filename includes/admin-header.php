@@ -37,11 +37,34 @@ html[data-theme="dark"] .admin-topbar { border-bottom-color: rgba(255,255,255,0.
 .profile-control { min-height:42px; display:inline-flex; align-items:center; gap:8px; padding:4px 10px; border-radius:999px; border:1px solid var(--cg-border); background:var(--cg-white); transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease; color: var(--cg-text); }
 .profile-control .avatar { width:32px; height:32px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; background:rgba(13,110,253,0.08); color:var(--cg-primary); }
 .dropdown-menu-admin { min-width:220px; border-radius:12px; background: var(--cg-white); border: 1px solid var(--cg-border); transition: background 0.25s ease, border-color 0.25s ease; }
-.dropdown-menu-admin .dropdown-item { color: var(--cg-text); transition: background 0.25s ease, color 0.25s ease; }
-.dropdown-menu-admin .dropdown-item:hover { background: rgba(13,110,253,0.1); color: var(--cg-primary); }
+.dropdown-menu-admin { min-width:204px; padding:5px; border-radius:13px; background:rgba(255,255,255,.78); border-color:rgba(255,255,255,.72); box-shadow:0 14px 30px rgba(15,23,42,.14); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); }
+.dropdown-menu-admin.dropdown-menu-end { right:0; left:auto; }
+.dropdown-menu-admin > li:first-child { margin:-5px -5px 4px; padding:8px 11px 8px !important; border-radius:13px 13px 8px 8px; background:rgba(239,246,255,.7); }
+.dropdown-menu-admin > li:first-child .avatar { width:34px; height:34px; display:inline-flex; align-items:center; justify-content:center; border-radius:10px; background:#dbeafe; color:#2563eb; font-size:1rem; }
+.dropdown-menu-admin > li:first-child .fw-bold { color:var(--cg-text); font-size:.9rem; letter-spacing:-.01em; }
+.dropdown-menu-admin > li:first-child .text-muted { color:var(--cg-muted) !important; font-size:.72rem; }
+.dropdown-menu-admin .dropdown-divider { margin:3px 6px 4px; border-color:var(--cg-border); opacity:.65; }
+.dropdown-menu-admin .dropdown-item { display:flex; align-items:center; min-height:32px; padding:6px 9px; border-radius:8px; color:var(--cg-text); font-size:.84rem; font-weight:600; transition:background 0.2s ease, color 0.2s ease, transform 0.2s ease; }
+.dropdown-menu-admin .dropdown-item .bi { width:18px; margin-right:9px !important; color:#64748b; font-size:.92rem; text-align:center; transition:color 0.2s ease; }
+.dropdown-menu-admin .dropdown-item:hover,
+.dropdown-menu-admin .dropdown-item:focus { background:#eef5ff; color:#1d4ed8; transform:translateX(2px); }
+.dropdown-menu-admin .dropdown-item:hover .bi,
+.dropdown-menu-admin .dropdown-item:focus .bi { color:#2563eb; }
 .dropdown-menu-admin .dropdown-item.text-danger { color: #dc2626; }
-.dropdown-menu-admin .dropdown-item.text-danger:hover { background: rgba(220,38,38,0.1); color: #ef4444; }
-.dropdown-menu-admin .dropdown-divider { border-color: var(--cg-border); }
+.dropdown-menu-admin .dropdown-item.text-danger .bi { color:#dc2626; }
+.dropdown-menu-admin .dropdown-item.text-danger:hover,
+.dropdown-menu-admin .dropdown-item.text-danger:focus { background:#fff1f2; color:#b91c1c; }
+.dropdown-menu-admin .dropdown-item.text-danger:hover .bi,
+.dropdown-menu-admin .dropdown-item.text-danger:focus .bi { color:#b91c1c; }
+html[data-theme="dark"] .dropdown-menu-admin { background:rgba(17,24,39,.82); border-color:rgba(148,163,184,.3); box-shadow:0 16px 34px rgba(0,0,0,.38); }
+html[data-theme="dark"] .dropdown-menu-admin > li:first-child { background:rgba(30,58,95,.72); }
+html[data-theme="dark"] .dropdown-menu-admin .dropdown-item:hover,
+html[data-theme="dark"] .dropdown-menu-admin .dropdown-item:focus { background:#1e3a61; color:#bfdbfe; }
+html[data-theme="dark"] .dropdown-menu-admin .dropdown-item .bi { color:#94a3b8; }
+html[data-theme="dark"] .dropdown-menu-admin .dropdown-item:hover .bi,
+html[data-theme="dark"] .dropdown-menu-admin .dropdown-item:focus .bi { color:#93c5fd; }
+html[data-theme="dark"] .dropdown-menu-admin .dropdown-item.text-danger:hover,
+html[data-theme="dark"] .dropdown-menu-admin .dropdown-item.text-danger:focus { background:#451a1a; color:#fca5a5; }
 
 .search-dropdown { position:absolute; top:100%; left:0; right:0; background:var(--cg-white); border:1px solid var(--cg-border); border-radius:10px; box-shadow:0 12px 30px rgba(15,23,42,0.1); max-height:400px; overflow-y:auto; z-index:1000; display:none; margin-top:8px; min-width:320px; transition: background 0.25s ease, border-color 0.25s ease; }
 html[data-theme="dark"] .search-dropdown { box-shadow: 0 12px 30px rgba(0,0,0,0.3); }

@@ -987,6 +987,34 @@ body.scrolled .navbar {
 .why-choose-card {
     --why-accent: #1267e8;
     --why-rgb: 18, 103, 232;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #e1e9f5 !important;
+    box-shadow: 0 12px 30px rgba(15,23,42,0.055);
+    transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+}
+
+.why-choose-card::before {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--why-accent), rgba(var(--why-rgb), .55));
+    border-radius: 0 0 999px 999px;
+    content: "";
+    transform: translateX(-50%);
+    transition: width .22s ease;
+}
+
+.why-choose-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(var(--why-rgb), .42) !important;
+    box-shadow: 0 22px 42px rgba(var(--why-rgb), .16);
+}
+
+.why-choose-card:hover::before {
+    width: 56%;
 }
 
 .why-choose-icon {
@@ -1010,6 +1038,10 @@ body.scrolled .navbar {
 .why-choose-section .row > div:nth-child(3) .why-choose-card { --why-accent: #7456d9; --why-rgb: 116, 86, 217; }
 .why-choose-section .row > div:nth-child(4) .why-choose-card { --why-accent: #078b68; --why-rgb: 7, 139, 104; }
 
+@media (prefers-reduced-motion: reduce) {
+    .why-choose-card { transition: none; }
+}
+
 /* Latest Opportunities */
 .latest-jobs .job-card { background: var(--cg-white); border: 1px solid var(--cg-border); box-shadow: 0 8px 24px rgba(15,23,42,0.04); transition: transform .22s ease, box-shadow .22s ease; }
 .latest-jobs .job-card h5 { font-size: 1.05rem; }
@@ -1030,7 +1062,8 @@ body.scrolled .navbar {
 /* How It Works */
 .how-it-works { background: transparent; }
 .how-steps { gap: 1rem; }
-.how-step { --how-accent: #1267e8; --how-rgb: 18, 103, 232; flex: 1 1 0; background: var(--cg-white); border: 1px solid var(--cg-border); box-shadow: 0 10px 30px rgba(15,23,42,0.04); transition: transform .22s ease, box-shadow .22s ease; }
+.how-step { --how-accent: #1267e8; --how-rgb: 18, 103, 232; position:relative; overflow:hidden; flex: 1 1 0; background: var(--cg-white); border: 1px solid #e1e9f5; box-shadow:0 12px 30px rgba(15,23,42,0.055); transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease; }
+.how-step::before { position:absolute; top:0; left:50%; width:0; height:4px; background:linear-gradient(90deg, var(--how-accent), rgba(var(--how-rgb), .55)); border-radius:0 0 999px 999px; content:""; transform:translateX(-50%); transition:width .22s ease; }
 .how-step .how-number { background: rgba(13,110,253,0.06); color: var(--cg-primary); font-weight:700; width:44px; height:44px; display:inline-flex; align-items:center; justify-content:center; border-radius:8px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', monospace; }
 .how-step .how-icon {
     width: 60px;
@@ -1045,7 +1078,8 @@ body.scrolled .navbar {
 .how-step:nth-child(4) { --how-accent: #078b68; --how-rgb: 7, 139, 104; }
 .how-step h5 { margin-bottom: .25rem; }
 .how-step p { color: var(--cg-muted); }
-.how-step:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(15,23,42,0.08); }
+.how-step:hover { transform:translateY(-6px); border-color:rgba(var(--how-rgb), .42); box-shadow:0 22px 42px rgba(var(--how-rgb), .16); }
+.how-step:hover::before { width:56%; }
 
 @media (prefers-reduced-motion: reduce) { .how-step { transition: none; } }
 

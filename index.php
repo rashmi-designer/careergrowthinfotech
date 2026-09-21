@@ -280,7 +280,7 @@ require_once __DIR__ . '/includes/navbar.php';
                             <div class="col-lg-3 col-md-6 d-grid">
                                 <label for="submitSearch" class="form-label small mb-2 fw-semibold visually-hidden">Find Jobs</label>
                                 <button id="submitSearch" type="submit" class="btn btn-primary btn-lg w-100">
-                                    <i class="bi bi-search me-2" aria-hidden="true"></i>Find Jobs
+                                    Find Jobs <i class="bi bi-search" aria-hidden="true"></i>
                                 </button>
                             </div>
                         </div>

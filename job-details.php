@@ -103,22 +103,38 @@ if (!function_exists('cg_render_safe_text')) {
 
 <style>
     .job-details-page {
-        padding-top: 3rem;
-        padding-bottom: 4rem;
+        padding-top: 2.75rem;
+        padding-bottom: 4.5rem;
     }
 
     .job-detail-shell {
         background: var(--cg-white);
-        border: 1px solid var(--cg-border);
-        border-radius: 1.25rem;
-        box-shadow: 0 16px 34px rgba(15, 23, 42, 0.04);
+        border: 1px solid #dce7f5;
+        border-radius: 1.5rem;
+        box-shadow: 0 22px 48px rgba(15, 35, 70, 0.08);
         overflow: hidden;
     }
 
     .job-detail-header {
-        background: rgba(13, 110, 253, 0.04);
-        border-bottom: 1px solid rgba(13, 110, 253, 0.08);
-        padding: 1.5rem 1.5rem 1.2rem;
+        position: relative;
+        isolation: isolate;
+        background:
+            radial-gradient(circle at 88% 18%, rgba(13, 110, 253, 0.17), transparent 26%),
+            linear-gradient(120deg, #fbfdff 0%, #eef5ff 55%, #deedff 100%);
+        border-bottom: 1px solid #dbe7f5;
+        padding: clamp(1.6rem, 3vw, 2.5rem);
+    }
+
+    .job-detail-header::after {
+        position: absolute;
+        z-index: -1;
+        top: -5rem;
+        right: 5%;
+        width: 13rem;
+        height: 13rem;
+        border: 1px solid rgba(13, 110, 253, 0.12);
+        border-radius: 50%;
+        content: '';
     }
 
     .job-company-tag {
@@ -130,7 +146,8 @@ if (!function_exists('cg_render_safe_text')) {
         letter-spacing: 0.08em;
         text-transform: uppercase;
         color: var(--cg-primary);
-        background: rgba(13, 110, 253, 0.06);
+        background: rgba(13, 110, 253, 0.09);
+        border: 1px solid rgba(13, 110, 253, 0.1);
         border-radius: 999px;
         padding: 0.42rem 0.7rem;
         margin-bottom: 0.9rem;
@@ -138,7 +155,7 @@ if (!function_exists('cg_render_safe_text')) {
 
     .job-detail-header h1 {
         margin: 0;
-        font-size: clamp(2rem, 4vw, 2.8rem);
+        font-size: clamp(2.1rem, 4vw, 3.15rem);
         line-height: 1.15;
         letter-spacing: -0.04em;
         color: var(--cg-accent);
@@ -147,49 +164,68 @@ if (!function_exists('cg_render_safe_text')) {
     .job-header-meta {
         display: flex;
         flex-wrap: wrap;
-        gap: 0.9rem 1.2rem;
-        margin-top: 1rem;
-        color: var(--cg-muted);
-        font-size: 0.95rem;
+        gap: 0.65rem;
+        margin-top: 1.25rem;
+        color: #526b8e;
+        font-size: 0.9rem;
     }
 
     .job-header-meta span {
         display: inline-flex;
         align-items: center;
-        gap: 0.5rem;
+        gap: 0.45rem;
+        padding: 0.55rem 0.72rem;
+        background: rgba(255, 255, 255, 0.78);
+        border: 1px solid rgba(202, 219, 241, 0.9);
+        border-radius: 0.65rem;
     }
 
     .job-header-meta i {
         color: var(--cg-primary);
     }
 
+    .job-header-meta span:nth-child(2) i { color: #f08a1b; }
+    .job-header-meta span:nth-child(3) i { color: #7c4de8; }
+    .job-header-meta span:nth-child(4) i { color: #009a78; }
+
     .job-detail-body {
-        padding: 1.5rem;
+        padding: clamp(1.25rem, 2.5vw, 2rem);
     }
 
     .detail-main {
-        padding-right: 0.5rem;
+        padding-right: 0.35rem;
     }
 
     .detail-section {
-        border: 1px solid var(--cg-border);
+        border: 1px solid #e0e8f2;
         background: var(--cg-white);
-        border-radius: 1rem;
-        padding: 1.25rem;
-        margin-bottom: 1rem;
+        border-radius: 1.05rem;
+        padding: 1.4rem 1.5rem;
+        margin-bottom: 1.1rem;
     }
 
     .detail-section h3 {
         color: var(--cg-accent);
-        font-size: 1.15rem;
-        margin-bottom: 0.75rem;
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        font-size: 1.2rem;
+        margin-bottom: 0.85rem;
         font-weight: 700;
+    }
+
+    .detail-section h3::before {
+        width: 0.28rem;
+        height: 1.3rem;
+        background: linear-gradient(180deg, #1d70f7, #65a4ff);
+        border-radius: 99px;
+        content: '';
     }
 
     .detail-section p,
     .detail-section li {
-        color: var(--cg-text);
-        line-height: 1.8;
+        color: #526b8e;
+        line-height: 1.85;
     }
 
     .detail-section ul {
@@ -203,11 +239,11 @@ if (!function_exists('cg_render_safe_text')) {
     }
 
     .sidebar-card {
-        border: 1px solid var(--cg-border);
-        background: var(--cg-light);
-        border-radius: 1rem;
-        padding: 1.25rem;
-        margin-bottom: 1rem;
+        border: 1px solid #e0e8f2;
+        background: #fbfdff;
+        border-radius: 1.05rem;
+        padding: 1.4rem;
+        margin-bottom: 1.1rem;
     }
 
     .sidebar-card h4 {
@@ -226,9 +262,10 @@ if (!function_exists('cg_render_safe_text')) {
         display: flex;
         justify-content: space-between;
         gap: 1rem;
-        padding: 0.7rem 0;
-        border-bottom: 1px solid rgba(15, 23, 42, 0.06);
-        color: var(--cg-text);
+        padding: 0.75rem 0;
+        border-bottom: 1px solid #e7edf5;
+        color: #4c6485;
+        font-size: 0.92rem;
     }
 
     .quick-list li:last-child {
@@ -241,12 +278,27 @@ if (!function_exists('cg_render_safe_text')) {
         font-weight: 600;
     }
 
+    .quick-list span {
+        color: #526b8e;
+        text-align: right;
+    }
+
     .apply-panel {
-        background: linear-gradient(180deg, rgba(13, 110, 253, 0.03), rgba(255, 255, 255, 0));
+        background: linear-gradient(145deg, #f0f6ff 0%, #fbfdff 72%);
+        border-color: #cfe0fa;
     }
 
     .apply-panel .btn {
         width: 100%;
+        min-height: 3.2rem;
+        box-shadow: 0 10px 20px rgba(13, 110, 253, 0.16);
+    }
+
+    @media (min-width: 992px) {
+        .job-detail-body aside {
+            position: sticky;
+            top: 1.25rem;
+        }
     }
 
     .alert-inline {
@@ -269,6 +321,11 @@ if (!function_exists('cg_render_safe_text')) {
         .job-detail-header,
         .job-detail-body {
             padding: 1rem;
+        }
+
+        .detail-section,
+        .sidebar-card {
+            padding: 1.15rem;
         }
     }
 </style>

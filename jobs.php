@@ -545,7 +545,7 @@ if ($categoryFilter !== '') {
                     <div class="col-lg-2 col-md-6">
                         <label class="form-label visually-hidden" for="jobType">Job type</label>
                         <select id="jobType" name="job_type" class="form-select">
-                            <option value="">All job types</option>
+                            <option value="">Job Types</option>
                             <?php foreach ($jobTypes as $type): ?>
                                 <option value="<?php echo htmlspecialchars((string)$type, ENT_QUOTES, 'UTF-8'); ?>" <?php echo $jobTypeFilter === (string)$type ? 'selected' : ''; ?>><?php echo htmlspecialchars((string)$type, ENT_QUOTES, 'UTF-8'); ?></option>
                             <?php endforeach; ?>

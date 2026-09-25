@@ -375,6 +375,52 @@ $conn->close();
     flex-wrap: wrap;
 }
 
+.filter-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    flex: 0 0 auto;
+}
+
+.filter-actions .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    min-height: 44px;
+    padding: 0.65rem 1rem;
+    font-weight: 700;
+}
+
+.filter-actions .filter-apply {
+    min-width: 108px;
+    color: #fff;
+    border-color: var(--cg-primary);
+    background: var(--cg-primary);
+    box-shadow: 0 8px 16px rgba(13, 110, 253, 0.16);
+}
+
+.filter-actions .filter-apply:hover,
+.filter-actions .filter-apply:focus {
+    color: #fff;
+    border-color: #095fd5;
+    background: #095fd5;
+}
+
+.filter-actions .filter-reset {
+    min-width: 90px;
+    color: #526b8e;
+    border: 1px solid #d6e1ef;
+    background: #fff;
+}
+
+.filter-actions .filter-reset:hover,
+.filter-actions .filter-reset:focus {
+    color: var(--cg-primary);
+    border-color: #b9d2f7;
+    background: #f3f8ff;
+}
+
 .search-wrap {
     position: relative;
     flex: 1 1 330px;
@@ -407,7 +453,9 @@ $conn->close();
 }
 
 .table-panel {
-    padding: 0.2rem 0;
+    padding: 0.25rem 0;
+    border-color: #d9e6f5;
+    overflow: hidden;
 }
 
 .table-wrap {
@@ -420,33 +468,38 @@ $conn->close();
 }
 
 .table thead th {
-    background: rgba(13,110,253,0.02);
-    color: var(--cg-muted);
-    font-size: 0.76rem;
-    letter-spacing: 0.05em;
+    background: linear-gradient(180deg, #f3f8ff 0%, #eaf3ff 100%);
+    color: #42648d;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.075em;
     text-transform: uppercase;
-    padding: 0.9rem 1rem;
-    border-bottom: 1px solid var(--cg-border);
+    padding: 1rem;
+    border-top: 1px solid #dbe9fa;
+    border-bottom: 1px solid #cddff5;
 }
 
 .table tbody td {
     padding: 1rem;
     vertical-align: middle;
-    border-bottom: 1px solid rgba(15, 23, 42, 0.04);
+    color: #273f60;
+    font-size: 0.95rem;
+    border-bottom: 1px solid #edf1f6;
 }
 
 .table tbody tr:hover {
-    background: rgba(13,110,253,0.02);
+    background: #f9fbff;
 }
 
 .job-cell {
-    min-width: 260px;
+    min-width: 0;
 }
 
 .job-title {
     font-weight: 700;
     color: var(--cg-accent);
     line-height: 1.3;
+    font-size: 1rem;
 }
 
 .job-meta {
@@ -457,6 +510,10 @@ $conn->close();
     color: var(--cg-muted);
     font-size: 0.83rem;
     margin-top: 0.2rem;
+}
+
+.table tbody td:not(:first-child) {
+    font-weight: 500;
 }
 
 .job-meta .dot {
@@ -493,13 +550,85 @@ $conn->close();
 .table-actions {
     display: flex;
     justify-content: flex-end;
-    gap: 0.5rem;
+    gap: 0.35rem;
     white-space: nowrap;
 }
 
 .table-actions .btn {
-    padding: 0.45rem 0.7rem;
-    font-size: 0.8rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    padding: 0;
+    border-radius: 0.7rem;
+    font-size: 1rem;
+}
+
+@media (min-width: 1200px) {
+    .table-wrap .table {
+        width: 100%;
+        table-layout: fixed;
+    }
+
+    .table-wrap .table th,
+    .table-wrap .table td {
+        padding-right: 0.7rem;
+        padding-left: 0.7rem;
+    }
+
+    .table-wrap .table th:nth-child(1),
+    .table-wrap .table td:nth-child(1) { width: 27%; }
+    .table-wrap .table th:nth-child(2),
+    .table-wrap .table td:nth-child(2) { width: 14%; }
+    .table-wrap .table th:nth-child(3),
+    .table-wrap .table td:nth-child(3) { width: 10%; }
+    .table-wrap .table th:nth-child(4),
+    .table-wrap .table td:nth-child(4) { width: 9%; }
+    .table-wrap .table th:nth-child(5),
+    .table-wrap .table td:nth-child(5) { width: 9%; }
+    .table-wrap .table th:nth-child(6),
+    .table-wrap .table td:nth-child(6) { width: 12%; white-space: nowrap; }
+    .table-wrap .table th:nth-child(7),
+    .table-wrap .table td:nth-child(7) { width: 8%; }
+    .table-wrap .table th:nth-child(8),
+    .table-wrap .table td:nth-child(8) { width: 11%; }
+
+    .table-wrap .table td:nth-child(2),
+    .table-wrap .table td:nth-child(3),
+    .table-wrap .table td:nth-child(4) {
+        overflow-wrap: anywhere;
+    }
+}
+
+.table-actions .action-toggle {
+    color: #d97706;
+    border-color: #f4d6a7;
+    background: #fffaf1;
+}
+
+.table-actions .action-toggle:hover,
+.table-actions .action-toggle:focus {
+    color: #fff;
+    border-color: #d97706;
+    background: #d97706;
+}
+
+.table-actions .action-view {
+    color: #2563eb;
+    border-color: #c9dcff;
+    background: #f6f9ff;
+}
+
+.table-actions .action-view:hover,
+.table-actions .action-view:focus {
+    color: #fff;
+    border-color: #2563eb;
+    background: #2563eb;
+}
+
+.table-actions .action-edit {
+    box-shadow: 0 7px 14px rgba(13, 110, 253, 0.14);
 }
 
 .empty-box {
@@ -564,6 +693,14 @@ $conn->close();
         align-items: stretch;
     }
 
+    .filter-actions {
+        width: 100%;
+    }
+
+    .filter-actions .btn {
+        flex: 1 1 0;
+    }
+
     .result-count {
         width: 100%;
         margin-left: 0;
@@ -572,7 +709,7 @@ $conn->close();
 }
 /* Shared admin visual language: presentation-only overrides. */
 .admin-root { gap:24px; padding:24px; background:#f4f7fb; }
-.admin-root .sidebar { width:248px; min-height:calc(100vh - 48px); height:auto; align-self:flex-start; padding:18px 14px; border:1px solid rgba(255,255,255,.14); border-radius:20px; background:linear-gradient(155deg,#102c54 0%,#16497f 56%,#0c8879 130%) !important; box-shadow:0 18px 42px rgba(20,57,102,.22); }
+.admin-root .sidebar { width:237px; min-width:237px; flex:0 0 237px; min-height:calc(100vh - 48px); height:auto; align-self:flex-start; padding:18px 14px; border:1px solid rgba(255,255,255,.14); border-radius:20px; background:linear-gradient(155deg,#102c54 0%,#16497f 56%,#0c8879 130%) !important; box-shadow:0 18px 42px rgba(20,57,102,.22); }
 .sidebar .brand-wrap { gap:11px; padding:4px 8px 18px; border-color:rgba(255,255,255,.18); }.sidebar .brand-mark-sm { display:inline-flex; align-items:center; justify-content:center; width:42px; height:42px; padding:4px; border-radius:12px; background:#fff; }.sidebar .brand-title { color:#fff; font-size:.92rem; font-weight:800; }.sidebar .brand-subtitle { color:rgba(232,244,255,.72); }
 .sidebar .sidebar-nav { gap:4px; margin-top:20px; }.sidebar .nav-link-admin { position:relative; gap:12px; padding:11px 12px; border-radius:11px; color:rgba(235,246,255,.8); font-size:.92rem; font-weight:650; transition:background .2s ease,color .2s ease,transform .2s ease; }.sidebar .nav-link-admin i { width:20px; font-size:1.08rem; text-align:center; }.sidebar .nav-link-admin:hover,.sidebar .nav-link-admin:focus { color:#fff; background:rgba(255,255,255,.12); transform:translateX(2px); }.sidebar .nav-link-admin.active { color:#fff; background:rgba(255,255,255,.18); box-shadow:inset 0 1px 0 rgba(255,255,255,.12); }.sidebar .nav-link-admin.active::before { content:""; position:absolute; left:0; width:4px; height:24px; border-radius:0 5px 5px 0; background:#54e2a6; }.sidebar .sidebar-footer { margin-top:20px; padding-top:14px; border-color:rgba(255,255,255,.18); }.sidebar .sidebar-footer .nav-link-admin:last-child { color:#ffd0cd; }.sidebar .sidebar-footer .nav-link-admin:last-child:hover { color:#fff; background:rgba(220,38,38,.2); }
 .main-panel .admin-topbar { min-height:73px; padding:4px 0 20px; margin-bottom:8px; border:0; }.main-panel .admin-topbar .title-area h1 { color:#12213d; font-size:1.65rem; letter-spacing:-.04em; }.main-panel .admin-topbar .subtitle { color:#77849a; }.main-panel .header-search,.main-panel .header-clock,.main-panel .dark-toggle,.main-panel .profile-control { border-color:#e0e8f2; border-radius:12px; box-shadow:0 5px 16px rgba(29,59,101,.04); }.main-panel .profile-control .avatar { color:#fff; background:linear-gradient(135deg,#1e40af,#3b82f6); }
@@ -684,13 +821,13 @@ $conn->close();
                     </div>
 
                     <select name="status" class="form-select" aria-label="Filter by status">
-                        <option value="">All statuses</option>
+                        <option value="">Status</option>
                         <option value="active" <?php if ($statusFilter === 'active') echo 'selected'; ?>>Active</option>
                         <option value="inactive" <?php if ($statusFilter === 'inactive') echo 'selected'; ?>>Inactive</option>
                     </select>
 
                     <select name="job_type" class="form-select" aria-label="Filter by job type">
-                        <option value="">All job types</option>
+                        <option value="">Job Types</option>
                         <?php foreach ($jobTypes as $jobType): ?>
                             <option value="<?php echo htmlspecialchars($jobType, ENT_QUOTES, 'UTF-8'); ?>" <?php if ($jobTypeFilter === $jobType) echo 'selected'; ?>>
                                 <?php echo htmlspecialchars($jobType, ENT_QUOTES, 'UTF-8'); ?>
@@ -698,8 +835,10 @@ $conn->close();
                         <?php endforeach; ?>
                     </select>
 
-                    <button type="submit" class="btn btn-outline-primary">Apply</button>
-                    <a href="jobs.php" class="btn btn-link text-decoration-none">Reset</a>
+                    <div class="filter-actions">
+                        <button type="submit" class="btn filter-apply"><i class="bi bi-funnel"></i>Apply</button>
+                        <a href="jobs.php" class="btn filter-reset"><i class="bi bi-arrow-counterclockwise"></i>Reset</a>
+                    </div>
 
                     <div class="result-count">Showing <?php echo count($jobs); ?> of <?php echo $totalJobs; ?> results</div>
                 </form>
@@ -763,10 +902,12 @@ $conn->close();
                                                     <input type="hidden" name="job_id" value="<?php echo (int)($job['id'] ?? 0); ?>">
                                                     <?php $status = strtolower((string)($job['status'] ?? 'inactive')); $toggleStatus = $status === 'active' ? 'inactive' : 'active'; $toggleLabel = $status === 'active' ? 'Deactivate' : 'Activate'; ?>
                                                     <input type="hidden" name="new_status" value="<?php echo htmlspecialchars($toggleStatus, ENT_QUOTES, 'UTF-8'); ?>">
-                                                    <button type="submit" class="btn btn-sm btn-outline-secondary"><?php echo htmlspecialchars($toggleLabel, ENT_QUOTES, 'UTF-8'); ?></button>
+                                                    <button type="submit" class="btn btn-sm action-toggle" title="<?php echo htmlspecialchars($toggleLabel, ENT_QUOTES, 'UTF-8'); ?> job" aria-label="<?php echo htmlspecialchars($toggleLabel, ENT_QUOTES, 'UTF-8'); ?> job">
+                                                        <i class="bi <?php echo $status === 'active' ? 'bi-pause-circle' : 'bi-play-circle'; ?>" aria-hidden="true"></i>
+                                                    </button>
                                                 </form>
-                                                <a href="job-details.php?id=<?php echo (int)($job['id'] ?? 0); ?>" class="btn btn-sm btn-outline-secondary">View</a>
-                                                <a href="edit-job.php?id=<?php echo (int)($job['id'] ?? 0); ?>" class="btn btn-sm btn-primary">Edit</a>
+                                                <a href="job-details.php?id=<?php echo (int)($job['id'] ?? 0); ?>" class="btn btn-sm action-view" title="View job" aria-label="View job"><i class="bi bi-eye" aria-hidden="true"></i></a>
+                                                <a href="edit-job.php?id=<?php echo (int)($job['id'] ?? 0); ?>" class="btn btn-sm btn-primary action-edit" title="Edit job" aria-label="Edit job"><i class="bi bi-pencil-square" aria-hidden="true"></i></a>
                                             </div>
                                         </td>
                                     </tr>

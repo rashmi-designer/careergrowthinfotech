@@ -693,7 +693,7 @@ $conn->close();
                 </div>
 
                 <select name="status" class="form-select" aria-label="Filter by application status">
-                    <option value="">All statuses</option>
+                    <option value="">Status</option>
                     <?php foreach ($statusValues as $statusValue): ?>
                         <option value="<?php echo htmlspecialchars($statusValue, ENT_QUOTES, 'UTF-8'); ?>" <?php if ($statusFilter === $statusValue) echo 'selected'; ?>>
                             <?php echo htmlspecialchars($statusValue, ENT_QUOTES, 'UTF-8'); ?>

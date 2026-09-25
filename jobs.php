@@ -193,10 +193,15 @@ if ($categoryFilter !== '') {
     }
 
     .jobs-hero {
-        background: rgba(13, 110, 253, 0.04);
-        border: 1px solid rgba(13, 110, 253, 0.1);
-        border-radius: 1.25rem;
-        padding: 1.5rem 1.25rem;
+        overflow: hidden;
+        background:
+            radial-gradient(circle at 82% 38%, rgba(255,255,255,.42), transparent 25%),
+            radial-gradient(circle at 100% 0%, rgba(13,110,253,.24), transparent 36%),
+            linear-gradient(118deg, #f9fbff 0%, #edf4ff 36%, #c9e0ff 70%, #9bc7ff 100%);
+        border: 1px solid rgba(13, 110, 253, 0.16);
+        border-radius: 1.5rem;
+        padding: 1rem;
+        box-shadow: 0 18px 42px rgba(13, 110, 253, 0.08);
         margin-bottom: 1.5rem;
     }
 
@@ -211,17 +216,55 @@ if ($categoryFilter !== '') {
 
     .jobs-hero h1 {
         margin: 0;
-        font-size: clamp(2rem, 4vw, 3rem);
+        font-size: clamp(2.2rem, 4vw, 3.5rem);
         font-weight: 800;
         letter-spacing: -0.04em;
-        color: var(--cg-accent);
+        color: #102b50;
+        line-height: 1.12;
     }
 
     .jobs-hero p {
-        color: var(--cg-muted);
+        color: #4a607a;
         margin-top: 0.75rem;
-        max-width: 42rem;
+        max-width: 52ch;
+        font-size: 1.08rem;
+        line-height: 1.65;
     }
+
+    .jobs-hero-card {
+        padding: clamp(1.25rem, 2.5vw, 1.75rem);
+        background: rgba(255,255,255,.9);
+        border: 1px solid rgba(13,110,253,.1);
+        border-radius: 1.1rem;
+        box-shadow: 0 18px 40px rgba(15,23,42,.08);
+    }
+
+    .jobs-hero-card-title { color: #18375e; font-size: 1.05rem; font-weight: 700; }
+    .jobs-hero-icon {
+        width: 52px;
+        height: 52px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 1rem;
+        background: linear-gradient(145deg, rgba(18,103,232,.08), rgba(18,103,232,.18));
+        color: #1267e8;
+        font-size: 1.35rem;
+    }
+
+    .jobs-hero-stat {
+        margin: 1.35rem 0 1rem;
+        padding: 1rem;
+        border: 1px solid #d9e7fa;
+        border-radius: .85rem;
+        background: #f6faff;
+    }
+
+    .jobs-hero-stat strong { display: block; color: #0d6efd; font-size: 1.85rem; line-height: 1; }
+    .jobs-hero-stat span { color: #506b89; font-size: .88rem; }
+
+    .jobs-hero-actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.5rem; }
+    .jobs-hero-actions .btn { min-width: 145px; }
 
     .jobs-toolbar {
         background: var(--cg-white);
@@ -240,13 +283,19 @@ if ($categoryFilter !== '') {
     }
 
     .job-card {
+        position: relative;
         background: var(--cg-white);
         border: 1px solid var(--cg-border);
         border-radius: 1rem;
         box-shadow: 0 12px 28px rgba(15, 23, 42, 0.04);
-        padding: 1.25rem;
+        padding: 1.5rem;
         margin-bottom: 1rem;
+        transition: box-shadow .2s ease, border-color .2s ease;
     }
+
+    .job-card::before { display: none; }
+    .job-card:hover { border-color: rgba(13,110,253,.24); box-shadow: 0 16px 34px rgba(15, 23, 42, .07); }
+    .job-card-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
 
     .job-company {
         display: inline-flex;
@@ -282,22 +331,25 @@ if ($categoryFilter !== '') {
     .job-meta {
         display: flex;
         flex-wrap: wrap;
-        gap: 0.9rem 1.2rem;
-        margin-top: 1rem;
-        color: var(--cg-muted);
-        font-size: 0.93rem;
+        gap: .65rem 1.35rem;
+        margin-top: .9rem;
     }
 
     .job-meta span {
         display: inline-flex;
         align-items: center;
         gap: 0.45rem;
+        color: var(--cg-muted);
+        font-size: .93rem;
     }
 
     .job-meta i {
-        color: var(--cg-primary);
+        color: #1267e8;
         font-size: 0.95rem;
     }
+
+    .job-meta span:nth-child(2) i { color: #e56f16; }
+    .job-meta span:nth-child(3) i { color: #7456d9; }
 
     .job-card .badge {
         border-radius: 999px;
@@ -314,7 +366,7 @@ if ($categoryFilter !== '') {
     }
 
     .job-card .salary {
-        margin-top: 1rem;
+        margin-top: .9rem;
         font-weight: 700;
         color: var(--cg-accent);
         display: inline-flex;
@@ -323,8 +375,10 @@ if ($categoryFilter !== '') {
     }
 
     .job-card .salary i {
-        color: var(--cg-primary);
+        color: #078b68;
     }
+
+    .job-status i { color: #e56f16; }
 
     .job-actions {
         display: flex;
@@ -332,7 +386,7 @@ if ($categoryFilter !== '') {
         align-items: center;
         gap: 0.85rem;
         flex-wrap: wrap;
-        margin-top: 1.2rem;
+        margin-top: 1rem;
         padding-top: 1rem;
         border-top: 1px solid rgba(15, 23, 42, 0.06);
     }
@@ -343,14 +397,40 @@ if ($categoryFilter !== '') {
     }
 
     .job-actions .btn {
-        min-width: 150px;
+        min-width: 145px;
+        padding: .7rem 1.2rem;
+        font-weight: 600;
+    }
+
+    /* Match the shared primary and outline CTA buttons used across the site. */
+    .job-actions .btn-primary {
+        background: var(--cg-primary);
+        border-color: var(--cg-primary);
+        color: var(--cg-white);
+        box-shadow: 0 10px 20px rgba(13, 110, 253, .18);
+    }
+
+    .job-actions .btn-outline-primary {
+        border-color: var(--cg-primary);
+        color: var(--cg-primary);
+        background: transparent;
     }
 
     .job-actions .btn-primary:hover,
     .job-actions .btn-primary:focus,
     .job-actions .btn-outline-primary:hover,
     .job-actions .btn-outline-primary:focus {
+        background: var(--cg-primary);
+        border-color: var(--cg-primary);
         color: var(--cg-white);
+    }
+
+    @media (max-width: 767.98px) {
+        .job-card-header { flex-direction: column; }
+        .job-meta { gap: .65rem 1rem; }
+        .job-actions { align-items: stretch; }
+        .job-actions > .d-flex { width: 100%; }
+        .job-actions .btn { flex: 1; min-width: 0; }
     }
 
     .empty-state {
@@ -427,19 +507,36 @@ if ($categoryFilter !== '') {
     <div class="row justify-content-center">
         <div class="col-xl-10">
             <div class="jobs-hero">
-                <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end gap-3">
-                    <div>
+                <div class="row g-4 align-items-center p-2 p-lg-4">
+                    <div class="col-lg-7">
                         <div class="eyebrow">Career Opportunities</div>
                         <h1>Find the right role for your next step</h1>
+                        <p>Explore current openings from Career Grow Infotech and discover roles that match your skills, location, and career goals.</p>
+                        <div class="jobs-hero-actions">
+                            <a href="#job-search" class="btn btn-primary">Explore openings</a>
+                            <a href="contact.php" class="btn btn-outline-primary">Talk to our team</a>
+                        </div>
                     </div>
-                    <a href="index.php" class="badge bg-primary-subtle text-primary px-3 py-2 rounded-pill text-decoration-none">
-                        <i class="bi bi-briefcase me-2"></i>Career Grow Infotech
-                    </a>
+                    <div class="col-lg-5">
+                        <div class="jobs-hero-card">
+                            <div class="d-flex align-items-center justify-content-between gap-3">
+                                <div>
+                                    <div class="eyebrow mb-1">Your job search</div>
+                                    <div class="jobs-hero-card-title">Opportunities curated for you</div>
+                                </div>
+                                <div class="jobs-hero-icon"><i class="bi bi-briefcase"></i></div>
+                            </div>
+                            <div class="jobs-hero-stat">
+                                <strong><?php echo (int) $totalJobs; ?></strong>
+                                <span>active <?php echo $totalJobs === 1 ? 'opportunity' : 'opportunities'; ?> available now</span>
+                            </div>
+                            <div class="small text-muted">Filter openings by role, location, or experience to find your best match.</div>
+                        </div>
+                    </div>
                 </div>
-                <p>Explore current openings from Career Grow Infotech and discover roles that match your skills, location, and career goals.</p>
             </div>
 
-            <div class="jobs-toolbar">
+            <div class="jobs-toolbar" id="job-search">
                 <form method="get" class="row g-3 align-items-center">
                     <div class="col-lg-3 col-md-6">
                         <label class="form-label visually-hidden" for="search">Search jobs</label>
@@ -510,7 +607,7 @@ if ($categoryFilter !== '') {
                     $cardCompany = cg_get_job_company_name($job['company'] ?? '');
                     ?>
                     <article class="job-card">
-                        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-start gap-3">
+                        <div class="job-card-header">
                             <div class="flex-grow-1">
                                 <span class="job-company"><?php echo htmlspecialchars($cardCompany, ENT_QUOTES, 'UTF-8'); ?></span>
                                 <h3><a href="job-details.php?id=<?php echo $jobId; ?>"><?php echo htmlspecialchars($jobTitle, ENT_QUOTES, 'UTF-8'); ?></a></h3>

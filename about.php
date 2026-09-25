@@ -3,10 +3,14 @@
 
 <style>
     .about-hero {
-        background: linear-gradient(135deg, rgba(13, 110, 253, 0.08), rgba(11, 31, 51, 0.02));
-        border: 1px solid rgba(13, 110, 253, 0.08);
+        background:
+            radial-gradient(circle at 82% 38%, rgba(255, 255, 255, 0.38), transparent 25%),
+            radial-gradient(circle at 100% 0%, rgba(13, 110, 253, 0.32), transparent 36%),
+            linear-gradient(118deg, #f9fbff 0%, #edf4ff 32%, #c9e0ff 67%, #82b8ff 100%);
+        border: 1px solid rgba(13, 110, 253, 0.16);
         border-radius: 1.5rem;
         overflow: hidden;
+        box-shadow: 0 18px 42px rgba(13, 110, 253, 0.08);
     }
 
     .about-badge {
@@ -38,6 +42,22 @@
         height: 100%;
     }
 
+    .about-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex: 0 0 auto;
+        border-radius: 50%;
+    }
+
+    .about-icon--blue { background: #dbeafe; color: #0d6efd; }
+    .about-icon--orange { background: #fff0e7; color: #f06b19; }
+    .about-icon--purple { background: #eee9ff; color: #7650dc; }
+    .about-icon--green { background: #e2f4ee; color: #009874; }
+
+    .about-check--blue { color: #0d6efd; }
+    .about-check--orange { color: #f06b19; }
+
     .about-timeline {
         position: relative;
         border-left: 2px solid rgba(13, 110, 253, 0.18);
@@ -66,9 +86,46 @@
     }
 
     .about-cta-banner {
-        background: linear-gradient(135deg, var(--cg-primary) 0%, var(--cg-accent) 100%);
+        background: linear-gradient(112deg, #fbfdff 0%, #edf5ff 52%, #d9eaff 100%);
+        border: 1px solid #c7ddfb;
         border-radius: 1.5rem;
-        box-shadow: 0 18px 40px rgba(11, 31, 51, 0.18);
+        box-shadow: 0 18px 40px rgba(26, 82, 151, 0.12);
+    }
+
+    .about-cta-banner .text-white-50 {
+        color: #466687 !important;
+    }
+
+    .about-cta-banner h2 {
+        color: #102b50;
+    }
+
+    .about-cta-banner .btn-light {
+        background: #0d6efd;
+        border-color: #0d6efd;
+        color: #ffffff;
+        transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    }
+
+    .about-cta-banner .btn-light:hover,
+    .about-cta-banner .btn-light:focus {
+        background: #0a58ca;
+        border-color: #0a58ca;
+        color: #ffffff;
+        box-shadow: 0 10px 20px rgba(10, 88, 202, 0.24);
+        transform: translateY(-2px);
+    }
+
+    .about-cta-banner .btn-outline-light {
+        border-color: #0d6efd;
+        color: #0a58ca;
+    }
+
+    .about-cta-banner .btn-outline-light:hover,
+    .about-cta-banner .btn-outline-light:focus {
+        background: #0d6efd;
+        border-color: #0d6efd;
+        color: #ffffff;
     }
 
 </style>
@@ -97,16 +154,16 @@
                                     <p class="text-uppercase text-primary fw-semibold small mb-1">Our mission</p>
                                     <h3 class="mb-0 fw-bold">Career clarity. Better hiring.</h3>
                                 </div>
-                                <div class="bg-primary-subtle rounded-circle d-flex align-items-center justify-content-center" style="width: 54px; height: 54px;">
-                                    <i class="bi bi-graph-up-arrow text-primary fs-4" aria-hidden="true"></i>
+                                <div class="about-icon about-icon--blue" style="width: 54px; height: 54px;">
+                                    <i class="bi bi-graph-up-arrow fs-4" aria-hidden="true"></i>
                                 </div>
                             </div>
 
                             <div class="row g-3">
                                 <div class="col-12">
                                     <div class="d-flex align-items-center gap-3 border rounded-4 p-3">
-                                        <div class="bg-primary-subtle rounded-circle d-flex align-items-center justify-content-center" style="width: 42px; height: 42px;">
-                                            <i class="bi bi-briefcase-fill text-primary" aria-hidden="true"></i>
+                                        <div class="about-icon about-icon--blue" style="width: 42px; height: 42px;">
+                                            <i class="bi bi-briefcase-fill" aria-hidden="true"></i>
                                         </div>
                                         <div>
                                             <h6 class="mb-1 fw-semibold">Opportunity matching</h6>
@@ -116,8 +173,8 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="d-flex align-items-center gap-3 border rounded-4 p-3">
-                                        <div class="bg-primary-subtle rounded-circle d-flex align-items-center justify-content-center" style="width: 42px; height: 42px;">
-                                            <i class="bi bi-people-fill text-primary" aria-hidden="true"></i>
+                                        <div class="about-icon about-icon--purple" style="width: 42px; height: 42px;">
+                                            <i class="bi bi-people-fill" aria-hidden="true"></i>
                                         </div>
                                         <div>
                                             <h6 class="mb-1 fw-semibold">Talent-first approach</h6>
@@ -143,11 +200,11 @@
                     <p class="text-muted mb-4">From identifying strong talent to connecting businesses with capable professionals, our process is shaped by market understanding, personalized guidance and a commitment to meaningful placement outcomes.</p>
                     <div class="d-flex flex-wrap gap-3">
                         <div class="d-flex align-items-center gap-2 text-dark fw-semibold">
-                            <i class="bi bi-check-circle-fill text-primary" aria-hidden="true"></i>
+                            <i class="bi bi-check-circle-fill about-check--blue" aria-hidden="true"></i>
                             Candidate-focused support
                         </div>
                         <div class="d-flex align-items-center gap-2 text-dark fw-semibold">
-                            <i class="bi bi-check-circle-fill text-primary" aria-hidden="true"></i>
+                            <i class="bi bi-check-circle-fill about-check--orange" aria-hidden="true"></i>
                             Employer-ready hiring approach
                         </div>
                     </div>
@@ -157,8 +214,8 @@
                     <div class="row g-3">
                         <div class="col-md-6">
                             <div class="about-value p-4 h-100">
-                                <div class="bg-primary-subtle rounded-circle d-flex align-items-center justify-content-center mb-3" style="width: 52px; height: 52px;">
-                                    <i class="bi bi-lightbulb text-primary fs-4" aria-hidden="true"></i>
+                                <div class="about-icon about-icon--blue mb-3" style="width: 52px; height: 52px;">
+                                    <i class="bi bi-lightbulb fs-4" aria-hidden="true"></i>
                                 </div>
                                 <h5 class="fw-semibold mb-2">Insight-driven</h5>
                                 <p class="text-muted small">We work with a practical understanding of industry needs and candidate expectations.</p>
@@ -166,8 +223,8 @@
                         </div>
                         <div class="col-md-6">
                             <div class="about-value p-4 h-100">
-                                <div class="bg-primary-subtle rounded-circle d-flex align-items-center justify-content-center mb-3" style="width: 52px; height: 52px;">
-                                    <i class="bi bi-shield-check text-primary fs-4" aria-hidden="true"></i>
+                                <div class="about-icon about-icon--orange mb-3" style="width: 52px; height: 52px;">
+                                    <i class="bi bi-shield-check fs-4" aria-hidden="true"></i>
                                 </div>
                                 <h5 class="fw-semibold mb-2">Reliable support</h5>
                                 <p class="text-muted small">Transparent, consistent assistance throughout the hiring and job-search journey.</p>
@@ -175,8 +232,8 @@
                         </div>
                         <div class="col-md-6">
                             <div class="about-value p-4 h-100">
-                                <div class="bg-primary-subtle rounded-circle d-flex align-items-center justify-content-center mb-3" style="width: 52px; height: 52px;">
-                                    <i class="bi bi-people text-primary fs-4" aria-hidden="true"></i>
+                                <div class="about-icon about-icon--purple mb-3" style="width: 52px; height: 52px;">
+                                    <i class="bi bi-people fs-4" aria-hidden="true"></i>
                                 </div>
                                 <h5 class="fw-semibold mb-2">People-first</h5>
                                 <p class="text-muted small">We invest in human connections and long-term career growth, not just quick placements.</p>
@@ -184,8 +241,8 @@
                         </div>
                         <div class="col-md-6">
                             <div class="about-value p-4 h-100">
-                                <div class="bg-primary-subtle rounded-circle d-flex align-items-center justify-content-center mb-3" style="width: 52px; height: 52px;">
-                                    <i class="bi bi-globe2 text-primary fs-4" aria-hidden="true"></i>
+                                <div class="about-icon about-icon--green mb-3" style="width: 52px; height: 52px;">
+                                    <i class="bi bi-globe2 fs-4" aria-hidden="true"></i>
                                 </div>
                                 <h5 class="fw-semibold mb-2">Growth mindset</h5>
                                 <p class="text-muted small">We continuously adapt to changing business needs, candidate goals and market trends.</p>

@@ -93,7 +93,7 @@ if (strpos($scriptPath, '/admin/') !== false && !empty($_SESSION['user_role']) &
                         </a>
                         <div class="copyright">
                             <div>© 2026 Career Grow Infotech Pvt. Ltd.</div>
-                            <div class="small-muted">All rights reserved.</div>
+                            <div class="small-muted">|All rights reserved</div>
                         </div>
                     </div>
 
@@ -155,7 +155,7 @@ if (strpos($scriptPath, '/admin/') !== false && !empty($_SESSION['user_role']) &
                 <ul class="list-unstyled footer-links">
                     <li>Pune</li>
                     <li>Chhatrapati Sambhajinagar</li>
-                    <li><a href="tel:+919850340340">+91 98503 40340</a></li>
+                    <li><a href="tel:9850340340">+91 98503 40340</a></li>
                     <li><a href="mailto:info@careergrowinfotech.com">info@careergrowinfotech.com</a></li>
                     <li><a href="<?php echo htmlspecialchars($whatsappHref, ENT_QUOTES, 'UTF-8'); ?>" target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
                 </ul>
@@ -164,8 +164,11 @@ if (strpos($scriptPath, '/admin/') !== false && !empty($_SESSION['user_role']) &
     </div>
 
     <div class="footer-bottom border-top">
-        <div class="container py-3 text-center">
-            <p class="mb-0 text-secondary footer-credit">© 2026 Career Grow Infotech Pvt. Ltd. All rights reserved. Software Developed &amp; Design By <a href="https://kavyainfoweb.com/" target="_blank" rel="noopener noreferrer">Kavya Infoweb Pvt. Ltd.</a></p>
+        <div class="container py-3">
+            <div class="footer-bottom-content">
+                <span class="footer-legal">&copy; 2026 Career Grow Infotech Pvt. Ltd. All rights reserved.</span>
+                <span class="footer-developer">Software Developed &amp; Designed by <a href="https://kavyainfoweb.com/" target="_blank" rel="noopener noreferrer">Kavya Infoweb Pvt. Ltd.</a></span>
+            </div>
         </div>
     </div>
 </footer>

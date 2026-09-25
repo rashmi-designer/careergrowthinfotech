@@ -94,9 +94,14 @@ require_once __DIR__ . '/includes/navbar.php';
 
 <style>
     .contact-hero {
-        background: linear-gradient(135deg, rgba(13, 110, 253, 0.08), rgba(11, 31, 51, 0.02));
-        border: 1px solid rgba(13, 110, 253, 0.08);
+        overflow: hidden;
+        background:
+            radial-gradient(circle at 82% 38%, rgba(255, 255, 255, 0.42), transparent 25%),
+            radial-gradient(circle at 100% 0%, rgba(13, 110, 253, 0.24), transparent 36%),
+            linear-gradient(118deg, #f9fbff 0%, #edf4ff 36%, #c9e0ff 70%, #9bc7ff 100%);
+        border: 1px solid rgba(13, 110, 253, 0.16);
         border-radius: 1.5rem;
+        box-shadow: 0 18px 42px rgba(13, 110, 253, 0.08);
     }
 
     .contact-badge {
@@ -112,6 +117,33 @@ require_once __DIR__ . '/includes/navbar.php';
         letter-spacing: 0.12em;
         text-transform: uppercase;
     }
+
+    .contact-hero h1 { color: #102b50; line-height: 1.12; }
+    .contact-hero-copy > p { max-width: 55ch; color: #4a607a !important; line-height: 1.65; }
+    .contact-hero-card {
+        padding: clamp(1.25rem, 2.5vw, 1.75rem);
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid rgba(13, 110, 253, 0.1);
+        border-radius: 1.1rem;
+        box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+    }
+    .contact-hero-card h3 { color: #18375e; font-size: 1.25rem; font-weight: 700; }
+    .contact-hero-card-icon {
+        width: 52px;
+        height: 52px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 1rem;
+        background: linear-gradient(145deg, rgba(18,103,232,.08), rgba(18,103,232,.18));
+        color: #1267e8;
+        font-size: 1.35rem;
+    }
+    .contact-hero-points { display: grid; gap: .7rem; margin: 1.25rem 0 0; padding: 0; list-style: none; }
+    .contact-hero-points li { display: flex; align-items: center; gap: .65rem; color: #4b6685; font-size: .92rem; }
+    .contact-hero-points i { color: #1267e8; font-size: 1rem; }
+    .contact-hero-points li:nth-child(2) i { color: #e56f16; }
+    .contact-hero-points li:nth-child(3) i { color: #7456d9; }
 
     .contact-card,
     .contact-form-card,
@@ -145,6 +177,19 @@ require_once __DIR__ . '/includes/navbar.php';
         color: var(--cg-primary);
         font-size: 1.4rem;
         margin-bottom: 1rem;
+    }
+
+    .contact-info-grid > div:nth-child(1) .contact-icon {
+        background: linear-gradient(145deg, rgba(18,103,232,.08), rgba(18,103,232,.18));
+        color: #1267e8;
+    }
+    .contact-info-grid > div:nth-child(2) .contact-icon {
+        background: linear-gradient(145deg, rgba(229,111,22,.08), rgba(229,111,22,.18));
+        color: #e56f16;
+    }
+    .contact-info-grid > div:nth-child(3) .contact-icon {
+        background: linear-gradient(145deg, rgba(116,86,217,.08), rgba(116,86,217,.18));
+        color: #7456d9;
     }
 
     .form-shell {
@@ -239,20 +284,68 @@ require_once __DIR__ . '/includes/navbar.php';
     }
 
     .faq-item {
-        padding: 1.2rem 1.3rem;
+        position: relative;
+        overflow: hidden;
+        padding: 1.35rem;
         height: 100%;
         width: 100%;
+        border-color: rgba(var(--faq-rgb), .18);
+        background: linear-gradient(145deg, rgba(var(--faq-rgb), .08), #ffffff 58%);
+        transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
     }
 
     .faq-grid > [class*="col-"] {
+        --faq-accent: #1267e8;
+        --faq-rgb: 18, 103, 232;
         display: flex;
     }
 
-    .contact-cta {
-        background: linear-gradient(135deg, var(--cg-primary) 0%, var(--cg-accent) 100%);
-        border-radius: 1.5rem;
-        box-shadow: 0 18px 40px rgba(11, 31, 51, 0.18);
+    .faq-grid > [class*="col-"]:nth-child(2) { --faq-accent: #e56f16; --faq-rgb: 229, 111, 22; }
+    .faq-grid > [class*="col-"]:nth-child(3) { --faq-accent: #7456d9; --faq-rgb: 116, 86, 217; }
+    .faq-grid > [class*="col-"]:nth-child(4) { --faq-accent: #078b68; --faq-rgb: 7, 139, 104; }
+    .faq-item:hover { transform: translateY(-4px); border-color: rgba(var(--faq-rgb), .4); box-shadow: 0 18px 34px rgba(var(--faq-rgb), .12); }
+    .faq-question { display: flex; align-items: center; gap: .75rem; margin-bottom: .8rem; }
+    .faq-question h6 { margin: 0; color: #193457; font-size: 1.05rem; line-height: 1.35; }
+    .faq-marker {
+        width: 40px;
+        height: 40px;
+        display: inline-flex;
+        flex: 0 0 auto;
+        align-items: center;
+        justify-content: center;
+        border-radius: .75rem;
+        background: linear-gradient(145deg, rgba(var(--faq-rgb), .1), rgba(var(--faq-rgb), .2));
+        color: var(--faq-accent);
+        font-size: 1.05rem;
     }
+    .faq-item p { color: #58708d !important; line-height: 1.6; }
+
+    .contact-cta {
+        background: linear-gradient(112deg, #fbfdff 0%, #edf5ff 52%, #d9eaff 100%);
+        border: 1px solid #c7ddfb;
+        border-radius: 1.5rem;
+        box-shadow: 0 18px 40px rgba(26, 82, 151, 0.12);
+    }
+
+    .contact-cta .text-white-50 { color: #466687 !important; }
+    .contact-cta h2 { color: #102b50; }
+    .contact-cta .btn-light {
+        background: #0d6efd;
+        border-color: #0d6efd;
+        color: #fff;
+        transition: background-color .2s ease, border-color .2s ease, color .2s ease, box-shadow .2s ease, transform .2s ease;
+    }
+    .contact-cta .btn-light:hover,
+    .contact-cta .btn-light:focus {
+        background: #0a58ca;
+        border-color: #0a58ca;
+        color: #fff;
+        box-shadow: 0 10px 20px rgba(10, 88, 202, .24);
+        transform: translateY(-2px);
+    }
+    .contact-cta .btn-outline-light { border-color: #0d6efd; color: #0a58ca; }
+    .contact-cta .btn-outline-light:hover,
+    .contact-cta .btn-outline-light:focus { background: #0d6efd; border-color: #0d6efd; color: #fff; }
 
     .breadcrumb {
         margin-bottom: 1rem;
@@ -269,26 +362,39 @@ require_once __DIR__ . '/includes/navbar.php';
 <main>
     <section class="py-5">
         <div class="container">
-            <nav aria-label="Breadcrumb" class="breadcrumb mb-4">
-                <ol class="breadcrumb mb-0">
-                    <li class="breadcrumb-item"><a href="index.php" class="text-decoration-none">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Contact</li>
-                </ol>
-            </nav>
-
-            <div class="contact-hero p-4 p-lg-5 text-center">
-                <span class="contact-badge"><i class="bi bi-envelope-paper" aria-hidden="true"></i> Contact</span>
-                <h1 class="display-5 fw-bold mt-3 mb-3">Get in Touch With Us</h1>
-                <p class="text-muted fs-5 mx-auto mb-0" style="max-width: 760px;">
-                    Whether you are looking for a new opportunity, need support with your application, or want to discuss recruitment requirements, Career Grow Infotech is here to help.
-                </p>
+            <div class="contact-hero p-3 p-lg-4">
+                <div class="row g-4 align-items-center p-2 p-lg-4">
+                    <div class="col-lg-7 contact-hero-copy">
+                        <span class="contact-badge"><i class="bi bi-envelope-paper" aria-hidden="true"></i> Contact</span>
+                        <h1 class="display-5 fw-bold mt-3 mb-3">Get in Touch With Us</h1>
+                        <p class="text-muted fs-5 mb-0">
+                            Whether you are looking for a new opportunity, need support with your application, or want to discuss recruitment requirements, Career Grow Infotech is here to help.
+                        </p>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="contact-hero-card">
+                            <div class="d-flex align-items-center justify-content-between gap-3">
+                                <div>
+                                    <p class="text-uppercase text-primary fw-semibold small mb-1">We’re here to help</p>
+                                    <h3 class="mb-0">Start the conversation</h3>
+                                </div>
+                                <div class="contact-hero-card-icon"><i class="bi bi-chat-dots"></i></div>
+                            </div>
+                            <ul class="contact-hero-points">
+                                <li><i class="bi bi-check-circle-fill"></i>Explore career opportunities</li>
+                                <li><i class="bi bi-check-circle-fill"></i>Get application support</li>
+                                <li><i class="bi bi-check-circle-fill"></i>Discuss recruitment needs</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
     <section class="pb-5">
         <div class="container">
-            <div class="row g-4">
+            <div class="row g-4 contact-info-grid">
                 <div class="col-md-6 col-lg-4">
                     <div class="contact-card">
                         <div class="contact-icon"><i class="bi bi-envelope-fill" aria-hidden="true"></i></div>
@@ -301,7 +407,7 @@ require_once __DIR__ . '/includes/navbar.php';
                     <div class="contact-card">
                         <div class="contact-icon"><i class="bi bi-telephone-fill" aria-hidden="true"></i></div>
                         <h4 class="fw-semibold mb-2">Phone</h4>
-                        <p class="text-muted mb-0"><a href="tel:+919850340340" class="text-decoration-none">+91 98503 40340</a></p>
+                        <p class="text-muted mb-0"><a href="tel:9850340340" class="text-decoration-none">+91 98503 40340</a></p>
                     </div>
                 </div>
 
@@ -415,28 +521,28 @@ require_once __DIR__ . '/includes/navbar.php';
             <div class="row g-3 faq-grid">
                 <div class="col-lg-6">
                     <div class="faq-item">
-                        <h6 class="fw-semibold mb-2">How do I apply for a job?</h6>
+                        <div class="faq-question"><span class="faq-marker"><i class="bi bi-send"></i></span><h6>How do I apply for a job?</h6></div>
                         <p class="text-muted mb-0">Browse the current opportunities on the jobs page and submit your application through the available role listing.</p>
                     </div>
                 </div>
 
                 <div class="col-lg-6">
                     <div class="faq-item">
-                        <h6 class="fw-semibold mb-2">Can I contact the team about my application?</h6>
+                        <div class="faq-question"><span class="faq-marker"><i class="bi bi-chat-dots"></i></span><h6>Can I contact the team about my application?</h6></div>
                         <p class="text-muted mb-0">Yes. Use the form above to send your application-related question or message.</p>
                     </div>
                 </div>
 
                 <div class="col-lg-6">
                     <div class="faq-item">
-                        <h6 class="fw-semibold mb-2">Do you support employers and recruitment teams?</h6>
+                        <div class="faq-question"><span class="faq-marker"><i class="bi bi-people"></i></span><h6>Do you support employers and recruitment teams?</h6></div>
                         <p class="text-muted mb-0">Yes. You can contact us to discuss hiring and recruitment requirements.</p>
                     </div>
                 </div>
 
                 <div class="col-lg-6">
                     <div class="faq-item">
-                        <h6 class="fw-semibold mb-2">What if I need general website help?</h6>
+                        <div class="faq-question"><span class="faq-marker"><i class="bi bi-question-circle"></i></span><h6>What if I need general website help?</h6></div>
                         <p class="text-muted mb-0">Use the contact form and mention the issue or assistance needed, and our team will review it.</p>
                     </div>
                 </div>
@@ -451,6 +557,7 @@ require_once __DIR__ . '/includes/navbar.php';
                     <div class="col-lg-8">
                         <p class="text-uppercase fw-semibold small mb-2 text-white-50">Career opportunities</p>
                         <h2 class="fw-bold mb-2">Looking for your next opportunity?</h2>
+                        <p class="text-white-50 mb-0">Explore current roles and take the next confident step in your career journey.</p>
                     </div>
                     <div class="col-lg-4 text-lg-end">
                         <div class="d-flex flex-wrap justify-content-lg-end gap-3">

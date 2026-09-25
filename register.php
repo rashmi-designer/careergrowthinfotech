@@ -105,7 +105,7 @@ require_once __DIR__ . '/includes/navbar.php';
 * , *::before, *::after { box-sizing: border-box; }
 html,body{height:100dvh;margin:0;padding:0}
 .auth-shell{min-height:100dvh;display:flex;align-items:stretch;height:100%;}
-.auth-left{flex:0 0 var(--login-left-width);position:relative;background-size:cover;background-position:center;border-right:1px solid rgba(15,23,42,0.04);}
+.auth-left{flex:0 0 var(--login-left-width);position:relative;overflow:hidden;background-size:cover;background-position:center;border-right:1px solid rgba(15,23,42,0.04);}
 .auth-left::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg, rgba(6,18,42,0.6), rgba(6,18,42,0.55));}
 .auth-left-inner{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;padding:clamp(12px,3vh,36px) clamp(14px,4vw,56px);box-sizing:border-box;color:#fff}
 .logo-badge{display:inline-flex;align-items:center;gap:12px;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.09);backdrop-filter: blur(6px);-webkit-backdrop-filter: blur(6px);box-shadow:0 6px 18px rgba(2,6,23,0.28)}
@@ -126,9 +126,10 @@ html,body{height:100dvh;margin:0;padding:0}
 
 .auth-right{flex:1;display:flex;align-items:center;justify-content:center;padding:clamp(12px,3vh,32px);background:linear-gradient(180deg, rgba(247,249,252,1), rgba(245,247,250,1));}
 .register-card{width:100%;max-width:600px;background:var(--cg-white);border:1px solid rgba(15,23,42,0.04);border-radius:var(--card-radius);padding:clamp(12px,2.5vh,24px);box-shadow:0 22px 44px rgba(15,23,42,0.06);box-sizing:border-box;max-height:calc(100dvh - 32px)}
-.card-header{display:flex;flex-direction:column;align-items:flex-start;gap:6px;margin-bottom:6px}
+.card-header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
 .card-logo-wrapper{display:inline-flex;align-items:center;justify-content:center;padding:6px 8px;border-radius:10px;background:rgba(11,31,51,0.02);border:1px solid rgba(15,23,42,0.03)}
-.card-logo-wrapper img{height:40px;width:auto;display:block}
+.card-logo-wrapper img{height:38px;width:auto;display:block}
+.portal-copy{display:flex;flex-direction:column;gap:2px}
 .portal-name{font-weight:700;font-size:0.95rem}
 .portal-sub{font-size:0.85rem;color:var(--cg-muted)}
 .register-title{font-size:1.6rem;font-weight:800;margin-top:6px}
@@ -165,14 +166,14 @@ html,body{height:100dvh;margin:0;padding:0}
     .form-control{height:48px}
     .form-grid{gap:8px}
     .btn-create{height:50px}
-    .card-header{gap:4px}
+    .card-header{margin-bottom:6px}
     .register-title{font-size:1.45rem;margin-top:4px}
 }
 @media (max-height: 800px) {
     /* Aggressive compaction for short laptop viewports */
     .auth-right{align-items:flex-start;padding-top:14px;padding-bottom:14px}
     .register-card{padding:10px;max-height:calc(100dvh - 20px)}
-    .card-header{gap:4px}
+    .card-header{gap:8px;margin-bottom:4px}
     .portal-name{font-size:0.9rem}
     .portal-sub{font-size:0.82rem}
     .register-title{font-size:1.36rem}
@@ -192,16 +193,8 @@ html,body{height:100dvh;margin:0;padding:0}
 </style>
 
 <main class="auth-shell">
-    <section class="auth-left" style="background-image:url('assets/images/buildcareer1.jpg')">
+    <section class="auth-left" style="background-image:url('assets/images/updateprofile.jpg')">
         <div class="auth-left-inner">
-            <div class="brand-line">
-                <div class="logo-badge"><a href="index.php" aria-label="Career Grow Infotech home"><img src="assets/images/logo.webp" alt="Career Grow Infotech logo"><span class="logo-pill-text">Career Grow Infotech</span></a></div>
-                <div>
-                    <div class="brand-title">Career Grow Infotech</div>
-                    <div class="brand-sub">Candidate Portal</div>
-                </div>
-            </div>
-
             <div class="eyebrow">START YOUR JOURNEY</div>
             <h1 class="left-head">Create Your Account.<br>Start Growing Your Career.</h1>
             <p class="left-desc">Create your Career Grow Infotech account and explore opportunities that match your career goals.</p>
@@ -222,8 +215,6 @@ html,body{height:100dvh;margin:0;padding:0}
                     <div class="feature-text"><h6>Build your professional profile</h6></div>
                 </div>
             </div>
-
-            <div class="left-bottom">A better career<br>starts here...</div>
         </div>
     </section>
 
@@ -231,8 +222,10 @@ html,body{height:100dvh;margin:0;padding:0}
         <div class="register-card" role="region" aria-label="Candidate registration form">
             <div class="card-header">
                 <div class="card-logo-wrapper"><img src="assets/images/logo.webp" alt="Career Grow Infotech logo"></div>
-                <div class="portal-name">Career Grow Infotech</div>
-                <div class="portal-sub">Candidate Portal</div>
+                <div class="portal-copy">
+                    <div class="portal-name">Career Grow Infotech</div>
+                    <div class="portal-sub">Candidate Portal</div>
+                </div>
             </div>
 
             <div class="register-title">Create Your Account</div>

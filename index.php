@@ -820,7 +820,7 @@ require_once __DIR__ . '/includes/navbar.php';
             </div>
 
             <div class="row g-3 mt-4 justify-content-center">
-                <div class="col-md-6">
+                <div class="col-lg-10">
                     <div class="cta-panel card h-100 rounded-soft p-4 reveal" data-index="0">
                         <div class="d-flex align-items-start gap-3 h-100">
                             <div class="cta-icon me-2 d-flex align-items-center justify-content-center" aria-hidden="true">
@@ -1153,7 +1153,7 @@ require_once __DIR__ . '/includes/navbar.php';
                             <span class="contact-strip-icon" aria-hidden="true"><i class="bi bi-telephone-fill"></i></span>
                             <div>
                                 <span class="contact-strip-label">Call us</span>
-                                <a href="tel:+919850340340" class="contact-strip-link">+91 98503 40340</a>
+                                <a href="tel:9850340340" class="contact-strip-link">+91 98503 40340</a>
                             </div>
                         </div>
                     </div>

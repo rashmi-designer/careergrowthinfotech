@@ -200,14 +200,546 @@ require_once __DIR__ . '/includes/navbar.php';
 }
 
 .why-cards .card { border:0; background:var(--cg-white); border-radius:12px; padding:1.2rem; box-shadow: 0 12px 36px rgba(15,23,42,0.04); }
-.final-cta { padding:2.25rem 0; }
-.final-cta .final-cta-card { background: linear-gradient(90deg, var(--cg-primary), var(--cg-primary-dark)); color: #fff; border:0; box-shadow: 0 20px 60px rgba(13,110,253,0.18); }
-.final-cta .final-cta-card .text-soft { color: rgba(255,255,255,0.88) !important; }
-.final-cta .final-cta-card .btn-primary { background:#fff; border-color:#fff; color:var(--cg-primary-dark); }
-.final-cta .final-cta-card .btn-primary:hover,
-.final-cta .final-cta-card .btn-primary:focus { background:var(--cg-primary); border-color:var(--cg-primary); color:#fff; }
+.final-cta { padding: 4rem 0; background: linear-gradient(180deg, #f8fbff, #f3f8ff); }
+.final-cta .final-cta-card {
+    padding: clamp(1.75rem, 4vw, 3.5rem);
+    border: 1px solid #c7ddfb;
+    border-radius: 1.5rem;
+    background: linear-gradient(112deg, #fbfdff 0%, #edf5ff 52%, #d9eaff 100%);
+    box-shadow: 0 18px 40px rgba(26, 82, 151, 0.12);
+}
+.final-cta .cta-eyebrow { margin-bottom: .65rem; color: #356391; font-size: .74rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+.final-cta .final-cta-card h3 { margin-bottom: .7rem; color: #102b50; font-size: clamp(1.85rem, 3vw, 2.55rem); font-weight: 750; line-height: 1.2; }
+.final-cta .final-cta-card .text-soft { max-width: 59ch; color: #466687 !important; font-size: 1.05rem; line-height: 1.65; }
+.final-cta .cta-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .85rem; }
+.final-cta .cta-actions .btn { min-width: 142px; padding: .75rem 1.1rem; font-weight: 600; }
+.final-cta .cta-actions .btn-primary { box-shadow: 0 10px 20px rgba(10, 88, 202, .2); }
+.final-cta .cta-actions .btn-outline-primary { border-color: #0d6efd; color: #0a58ca; }
+.final-cta .cta-actions .btn-outline-primary:hover,
+.final-cta .cta-actions .btn-outline-primary:focus { background: #0d6efd; border-color: #0d6efd; color: #fff; }
+@media (max-width: 991.98px) {
+    .final-cta .cta-actions { justify-content: flex-start; }
+}
+@media (max-width: 575.98px) {
+    .final-cta { padding: 2.75rem 0; }
+    .final-cta .cta-actions { display: grid; grid-template-columns: 1fr; }
+    .final-cta .cta-actions .btn { width: 100%; }
+}
 
 .svc-hero .breadcrumb { background: transparent; padding: 0; }
+
+/* Services hero aligned with the contained About-page hero treatment */
+.svc-hero {
+    padding: 2.75rem 0 3.5rem;
+    background: transparent;
+    overflow: hidden;
+}
+.svc-hero-panel {
+    background:
+        radial-gradient(circle at 82% 38%, rgba(255, 255, 255, 0.42), transparent 25%),
+        radial-gradient(circle at 100% 0%, rgba(13, 110, 253, 0.24), transparent 36%),
+        linear-gradient(118deg, #f9fbff 0%, #edf4ff 36%, #c9e0ff 70%, #9bc7ff 100%);
+    border: 1px solid rgba(13, 110, 253, 0.16);
+    border-radius: 1.5rem;
+    box-shadow: 0 18px 42px rgba(13, 110, 253, 0.08);
+}
+.svc-hero .hero-row { gap: 0; }
+.svc-hero .svc-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    padding: .55rem .9rem;
+    border-radius: 999px;
+    background: rgba(13, 110, 253, 0.09);
+    color: var(--cg-primary) !important;
+    font-weight: 700;
+}
+.svc-hero .section-title {
+    max-width: 14ch;
+    font-size: clamp(2.35rem, 4vw, 4rem);
+    line-height: 1.16;
+    letter-spacing: -0.035em;
+    color: #1f2a3d;
+}
+.svc-hero .breadcrumb {
+    display: inline-flex;
+    width: auto;
+    margin-top: .15rem;
+    padding: .42rem .7rem;
+    border: 1px solid rgba(13, 110, 253, 0.12);
+    border-radius: .65rem;
+    background: rgba(255, 255, 255, 0.56);
+}
+.svc-hero .lead-muted {
+    max-width: 56ch;
+    color: #4a607a;
+    font-size: 1.08rem;
+}
+.svc-hero-card {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(13, 110, 253, 0.1);
+    border-radius: 1.1rem;
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+}
+.svc-hero-card .talent-visual {
+    grid-template-columns: minmax(0, 1fr) minmax(130px, .48fr);
+    gap: .75rem;
+    min-height: 0;
+}
+.svc-hero-card .tv-card,
+.svc-hero-card .tv-small {
+    box-shadow: none;
+}
+.svc-hero-card .tv-card { padding: 1.1rem; }
+.svc-hero-card .tv-small { padding: .8rem; }
+.svc-match-board { display: grid; grid-template-columns: minmax(0, 1fr) 165px; gap: .9rem; align-items: stretch; }
+.svc-match-primary, .svc-match-process { border: 1px solid #dce6f4; border-radius: 1rem; background: rgba(255, 255, 255, 0.88); }
+.svc-match-primary { padding: 1.3rem; }
+.svc-match-process { padding: 1rem; }
+.svc-match-board .tv-card { width: auto; max-width: none; box-shadow: none; }
+.svc-match-board .tv-small { position: static; width: auto; box-shadow: none; }
+.svc-match-board .tv-connector { display: none; }
+.svc-match-process .bi-briefcase {
+    width: 42px;
+    height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: .8rem;
+    background: #e8f1ff;
+    color: #0d6efd !important;
+    font-size: 1.05rem !important;
+    flex: 0 0 auto;
+}
+.svc-match-top { display: flex; align-items: center; justify-content: space-between; gap: .75rem; margin-bottom: 1rem; }
+.svc-match-label, .svc-match-status { display: inline-flex; align-items: center; gap: .4rem; font-size: .75rem; font-weight: 700; }
+.svc-match-label { color: #0d6efd; }
+.svc-match-status { padding: .3rem .55rem; border-radius: 999px; background: #e5f7ef; color: #15845f; }
+.svc-match-primary h3 { margin-bottom: .4rem; color: #142a48; font-size: 1.25rem; font-weight: 700; }
+.svc-match-primary > p { margin-bottom: 1rem; color: #58708d; font-size: .88rem; line-height: 1.55; }
+.svc-match-tags { display: flex; flex-wrap: wrap; gap: .45rem; margin-bottom: 1.1rem; }
+.svc-match-tags span { padding: .33rem .58rem; border-radius: .5rem; background: #eef4ff; color: #2864bd; font-size: .78rem; font-weight: 600; }
+.svc-match-meter + .svc-match-meter { margin-top: .75rem; }
+.svc-match-meter-label { display: flex; justify-content: space-between; gap: .75rem; margin-bottom: .35rem; color: #45617f; font-size: .77rem; }
+.svc-match-meter-label strong { color: #1b63c7; }
+.svc-match-track { height: .38rem; overflow: hidden; border-radius: 999px; background: #e7edf6; }
+.svc-match-track span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #1976f3, #6ba9ff); }
+.svc-match-process-icon { width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center; margin-bottom: .8rem; border-radius: .85rem; background: #e8f1ff; color: #0d6efd; font-size: 1.2rem; }
+.svc-match-process h4 { margin-bottom: .8rem; color: #17355d; font-size: .98rem; font-weight: 700; }
+.svc-match-process-item { display: flex; gap: .45rem; align-items: flex-start; color: #536b88; font-size: .78rem; line-height: 1.35; }
+.svc-match-process-item + .svc-match-process-item { margin-top: .72rem; }
+.svc-match-process-item i { color: #0d6efd; }
+
+/* Homepage-inspired icon palette and card interactions */
+.svc-intro-highlights .card,
+.svc-service-card,
+.process-node,
+.why-cards .card {
+    --svc-accent: #1267e8;
+    --svc-rgb: 18, 103, 232;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #e1e9f5;
+    transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+}
+.svc-intro-highlights .card::before,
+.svc-service-card::before,
+.process-node::before,
+.why-cards .card::before {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 0;
+    height: 4px;
+    border-radius: 0 0 999px 999px;
+    background: linear-gradient(90deg, var(--svc-accent), rgba(var(--svc-rgb), .55));
+    content: "";
+    transform: translateX(-50%);
+    transition: width .22s ease;
+}
+.svc-intro-highlights .card:hover,
+.svc-service-card:hover,
+.process-node:hover,
+.why-cards .card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(var(--svc-rgb), .42);
+    box-shadow: 0 22px 42px rgba(var(--svc-rgb), .16);
+}
+.svc-intro-highlights .card:hover::before,
+.svc-service-card:hover::before,
+.process-node:hover::before,
+.why-cards .card:hover::before { width: 56%; }
+.svc-service-badge,
+.svc-service-card .icon-wrap {
+    background: linear-gradient(145deg, rgba(var(--svc-rgb), .08), rgba(var(--svc-rgb), .18));
+    color: var(--svc-accent);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .8);
+    transition: transform .22s ease, background .22s ease;
+}
+.svc-service-badge i,
+.svc-service-card .icon-wrap i { color: var(--svc-accent); }
+.svc-service-card:hover .icon-wrap,
+.svc-intro-highlights .card:hover .svc-service-badge { transform: translateY(-3px) scale(1.03); }
+.process-node .step-num {
+    background: linear-gradient(145deg, rgba(var(--svc-rgb), .1), rgba(var(--svc-rgb), .2));
+    color: var(--svc-accent);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .8);
+}
+.svc-feature-visual {
+    transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+}
+.svc-feature-visual:hover {
+    transform: translateY(-4px);
+    border-color: rgba(18, 103, 232, .3);
+    box-shadow: 0 20px 42px rgba(18, 103, 232, .1);
+}
+.job-seeker-visual .bi-briefcase {
+    background: rgba(13, 110, 253, .1) !important;
+    color: #0d6efd !important;
+}
+.svc-palette-1 { --svc-accent: #1267e8; --svc-rgb: 18, 103, 232; }
+.svc-palette-2 { --svc-accent: #e56f16; --svc-rgb: 229, 111, 22; }
+.svc-palette-3 { --svc-accent: #7456d9; --svc-rgb: 116, 86, 217; }
+.svc-palette-4 { --svc-accent: #078b68; --svc-rgb: 7, 139, 104; }
+.svc-intro-highlights .card.svc-palette-1,
+.svc-service-card.svc-palette-1,
+.process-node.svc-palette-1,
+.why-cards .card.svc-palette-1 { --svc-accent: #1267e8 !important; --svc-rgb: 18, 103, 232 !important; }
+.svc-intro-highlights .card.svc-palette-2,
+.svc-service-card.svc-palette-2,
+.process-node.svc-palette-2,
+.why-cards .card.svc-palette-2 { --svc-accent: #e56f16 !important; --svc-rgb: 229, 111, 22 !important; }
+.svc-intro-highlights .card.svc-palette-3,
+.svc-service-card.svc-palette-3,
+.process-node.svc-palette-3,
+.why-cards .card.svc-palette-3 { --svc-accent: #7456d9 !important; --svc-rgb: 116, 86, 217 !important; }
+.svc-intro-highlights .card.svc-palette-4,
+.svc-service-card.svc-palette-4,
+.process-node.svc-palette-4,
+.why-cards .card.svc-palette-4 { --svc-accent: #078b68 !important; --svc-rgb: 7, 139, 104 !important; }
+
+/* Recruitment support cards: distinct accents make each benefit easy to scan. */
+.why-cards .card {
+    padding: 1.35rem !important;
+    border-color: rgba(var(--svc-rgb), .18);
+    background: linear-gradient(145deg, rgba(var(--svc-rgb), .1), rgba(255,255,255,.98) 58%);
+}
+.why-cards .why-card-head { display: flex; align-items: center; gap: .8rem; margin-bottom: 1rem; }
+.why-cards .why-card-icon {
+    width: 44px;
+    height: 44px;
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    border-radius: .8rem;
+    background: rgba(var(--svc-rgb), .14);
+    color: var(--svc-accent);
+    font-size: 1.15rem;
+}
+.why-cards h6 { margin: 0; color: #193457; font-size: 1rem; font-weight: 700; line-height: 1.35; }
+.why-cards .text-soft { color: #59718f !important; line-height: 1.6; }
+
+/* Recruitment process: use vertical cards so each step has room to breathe. */
+.process-track {
+    grid-template-columns: minmax(0, 1fr) 52px minmax(0, 1fr) 52px minmax(0, 1fr) 52px minmax(0, 1fr);
+    gap: .75rem;
+}
+.process-node {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: .9rem;
+    min-height: 208px;
+    padding: 1.35rem;
+    border-color: rgba(var(--svc-rgb), .2);
+    background: linear-gradient(150deg, rgba(var(--svc-rgb), .1), #ffffff 55%);
+}
+.process-node .step-num {
+    width: auto;
+    min-width: 0;
+    height: auto;
+    min-height: 0;
+    padding: .42rem .68rem;
+    border-radius: 999px;
+    font-size: .82rem;
+    letter-spacing: .04em;
+}
+.process-node h5 { margin-bottom: .4rem !important; color: #193457; font-size: 1.12rem; font-weight: 700; }
+.process-node .text-soft { color: #59718f !important; line-height: 1.6; }
+.process-line { height: 3px; border-radius: 999px; background: linear-gradient(90deg, rgba(13,110,253,.16), rgba(13,110,253,.42), rgba(13,110,253,.16)); }
+@media (max-width: 991.98px) {
+    .process-node { min-height: 0; }
+}
+
+/* Employer services: a distinct, editorial-style service panel */
+.employer-services .container {
+    position: relative;
+    padding: clamp(1.5rem, 3vw, 3rem);
+    overflow: hidden;
+    border: 1px solid #d9e6f6;
+    border-radius: 1.5rem;
+    background:
+        radial-gradient(circle at 88% 14%, rgba(13, 110, 253, .12), transparent 30%),
+        linear-gradient(130deg, #fbfdff 0%, #f3f8ff 55%, #e7f1ff 100%);
+    box-shadow: 0 18px 44px rgba(31, 72, 122, .07);
+}
+.employer-services h3 {
+    margin-bottom: 1rem;
+    color: #132e52;
+    font-size: clamp(1.8rem, 2.4vw, 2.35rem);
+    font-weight: 700;
+}
+.employer-services h3::before {
+    display: block;
+    margin-bottom: .7rem;
+    color: #0d6efd;
+    font-size: .74rem;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    content: "For employers";
+}
+.employer-services .col-lg-6 > p {
+    max-width: 56ch;
+    color: #526b88 !important;
+    font-size: 1.05rem;
+    line-height: 1.7;
+}
+.employer-services ul {
+    display: grid;
+    gap: .65rem;
+    margin: 1.5rem 0 1.75rem;
+    padding: 0;
+    list-style: none;
+}
+.employer-services li {
+    position: relative;
+    padding: .72rem .85rem .72rem 2.45rem;
+    border: 1px solid rgba(13, 110, 253, .1);
+    border-radius: .7rem;
+    background: rgba(255, 255, 255, .74);
+    color: #254464;
+    font-weight: 600;
+}
+.employer-services li::before {
+    position: absolute;
+    top: 50%;
+    left: .8rem;
+    width: 1.1rem;
+    height: 1.1rem;
+    border-radius: 50%;
+    background: #e2efff;
+    color: #0d6efd;
+    content: "✓";
+    font-size: .72rem;
+    font-weight: 800;
+    line-height: 1.1rem;
+    text-align: center;
+    transform: translateY(-50%);
+}
+.employer-services .btn-primary {
+    box-shadow: 0 12px 24px rgba(13, 110, 253, .22);
+}
+.employer-services .svc-feature-visual {
+    padding: clamp(1rem, 2.2vw, 1.5rem);
+    border-color: rgba(13, 110, 253, .16);
+    border-radius: 1.2rem;
+    background: linear-gradient(145deg, #e1efff, #c8e0ff);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .72);
+}
+.employer-services .svc-feature-visual .tv-card {
+    border-color: rgba(13, 110, 253, .12);
+    border-radius: 1rem;
+    box-shadow: 0 15px 32px rgba(26, 77, 139, .1);
+}
+.employer-services .tv-card .mb-2 > .d-flex {
+    padding: .55rem;
+    border-radius: .7rem;
+    transition: background-color .2s ease, transform .2s ease;
+}
+.employer-services .tv-card .mb-2 > .d-flex:hover {
+    background: #f2f7ff;
+    transform: translateX(3px);
+}
+.employer-services .candidate-row {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center !important;
+    min-height: 74px;
+}
+.employer-services .candidate-row > .d-flex { min-width: 0; }
+.employer-services .tv-card .mb-2 > .d-flex:nth-child(2) .avatar { background: linear-gradient(135deg, #e56f16, #c95709); }
+.employer-services .tv-card .mb-2 > .d-flex:nth-child(3) .avatar { background: linear-gradient(135deg, #7456d9, #5440ad); }
+
+/* Job seeker services: matching visual weight with a career-focused accent */
+.job-seeker-services .container {
+    position: relative;
+    padding: clamp(1.5rem, 3vw, 3rem);
+    overflow: hidden;
+    border: 1px solid #dce5f5;
+    border-radius: 1.5rem;
+    background:
+        radial-gradient(circle at 8% 16%, rgba(13, 110, 253, .1), transparent 30%),
+        linear-gradient(130deg, #fbfdff 0%, #f3f8ff 55%, #e7f1ff 100%);
+    box-shadow: 0 18px 44px rgba(31, 72, 122, .07);
+}
+.job-seeker-services .job-seeker-visual {
+    border-color: rgba(13, 110, 253, .16);
+    background: linear-gradient(145deg, #e1efff, #c8e0ff);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .78);
+}
+.job-seeker-services .job-seeker-visual .tv-card {
+    border-color: rgba(13, 110, 253, .12);
+    box-shadow: 0 15px 32px rgba(26, 77, 139, .1);
+}
+.job-seeker-services .job-seeker-visual .avatar {
+    background: linear-gradient(135deg, #1674f5, #0a58ca);
+}
+.job-seeker-services .job-seeker-visual .tv-card {
+    display: grid;
+    gap: 1rem;
+    padding: clamp(1rem, 2vw, 1.5rem);
+}
+.job-seeker-services .job-profile-summary {
+    display: flex;
+    align-items: center;
+    gap: .85rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e5edf8;
+}
+.job-seeker-services .job-profile-summary .avatar { flex: 0 0 auto; }
+.job-seeker-services .job-profile-summary .fw-semibold { color: #172f55; }
+.job-seeker-services .job-role-card {
+    display: flex;
+    align-items: center;
+    gap: .85rem;
+    padding: 1rem;
+    border: 1px solid #cfe1fb;
+    border-radius: .9rem;
+    background: #f5f9ff;
+}
+.job-seeker-services .job-role-icon {
+    width: 48px;
+    height: 48px;
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    border-radius: .75rem;
+    background: linear-gradient(145deg, rgba(229,111,22,.1), rgba(229,111,22,.2));
+    color: #e56f16;
+    font-size: 1.25rem;
+}
+.job-seeker-services .job-role-label {
+    margin-bottom: .18rem;
+    color: #547096;
+    font-size: .7rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+.job-seeker-services .job-profile-actions {
+    display: grid;
+    grid-template-columns: 1.2fr .9fr;
+    gap: .7rem;
+    padding-top: .15rem;
+}
+.job-seeker-services .job-profile-actions .btn {
+    min-width: 0;
+    padding: .7rem .75rem;
+    font-weight: 600;
+}
+.job-seeker-services .job-seeker-copy h3 {
+    margin-bottom: 1rem;
+    color: #1d3155;
+    font-size: clamp(1.8rem, 2.4vw, 2.35rem);
+    font-weight: 700;
+}
+.job-seeker-services .job-seeker-copy h3::before {
+    display: block;
+    margin-bottom: .7rem;
+    color: #0d6efd;
+    font-size: .74rem;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    content: "For job seekers";
+}
+.job-seeker-services .job-seeker-copy > p {
+    max-width: 56ch;
+    color: #526b88 !important;
+    font-size: 1.05rem;
+    line-height: 1.7;
+}
+.job-seeker-services .job-seeker-copy ul {
+    display: grid;
+    gap: .65rem;
+    margin: 1.5rem 0 1.75rem;
+}
+.job-seeker-services .job-seeker-copy li {
+    padding: .72rem .85rem .72rem 2.45rem;
+    border: 1px solid rgba(13, 110, 253, .1);
+    border-radius: .7rem;
+    background: rgba(255, 255, 255, .76);
+    color: #354967;
+    font-weight: 600;
+}
+.job-seeker-services .job-seeker-copy li::before {
+    top: 50%;
+    left: .8rem;
+    width: 1.1rem;
+    height: 1.1rem;
+    border-radius: 50%;
+    background: #e2efff;
+    color: #0d6efd;
+    font-size: .72rem;
+    line-height: 1.1rem;
+    text-align: center;
+    transform: translateY(-50%);
+}
+.job-seeker-services .job-seeker-copy li:nth-child(2)::before { background: rgba(229,111,22,.13); color: #e56f16; }
+.job-seeker-services .job-seeker-copy li:nth-child(3)::before { background: rgba(116,86,217,.13); color: #7456d9; }
+.job-seeker-services .job-seeker-copy li:nth-child(4)::before { background: rgba(7,139,104,.13); color: #078b68; }
+.job-seeker-services .btn-outline-secondary {
+    border-color: rgba(13, 110, 253, .35);
+    color: #0d6efd;
+}
+.job-seeker-services .btn-outline-secondary:hover,
+.job-seeker-services .btn-outline-secondary:focus {
+    border-color: #0d6efd;
+    background: #0d6efd;
+    color: #ffffff;
+}
+
+@media (max-width: 575.98px) {
+    .employer-services .container { padding: 1.25rem; border-radius: 1.1rem; }
+    .job-seeker-services .container { padding: 1.25rem; border-radius: 1.1rem; }
+    .job-seeker-services .job-profile-actions { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .svc-intro-highlights .card,
+    .svc-service-card,
+    .process-node,
+    .why-cards .card,
+    .svc-feature-visual,
+    .svc-service-badge,
+    .svc-service-card .icon-wrap { transition: none; }
+}
+
+@media (max-width: 991.98px) {
+    .svc-hero { padding: 2rem 0 2.5rem; }
+    .svc-hero .section-title { max-width: 18ch; }
+    .svc-hero-card .talent-visual { display: grid; grid-template-columns: minmax(0, 1fr) minmax(130px, .48fr); }
+    .svc-match-board { grid-template-columns: minmax(0, 1fr) 160px; }
+}
+
+@media (max-width: 575.98px) {
+    .svc-hero-panel { border-radius: 1.1rem; }
+    .svc-hero .section-title { font-size: clamp(2.1rem, 10vw, 2.8rem); }
+    .svc-hero-card .talent-visual { display: flex; flex-direction: column; }
+    .svc-match-board { grid-template-columns: 1fr; }
+}
 </style>
 
 <main class="flex-grow-1">
@@ -215,16 +747,11 @@ require_once __DIR__ . '/includes/navbar.php';
     <!-- HERO -->
     <section class="svc-hero">
         <div class="container">
-            <div class="row hero-row">
+            <div class="svc-hero-panel p-3 p-lg-4">
+            <div class="row hero-row g-4 align-items-center p-2 p-lg-4">
                 <div class="col-lg-6">
                     <p class="svc-eyebrow text-uppercase text-primary fw-semibold mb-2">OUR SERVICES</p>
                     <h1 class="section-title">Recruitment Solutions That Connect Talent With Opportunity</h1>
-                    <nav aria-label="breadcrumb" class="mb-3">
-                        <ol class="breadcrumb mb-0 bg-transparent">
-                            <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Services</li>
-                        </ol>
-                    </nav>
                     <p class="lead-muted mt-2">Career Grow Infotech provides professional recruitment and career support services designed to connect organizations with suitable talent and help candidates discover meaningful career opportunities.</p>
                     <div class="hero-actions d-flex gap-2 mt-4">
                         <a href="jobs.php" class="btn btn-primary">Explore Jobs</a>
@@ -233,44 +760,46 @@ require_once __DIR__ . '/includes/navbar.php';
                 </div>
 
                 <div class="col-lg-6">
-                    <div class="talent-visual">
-                        <div class="tv-card">
+                    <div class="svc-hero-card p-4">
+                    <div class="svc-match-board">
+                        <div class="tv-card svc-match-primary">
                             <div class="d-flex justify-content-between align-items-start">
                                 <div class="profile">
-                                    <div class="avatar">RK</div>
+                                    <div class="avatar">CG</div>
                                     <div>
-                                        <div class="fw-semibold">Rashmi K.</div>
-                                        <div class="text-soft small">Marketing Executive • 3+ yrs</div>
+                                        <div class="fw-semibold">Talent profile</div>
+                                        <div class="text-soft small">Skills, experience and role needs</div>
                                     </div>
                                 </div>
-                                <div class="text-end small text-soft">Profile</div>
                             </div>
 
                             <div class="skills mt-3">
-                                <span class="skill">Marketing</span>
-                                <span class="skill">SEO</span>
-                                <span class="skill">Communication</span>
+                                <span class="skill">Skills</span>
+                                <span class="skill">Experience</span>
+                                <span class="skill">Role fit</span>
                             </div>
 
                             <div class="mt-3 d-flex justify-content-between align-items-center">
-                                <div class="text-muted small">Experience: 3+ years</div>
-                                <div class="badge bg-soft text-primary rounded-pill">Matched</div>
+                                <div class="text-muted small">Support: end-to-end</div>
+                                <div class="badge bg-soft text-primary rounded-pill">Aligned</div>
                             </div>
                         </div>
 
                         <div class="tv-connector" aria-hidden="true"></div>
 
-                        <div class="tv-small">
+                        <div class="tv-small svc-match-process">
                             <div class="d-flex align-items-start gap-2">
                                 <i class="bi bi-briefcase fs-4 text-primary"></i>
                                 <div>
-                                    <div class="fw-semibold">Suitable Opportunity</div>
-                                    <div class="text-soft small">Marketing Executive - Pune</div>
+                                    <div class="fw-semibold">Structured support</div>
+                                    <div class="text-soft small">Role discovery and candidate screening</div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    </div>
                 </div>
+            </div>
             </div>
         </div>
     </section>
@@ -287,7 +816,7 @@ require_once __DIR__ . '/includes/navbar.php';
 
             <div class="row svc-intro-highlights g-3">
                 <div class="col-md-4">
-                    <div class="card p-3 h-100">
+                    <div class="card svc-palette-1 p-3 h-100">
                         <div class="d-flex align-items-start gap-3">
                             <div class="svc-service-badge"><i class="bi bi-building"></i></div>
                             <div>
@@ -299,7 +828,7 @@ require_once __DIR__ . '/includes/navbar.php';
                 </div>
 
                 <div class="col-md-4">
-                    <div class="card p-3 h-100">
+                    <div class="card svc-palette-2 p-3 h-100">
                         <div class="d-flex align-items-start gap-3">
                             <div class="svc-service-badge"><i class="bi bi-person"></i></div>
                             <div>
@@ -311,7 +840,7 @@ require_once __DIR__ . '/includes/navbar.php';
                 </div>
 
                 <div class="col-md-4">
-                    <div class="card p-3 h-100">
+                    <div class="card svc-palette-3 p-3 h-100">
                         <div class="d-flex align-items-start gap-3">
                             <div class="svc-service-badge"><i class="bi bi-gear"></i></div>
                             <div>
@@ -348,10 +877,10 @@ require_once __DIR__ . '/includes/navbar.php';
                     ["title"=>"Recruitment Coordination","icon"=>"inboxes","desc"=>"Support communication and coordination between suitable candidates and organizations during the recruitment journey."]
                 ];
 
-                foreach ($services as $s) {
+                foreach ($services as $serviceIndex => $s) {
                     ?>
                         <div class="col-lg-3 col-md-6">
-                            <div class="card svc-service-card h-100 d-flex flex-column">
+                            <div class="card svc-service-card svc-palette-<?php echo ($serviceIndex % 4) + 1; ?> h-100 d-flex flex-column">
                                 <div class="card-body d-flex flex-column">
                                     <div class="svc-service-meta mb-3">
                                         <div>
@@ -374,7 +903,7 @@ require_once __DIR__ . '/includes/navbar.php';
     </section>
 
     <!-- EMPLOYER SERVICES -->
-    <section class="py-5 svc-section">
+    <section class="py-5 svc-section employer-services">
         <div class="container">
             <div class="row align-items-center g-4">
                 <div class="col-lg-6">
@@ -398,7 +927,7 @@ require_once __DIR__ . '/includes/navbar.php';
                             </div>
 
                             <div class="mb-2">
-                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                <div class="d-flex align-items-center justify-content-between mb-2 candidate-row">
                                     <div class="d-flex align-items-center gap-2">
                                         <div class="avatar">AD</div>
                                         <div>
@@ -412,7 +941,7 @@ require_once __DIR__ . '/includes/navbar.php';
                                     </div>
                                 </div>
 
-                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                <div class="d-flex align-items-center justify-content-between mb-2 candidate-row">
                                     <div class="d-flex align-items-center gap-2">
                                         <div class="avatar">SM</div>
                                         <div>
@@ -426,7 +955,7 @@ require_once __DIR__ . '/includes/navbar.php';
                                     </div>
                                 </div>
 
-                                <div class="d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center justify-content-between mb-2 candidate-row">
                                     <div class="d-flex align-items-center gap-2">
                                         <div class="avatar">PN</div>
                                         <div>
@@ -453,13 +982,13 @@ require_once __DIR__ . '/includes/navbar.php';
     </section>
 
     <!-- JOB SEEKER SERVICES -->
-    <section class="py-5 bg-soft svc-section">
+    <section class="py-5 bg-soft svc-section job-seeker-services">
         <div class="container">
             <div class="row align-items-center g-4">
                 <div class="col-lg-6 order-lg-1 order-1">
                     <div class="svc-feature-visual job-seeker-visual d-flex align-items-center justify-content-center">
                         <div class="tv-card w-100 text-start">
-                            <div class="d-flex align-items-center gap-3 mb-2">
+                            <div class="job-profile-summary">
                                 <div class="avatar">JS</div>
                                 <div>
                                     <div class="fw-semibold">Your Profile</div>
@@ -467,15 +996,16 @@ require_once __DIR__ . '/includes/navbar.php';
                                 </div>
                             </div>
 
-                            <div class="d-flex gap-2 align-items-center mb-3">
-                                <i class="bi bi-briefcase fs-3 text-primary"></i>
+                            <div class="job-role-card">
+                                <div class="job-role-icon"><i class="bi bi-briefcase"></i></div>
                                 <div>
+                                    <div class="job-role-label">Suggested role</div>
                                     <div class="fw-semibold">Frontend Developer</div>
                                     <div class="text-soft small">JavaScript • React • 3+ yrs</div>
                                 </div>
                             </div>
 
-                            <div class="d-flex gap-2">
+                            <div class="job-profile-actions">
                                 <a href="jobs.php" class="btn btn-primary">View Matching Roles</a>
                                 <a href="register.php" class="btn btn-outline-secondary">Update Profile</a>
                             </div>
@@ -516,7 +1046,7 @@ require_once __DIR__ . '/includes/navbar.php';
                     <div class="process-steps">
                         <div class="process-track d-flex align-items-center flex-column flex-lg-row">
                             <div class="process-step col-12 col-lg-auto">
-                                <div class="process-node">
+                                <div class="process-node svc-palette-1">
                                     <div class="step-num">01</div>
                                     <div>
                                         <h5 class="mb-1">Understand</h5>
@@ -528,7 +1058,7 @@ require_once __DIR__ . '/includes/navbar.php';
                             <div class="d-none d-lg-block process-line" aria-hidden="true"></div>
 
                             <div class="process-step col-12 col-lg-auto">
-                                <div class="process-node">
+                                <div class="process-node svc-palette-2">
                                     <div class="step-num">02</div>
                                     <div>
                                         <h5 class="mb-1">Identify</h5>
@@ -540,7 +1070,7 @@ require_once __DIR__ . '/includes/navbar.php';
                             <div class="d-none d-lg-block process-line" aria-hidden="true"></div>
 
                             <div class="process-step col-12 col-lg-auto">
-                                <div class="process-node">
+                                <div class="process-node svc-palette-3">
                                     <div class="step-num">03</div>
                                     <div>
                                         <h5 class="mb-1">Connect</h5>
@@ -552,7 +1082,7 @@ require_once __DIR__ . '/includes/navbar.php';
                             <div class="d-none d-lg-block process-line" aria-hidden="true"></div>
 
                             <div class="process-step col-12 col-lg-auto">
-                                <div class="process-node">
+                                <div class="process-node svc-palette-4">
                                     <div class="step-num">04</div>
                                     <div>
                                         <h5 class="mb-1">Support</h5>
@@ -579,29 +1109,41 @@ require_once __DIR__ . '/includes/navbar.php';
 
             <div class="row g-4 why-cards">
                 <div class="col-md-6 col-lg-3">
-                    <div class="card p-3 h-100">
-                        <h6 class="mb-2">Requirement-Focused Approach</h6>
+                    <div class="card svc-palette-1 p-3 h-100">
+                        <div class="why-card-head">
+                            <span class="why-card-icon"><i class="bi bi-bullseye"></i></span>
+                            <h6>Requirement-Focused Approach</h6>
+                        </div>
                         <p class="text-soft mb-0">We focus on core role requirements to find relevant matches.</p>
                     </div>
                 </div>
 
                 <div class="col-md-6 col-lg-3">
-                    <div class="card p-3 h-100">
-                        <h6 class="mb-2">Skill-Based Matching</h6>
+                    <div class="card svc-palette-2 p-3 h-100">
+                        <div class="why-card-head">
+                            <span class="why-card-icon"><i class="bi bi-diagram-3"></i></span>
+                            <h6>Skill-Based Matching</h6>
+                        </div>
                         <p class="text-soft mb-0">Connect competencies with real role needs.</p>
                     </div>
                 </div>
 
                 <div class="col-md-6 col-lg-3">
-                    <div class="card p-3 h-100">
-                        <h6 class="mb-2">Candidate-Centered Support</h6>
+                    <div class="card svc-palette-3 p-3 h-100">
+                        <div class="why-card-head">
+                            <span class="why-card-icon"><i class="bi bi-person-heart"></i></span>
+                            <h6>Candidate-Centered Support</h6>
+                        </div>
                         <p class="text-soft mb-0">Support candidates to present their experience effectively.</p>
                     </div>
                 </div>
 
                 <div class="col-md-6 col-lg-3">
-                    <div class="card p-3 h-100">
-                        <h6 class="mb-2">Professional Coordination</h6>
+                    <div class="card svc-palette-4 p-3 h-100">
+                        <div class="why-card-head">
+                            <span class="why-card-icon"><i class="bi bi-clipboard-check"></i></span>
+                            <h6>Professional Coordination</h6>
+                        </div>
                         <p class="text-soft mb-0">Clear communication and process coordination for all parties.</p>
                     </div>
                 </div>
@@ -612,15 +1154,18 @@ require_once __DIR__ . '/includes/navbar.php';
     <!-- FINAL CTA -->
     <section class="final-cta svc-section">
         <div class="container">
-            <div class="final-cta-card p-4 rounded">
-                <div class="d-flex flex-column flex-md-row align-items-center justify-content-between gap-3">
-                    <div>
-                        <h3 class="mb-1">Ready to Take the Next Step?</h3>
+            <div class="final-cta-card">
+                <div class="row align-items-center g-4">
+                    <div class="col-lg-8">
+                        <p class="cta-eyebrow">Let’s grow together</p>
+                        <h3>Ready to Take the Next Step?</h3>
                         <p class="text-soft mb-0">Whether you are looking for the right opportunity or the right talent, connect with Career Grow Infotech today.</p>
                     </div>
-                    <div class="d-flex gap-2 flex-wrap">
-                        <a href="jobs.php" class="btn btn-primary">Explore Jobs</a>
-                        <a href="contact.php" class="btn btn-outline-primary">Contact Us</a>
+                    <div class="col-lg-4">
+                        <div class="cta-actions">
+                            <a href="jobs.php" class="btn btn-primary">Explore Jobs</a>
+                            <a href="contact.php" class="btn btn-outline-primary">Contact Us</a>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -128,7 +128,8 @@ html,body{height:100%;}
 .login-card{width:100%;max-width:480px;background:var(--cg-white);border:1px solid var(--cg-border);border-radius:18px;padding:34px;box-shadow:0 18px 40px rgba(15,23,42,0.06)}
 .card-header{display:flex;flex-direction:column;align-items:start;gap:8px;margin-bottom:16px}
 .card-logo-wrapper{display:inline-flex;align-items:center;justify-content:center;padding:6px 8px;border-radius:10px;background:rgba(11,31,51,0.02);border:1px solid rgba(15,23,42,0.03)}
-.card-logo-wrapper img{height:40px;width:auto;display:block}
+.card-logo-mark{width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;border-radius:50%;background:#fff}
+.card-logo-mark img{width:72%;height:auto;display:block;object-fit:contain;border-radius:0;background:transparent;padding:0}
 .welcome{font-size:1.6rem;font-weight:800;margin:6px 0}
 .subtitle{color:var(--cg-muted);margin-bottom:6px}
 .form-label{font-weight:700}
@@ -160,7 +161,7 @@ html,body{height:100%;}
   .auth-left-inner{display:none}
   .auth-right{position:relative;z-index:1;box-sizing:border-box;min-height:100dvh;display:flex;align-items:center;justify-content:center;padding:28px;background:transparent}
   .login-card{width:min(100%,430px);max-width:430px;padding:30px 32px;border:1px solid rgba(212,244,255,.46);border-radius:22px;background:rgba(255,255,255,.9);box-shadow:0 24px 55px rgba(0,26,70,.3);backdrop-filter:blur(16px)}
-  .card-header{align-items:center;gap:7px;margin-bottom:20px;text-align:center}.card-logo-wrapper{gap:9px;padding:5px 9px;border-radius:10px;background:rgba(17,99,173,.07);border-color:rgba(17,99,173,.08)}.card-logo-wrapper img{height:32px}.card-logo-wrapper span{color:#143b6b;font-size:.85rem;font-weight:800}
+  .card-header{align-items:center;gap:7px;margin-bottom:20px;text-align:center}.card-logo-wrapper{gap:9px;padding:5px 9px;border-radius:10px;background:rgba(17,99,173,.07);border-color:rgba(17,99,173,.08)}.card-logo-mark{width:32px;height:32px}.card-logo-wrapper span{color:#143b6b;font-size:.85rem;font-weight:800}
   .welcome{margin:5px 0 0;color:#113b70;font-size:1.62rem;letter-spacing:-.035em}.subtitle{margin:0;color:#60728b;font-size:.96rem}.form-label{color:#193b67;font-size:.83rem}.form-control{height:48px;padding:.7rem .85rem;border:1px solid #d7e4f3;border-radius:10px;background:#fbfdff}.form-control:focus{border-color:#30b99d;box-shadow:0 0 0 4px rgba(48,185,157,.13)}.form-group{margin-bottom:12px}.forgot-row{margin-top:-2px;margin-bottom:14px}.forgot-row a{color:#078e82;font-size:.9rem}.btn-login{height:48px;border:0;border-radius:10px;background:linear-gradient(135deg,#1b75d0,#14a99a);box-shadow:0 10px 20px rgba(13,119,169,.22)}.btn-login:hover{background:linear-gradient(135deg,#1463b5,#0c9183)}.divider{margin:15px 0;font-size:.9rem}.register-row{font-size:.92rem}.back-home{margin-top:9px;font-size:.9rem}
 }
 
@@ -170,7 +171,7 @@ html,body{height:100%;}
     .login-card::before{content:'';position:absolute;inset:1px;border-radius:23px;pointer-events:none;background:linear-gradient(115deg,rgba(255,255,255,.2),transparent 18%,transparent 72%,rgba(112,239,207,.14));opacity:.85;z-index:-1}
     .login-card::after{content:'';position:absolute;inset:0;border-radius:23px;pointer-events:none;background:radial-gradient(ellipse 20px 82px at 1.5% 52%,rgba(194,249,255,1) 0%,rgba(77,224,250,.92) 20%,rgba(45,194,232,.38) 58%,transparent 100%),radial-gradient(ellipse 20px 82px at 98.5% 52%,rgba(194,249,255,1) 0%,rgba(77,224,250,.92) 20%,rgba(45,194,232,.38) 58%,transparent 100%),radial-gradient(ellipse 170px 46px at 50% 0%,rgba(149,242,255,.24),transparent 72%);filter:blur(4px);mix-blend-mode:screen;opacity:.98;z-index:0}
   .login-card>*{position:relative;z-index:1}
-  .card-header{gap:5px;margin-bottom:16px}.card-logo-wrapper{padding:4px 8px;background:rgba(255,255,255,.12);border-color:rgba(181,243,255,.32)}.card-logo-wrapper span{color:#d7fffa;font-size:.78rem}.card-logo-wrapper img{height:28px}
+  .card-header{gap:5px;margin-bottom:16px}.card-logo-wrapper{padding:4px 8px;background:rgba(255,255,255,.12);border-color:rgba(181,243,255,.32)}.card-logo-wrapper span{color:#d7fffa;font-size:.78rem}.card-logo-mark{width:32px;height:32px}.card-logo-mark img{width:72%;height:auto;padding:0;border-radius:0;background:transparent}
   .welcome{color:#fff;font-size:1.42rem;margin:3px 0 0}.subtitle{color:rgba(229,246,255,.8);font-size:.88rem}.form-label{color:#e9f8ff;font-size:.76rem}.form-control{height:44px;padding:.6rem .75rem;border-color:rgba(198,238,255,.4);border-radius:9px;background:rgba(255,255,255,.12);color:#fff}.form-control::placeholder{color:rgba(231,247,255,.66)}.form-control:focus{border-color:#72f0df;background:rgba(255,255,255,.17);box-shadow:0 0 0 3px rgba(78,231,216,.18);color:#fff}.form-group{margin-bottom:10px}.forgot-row{margin-top:0;margin-bottom:11px}.forgot-row a{color:#9bfff0;font-size:.82rem}.btn-login{height:44px;border-radius:9px;background:linear-gradient(135deg,#20cba6,#168dd8);box-shadow:0 9px 18px rgba(0,28,85,.32)}.divider{color:rgba(231,247,255,.7);margin:13px 0}.divider::before,.divider::after{background:rgba(211,243,255,.24)}.register-row{color:#eefaff;font-size:.84rem}.register-row a[style]{color:#9bfff0!important}.back-home{margin-top:8px;color:rgba(231,247,255,.8);font-size:.82rem}
 }
 </style>
@@ -211,7 +212,7 @@ html,body{height:100%;}
     <section class="auth-right">
         <div class="login-card" role="region" aria-label="Candidate login form">
             <div class="card-header">
-                <div class="card-logo-wrapper"><img src="assets/images/logo.webp" alt="Career Grow Infotech logo"><span>Career Grow Infotech</span></div>
+                <div class="card-logo-wrapper"><span class="card-logo-mark"><img src="assets/images/logo.webp" alt="Career Grow Infotech logo"></span><span>Career Grow Infotech</span></div>
                 <div class="welcome">Welcome Back</div>
                 <div class="subtitle">Login to continue to your account.</div>
             </div>

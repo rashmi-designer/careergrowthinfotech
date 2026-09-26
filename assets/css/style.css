@@ -355,36 +355,7 @@ body.scrolled .navbar {
     white-space: nowrap;
 }
 
-.navbar-auth-btn,
-.navbar-actions .btn {
-    border-radius: 0.75rem;
-    font-weight: 600;
-    padding: 0.6rem 1rem;
-    height: 2.5rem;
-    line-height: 1;
-    box-shadow: none;
-    transition: transform var(--cg-transition), box-shadow var(--cg-transition), background-color var(--cg-transition), border-color var(--cg-transition), color var(--cg-transition);
-}
-
-.navbar-auth-btn {
-    background-color: var(--cg-primary);
-    border: 1px solid var(--cg-primary);
-    color: var(--cg-white);
-    box-shadow: 0 10px 20px rgba(13, 110, 253, 0.18);
-}
-
-.navbar-auth-btn:hover,
-.navbar-auth-btn:focus,
-.navbar-auth-btn:active {
-    background-color: var(--cg-primary-dark);
-    border-color: var(--cg-primary-dark);
-    color: var(--cg-white);
-    box-shadow: 0 12px 24px rgba(13, 110, 253, 0.25);
-    transform: translateY(-1px);
-}
-
-.navbar-actions .btn .bi,
-.navbar-auth-btn .bi {
+.navbar-actions .btn .bi {
     font-size: 1.1rem;
 }
 
@@ -438,6 +409,10 @@ body.scrolled .navbar {
     background-color: rgba(108, 117, 125, 0.1);
     border-color: var(--cg-muted);
     color: var(--cg-accent);
+}
+
+.admin-login-btn {
+    font-size: 0.875rem;
 }
 
 .navbar-toggler {
@@ -1451,10 +1426,10 @@ body.scrolled .navbar {
     box-shadow: var(--cg-shadow);
 }
 .job-card a {
-    color: #fff;
+    color: var(--cg-accent);
 }
 .job-card a:hover {
-    color: #fff;
+    color: var(--cg-primary);
 }
 .rounded-soft {
     border-radius: 0.9rem;

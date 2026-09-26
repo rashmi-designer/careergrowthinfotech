@@ -128,6 +128,21 @@
         color: #ffffff;
     }
 
+    /* Ensure outline buttons on the About page render with #0d6efd background by default
+       without altering hover/focus/active interactions. Scoped to About page selectors only. */
+    .about-hero .btn-outline-primary {
+        background-color: #0d6efd;
+        border-color: #0d6efd;
+        color: #ffffff;
+    }
+
+    .about-cta-banner .btn-outline-light {
+        /* set initial background to match requested color while preserving existing hover rules */
+        background-color: #0d6efd;
+        border-color: #0d6efd;
+        color: #ffffff;
+    }
+
 </style>
 
 <main>

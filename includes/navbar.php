@@ -95,7 +95,7 @@ $navItems = [
                 <?php endif; ?>
 
                 <?php if (!$isCandidate): // Do not show Admin link to candidates; visible to guests and admins ?>
-                    <a href="<?php echo htmlspecialchars($basePath, ENT_QUOTES, 'UTF-8'); ?>admin/login.php" class="btn btn-outline-secondary btn-sm admin-login-btn" aria-label="Admin login">
+                    <a href="<?php echo htmlspecialchars($basePath, ENT_QUOTES, 'UTF-8'); ?>admin/login.php" class="btn btn-primary btn-sm" aria-label="Admin login">
                         <i class="bi bi-shield-lock" aria-hidden="true"></i>
                         <span class="d-none d-lg-inline ms-1">Admin</span>
                     </a>

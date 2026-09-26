@@ -42,6 +42,12 @@ require_once __DIR__ . '/includes/navbar.php';
             .slide .btn-outline-light:focus { background-color: rgba(31, 125, 255, .78); border-color: #65adff; box-shadow: 0 12px 28px rgba(0, 92, 230, .28); }
             .slide .btn-outline-light:active { background-color: rgba(7, 91, 211, .92); border-color: #65adff; box-shadow: none; }
             .slide .btn:focus-visible { outline: 3px solid rgba(151, 204, 255, .92); outline-offset: 3px; }
+            /* Unified styling for all three hero primary CTA buttons - overrides Bootstrap defaults */
+            .hero-cta-button { display: inline-flex !important; align-items: center; justify-content: center; min-width: 142px; margin-right: .55rem; padding: .78rem 1.15rem; border-radius: .75rem; font-size: 1rem; font-weight: 700; line-height: 1.5; letter-spacing: 0; border: 1px solid #0d6efd; background-color: #0d6efd !important; color: #fff !important; box-shadow: 0 12px 28px rgba(0, 92, 230, .32); text-decoration: none !important; white-space: nowrap; cursor: pointer; transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease, border-color .2s ease; }
+            .hero-cta-button:hover,
+            .hero-cta-button:focus { transform: translateY(-2px); background-color: #075bd3 !important; border-color: #075bd3; box-shadow: 0 16px 32px rgba(0, 92, 230, .46); text-decoration: none !important; }
+            .hero-cta-button:active { background-color: #064bac !important; border-color: #064bac; box-shadow: none; text-decoration: none !important; }
+            .hero-cta-button:focus-visible { outline: 3px solid rgba(151, 204, 255, .92); outline-offset: 3px; }
             .slider-nav { position: absolute; left: 0; right: 0; bottom: 1.7rem; display:flex; justify-content:center; align-items:center; gap:.5rem; z-index:6; }
             .dot { width: 9px; height: 9px; padding: 0; border: 0; border-radius: 999px; background: rgba(255,255,255,.42); cursor:pointer; transition: width .2s ease, background .2s ease; }
             .dot.active { width: 30px; background: var(--cg-white); }
@@ -65,6 +71,7 @@ require_once __DIR__ . '/includes/navbar.php';
                 .slide-content { max-width: 100%; padding: 1.5rem; border-radius: 1.15rem; }
                 .slide h2 { font-size: clamp(2rem, 9vw, 2.75rem); }
                 .slide .btn { min-width: 0; margin-bottom: .5rem; }
+                .hero-cta-button { min-width: 0; }
                 .slider-arrows { display: none; }
             }
             /* spacing between hero and next sections */
@@ -80,7 +87,7 @@ require_once __DIR__ . '/includes/navbar.php';
                         <h2 class="animate" data-anim-delay="400">Find the Right Opportunity for Your Future</h2>
                         <p class="lead animate" data-anim-delay="600">Discover career opportunities that match your skills, experience and ambitions.</p>
                         <div class="animate" data-anim-delay="800">
-                            <a href="jobs.php" class="btn btn-primary btn-lg">Explore Jobs</a>
+                            <a href="jobs.php" class="hero-cta-button">Explore Jobs</a>
                             <a href="register.php" class="btn btn-outline-light btn-lg">Register Now</a>
                         </div>
                     </div>
@@ -95,7 +102,7 @@ require_once __DIR__ . '/includes/navbar.php';
                         <h2 class="animate" data-anim-delay="400">Turn Your Skills Into Your Next Career Move</h2>
                         <p class="lead animate" data-anim-delay="600">Connect with opportunities where your skills can make a real difference.</p>
                         <div class="animate" data-anim-delay="800">
-                            <a href="jobs.php" class="btn btn-primary btn-lg">Explore Jobs</a>
+                            <a href="jobs.php" class="hero-cta-button">Explore Jobs</a>
                             <a href="about.php" class="btn btn-outline-light btn-lg">Learn More</a>
                         </div>
                     </div>
@@ -110,7 +117,7 @@ require_once __DIR__ . '/includes/navbar.php';
                         <h2 class="animate" data-anim-delay="400">Helping Businesses Connect With Skilled Professionals</h2>
                         <p class="lead animate" data-anim-delay="600">Career Grow Infotech helps organizations connect with capable professionals for the right opportunities.</p>
                         <div class="animate" data-anim-delay="800">
-                            <a href="contact.php" class="btn btn-primary btn-lg">Contact Us</a>
+                            <a href="contact.php" class="hero-cta-button">Contact Us</a>
                             <a href="services.php" class="btn btn-outline-light btn-lg">Our Services</a>
                         </div>
                     </div>
@@ -665,6 +672,103 @@ require_once __DIR__ . '/includes/navbar.php';
     </section>
 
     <!-- Introduction / Trust Section -->
+    <style>
+        /* Home page: ensure every visible button's default background is #0d6efd
+           Only affects buttons inside <main> on this page; excludes `.hero-cta-button`.
+           This changes only the default background color and border-color so hover,
+           size, spacing, radius and other behaviors remain unchanged. */
+        main .btn:not(.hero-cta-button) {
+            background-color: #0d6efd !important;
+            border-color: #0d6efd !important;
+            color: #fff !important;
+        }
+
+        /* Ensure the About section primary CTA matches hero CTA buttons exactly
+           Scoped to .intro-trust on the Home page only. */
+        .intro-trust .hero-cta-button {
+            display: inline-flex !important;
+            align-items: center;
+            justify-content: center;
+            min-width: 142px;
+            margin-right: .55rem;
+            padding: .78rem 1.15rem;
+            border-radius: .75rem;
+            font-size: 1rem;
+            font-weight: 700;
+            line-height: 1.5;
+            letter-spacing: 0;
+            border: 1px solid #0d6efd;
+            background-color: #0d6efd !important;
+            color: #fff !important;
+            box-shadow: 0 12px 28px rgba(0, 92, 230, .32);
+            text-decoration: none !important;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease, border-color .2s ease;
+        }
+        .intro-trust .hero-cta-button:hover,
+        .intro-trust .hero-cta-button:focus {
+            transform: translateY(-2px);
+            background-color: #075bd3 !important;
+            border-color: #075bd3;
+            box-shadow: 0 16px 32px rgba(0, 92, 230, .46);
+            text-decoration: none !important;
+        }
+        .intro-trust .hero-cta-button:active {
+            background-color: #064bac !important;
+            border-color: #064bac;
+            box-shadow: none;
+            text-decoration: none !important;
+        }
+        .intro-trust .hero-cta-button:focus-visible {
+            outline: 3px solid rgba(151, 204, 255, .92);
+            outline-offset: 3px;
+        }
+        /* Highly specific rule for the About section CTA to prevent other selectors from overriding */
+        .intro-trust .intro-content a.about-cta-button {
+            display: inline-flex !important;
+            align-items: center;
+            justify-content: center;
+            min-width: 142px;
+            margin-right: .55rem;
+            padding: .78rem 1.15rem;
+            height: auto;
+            border-radius: .75rem;
+            font-size: 1rem;
+            font-weight: 700;
+            line-height: 1.5;
+            letter-spacing: 0;
+            border: 1px solid #0d6efd !important;
+            background-color: #0d6efd !important;
+            color: #fff !important;
+            box-shadow: 0 12px 28px rgba(0, 92, 230, .32) !important;
+            text-decoration: none !important;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease, border-color .2s ease;
+        }
+        .intro-trust .intro-content a.about-cta-button:hover,
+        .intro-trust .intro-content a.about-cta-button:focus {
+            transform: translateY(-2px);
+            background-color: #075bd3 !important;
+            border-color: #075bd3 !important;
+            box-shadow: 0 16px 32px rgba(0, 92, 230, .46) !important;
+            text-decoration: none !important;
+        }
+        .intro-trust .intro-content a.about-cta-button:active {
+            background-color: #064bac !important;
+            border-color: #064bac !important;
+            box-shadow: none !important;
+            text-decoration: none !important;
+        }
+        .intro-trust .intro-content a.about-cta-button:focus-visible {
+            outline: 3px solid rgba(151, 204, 255, .92);
+            outline-offset: 3px;
+        }
+        @media (max-width: 767.98px) {
+            .intro-trust .hero-cta-button { min-width: 0; }
+        }
+    </style>
     <section class="intro-trust py-5">
         <div class="container">
             <div class="row g-4 align-items-center">
@@ -675,7 +779,7 @@ require_once __DIR__ . '/includes/navbar.php';
                         <p class="text-muted mb-3">Career Grow Infotech Pvt. Ltd. is focused on helping job seekers discover meaningful career opportunities while supporting businesses in finding the right talent for their growing teams.</p>
                         <p class="text-muted mb-3">Our approach combines career guidance, recruitment support and a strong understanding of employer requirements to create better connections between professionals and organizations.</p>
                         <div class="d-flex gap-3 mt-3">
-                            <a href="jobs.php" class="btn btn-primary">Explore Opportunities</a>
+                            <a href="jobs.php" class="hero-cta-button about-cta-button">Explore Opportunities</a>
                             <a href="about.php" class="btn btn-outline-primary">Learn More About Us</a>
                         </div>
                     </div>

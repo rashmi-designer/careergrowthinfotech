@@ -347,6 +347,32 @@ require_once __DIR__ . '/includes/navbar.php';
     .contact-cta .btn-outline-light:hover,
     .contact-cta .btn-outline-light:focus { background: #0d6efd; border-color: #0d6efd; color: #fff; }
 
+    /* Ensure outline-style CTA on Contact page has #0d6efd background by default
+       Only changing the background-color as requested; text and border colors left unchanged. */
+    .contact-cta .btn-outline-light {
+        background-color: #0d6efd !important;
+    }
+
+    .contact-cta .text-white-50 { color: #466687 !important; }
+    .contact-cta h2 { color: #102b50; }
+    .contact-cta .btn-light {
+        background: #0d6efd;
+        border-color: #0d6efd;
+        color: #fff;
+        transition: background-color .2s ease, border-color .2s ease, color .2s ease, box-shadow .2s ease, transform .2s ease;
+    }
+    .contact-cta .btn-light:hover,
+    .contact-cta .btn-light:focus {
+        background: #0a58ca;
+        border-color: #0a58ca;
+        color: #fff;
+        box-shadow: 0 10px 20px rgba(10, 88, 202, .24);
+        transform: translateY(-2px);
+    }
+    .contact-cta .btn-outline-light { border-color: #0d6efd; color: #0a58ca; }
+    .contact-cta .btn-outline-light:hover,
+    .contact-cta .btn-outline-light:focus { background: #0d6efd; border-color: #0d6efd; color: #fff; }
+
     .breadcrumb {
         margin-bottom: 1rem;
         font-size: 0.92rem;

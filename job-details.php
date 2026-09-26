@@ -294,6 +294,15 @@ if (!function_exists('cg_render_safe_text')) {
         box-shadow: 0 10px 20px rgba(13, 110, 253, 0.16);
     }
 
+    /* Ensure buttons on the Job Details page render with exact brand blue
+       Scoped to this page only and targets the actual elements used here. */
+    .job-details-page .btn.btn-primary,
+    .job-details-page a.btn.btn-primary {
+        background: #0d6efd !important;
+        border-color: #0d6efd !important;
+        color: #ffffff !important;
+    }
+
     @media (min-width: 992px) {
         .job-detail-body aside {
             position: sticky;

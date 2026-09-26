@@ -1,273 +1,599 @@
-<?php
+﻿<?php
 $pageTitle = 'Services - Career Grow Infotech';
 require_once __DIR__ . '/includes/header.php';
 require_once __DIR__ . '/includes/navbar.php';
 ?>
 
 <style>
-/* Page-specific styles (kept local to services.php) */
-.svc-hero {
-    padding: 5rem 0 3.5rem;
-    background: linear-gradient(180deg, rgba(13,110,253,0.04), rgba(13,110,253,0.01));
-    position: relative;
-    overflow: visible;
-}
-.svc-hero .hero-decor { position: absolute; right: -6%; top: -6%; width: 380px; height: 380px; opacity: .06; transform: rotate(18deg); }
-.svc-eyebrow { letter-spacing: .12em; font-size: .78rem; }
-.svc-intro-highlights .card { border: 1px solid var(--cg-border); border-radius: .85rem; box-shadow: 0 8px 30px rgba(15,23,42,0.04); }
-.svc-service-badge { width:44px; height:44px; border-radius:8px; background: linear-gradient(135deg,var(--cg-primary),var(--cg-primary-dark)); color:#fff; display:inline-flex; align-items:center; justify-content:center; font-weight:700; }
-.svc-service-card { border:1px solid var(--cg-border); border-radius:.9rem; transition: transform .22s ease, box-shadow .22s ease; background:var(--cg-white); }
-.svc-service-card:hover { transform: translateY(-6px); box-shadow: 0 22px 56px rgba(15,23,42,0.06); }
-.svc-service-card .card-body { min-height: 150px; display:flex; flex-direction:column; }
-.svc-service-card .card-footer { background:transparent; border-top:0; }
-.svc-feature-visual { background: linear-gradient(180deg, rgba(13,110,253,0.02), rgba(13,110,253,0.00)); border:1px solid var(--cg-border); border-radius:.9rem; padding:1.25rem; }
-.process-steps { position:relative; }
-.process-track { display:flex; gap:1rem; align-items:stretch; }
-.process-step { flex:1 1 0; background:var(--cg-white); border:1px solid var(--cg-border); border-radius:.85rem; padding:1.1rem; box-shadow: 0 10px 28px rgba(15,23,42,0.04); }
-.process-step .step-num { width:40px; height:40px; border-radius:8px; background:var(--cg-primary); color:#fff; display:inline-flex; align-items:center; justify-content:center; font-weight:700; margin-right:.8rem; }
-@media (max-width: 991.98px) {
-    .svc-hero { padding:3rem 0 2rem; }
-    .svc-hero .hero-decor { display:none; }
-    .process-track { flex-direction:column; }
-}
-.why-cards .card { border:1px solid var(--cg-border); border-radius:.85rem; box-shadow: 0 10px 28px rgba(15,23,42,0.04); }
-.final-cta { padding:2.25rem 0; background: linear-gradient(180deg, rgba(13,110,253,0.04), rgba(13,110,253,0.01)); }
-.lead-muted { color:var(--cg-muted); }
-.svc-hero .hero-row { align-items: center; gap: 2rem; }
-.svc-hero .section-title { font-size: clamp(1.8rem, 3.6vw, 2.6rem); font-weight:800; }
-.svc-hero .lead-muted { color:var(--cg-muted); max-width: 58ch; }
-.svc-hero .hero-actions .btn { min-width: 160px; }
-
-/* Talent matching visual */
-.talent-visual { position: relative; display: flex; align-items: center; justify-content: center; }
-.tv-card { width: 360px; max-width: 100%; background: var(--cg-white); border: 1px solid var(--cg-border); border-radius: 1rem; box-shadow: 0 18px 40px rgba(15,23,42,0.06); padding: 1rem; }
-.tv-card .profile { display:flex; gap:.75rem; align-items:center; }
-.tv-card .avatar { width:56px; height:56px; border-radius:12px; background: linear-gradient(135deg,var(--cg-primary),var(--cg-primary-dark)); color:#fff; display:inline-flex; align-items:center; justify-content:center; font-weight:700; }
-.tv-card .skills { margin-top:.6rem; display:flex; gap:.4rem; flex-wrap:wrap; }
-.tv-card .skill { background: rgba(13,110,253,0.06); color:var(--cg-primary); padding:.28rem .55rem; border-radius:.5rem; font-size:.85rem; }
-.tv-small { position: absolute; right: -28px; top: 12%; width:180px; background:var(--cg-white); border:1px solid var(--cg-border); border-radius:.75rem; padding:.6rem; box-shadow: 0 10px 30px rgba(15,23,42,0.06); }
-.tv-connector { position:absolute; left: 42%; top: 40%; width: 120px; height:2px; background: linear-gradient(90deg, rgba(13,110,253,0.12), rgba(13,110,253,0.45)); transform: rotate(8deg); }
-.talent-visual { display:grid; grid-template-columns:minmax(320px, 360px) 190px; gap:1rem; justify-content:center; align-items:center; min-height:280px; }
-.talent-visual .tv-card { width:100%; position:relative; z-index:1; }
-.talent-visual .tv-small { position:static; width:100%; padding:1rem; z-index:1; }
-.talent-visual .tv-connector { display:none; }
-.talent-visual .bi-briefcase,
-.svc-feature-visual .bi-briefcase {
-    width: 46px;
-    height: 46px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 14px;
-    background: rgba(13,110,253,0.08);
-    color: var(--cg-primary) !important;
-    font-size: 1.15rem !important;
-    flex: 0 0 auto;
-    line-height: 1;
-}
-.talent-visual .bi-briefcase { width: 42px; height: 42px; border-radius: 12px; font-size: 1.05rem !important; }
-.job-seeker-visual { padding:1.5rem; background:linear-gradient(145deg, rgba(13,110,253,0.06), rgba(255,255,255,0.72)); }
-.job-seeker-visual .tv-card { max-width:none; padding:1.5rem; border-radius:1.25rem; box-shadow:0 18px 45px rgba(15,23,42,0.08); }
-.job-seeker-visual .tv-card > .d-flex:first-child { padding-bottom:1.25rem; border-bottom:1px solid rgba(15,23,42,0.08); }
-.job-seeker-visual .tv-card > .d-flex:nth-child(2) { margin:1.25rem 0 !important; padding:1rem; border:1px solid rgba(13,110,253,0.1); border-radius:.9rem; background:rgba(13,110,253,0.04); }
-.job-seeker-visual .tv-card > .d-flex:last-child { justify-content:flex-end; flex-wrap:wrap; gap:.75rem !important; }
-.job-seeker-visual .tv-card > .d-flex:last-child .btn { min-width:150px; }
-.job-seeker-visual .bi-briefcase { width:48px; height:48px; border-radius:14px; background:var(--cg-white); box-shadow:0 6px 16px rgba(13,110,253,0.08); }
-.job-seeker-copy ul { list-style:none; padding-left:0; }
-.job-seeker-copy li { position:relative; padding-left:1.5rem; margin-bottom:.65rem; }
-.job-seeker-copy li::before { content:'\2713'; position:absolute; left:0; top:.1rem; color:var(--cg-primary); font-weight:700; }
-
-.svc-intro-highlights .feature { display:flex; gap:1rem; align-items:flex-start; padding:1.05rem; border-radius:.75rem; background:var(--cg-white); border:1px solid rgba(15,23,42,0.04); box-shadow: 0 8px 24px rgba(15,23,42,0.04); }
-.svc-service-badge {
-    width: 52px;
-    height: 52px;
-    border-radius: 16px;
-    background: linear-gradient(135deg,var(--cg-primary),var(--cg-primary-dark));
-    color: #fff;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    flex: 0 0 auto;
-    font-size: 1.1rem;
-    box-shadow: 0 10px 22px rgba(13,110,253,0.14);
-}
-.svc-service-badge i { line-height: 1; }
-
-/* Services grid: 4 columns desktop */
-.svc-service-card {
-    border: 1px solid var(--cg-border);
-    border-radius: 1rem;
-    transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
-    background: var(--cg-white);
-    display: flex;
-    flex-direction: column;
-    min-height: 220px;
-}
-.svc-service-card .icon-wrap {
-    width: 56px;
-    height: 56px;
-    border-radius: 16px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, rgba(13,110,253,0.12), rgba(13,110,253,0.08));
-    color: var(--cg-primary);
-    font-size: 1.25rem;
-    flex: 0 0 auto;
-    line-height: 1;
-    box-shadow: 0 10px 20px rgba(13,110,253,0.08);
-}
-.svc-service-card .icon-wrap i { line-height: 1; }
-.svc-service-card h5 { font-size:1.05rem; margin-bottom:.45rem; }
-.svc-service-card p { color:var(--cg-muted); }
-.svc-service-card:hover { transform: translateY(-6px); box-shadow: 0 28px 60px rgba(15,23,42,0.08); border-color: rgba(13,110,253,0.12); }
-.svc-service-card:hover .icon-wrap { transform: translateY(-3px); }
-.svc-service-card .card-body { flex:1 1 auto; }
-.svc-service-card .card-footer { background:transparent; border-top:0; }
-
-/* Additional visual polish: spacing, headings, numbers */
-.svc-section { padding-top: 4.5rem; padding-bottom: 4.5rem; }
-@media (min-width: 1200px) { .svc-section { padding-top: 6rem; padding-bottom: 5rem; } }
-@media (max-width: 991.98px) { .svc-section { padding-top: 3.5rem; padding-bottom: 3rem; } }
-.svc-service-card { padding: 1.35rem; }
-.svc-service-footer { margin-top: 1rem; }
-.svc-service-footer a { color: var(--cg-primary); font-weight:600; text-decoration: none; }
-.svc-service-footer a:hover { text-decoration: underline; }
-.svc-service-meta {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 56px;
-    gap: .9rem;
-    align-items: start;
-    width: 100%;
-}
-.svc-service-meta > div:first-child {
-    min-width: 0;
-    overflow-wrap: normal;
-    word-break: normal;
-}
-.svc-service-card .icon-wrap { justify-self: end; align-self: start; margin-left: 0; }
-.svc-service-card h5 { line-height: 1.25; }
-.svc-service-card p { line-height: 1.65; }
-.section-title { letter-spacing: -0.01em; }
-.lead-muted { font-size: 1rem; line-height: 1.7; }
-
-@media (max-width: 991.98px) {
-    .svc-hero { padding:3rem 0 2rem; }
-    .talent-visual { display:flex; flex-direction:column; align-items:stretch; min-height:0; }
-    .talent-visual .tv-card,
-    .talent-visual .tv-small { max-width:420px; margin-left:auto; margin-right:auto; }
-}
-
-@media (max-width: 575.98px) {
-    .svc-service-meta {
-        gap: .75rem;
-        grid-template-columns: minmax(0, 1fr) 48px;
+    .svc-page {
+        background:
+            radial-gradient(circle at top left, rgba(13, 110, 253, 0.08), transparent 28%),
+            linear-gradient(180deg, #f6faff 0%, #ffffff 30%, #f6faff 100%);
+        overflow: hidden;
     }
 
-    .svc-service-card .icon-wrap,
-    .svc-service-badge {
-        width: 48px;
-        height: 48px;
-        border-radius: 14px;
-        font-size: 1.05rem;
-    }
-}
-
-@media (max-width: 399.98px) {
-    .svc-service-meta {
-        grid-template-columns: minmax(0, 1fr) 48px;
+    .svc-hero {
+        position: relative;
+        padding: 2.5rem 0 2rem;
+        background: linear-gradient(135deg, rgba(13, 110, 253, 0.06), rgba(11, 31, 51, 0.02) 50%, rgba(13, 110, 253, 0.02));
+        border-bottom: 1px solid rgba(13, 110, 253, 0.08);
     }
 
-    .svc-service-card .icon-wrap {
-        grid-column: 2;
-        grid-row: 1;
+    .svc-hero::before,
+    .svc-hero::after,
+    .svc-cta-card::before,
+    .svc-cta-card::after {
+        content: "";
+        position: absolute;
+        pointer-events: none;
+        border-radius: 50%;
+        filter: blur(18px);
+        opacity: 0.8;
     }
-}
 
-.process-steps { padding-top:.5rem; }
-.process-track { display:grid !important; grid-template-columns:minmax(0, 1fr) 80px minmax(0, 1fr) 80px minmax(0, 1fr) 80px minmax(0, 1fr); gap:1rem; align-items:stretch !important; }
-.process-step { width:100%; min-width:0; display:flex; align-self:stretch; background:transparent; border:0; padding:0; }
-.process-node { width:100%; height:100%; background:var(--cg-white); border:1px solid var(--cg-border); border-radius:12px; padding:1.25rem; box-shadow: 0 12px 30px rgba(15,23,42,0.04); display:flex; gap:1rem; align-items:flex-start; min-height:170px; }
-.process-node > div:last-child { min-width:0; }
-.process-step:first-child .process-node h5 { font-size:1.18rem; }
-.process-node .step-num { width:52px; height:52px; min-width:52px; min-height:52px; flex:0 0 52px; aspect-ratio:1 / 1; border-radius:50%; background:var(--cg-primary); color:#fff; display:inline-flex; align-items:center; justify-content:center; font-weight:800; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, 'Roboto Mono', monospace; line-height:1; }
-.process-line { width:100%; height:2px; align-self:center; background: linear-gradient(90deg, rgba(13,110,253,0.12), rgba(13,110,253,0.28)); }
+    .svc-hero::before {
+        width: 220px;
+        height: 220px;
+        background: rgba(13, 110, 253, 0.1);
+        right: 14%;
+        top: -50px;
+        animation: floatGlow 10s ease-in-out infinite alternate;
+    }
 
-@media (max-width: 991.98px) {
-    .process-track { display:flex !important; flex-direction:column; align-items:stretch !important; }
-    .process-step { display:block; }
-    .process-node { height:auto; }
-}
+    .svc-hero::after {
+        width: 180px;
+        height: 180px;
+        background: rgba(79, 172, 255, 0.12);
+        left: 8%;
+        bottom: -30px;
+        animation: floatGlow 12s ease-in-out infinite alternate-reverse;
+    }
 
-.why-cards .card { border:0; background:var(--cg-white); border-radius:12px; padding:1.2rem; box-shadow: 0 12px 36px rgba(15,23,42,0.04); }
-.final-cta { padding:2.25rem 0; }
-.final-cta .final-cta-card { background: linear-gradient(90deg, var(--cg-primary), var(--cg-primary-dark)); color: #fff; border:0; box-shadow: 0 20px 60px rgba(13,110,253,0.18); }
-.final-cta .final-cta-card .text-soft { color: rgba(255,255,255,0.88) !important; }
-.final-cta .final-cta-card .btn-primary { background:#fff; border-color:#fff; color:var(--cg-primary-dark); }
-.final-cta .final-cta-card .btn-primary:hover,
-.final-cta .final-cta-card .btn-primary:focus { background:var(--cg-primary); border-color:var(--cg-primary); color:#fff; }
+    .svc-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.42rem 0.8rem;
+        border-radius: 999px;
+        background: rgba(13, 110, 253, 0.08);
+        border: 1px solid rgba(13, 110, 253, 0.1);
+        letter-spacing: 0.12em;
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: var(--cg-primary);
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.3);
+    }
 
-.svc-hero .breadcrumb { background: transparent; padding: 0; }
+    .svc-hero h1 {
+        margin-top: 0.9rem;
+        font-size: clamp(2.2rem, 4vw, 3.3rem);
+        line-height: 1.08;
+        letter-spacing: -0.05em;
+        font-weight: 800;
+        color: var(--cg-accent);
+        max-width: 670px;
+    }
+
+    .svc-hero .lead {
+        max-width: 60ch;
+        color: var(--cg-muted);
+        font-size: 1.03rem;
+        line-height: 1.7;
+        margin-top: 0.9rem;
+    }
+
+    .svc-hero .btn {
+        min-width: 170px;
+        padding: 0.75rem 1.15rem;
+        border-radius: 0.8rem;
+        font-weight: 700;
+        transition: transform 0.23s ease, box-shadow 0.23s ease, border-color 0.23s ease;
+    }
+
+    .svc-hero .btn:hover,
+    .svc-cta-card .btn:hover {
+        transform: translateY(-2px);
+    }
+
+    .svc-hero-visual {
+        position: relative;
+        background: rgba(255, 255, 255, 0.88);
+        border: 1px solid rgba(13, 110, 253, 0.12);
+        border-radius: 1.45rem;
+        box-shadow: 0 22px 48px rgba(15, 23, 42, 0.08);
+        padding: 1.2rem;
+        overflow: hidden;
+        backdrop-filter: blur(2px);
+    }
+
+    .svc-hero-visual::before {
+        content: "";
+        position: absolute;
+        inset: auto -18% -30% auto;
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        background: rgba(13, 110, 253, 0.08);
+        filter: blur(12px);
+    }
+
+    .mini-panel {
+        position: relative;
+        z-index: 1;
+        border: 1px solid rgba(13, 110, 253, 0.08);
+        border-radius: 1rem;
+        background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(245,247,251,0.94));
+        padding: 1rem 1.05rem;
+        box-shadow: 0 8px 18px rgba(15, 23, 42, 0.04);
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .mini-panel + .mini-panel {
+        margin-top: 0.9rem;
+    }
+
+    .mini-panel:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 16px 30px rgba(13, 110, 253, 0.08);
+    }
+
+    .svc-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.45rem 0.7rem;
+        border-radius: 999px;
+        background: rgba(13, 110, 253, 0.08);
+        color: var(--cg-primary);
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+    }
+
+    .svc-block-title {
+        font-size: 1.08rem;
+        font-weight: 700;
+        color: var(--cg-accent);
+        margin-bottom: 0.4rem;
+    }
+
+    .svc-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.8rem;
+    }
+
+    .svc-stat {
+        border: 1px solid rgba(13, 110, 253, 0.1);
+        border-radius: 0.85rem;
+        background: linear-gradient(180deg, rgba(13,110,253,0.04), rgba(13,110,253,0.02));
+        padding: 0.75rem 0.8rem;
+    }
+
+    .svc-stat strong {
+        display: block;
+        font-size: 1.18rem;
+        color: var(--cg-primary);
+        margin-bottom: 0.18rem;
+    }
+
+    .svc-section {
+        position: relative;
+        padding: 4rem 0;
+    }
+
+    .svc-section + .svc-section {
+        border-top: 1px solid rgba(15, 23, 42, 0.05);
+    }
+
+    .svc-section.bg-white {
+        background: rgba(255, 255, 255, 0.78);
+    }
+
+    .section-heading {
+        margin-bottom: 1.8rem;
+    }
+
+    .section-heading h2 {
+        font-size: clamp(1.9rem, 3vw, 2.45rem);
+        font-weight: 800;
+        line-height: 1.16;
+        letter-spacing: -0.04em;
+        color: var(--cg-accent);
+        margin: 0;
+    }
+
+    .section-heading p {
+        margin-top: 0.7rem;
+        max-width: 62ch;
+        color: var(--cg-muted);
+        line-height: 1.7;
+    }
+
+    .svc-service-card {
+        position: relative;
+        border: 1px solid rgba(13, 110, 253, 0.08);
+        border-radius: 1.1rem;
+        background: rgba(255,255,255,0.9);
+        box-shadow: 0 12px 28px rgba(15, 23, 42, 0.04);
+        transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    .svc-service-card::before {
+        content: "";
+        position: absolute;
+        inset: 0 auto auto 0;
+        width: 100%;
+        height: 3px;
+        background: linear-gradient(90deg, var(--cg-primary), rgba(13, 110, 253, 0.2));
+        opacity: 0;
+        transition: opacity 0.25s ease;
+    }
+
+    .svc-service-card:hover {
+        transform: translateY(-6px);
+        border-color: rgba(13, 110, 253, 0.18);
+        box-shadow: 0 20px 36px rgba(15, 23, 42, 0.08);
+    }
+
+    .svc-service-card:hover::before {
+        opacity: 1;
+    }
+
+    .svc-service-card .card-body {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        padding: 1.35rem 1.3rem 1.2rem;
+    }
+
+    .svc-icon-wrap {
+        width: 52px;
+        height: 52px;
+        border-radius: 0.9rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, rgba(13, 110, 253, 0.12), rgba(79, 172, 255, 0.12));
+        color: var(--cg-primary);
+        font-size: 1.2rem;
+        margin-bottom: 0.9rem;
+        border: 1px solid rgba(13, 110, 253, 0.08);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .svc-service-card:hover .svc-icon-wrap {
+        transform: translateY(-2px) scale(1.02);
+        box-shadow: 0 12px 22px rgba(13, 110, 253, 0.12);
+    }
+
+    .svc-service-card h3 {
+        margin: 0 0 0.6rem;
+        font-size: 1.12rem;
+        font-weight: 700;
+        color: var(--cg-accent);
+    }
+
+    .svc-service-card p {
+        margin: 0;
+        color: var(--cg-muted);
+        line-height: 1.65;
+    }
+
+    .svc-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        margin-top: 1rem;
+        color: var(--cg-primary);
+        font-weight: 700;
+        text-decoration: none;
+        transition: gap 0.2s ease, opacity 0.2s ease;
+    }
+
+    .svc-link:hover {
+        gap: 0.6rem;
+        opacity: 0.9;
+    }
+
+    .journey-panel {
+        background: linear-gradient(180deg, #ffffff, #f7fbff);
+        border: 1px solid rgba(13, 110, 253, 0.08);
+        border-radius: 1.25rem;
+        box-shadow: 0 18px 32px rgba(15, 23, 42, 0.05);
+        padding: 1.4rem;
+    }
+
+    .journey-list {
+        display: grid;
+        gap: 0.95rem;
+        margin-top: 1.3rem;
+    }
+
+    .journey-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.8rem;
+        padding: 0.95rem 1rem;
+        border-radius: 1rem;
+        background: rgba(13, 110, 253, 0.02);
+        border: 1px solid rgba(13, 110, 253, 0.08);
+        transition: transform 0.25s ease, border-color 0.25s ease;
+    }
+
+    .journey-item:hover {
+        transform: translateX(2px);
+        border-color: rgba(13, 110, 253, 0.15);
+    }
+
+    .journey-number {
+        width: 38px;
+        height: 38px;
+        border-radius: 0.85rem;
+        background: linear-gradient(135deg, var(--cg-primary), var(--cg-primary-dark));
+        color: #fff;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        flex-shrink: 0;
+        box-shadow: 0 12px 20px rgba(13, 110, 253, 0.18);
+    }
+
+    .journey-item h4 {
+        margin: 0 0 0.3rem;
+        font-size: 1rem;
+        color: var(--cg-accent);
+    }
+
+    .journey-item p {
+        margin: 0;
+        color: var(--cg-muted);
+        line-height: 1.6;
+    }
+
+    .benefit-card {
+        position: relative;
+        background: rgba(255,255,255,0.9);
+        border: 1px solid rgba(13, 110, 253, 0.08);
+        border-radius: 1rem;
+        padding: 1.2rem 1.1rem;
+        box-shadow: 0 12px 22px rgba(15, 23, 42, 0.03);
+        height: 100%;
+        transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+
+    .benefit-card:hover {
+        transform: translateY(-5px);
+        border-color: rgba(13, 110, 253, 0.15);
+        box-shadow: 0 18px 28px rgba(15, 23, 42, 0.05);
+    }
+
+    .benefit-card i {
+        font-size: 1.35rem;
+        color: var(--cg-primary);
+        margin-bottom: 0.7rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, rgba(13,110,253,0.09), rgba(13,110,253,0.04));
+    }
+
+    .benefit-card h3 {
+        font-size: 1.04rem;
+        margin: 0 0 0.55rem;
+        color: var(--cg-accent);
+    }
+
+    .benefit-card p {
+        margin: 0;
+        color: var(--cg-muted);
+        line-height: 1.62;
+    }
+
+    .svc-cta {
+        padding: 0 0 4.5rem;
+    }
+
+    .svc-cta-card {
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(135deg, var(--cg-primary) 0%, #0b1f33 100%);
+        color: #fff;
+        border-radius: 1.4rem;
+        box-shadow: 0 20px 48px rgba(13, 110, 253, 0.18);
+        padding: 1.8rem 2rem;
+    }
+
+    .svc-cta-card::before {
+        width: 220px;
+        height: 220px;
+        background: rgba(255, 255, 255, 0.1);
+        right: -30px;
+        top: -30px;
+        animation: floatGlow 9s ease-in-out infinite alternate;
+    }
+
+    .svc-cta-card::after {
+        width: 180px;
+        height: 180px;
+        background: rgba(127, 182, 255, 0.12);
+        left: -30px;
+        bottom: -30px;
+        animation: floatGlow 11s ease-in-out infinite alternate-reverse;
+    }
+
+    .svc-cta-card > * {
+        position: relative;
+        z-index: 1;
+    }
+
+    .svc-cta-card h2 {
+        margin: 0;
+        color: #fff;
+        font-size: clamp(1.8rem, 2.8vw, 2.5rem);
+        letter-spacing: -0.04em;
+        font-weight: 800;
+    }
+
+    .svc-cta-card p {
+        color: rgba(255, 255, 255, 0.86);
+        margin-top: 0.7rem;
+        max-width: 58ch;
+        line-height: 1.6;
+    }
+
+    .svc-cta-card .btn {
+        min-width: 170px;
+        padding: 0.8rem 1.2rem;
+        border-radius: 0.8rem;
+        font-weight: 700;
+    }
+
+    .svc-cta-card .btn-light {
+        color: var(--cg-primary-dark);
+    }
+
+    .reveal {
+        opacity: 0;
+        transform: translateY(18px);
+        transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+
+    .reveal.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .reveal-delay-1 { transition-delay: 0.08s; }
+    .reveal-delay-2 { transition-delay: 0.15s; }
+    .reveal-delay-3 { transition-delay: 0.22s; }
+    .reveal-delay-4 { transition-delay: 0.3s; }
+
+    @keyframes floatGlow {
+        0% { transform: translate3d(0, 0, 0) scale(1); }
+        100% { transform: translate3d(10px, -10px, 0) scale(1.06); }
+    }
+
+    @media (max-width: 991.98px) {
+        .svc-page {
+            background: linear-gradient(180deg, #f6faff 0%, #ffffff 34%, #f6faff 100%);
+        }
+
+        .svc-hero {
+            padding-top: 2rem;
+        }
+
+        .svc-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 767.98px) {
+        .svc-section,
+        .svc-cta {
+            padding-top: 3rem;
+            padding-bottom: 3rem;
+        }
+
+        .svc-hero .btn,
+        .svc-cta-card .btn {
+            width: 100%;
+        }
+
+        .svc-hero h1 {
+            max-width: none;
+        }
+
+        .svc-cta-card {
+            padding: 1.5rem;
+        }
+
+        .journey-item {
+            padding: 0.9rem 0.85rem;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+            scroll-behavior: auto !important;
+        }
+
+        .reveal {
+            opacity: 1;
+            transform: none;
+        }
+    }
 </style>
 
-<main class="flex-grow-1">
-
-    <!-- HERO -->
+<main class="svc-page flex-grow-1">
     <section class="svc-hero">
         <div class="container">
-            <div class="row hero-row">
-                <div class="col-lg-6">
-                    <p class="svc-eyebrow text-uppercase text-primary fw-semibold mb-2">OUR SERVICES</p>
-                    <h1 class="section-title">Recruitment Solutions That Connect Talent With Opportunity</h1>
-                    <nav aria-label="breadcrumb" class="mb-3">
-                        <ol class="breadcrumb mb-0 bg-transparent">
-                            <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Services</li>
-                        </ol>
-                    </nav>
-                    <p class="lead-muted mt-2">Career Grow Infotech provides professional recruitment and career support services designed to connect organizations with suitable talent and help candidates discover meaningful career opportunities.</p>
-                    <div class="hero-actions d-flex gap-2 mt-4">
-                        <a href="jobs.php" class="btn btn-primary">Explore Jobs</a>
-                        <a href="contact.php" class="btn btn-outline-primary">Contact Us</a>
+            <nav aria-label="Breadcrumb" class="mb-3">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Services</li>
+                </ol>
+            </nav>
+
+            <div class="row align-items-center g-4">
+                <div class="col-lg-7">
+                    <div class="reveal reveal-delay-1">
+                        <span class="svc-eyebrow"><i class="bi bi-briefcase-fill" aria-hidden="true"></i> Candidate services</span>
+                    </div>
+                    <h1 class="reveal reveal-delay-2">Career support built around the job portal experience.</h1>
+                    <p class="lead reveal reveal-delay-3">Career Grow Infotech helps candidates discover current jobs, build a complete profile, upload a resume, apply for positions, and keep track of their application status from a single, straightforward platform.</p>
+                    <div class="d-flex flex-wrap gap-3 mt-4 reveal reveal-delay-4">
+                        <a href="jobs.php" class="btn btn-primary">Explore jobs</a>
+                        <a href="register.php" class="btn btn-outline-primary">Create account</a>
                     </div>
                 </div>
 
-                <div class="col-lg-6">
-                    <div class="talent-visual">
-                        <div class="tv-card">
-                            <div class="d-flex justify-content-between align-items-start">
-                                <div class="profile">
-                                    <div class="avatar">RK</div>
-                                    <div>
-                                        <div class="fw-semibold">Rashmi K.</div>
-                                        <div class="text-soft small">Marketing Executive • 3+ yrs</div>
-                                    </div>
+                <div class="col-lg-5">
+                    <div class="svc-hero-visual reveal reveal-delay-3">
+                        <div class="mini-panel">
+                            <div class="d-flex justify-content-between align-items-center gap-2 mb-3">
+                                <span class="svc-pill"><i class="bi bi-person-circle" aria-hidden="true"></i> Profile</span>
+                                <span class="text-muted small">Ready</span>
+                            </div>
+                            <div class="svc-block-title">Candidate profile</div>
+                            <p class="text-muted mb-0">Skills, location, experience, and resume details can be managed in one place.</p>
+                        </div>
+
+                        <div class="mini-panel">
+                            <div class="d-flex justify-content-between align-items-center gap-2 mb-3">
+                                <span class="svc-pill"><i class="bi bi-search" aria-hidden="true"></i> Jobs</span>
+                                <span class="text-muted small">Updated</span>
+                            </div>
+                            <div class="svc-grid">
+                                <div class="svc-stat">
+                                    <strong>Search</strong>
+                                    <span class="small text-muted">By role, type, and location</span>
                                 </div>
-                                <div class="text-end small text-soft">Profile</div>
-                            </div>
-
-                            <div class="skills mt-3">
-                                <span class="skill">Marketing</span>
-                                <span class="skill">SEO</span>
-                                <span class="skill">Communication</span>
-                            </div>
-
-                            <div class="mt-3 d-flex justify-content-between align-items-center">
-                                <div class="text-muted small">Experience: 3+ years</div>
-                                <div class="badge bg-soft text-primary rounded-pill">Matched</div>
+                                <div class="svc-stat">
+                                    <strong>Apply</strong>
+                                    <span class="small text-muted">Submit through the portal</span>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="tv-connector" aria-hidden="true"></div>
-
-                        <div class="tv-small">
-                            <div class="d-flex align-items-start gap-2">
-                                <i class="bi bi-briefcase fs-4 text-primary"></i>
-                                <div>
-                                    <div class="fw-semibold">Suitable Opportunity</div>
-                                    <div class="text-soft small">Marketing Executive - Pune</div>
-                                </div>
+                        <div class="mini-panel">
+                            <div class="d-flex justify-content-between align-items-center gap-2 mb-3">
+                                <span class="svc-pill"><i class="bi bi-list-check" aria-hidden="true"></i> Status</span>
+                                <span class="text-muted small">Live</span>
                             </div>
+                            <div class="svc-block-title">Application tracking</div>
+                            <p class="text-muted mb-0">Candidates can monitor their submissions and see current application status.</p>
                         </div>
                     </div>
                 </div>
@@ -275,176 +601,172 @@ require_once __DIR__ . '/includes/navbar.php';
         </div>
     </section>
 
-    <!-- INTRO -->
-    <section class="py-5 svc-section">
+    <section class="svc-section">
         <div class="container">
-            <div class="row align-items-center mb-4">
-                <div class="col-lg-6">
-                    <h2 class="section-title">How We Help</h2>
-                    <p class="lead-muted">Career Grow Infotech supports both organizations and job seekers through a structured recruitment approach focused on skills, requirements, opportunities and professional connections.</p>
-                </div>
-            </div>
-
-            <div class="row svc-intro-highlights g-3">
-                <div class="col-md-4">
-                    <div class="card p-3 h-100">
-                        <div class="d-flex align-items-start gap-3">
-                            <div class="svc-service-badge"><i class="bi bi-building"></i></div>
-                            <div>
-                                <h5 class="mb-1">For Employers</h5>
-                                <p class="text-soft mb-0">Structured recruitment support to help organizations find and engage suitable talent.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="card p-3 h-100">
-                        <div class="d-flex align-items-start gap-3">
-                            <div class="svc-service-badge"><i class="bi bi-person"></i></div>
-                            <div>
-                                <h5 class="mb-1">For Job Seekers</h5>
-                                <p class="text-soft mb-0">Career guidance and practical support to help candidates present their skills effectively.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="card p-3 h-100">
-                        <div class="d-flex align-items-start gap-3">
-                            <div class="svc-service-badge"><i class="bi bi-gear"></i></div>
-                            <div>
-                                <h5 class="mb-1">Recruitment Support</h5>
-                                <p class="text-soft mb-0">End-to-end coordination and support through the recruitment journey.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- MAIN SERVICES -->
-    <section class="py-4 bg-soft svc-section">
-        <div class="container">
-            <div class="row mb-3">
-                <div class="col-lg-8">
-                    <h2 class="section-title">Our Recruitment Services</h2>
-                    <p class="text-soft">Practical recruitment support for employers and meaningful career assistance for job seekers.</p>
-                </div>
+            <div class="section-heading text-center reveal">
+                <p class="svc-eyebrow mx-auto">What the platform includes</p>
+                <h2>Services that match the actual portal functionality.</h2>
+                <p>Every feature below is supported by the current Career Grow Infotech job portal and reflects the real candidate experience.</p>
             </div>
 
             <div class="row g-4">
-                <?php
-                $services = [
-                    ["title"=>"Recruitment Assistance","icon"=>"people-fill","desc"=>"Support organizations in identifying and connecting with professionals based on their hiring requirements."],
-                    ["title"=>"Talent Sourcing","icon"=>"search","desc"=>"Identify potential candidates based on relevant skills, experience and role requirements."],
-                    ["title"=>"Candidate Screening","icon"=>"file-earmark-text","desc"=>"Review candidate profiles against relevant requirements to support a focused recruitment process."],
-                    ["title"=>"Skill-Based Matching","icon"=>"person-bounding-box","desc"=>"Connect candidate skills and experience with suitable professional opportunities."],
-                    ["title"=>"Hiring Support","icon"=>"person-check-fill","desc"=>"Provide structured recruitment support throughout the candidate and employer interaction process."],
-                    ["title"=>"Career Support","icon"=>"briefcase","desc"=>"Help job seekers explore opportunities aligned with their skills, qualifications, experience and career goals."],
-                    ["title"=>"Job Opportunity Guidance","icon"=>"compass","desc"=>"Help candidates understand available opportunities and identify roles that match their career interests."],
-                    ["title"=>"Recruitment Coordination","icon"=>"inboxes","desc"=>"Support communication and coordination between suitable candidates and organizations during the recruitment journey."]
-                ];
-
-                foreach ($services as $s) {
-                    ?>
-                        <div class="col-lg-3 col-md-6">
-                            <div class="card svc-service-card h-100 d-flex flex-column">
-                                <div class="card-body d-flex flex-column">
-                                    <div class="svc-service-meta mb-3">
-                                        <div>
-                                            <h5 class="mb-0"><?php echo htmlspecialchars($s['title'],ENT_QUOTES,'UTF-8'); ?></h5>
-                                            <p class="text-soft mb-0 small mt-1"><?php echo htmlspecialchars($s['desc'],ENT_QUOTES,'UTF-8'); ?></p>
-                                        </div>
-                                        <div class="icon-wrap"><i class="bi bi-<?php echo htmlspecialchars($s['icon'],ENT_QUOTES,'UTF-8'); ?>"></i></div>
-                                    </div>
-                                    <div class="mt-auto svc-service-footer">
-                                        <a href="contact.php">Get Started &raquo;</a>
-                                    </div>
-                                </div>
-                            </div>
+                <div class="col-md-6 col-xl-4 reveal">
+                    <div class="svc-service-card">
+                        <div class="card-body">
+                            <div class="svc-icon-wrap"><i class="bi bi-search" aria-hidden="true"></i></div>
+                            <h3>Job Search & Discovery</h3>
+                            <p>Browse active vacancies, use keyword search, and filter results by job type, category, experience, and location.</p>
+                            <a href="jobs.php" class="svc-link">View current jobs <i class="bi bi-arrow-right" aria-hidden="true"></i></a>
                         </div>
-                    <?php
-                }
-                ?>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-xl-4 reveal">
+                    <div class="svc-service-card">
+                        <div class="card-body">
+                            <div class="svc-icon-wrap"><i class="bi bi-person-plus" aria-hidden="true"></i></div>
+                            <h3>Candidate Registration</h3>
+                            <p>Create a secure personal account to access the portal and start your job search with a verified candidate profile.</p>
+                            <a href="register.php" class="svc-link">Create account <i class="bi bi-arrow-right" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-xl-4 reveal">
+                    <div class="svc-service-card">
+                        <div class="card-body">
+                            <div class="svc-icon-wrap"><i class="bi bi-file-earmark-text" aria-hidden="true"></i></div>
+                            <h3>Profile & Resume Management</h3>
+                            <p>Update profile details, include skills and qualifications, and upload a resume that can be used for applications.</p>
+                            <a href="login.php" class="svc-link">Manage profile <i class="bi bi-arrow-right" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-xl-4 reveal">
+                    <div class="svc-service-card">
+                        <div class="card-body">
+                            <div class="svc-icon-wrap"><i class="bi bi-send-check" aria-hidden="true"></i></div>
+                            <h3>Easy Job Application</h3>
+                            <p>Review job detail pages, submit an application, and attach a resume directly from the candidate workflow.</p>
+                            <a href="jobs.php" class="svc-link">Apply now <i class="bi bi-arrow-right" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-xl-4 reveal">
+                    <div class="svc-service-card">
+                        <div class="card-body">
+                            <div class="svc-icon-wrap"><i class="bi bi-list-check" aria-hidden="true"></i></div>
+                            <h3>Application Tracking</h3>
+                            <p>Monitor submitted applications in the candidate dashboard and filter them by status such as New Applied, Reviewed, Accepted, and Rejected.</p>
+                            <a href="login.php" class="svc-link">Track applications <i class="bi bi-arrow-right" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-xl-4 reveal">
+                    <div class="svc-service-card">
+                        <div class="card-body">
+                            <div class="svc-icon-wrap"><i class="bi bi-shield-lock" aria-hidden="true"></i></div>
+                            <h3>Secure Account Access</h3>
+                            <p>Candidate login and password protection keep personal details and application data accessible only to the account owner.</p>
+                            <a href="login.php" class="svc-link">Login securely <i class="bi bi-arrow-right" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-xl-4 offset-xl-2 reveal">
+                    <div class="svc-service-card">
+                        <div class="card-body">
+                            <div class="svc-icon-wrap"><i class="bi bi-headset" aria-hidden="true"></i></div>
+                            <h3>Contact & Support</h3>
+                            <p>Use the public contact form to ask about job queries, application questions, and general support.</p>
+                            <a href="contact.php" class="svc-link">Contact us <i class="bi bi-arrow-right" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- EMPLOYER SERVICES -->
-    <section class="py-5 svc-section">
+    <section class="svc-section bg-white">
         <div class="container">
-            <div class="row align-items-center g-4">
+            <div class="row align-items-center g-5">
                 <div class="col-lg-6">
-                    <h3>Solutions for Employers</h3>
-                    <p class="text-soft">Finding suitable professionals can be challenging. Our recruitment support helps organizations identify relevant talent based on their requirements.</p>
-                    <ul class="mt-3">
-                        <li>Understand Hiring Requirements</li>
-                        <li>Source Relevant Candidates</li>
-                        <li>Support Candidate Screening</li>
-                        <li>Assist Recruitment Coordination</li>
-                    </ul>
-                    <a href="contact.php" class="btn btn-primary mt-3">Discuss Your Hiring Needs</a>
+                    <div class="section-heading mb-0 reveal">
+                        <p class="svc-eyebrow">How it works</p>
+                        <h2>Candidate journey built from the actual portal flow.</h2>
+                        <p>The current platform supports a simple, practical path from registration to application.</p>
+                    </div>
+
+                    <div class="journey-list">
+                        <div class="journey-item reveal">
+                            <div class="journey-number">1</div>
+                            <div>
+                                <h4>Register</h4>
+                                <p>Create a candidate account with a verified email and password through the public registration screen.</p>
+                            </div>
+                        </div>
+
+                        <div class="journey-item reveal">
+                            <div class="journey-number">2</div>
+                            <div>
+                                <h4>Complete profile</h4>
+                                <p>Add skills, location, experience, qualification, and resume details to strengthen your application profile.</p>
+                            </div>
+                        </div>
+
+                        <div class="journey-item reveal">
+                            <div class="journey-number">3</div>
+                            <div>
+                                <h4>Search and review jobs</h4>
+                                <p>Browse current listings, filter by role and location, and open detailed job pages for more information.</p>
+                            </div>
+                        </div>
+
+                        <div class="journey-item reveal">
+                            <div class="journey-number">4</div>
+                            <div>
+                                <h4>Apply and track</h4>
+                                <p>Submit an application and monitor status updates from the dashboard and My Applications section.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="col-lg-6">
-                    <div class="svc-feature-visual h-100 d-flex align-items-center justify-content-center">
-                        <div class="tv-card w-100">
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <div class="fw-semibold">Talent Search</div>
-                                <div class="text-soft small">Filtered: Marketing, Pune</div>
+                <div class="col-lg-6 reveal">
+                    <div class="journey-panel">
+                        <div class="d-flex align-items-center justify-content-between gap-3 mb-3">
+                            <div>
+                                <p class="text-uppercase text-primary fw-semibold small mb-1">Portal flow</p>
+                                <h3 class="mb-0">What candidates can do</h3>
                             </div>
+                            <div class="svc-icon-wrap mb-0"><i class="bi bi-people" aria-hidden="true"></i></div>
+                        </div>
 
-                            <div class="mb-2">
-                                <div class="d-flex align-items-center justify-content-between mb-2">
-                                    <div class="d-flex align-items-center gap-2">
-                                        <div class="avatar">AD</div>
-                                        <div>
-                                            <div class="fw-semibold">Aditya D.</div>
-                                            <div class="text-soft small">PHP Developer • 4 yrs</div>
-                                        </div>
-                                    </div>
-                                    <div class="text-end">
-                                        <div class="small text-soft">Skills</div>
-                                        <div class="mt-1 small"><span class="skill">PHP</span> <span class="skill">MySQL</span></div>
-                                    </div>
-                                </div>
-
-                                <div class="d-flex align-items-center justify-content-between mb-2">
-                                    <div class="d-flex align-items-center gap-2">
-                                        <div class="avatar">SM</div>
-                                        <div>
-                                            <div class="fw-semibold">Sneha M.</div>
-                                            <div class="text-soft small">Marketing Executive • 3 yrs</div>
-                                        </div>
-                                    </div>
-                                    <div class="text-end">
-                                        <div class="small text-soft">Skills</div>
-                                        <div class="mt-1 small"><span class="skill">SEO</span> <span class="skill">Content</span></div>
-                                    </div>
-                                </div>
-
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <div class="d-flex align-items-center gap-2">
-                                        <div class="avatar">PN</div>
-                                        <div>
-                                            <div class="fw-semibold">Priya N.</div>
-                                            <div class="text-soft small">UI/UX • 5 yrs</div>
-                                        </div>
-                                    </div>
-                                    <div class="text-end">
-                                        <div class="small text-soft">Skills</div>
-                                        <div class="mt-1 small"><span class="skill">Figma</span> <span class="skill">UX</span></div>
-                                    </div>
-                                </div>
+                        <div class="svc-grid">
+                            <div class="svc-stat">
+                                <strong>Register</strong>
+                                <span class="small text-muted">Create account</span>
                             </div>
-
-                            <div class="d-flex justify-content-between align-items-center">
-                                <a href="contact.php" class="small">Discuss candidates &raquo;</a>
-                                <div class="badge bg-soft text-primary rounded-pill">3 Matched</div>
+                            <div class="svc-stat">
+                                <strong>Profile</strong>
+                                <span class="small text-muted">Add resume details</span>
                             </div>
+                            <div class="svc-stat">
+                                <strong>Search</strong>
+                                <span class="small text-muted">Filter jobs</span>
+                            </div>
+                            <div class="svc-stat">
+                                <strong>Track</strong>
+                                <span class="small text-muted">Review status</span>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 p-3 border rounded-4 bg-light">
+                            <p class="text-muted mb-2">The platform is designed for a clear candidate workflow:</p>
+                            <p class="fw-semibold mb-0">Register → Build profile → Search jobs → Apply → Track applications</p>
                         </div>
                     </div>
                 </div>
@@ -452,181 +774,114 @@ require_once __DIR__ . '/includes/navbar.php';
         </div>
     </section>
 
-    <!-- JOB SEEKER SERVICES -->
-    <section class="py-5 bg-soft svc-section">
+    <section class="svc-section">
         <div class="container">
-            <div class="row align-items-center g-4">
-                <div class="col-lg-6 order-lg-1 order-1">
-                    <div class="svc-feature-visual job-seeker-visual d-flex align-items-center justify-content-center">
-                        <div class="tv-card w-100 text-start">
-                            <div class="d-flex align-items-center gap-3 mb-2">
-                                <div class="avatar">JS</div>
-                                <div>
-                                    <div class="fw-semibold">Your Profile</div>
-                                    <div class="text-soft small">Showcase skills and explore roles</div>
-                                </div>
-                            </div>
+            <div class="section-heading text-center reveal">
+                <p class="svc-eyebrow mx-auto">Benefits</p>
+                <h2>Benefits the project actually supports.</h2>
+                <p>These are grounded in the current portal functionality rather than generic staffing claims.</p>
+            </div>
 
-                            <div class="d-flex gap-2 align-items-center mb-3">
-                                <i class="bi bi-briefcase fs-3 text-primary"></i>
-                                <div>
-                                    <div class="fw-semibold">Frontend Developer</div>
-                                    <div class="text-soft small">JavaScript • React • 3+ yrs</div>
-                                </div>
-                            </div>
-
-                            <div class="d-flex gap-2">
-                                <a href="jobs.php" class="btn btn-primary">View Matching Roles</a>
-                                <a href="register.php" class="btn btn-outline-secondary">Update Profile</a>
-                            </div>
-                        </div>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4 reveal">
+                    <div class="benefit-card">
+                        <i class="bi bi-compass" aria-hidden="true"></i>
+                        <h3>Centralized job discovery</h3>
+                        <p>All active roles are surfaced in one place for easier browsing and filtering.</p>
                     </div>
                 </div>
 
-                <div class="col-lg-6 order-lg-2 order-2 job-seeker-copy">
-                    <h3>Support for Job Seekers</h3>
-                    <p class="text-soft">Explore opportunities that match your skills, qualifications, experience and career goals.</p>
-                    <ul class="mt-3">
-                        <li>Explore Job Opportunities</li>
-                        <li>Build Your Professional Profile</li>
-                        <li>Highlight Your Skills</li>
-                        <li>Move Toward Your Career Goals</li>
-                    </ul>
-                    <div class="d-flex gap-2 mt-3">
-                        <a href="jobs.php" class="btn btn-primary">Explore Jobs</a>
-                        <a href="register.php" class="btn btn-outline-secondary">Create Your Profile</a>
+                <div class="col-md-6 col-lg-4 reveal">
+                    <div class="benefit-card">
+                        <i class="bi bi-person-vcard" aria-hidden="true"></i>
+                        <h3>Structured candidate profile</h3>
+                        <p>Users can add critical profile data, including skills, experience, location, and qualifications.</p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 reveal">
+                    <div class="benefit-card">
+                        <i class="bi bi-file-earmark-arrow-up" aria-hidden="true"></i>
+                        <h3>Resume upload</h3>
+                        <p>Applications can include a resume upload in supported PDF or Word formats.</p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 reveal">
+                    <div class="benefit-card">
+                        <i class="bi bi-bar-chart" aria-hidden="true"></i>
+                        <h3>Application history</h3>
+                        <p>Submitted applications are stored and can be reviewed in a dedicated My Applications area.</p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 reveal">
+                    <div class="benefit-card">
+                        <i class="bi bi-lock" aria-hidden="true"></i>
+                        <h3>Secure access</h3>
+                        <p>Candidate accounts are protected with login and password verification before access to profile data and applications.</p>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 reveal">
+                    <div class="benefit-card">
+                        <i class="bi bi-info-circle" aria-hidden="true"></i>
+                        <h3>Clear job details</h3>
+                        <p>Each listing can be opened to review requirements, location, job type, and application availability.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- RECRUITMENT PROCESS -->
-    <section class="py-5 svc-section">
-        <div class="container">
-            <div class="row mb-3">
-                <div class="col-12">
-                    <h3 class="section-title">Our Recruitment Approach</h3>
-                    <p class="text-soft">A practical, staged approach that helps connect the right people with the right roles.</p>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-12">
-                    <div class="process-steps">
-                        <div class="process-track d-flex align-items-center flex-column flex-lg-row">
-                            <div class="process-step col-12 col-lg-auto">
-                                <div class="process-node">
-                                    <div class="step-num">01</div>
-                                    <div>
-                                        <h5 class="mb-1">Understand</h5>
-                                        <p class="text-soft mb-0">Understand employer or candidate requirements.</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="d-none d-lg-block process-line" aria-hidden="true"></div>
-
-                            <div class="process-step col-12 col-lg-auto">
-                                <div class="process-node">
-                                    <div class="step-num">02</div>
-                                    <div>
-                                        <h5 class="mb-1">Identify</h5>
-                                        <p class="text-soft mb-0">Identify relevant opportunities or potential talent.</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="d-none d-lg-block process-line" aria-hidden="true"></div>
-
-                            <div class="process-step col-12 col-lg-auto">
-                                <div class="process-node">
-                                    <div class="step-num">03</div>
-                                    <div>
-                                        <h5 class="mb-1">Connect</h5>
-                                        <p class="text-soft mb-0">Create meaningful connections between candidates and organizations.</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="d-none d-lg-block process-line" aria-hidden="true"></div>
-
-                            <div class="process-step col-12 col-lg-auto">
-                                <div class="process-node">
-                                    <div class="step-num">04</div>
-                                    <div>
-                                        <h5 class="mb-1">Support</h5>
-                                        <p class="text-soft mb-0">Provide structured support through the recruitment journey.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- WHY WORK WITH US -->
-    <section class="py-5 bg-soft svc-section">
-        <div class="container">
-            <div class="row mb-3">
-                <div class="col-lg-8">
-                    <h3 class="section-title">Why Choose Our Recruitment Support?</h3>
-                    <p class="text-soft">A practical, people-centred approach delivered with professional coordination.</p>
-                </div>
-            </div>
-
-            <div class="row g-4 why-cards">
-                <div class="col-md-6 col-lg-3">
-                    <div class="card p-3 h-100">
-                        <h6 class="mb-2">Requirement-Focused Approach</h6>
-                        <p class="text-soft mb-0">We focus on core role requirements to find relevant matches.</p>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-3">
-                    <div class="card p-3 h-100">
-                        <h6 class="mb-2">Skill-Based Matching</h6>
-                        <p class="text-soft mb-0">Connect competencies with real role needs.</p>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-3">
-                    <div class="card p-3 h-100">
-                        <h6 class="mb-2">Candidate-Centered Support</h6>
-                        <p class="text-soft mb-0">Support candidates to present their experience effectively.</p>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-3">
-                    <div class="card p-3 h-100">
-                        <h6 class="mb-2">Professional Coordination</h6>
-                        <p class="text-soft mb-0">Clear communication and process coordination for all parties.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FINAL CTA -->
-    <section class="final-cta svc-section">
-        <div class="container">
-            <div class="final-cta-card p-4 rounded">
-                <div class="d-flex flex-column flex-md-row align-items-center justify-content-between gap-3">
+    <section class="svc-cta">
+        <div class="container reveal">
+            <div class="svc-cta-card">
+                <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-4">
                     <div>
-                        <h3 class="mb-1">Ready to Take the Next Step?</h3>
-                        <p class="text-soft mb-0">Whether you are looking for the right opportunity or the right talent, connect with Career Grow Infotech today.</p>
+                        <p class="text-uppercase fw-semibold small mb-2 text-white-50">Ready to explore?</p>
+                        <h2>Ready to explore your next opportunity?</h2>
+                        <p>Browse the current vacancy list and start your next career step with Career Grow Infotech.</p>
                     </div>
-                    <div class="d-flex gap-2 flex-wrap">
-                        <a href="jobs.php" class="btn btn-primary">Explore Jobs</a>
-                        <a href="contact.php" class="btn btn-outline-primary">Contact Us</a>
+
+                    <div class="d-flex flex-wrap gap-3">
+                        <a href="jobs.php" class="btn btn-light">Browse jobs</a>
+                        <a href="register.php" class="btn btn-outline-light">Create account</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
 </main>
 
-<?php include __DIR__ . '/includes/footer.php'; ?>
+<script>
+    (() => {
+        const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const revealItems = document.querySelectorAll('.reveal');
+
+        if (!revealItems.length) {
+            return;
+        }
+
+        if (reduceMotion) {
+            revealItems.forEach((item) => item.classList.add('is-visible'));
+            return;
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.12,
+            rootMargin: '0px 0px -30px 0px'
+        });
+
+        revealItems.forEach((item) => observer.observe(item));
+    })();
+</script>
+
+<?php require_once __DIR__ . '/includes/footer.php'; ?>

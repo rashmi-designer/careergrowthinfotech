@@ -239,6 +239,97 @@ if ($categoryFilter !== '') {
         border-color: rgba(13, 110, 253, 0.12);
     }
 
+    .home-cta-btn {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.55rem;
+        min-height: 2.9rem;
+        padding: 0.8rem 1.35rem;
+        border-radius: 0.8rem;
+        border: 1px solid var(--cg-primary);
+        font-size: 0.95rem;
+        font-weight: 700;
+        line-height: 1.1;
+        letter-spacing: 0.01em;
+        text-align: center;
+        background: linear-gradient(135deg, var(--cg-primary), #1d78ff 56%, #0d63dd);
+        color: var(--cg-white);
+        box-shadow: 0 12px 26px rgba(13, 110, 253, 0.18);
+        transition: transform 0.22s ease, box-shadow 0.22s ease, background-color 0.22s ease, border-color 0.22s ease, color 0.22s ease, filter 0.22s ease;
+        overflow: hidden;
+        white-space: nowrap;
+        will-change: transform, box-shadow;
+    }
+
+    .home-cta-btn::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.28) 35%, transparent 65%);
+        transform: translateX(-120%);
+        transition: transform 0.7s ease;
+    }
+
+    .home-cta-btn:hover::before,
+    .home-cta-btn:focus::before,
+    .home-cta-btn:active::before {
+        transform: translateX(120%);
+    }
+
+    .home-cta-btn:hover,
+    .home-cta-btn:focus,
+    .home-cta-btn:active {
+        background: linear-gradient(135deg, #0b5acc, #126df3 58%, #0d63dd);
+        border-color: #0b5acc;
+        color: var(--cg-white);
+        transform: translateY(-2px);
+        box-shadow: 0 16px 32px rgba(13, 110, 253, 0.26);
+        filter: saturate(1.06);
+    }
+
+    .home-cta-btn .bi,
+    .home-cta-btn i {
+        transition: transform 0.22s ease;
+    }
+
+    .home-cta-btn:hover .bi,
+    .home-cta-btn:focus .bi,
+    .home-cta-btn:hover i,
+    .home-cta-btn:focus i {
+        transform: translateX(3px);
+    }
+
+    .home-cta-btn:focus-visible {
+        outline: 3px solid rgba(151, 204, 255, 0.92);
+        outline-offset: 3px;
+    }
+
+    @media (max-width: 767.98px) {
+        .home-cta-btn {
+            min-height: 2.75rem;
+            padding: 0.75rem 1.1rem;
+            font-size: 0.9rem;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .home-cta-btn,
+        .home-cta-btn::before,
+        .home-cta-btn .bi,
+        .home-cta-btn i {
+            transition: none !important;
+            animation: none !important;
+        }
+
+        .home-cta-btn:hover,
+        .home-cta-btn:focus,
+        .home-cta-btn:active {
+            transform: none;
+        }
+    }
+
     .job-card {
         background: var(--cg-white);
         border: 1px solid var(--cg-border);
@@ -346,11 +437,8 @@ if ($categoryFilter !== '') {
         min-width: 150px;
     }
 
-    .job-actions .btn-primary:hover,
-    .job-actions .btn-primary:focus,
-    .job-actions .btn-outline-primary:hover,
-    .job-actions .btn-outline-primary:focus {
-        color: var(--cg-white);
+    .job-actions .home-cta-btn {
+        min-width: 150px;
     }
 
     .empty-state {
@@ -473,8 +561,8 @@ if ($categoryFilter !== '') {
                         </select>
                     </div>
                     <div class="col-lg-3 col-md-12 d-flex gap-2">
-                        <button type="submit" class="btn btn-primary flex-fill">Search</button>
-                        <a href="jobs.php" class="btn btn-outline-secondary">Clear</a>
+                        <button type="submit" class="home-cta-btn flex-fill">Search</button>
+                        <a href="jobs.php" class="home-cta-btn">Clear</a>
                     </div>
                 </form>
             </div>
@@ -484,9 +572,9 @@ if ($categoryFilter !== '') {
                     <h3><?php echo htmlspecialchars($emptyStateTitle, ENT_QUOTES, 'UTF-8'); ?></h3>
                     <p><?php echo htmlspecialchars($emptyStateText, ENT_QUOTES, 'UTF-8'); ?></p>
                     <?php if ($hasFilters): ?>
-                        <a href="jobs.php" class="btn btn-primary">Clear Filters</a>
+                        <a href="jobs.php" class="home-cta-btn">Clear Filters</a>
                     <?php else: ?>
-                        <a href="contact.php" class="btn btn-primary">Contact Us</a>
+                        <a href="contact.php" class="home-cta-btn">Contact Us</a>
                     <?php endif; ?>
                 </div>
             <?php else: ?>
@@ -540,8 +628,8 @@ if ($categoryFilter !== '') {
                                 <i class="bi bi-clock-history me-1"></i>Posted <?php echo htmlspecialchars(cg_format_date((string)($job['created_at'] ?? '')), ENT_QUOTES, 'UTF-8'); ?>
                             </div>
                             <div class="d-flex gap-2">
-                                <a href="job-details.php?id=<?php echo $jobId; ?>" class="btn btn-outline-primary">View Details</a>
-                                <a href="job-details.php?id=<?php echo $jobId; ?>" class="btn btn-primary">Apply Now</a>
+                                <a href="job-details.php?id=<?php echo $jobId; ?>" class="home-cta-btn">View Details</a>
+                                <a href="job-details.php?id=<?php echo $jobId; ?>" class="home-cta-btn">Apply Now</a>
                             </div>
                         </div>
                     </article>

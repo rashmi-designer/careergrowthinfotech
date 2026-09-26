@@ -23,25 +23,149 @@ require_once __DIR__ . '/includes/navbar.php';
             .eyebrow::before { width: .45rem; height: .45rem; border-radius: 50%; background: #68b4ff; box-shadow: 0 0 0 4px rgba(104,180,255,.15); content: ''; }
             .slide h2 { max-width: 580px; font-size: clamp(2.1rem, 3.45vw, 3.7rem); line-height: 1.1; letter-spacing: -.035em; margin-top: 1.25rem; margin-bottom: 1rem; color: #fff; }
             .slide p.lead { max-width: 520px; color: rgba(240,247,255,.88); font-size: clamp(1rem, 1.25vw, 1.15rem); line-height: 1.65; margin-bottom: 1.75rem; }
-            .slide .btn { min-width: 142px; margin-right: .55rem; padding: .78rem 1.15rem; border-radius: .75rem; font-weight: 700; transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease; }
-            .slide .btn-primary { box-shadow: 0 12px 28px rgba(0, 92, 230, .32); }
-            .slide .btn:hover { transform: translateY(-2px); }
-            .slide .btn-outline-light { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.65); }
-            .slide .btn-primary,
-            .slide .btn-primary:hover,
-            .slide .btn-primary:focus,
-            .slide .btn-primary:active,
-            .slide .btn-outline-light,
-            .slide .btn-outline-light:hover,
-            .slide .btn-outline-light:focus,
-            .slide .btn-outline-light:active { color: #fff !important; }
-            .slide .btn-primary:hover,
-            .slide .btn-primary:focus { background-color: #075bd3; border-color: #075bd3; box-shadow: 0 16px 32px rgba(0, 92, 230, .46); }
-            .slide .btn-primary:active { background-color: #064bac; border-color: #064bac; box-shadow: none; }
-            .slide .btn-outline-light:hover,
-            .slide .btn-outline-light:focus { background-color: rgba(31, 125, 255, .78); border-color: #65adff; box-shadow: 0 12px 28px rgba(0, 92, 230, .28); }
-            .slide .btn-outline-light:active { background-color: rgba(7, 91, 211, .92); border-color: #65adff; box-shadow: none; }
-            .slide .btn:focus-visible { outline: 3px solid rgba(151, 204, 255, .92); outline-offset: 3px; }
+            .slide .hero-slide-btn {
+                position: relative;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: .55rem;
+                min-width: 142px;
+                margin-right: .55rem;
+                padding: .82rem 1.3rem;
+                border: 1px solid rgba(124, 187, 255, .9) !important;
+                border-radius: .8rem;
+                font-weight: 700;
+                color: #fff !important;
+                background: linear-gradient(135deg, rgba(13, 110, 253, .96), rgba(35, 143, 255, .92), rgba(7, 91, 211, .98));
+                background-size: 180% 180%;
+                background-position: 0% 50%;
+                box-shadow: 0 12px 28px rgba(0, 92, 230, .22), inset 0 1px 0 rgba(255,255,255,.18);
+                transition: transform .25s ease, box-shadow .25s ease, background-position .7s ease, filter .25s ease, border-color .25s ease;
+                overflow: hidden;
+                will-change: transform, background-position;
+                animation: heroButtonGlow 4.5s ease-in-out infinite;
+            }
+            .slide .hero-slide-btn::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,.28) 35%, transparent 65%);
+                transform: translateX(-120%);
+                transition: transform .7s ease;
+            }
+            .slide .hero-slide-btn:hover,
+            .slide .hero-slide-btn:focus,
+            .slide .hero-slide-btn:active {
+                transform: translateY(-2px);
+                border-color: rgba(147, 204, 255, 1) !important;
+                box-shadow: 0 16px 34px rgba(0, 92, 230, .32), inset 0 1px 0 rgba(255,255,255,.18);
+                background-position: 100% 50%;
+                filter: saturate(1.08);
+            }
+            .slide .hero-slide-btn:hover::before,
+            .slide .hero-slide-btn:focus::before,
+            .slide .hero-slide-btn:active::before {
+                transform: translateX(120%);
+            }
+            .slide .hero-slide-btn .bi,
+            .slide .hero-slide-btn i {
+                transition: transform .25s ease;
+            }
+            .slide .hero-slide-btn:hover .bi,
+            .slide .hero-slide-btn:focus .bi,
+            .slide .hero-slide-btn:hover i,
+            .slide .hero-slide-btn:focus i {
+                transform: translateX(3px);
+            }
+            .slide .hero-slide-btn:focus-visible {
+                outline: 3px solid rgba(151, 204, 255, .92);
+                outline-offset: 3px;
+            }
+            .home-cta-btn {
+                position: relative;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: .55rem;
+                min-height: 2.9rem;
+                padding: .8rem 1.35rem;
+                border-radius: .8rem;
+                border: 1px solid var(--cg-primary);
+                font-size: .95rem;
+                font-weight: 700;
+                line-height: 1.1;
+                letter-spacing: .01em;
+                text-align: center;
+                background: linear-gradient(135deg, var(--cg-primary), #1d78ff 56%, #0d63dd);
+                color: var(--cg-white);
+                box-shadow: 0 12px 26px rgba(13, 110, 253, .18);
+                transition: transform .22s ease, box-shadow .22s ease, background-color .22s ease, border-color .22s ease, color .22s ease, filter .22s ease;
+                overflow: hidden;
+                white-space: nowrap;
+                will-change: transform, box-shadow;
+            }
+            .home-cta-btn::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,.28) 35%, transparent 65%);
+                transform: translateX(-120%);
+                transition: transform .7s ease;
+            }
+            .home-cta-btn:hover::before,
+            .home-cta-btn:focus::before,
+            .home-cta-btn:active::before {
+                transform: translateX(120%);
+            }
+            .home-cta-btn:hover,
+            .home-cta-btn:focus,
+            .home-cta-btn:active {
+                background: linear-gradient(135deg, #0b5acc, #126df3 58%, #0d63dd);
+                border-color: #0b5acc;
+                color: var(--cg-white);
+                transform: translateY(-2px);
+                box-shadow: 0 16px 32px rgba(13, 110, 253, .26);
+                filter: saturate(1.06);
+            }
+            .home-cta-btn .bi,
+            .home-cta-btn i {
+                transition: transform .22s ease;
+            }
+            .home-cta-btn:hover .bi,
+            .home-cta-btn:focus .bi,
+            .home-cta-btn:hover i,
+            .home-cta-btn:focus i {
+                transform: translateX(3px);
+            }
+            .home-cta-btn:focus-visible {
+                outline: 3px solid rgba(151, 204, 255, .92);
+                outline-offset: 3px;
+            }
+            @media (max-width: 767.98px) {
+                .home-cta-btn {
+                    min-height: 2.75rem;
+                    padding: .75rem 1.1rem;
+                    font-size: .9rem;
+                }
+            }
+            @media (prefers-reduced-motion: reduce) {
+                .home-cta-btn,
+                .home-cta-btn::before,
+                .home-cta-btn .bi,
+                .home-cta-btn i {
+                    transition: none !important;
+                    animation: none !important;
+                }
+                .home-cta-btn:hover,
+                .home-cta-btn:focus,
+                .home-cta-btn:active {
+                    transform: none;
+                }
+            }
+            @keyframes heroButtonGlow {
+                0%, 100% { box-shadow: 0 12px 28px rgba(0, 92, 230, .22), inset 0 1px 0 rgba(255,255,255,.18); }
+                50% { box-shadow: 0 14px 30px rgba(24, 110, 255, .32), inset 0 1px 0 rgba(255,255,255,.18); }
+            }
             .slider-nav { position: absolute; left: 0; right: 0; bottom: 1.7rem; display:flex; justify-content:center; align-items:center; gap:.5rem; z-index:6; }
             .dot { width: 9px; height: 9px; padding: 0; border: 0; border-radius: 999px; background: rgba(255,255,255,.42); cursor:pointer; transition: width .2s ease, background .2s ease; }
             .dot.active { width: 30px; background: var(--cg-white); }
@@ -58,7 +182,7 @@ require_once __DIR__ . '/includes/navbar.php';
             @media (prefers-reduced-motion: reduce) {
                 .slide-bg-zoom, .slide { transition: none !important; }
                 .animate { transition: none !important; }
-                .slide .btn, .slider-arrow, .dot { transition: none !important; }
+                .slide .hero-slide-btn, .slide .btn, .slider-arrow, .dot { transition: none !important; animation: none !important; }
             }
             @media (max-width: 767.98px) {
                 .slide { align-items: flex-end; padding-bottom: 3.75rem; background-position: 58% center; }
@@ -80,8 +204,8 @@ require_once __DIR__ . '/includes/navbar.php';
                         <h2 class="animate" data-anim-delay="400">Find the Right Opportunity for Your Future</h2>
                         <p class="lead animate" data-anim-delay="600">Discover career opportunities that match your skills, experience and ambitions.</p>
                         <div class="animate" data-anim-delay="800">
-                            <a href="jobs.php" class="btn btn-primary btn-lg">Explore Jobs</a>
-                            <a href="register.php" class="btn btn-outline-light btn-lg">Register Now</a>
+                            <a href="jobs.php" class="hero-slide-btn btn btn-lg">Explore Jobs</a>
+                            <a href="register.php" class="hero-slide-btn btn btn-lg">Register Now</a>
                         </div>
                     </div>
                 </div>
@@ -95,8 +219,8 @@ require_once __DIR__ . '/includes/navbar.php';
                         <h2 class="animate" data-anim-delay="400">Turn Your Skills Into Your Next Career Move</h2>
                         <p class="lead animate" data-anim-delay="600">Connect with opportunities where your skills can make a real difference.</p>
                         <div class="animate" data-anim-delay="800">
-                            <a href="jobs.php" class="btn btn-primary btn-lg">Explore Jobs</a>
-                            <a href="about.php" class="btn btn-outline-light btn-lg">Learn More</a>
+                            <a href="jobs.php" class="hero-slide-btn btn btn-lg">Explore Jobs</a>
+                            <a href="about.php" class="hero-slide-btn btn btn-lg">Learn More</a>
                         </div>
                     </div>
                 </div>
@@ -110,8 +234,8 @@ require_once __DIR__ . '/includes/navbar.php';
                         <h2 class="animate" data-anim-delay="400">Helping Businesses Connect With Skilled Professionals</h2>
                         <p class="lead animate" data-anim-delay="600">Career Grow Infotech helps organizations connect with capable professionals for the right opportunities.</p>
                         <div class="animate" data-anim-delay="800">
-                            <a href="contact.php" class="btn btn-primary btn-lg">Contact Us</a>
-                            <a href="services.php" class="btn btn-outline-light btn-lg">Our Services</a>
+                            <a href="contact.php" class="hero-slide-btn btn btn-lg">Contact Us</a>
+                            <a href="services.php" class="hero-slide-btn btn btn-lg">Our Services</a>
                         </div>
                     </div>
                 </div>
@@ -674,9 +798,9 @@ require_once __DIR__ . '/includes/navbar.php';
                         <h2 class="fw-bold mb-3">Connecting Talent With The Right Opportunities</h2>
                         <p class="text-muted mb-3">Career Grow Infotech Pvt. Ltd. is focused on helping job seekers discover meaningful career opportunities while supporting businesses in finding the right talent for their growing teams.</p>
                         <p class="text-muted mb-3">Our approach combines career guidance, recruitment support and a strong understanding of employer requirements to create better connections between professionals and organizations.</p>
-                        <div class="d-flex gap-3 mt-3">
-                            <a href="jobs.php" class="btn btn-primary">Explore Opportunities</a>
-                            <a href="about.php" class="btn btn-outline-primary">Learn More About Us</a>
+                        <div class="d-flex flex-wrap gap-3 mt-3">
+                            <a href="jobs.php" class="home-cta-btn">Explore Opportunities</a>
+                            <a href="about.php" class="home-cta-btn">Learn More About Us</a>
                         </div>
                     </div>
                 </div>
@@ -830,9 +954,9 @@ require_once __DIR__ . '/includes/navbar.php';
                                 <div class="small text-uppercase text-muted">FOR JOB SEEKERS</div>
                                 <h4 class="fw-bold mb-2">Find Your Next Career Opportunity</h4>
                                 <p class="text-muted">Explore available opportunities, discover roles that match your skills and take the next step in your professional journey.</p>
-                                <div class="mt-3">
-                                    <a href="jobs.php" class="btn btn-primary me-2">Explore Jobs</a>
-                                    <a href="register.php" class="btn btn-outline-primary">Create Your Profile</a>
+                                <div class="mt-3 d-flex flex-wrap gap-3">
+                                    <a href="jobs.php" class="home-cta-btn">Explore Jobs</a>
+                                    <a href="register.php" class="home-cta-btn">Create Your Profile</a>
                                 </div>
                             </div>
                         </div>
@@ -1042,8 +1166,8 @@ require_once __DIR__ . '/includes/navbar.php';
                     </div>
 
                     <div class="mt-4 d-flex flex-wrap gap-3">
-                        <a href="jobs.php" class="btn btn-primary">Explore Jobs</a>
-                        <a href="register.php" class="btn btn-outline-primary">Create Your Profile</a>
+                        <a href="jobs.php" class="home-cta-btn">Explore Jobs</a>
+                        <a href="register.php" class="home-cta-btn">Create Your Profile</a>
                     </div>
                 </div>
             </div>
@@ -1078,8 +1202,8 @@ require_once __DIR__ . '/includes/navbar.php';
                     <p class="final-cta-copy mx-auto mb-4">Explore career opportunities, build your professional profile or connect with us for recruitment support.</p>
 
                     <div class="d-flex flex-column flex-sm-row justify-content-center align-items-center gap-3">
-                        <a href="jobs.php" class="btn btn-primary btn-lg final-cta-primary">Explore Jobs</a>
-                        <a href="contact.php" class="btn btn-outline-primary btn-lg final-cta-secondary">Contact Us</a>
+                        <a href="jobs.php" class="home-cta-btn">Explore Jobs</a>
+                        <a href="contact.php" class="home-cta-btn">Contact Us</a>
                     </div>
 
                     <p class="final-cta-note mt-4 mb-0">Career opportunities for professionals. Recruitment support for organizations.</p>
@@ -1168,8 +1292,8 @@ require_once __DIR__ . '/includes/navbar.php';
                     </div>
                     <div class="col-md-4 text-center text-md-end">
                         <div class="contact-strip-actions d-flex justify-content-center justify-content-md-end gap-2 flex-wrap">
-                            <a href="contact.php" class="btn btn-primary btn-sm">Contact Us</a>
-                            <a href="jobs.php" class="btn btn-outline-primary btn-sm">Explore Jobs</a>
+                            <a href="contact.php" class="home-cta-btn">Contact Us</a>
+                            <a href="jobs.php" class="home-cta-btn">Explore Jobs</a>
                         </div>
                     </div>
                 </div>

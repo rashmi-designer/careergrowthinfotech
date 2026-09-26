@@ -88,14 +88,14 @@ $navItems = [
                         </ul>
                     </div>
                 <?php else: ?>
-                    <a href="<?php echo htmlspecialchars($basePath, ENT_QUOTES, 'UTF-8'); ?>login.php" class="btn btn-primary btn-sm" aria-label="Login to Career Grow Infotech">
+                    <a href="<?php echo htmlspecialchars($basePath, ENT_QUOTES, 'UTF-8'); ?>login.php" class="btn btn-primary btn-sm navbar-auth-btn" aria-label="Login to Career Grow Infotech">
                         <i class="bi bi-box-arrow-in-right" aria-hidden="true"></i>
                         <span class="d-none d-sm-inline ms-1">Login</span>
                     </a>
                 <?php endif; ?>
 
                 <?php if (!$isCandidate): // Do not show Admin link to candidates; visible to guests and admins ?>
-                    <a href="<?php echo htmlspecialchars($basePath, ENT_QUOTES, 'UTF-8'); ?>admin/login.php" class="btn btn-outline-secondary btn-sm admin-login-btn" aria-label="Admin login">
+                    <a href="<?php echo htmlspecialchars($basePath, ENT_QUOTES, 'UTF-8'); ?>admin/login.php" class="btn btn-primary btn-sm navbar-auth-btn" aria-label="Admin login">
                         <i class="bi bi-shield-lock" aria-hidden="true"></i>
                         <span class="d-none d-lg-inline ms-1">Admin</span>
                     </a>

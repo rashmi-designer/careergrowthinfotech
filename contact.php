@@ -347,6 +347,12 @@ require_once __DIR__ . '/includes/navbar.php';
     .contact-cta .btn-outline-light:hover,
     .contact-cta .btn-outline-light:focus { background: #0d6efd; border-color: #0d6efd; color: #fff; }
 
+    /* Ensure outline-style CTA on Contact page has #0d6efd background by default
+       Only changing the background-color as requested; text and border colors left unchanged. */
+    .contact-cta .btn-outline-light {
+        background-color: #0d6efd !important;
+    }
+
     .breadcrumb {
         margin-bottom: 1rem;
         font-size: 0.92rem;

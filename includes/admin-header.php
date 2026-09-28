@@ -2,7 +2,7 @@
 // Admin header include (UI-only). Expects $pageH1 and $pageSubtitle set in the including page.
 $adminName = htmlspecialchars($_SESSION['admin_name'] ?? $_SESSION['user_name'] ?? 'Administrator', ENT_QUOTES, 'UTF-8');
 ?>
-<!-- Admin layout: fixed sidebar + right-side scroll area (scoped to admin pages) -->
+<!-- Admin layout: fixed sidebar with normal document scrolling -->
 <style>
     /* Layout wrapper for admin pages. This wrapper owns the left offset
        so the right-area (header, main content, footer) aligns naturally
@@ -87,21 +87,13 @@ $adminName = htmlspecialchars($_SESSION['admin_name'] ?? $_SESSION['user_name'] 
     .admin-root .main-panel,
     .admin-root section.dashboard-content { box-sizing:border-box; }
 
-     /* Make the right-side content scrollable while the sidebar remains fixed.
-         Set vertical scrolling while preventing horizontal overflow.
-         Visually hide scrollbars but preserve scrolling functionality across browsers. */
+     /* Let the page grow with its content so the footer follows every section.
+        The browser owns page scrolling; only the sidebar scrolls independently. */
      .admin-root .dashboard-content,
      .admin-root .main-panel {
-          height:100vh;
-          overflow-y:auto;
-          overflow-x:hidden;
-          -ms-overflow-style: none; /* IE and Edge */
-          scrollbar-width: none; /* Firefox */
+          height:auto;
+          overflow:visible;
      }
-
-     /* WebKit browsers: hide the scrollbar track while preserving scroll interaction */
-     .admin-root .dashboard-content::-webkit-scrollbar,
-     .admin-root .main-panel::-webkit-scrollbar { width: 0; height: 0; }
 
      /* Admin header should scroll naturally with the right-side content.
          Only the sidebar remains fixed. Do NOT use fixed or sticky for the header. */
@@ -199,6 +191,7 @@ html[data-theme="dark"] .admin-topbar { border-bottom-color: rgba(255,255,255,0.
 .admin-topbar .utils { display:flex; align-items:center; justify-self:end; gap:0.75rem; flex-wrap:nowrap; }
 .mobile-header-row { display:none; }
 .mobile-branding { display:none; }
+.admin-sidebar-close-button { display:none; }
 .header-search { width:260px; max-width:38vw; height:42px; display:inline-flex; align-items:center; gap:8px; padding:6px 10px; background:var(--cg-white); border:1px solid var(--cg-border); border-radius:10px; transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease; }
 .header-search input { border:0; outline:0; width:100%; font-size:0.95rem; background: transparent; color: var(--cg-text); transition: color 0.25s ease; }
 .header-search input::placeholder { color: var(--cg-muted); }

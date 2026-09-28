@@ -183,6 +183,7 @@ function formatDate(?string $value, string $fallback = 'N/A'): string {
 .form-static p { margin: 0; color: var(--cg-text); }
 .file-input-label { display: inline-block; padding: 0.75rem 1rem; background: var(--cg-primary); color: white; border-radius: 0.35rem; cursor: pointer; font-weight: 500; }
 .file-input-label:hover { background: #0b5ed7; }
+.form-group label.file-input-label { color: #fff; }
 #resume { display: none; }
 .file-name { color: var(--cg-muted); font-size: 0.9rem; margin-top: 0.5rem; }
 .form-actions { display: flex; gap: 1rem; justify-content: space-between; margin-top: 2rem; }

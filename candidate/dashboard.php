@@ -98,7 +98,7 @@ $conn->close();
 .quick-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
 .quick-actions .btn { padding: 0.75rem 1.25rem; font-size: 0.95rem; font-weight: 500; }
 
-/* Candidate Dashboard: ensure the header "My Apps" outline button text is always white
+/* Candidate Dashboard: ensure the header "My Applications" outline button text is always white
    without changing background, size, padding, icon, or hover animation. Scope to
    the header quick-actions to avoid affecting other outline buttons on this page. */
 .dashboard-header .quick-actions a.btn.btn-outline-primary[href="applications.php"] {
@@ -113,15 +113,41 @@ $conn->close();
     color: #ffffff !important;
 }
 
-.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem; margin-bottom: 2.5rem; }
+.stats-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; margin-bottom: 2.5rem; }
 
-.stat-card { background: var(--cg-white); border: 1px solid var(--cg-border); border-radius: 0.875rem; padding: 1.75rem; transition: box-shadow var(--cg-transition), transform var(--cg-transition); display: flex; flex-direction: column; }
+.stat-card {
+    background: var(--cg-white);
+    border: 1px solid var(--cg-border);
+    border-left: 4px solid var(--stat-color, var(--cg-primary));
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 4px 18px rgba(16,44,84,0.045);
+    transition: box-shadow var(--cg-transition), transform var(--cg-transition);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-content: start;
+    column-gap: 0.75rem;
+    min-width: 0;
+}
 .stat-card:hover { box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08); transform: translateY(-2px); }
-.stat-card.has-data { border-left: 4px solid var(--stat-color, var(--cg-primary)); }
 
-.stat-card .stat-value { font-size: 2.5rem; font-weight: 700; color: var(--stat-color, var(--cg-primary)); margin-bottom: 0.5rem; }
-.stat-card .stat-label { font-size: 0.95rem; color: var(--cg-muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 0.5rem; }
-.stat-card .stat-detail { font-size: 0.85rem; color: var(--cg-muted); }
+.stat-card .stat-icon {
+    grid-column: 2;
+    grid-row: 1;
+    width: 46px;
+    height: 46px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    color: var(--stat-color, var(--cg-primary));
+    background: #f0f5fb;
+    background: color-mix(in srgb, var(--stat-color, var(--cg-primary)) 10%, var(--cg-white));
+    font-size: 1.25rem;
+}
+.stat-card .stat-value { grid-column: 1; grid-row: 1; align-self: center; font-size: 2.5rem; line-height: 1.15; font-weight: 750; font-variant-numeric: tabular-nums; letter-spacing: -0.04em; overflow-wrap: anywhere; color: var(--stat-color, var(--cg-primary)); margin-bottom: 0; }
+.stat-card .stat-label { grid-column: 1 / -1; font-size: 0.9rem; color: var(--cg-text); font-weight: 650; text-transform: uppercase; letter-spacing: 0.035em; margin-top: 1.25rem; margin-bottom: 0.4rem; }
+.stat-card .stat-detail { grid-column: 1 / -1; font-size: 0.85rem; color: var(--cg-muted); line-height: 1.5; }
 
 .section-container { background: var(--cg-white); border: 1px solid var(--cg-border); border-radius: 0.875rem; padding: 2rem; margin-bottom: 2rem; }
 .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.75rem; }
@@ -290,8 +316,16 @@ $conn->close();
     .stat-card { padding: 1rem; }
     .stat-card .stat-value { font-size: 1.75rem; }
     .stat-card .stat-label { font-size: 0.8rem; }
+    .stat-card .stat-icon { width: 34px; height: 34px; border-radius: 10px; font-size: 1rem; }
     .section-container { padding: 1.25rem; }
     .dashboard-welcome h1 { font-size: 1.5rem; }
+}
+@media (max-width: 359.98px) {
+    .stats-grid { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .stat-card { transition: none; }
+    .stat-card:hover { transform: none; }
 }
 </style>
 
@@ -307,7 +341,7 @@ $conn->close();
                 <i class="bi bi-briefcase"></i> Browse Jobs
             </a>
             <a href="applications.php" class="btn btn-outline-primary">
-                <i class="bi bi-file-text"></i> My Apps
+                <i class="bi bi-file-text"></i> My Applications
             </a>
         </div>
     </div>
@@ -316,6 +350,7 @@ $conn->close();
     <div class="stats-grid">
         <!-- Total Applications -->
         <div class="stat-card <?php echo $statusCounts['total'] > 0 ? 'has-data' : ''; ?>" style="--stat-color: var(--cg-primary);">
+            <i class="bi bi-files stat-icon" aria-hidden="true"></i>
             <div class="stat-value"><?php echo $statusCounts['total']; ?></div>
             <div class="stat-label">Total Applications</div>
             <div class="stat-detail">Overall submissions</div>
@@ -323,6 +358,7 @@ $conn->close();
 
         <!-- New Applied -->
         <div class="stat-card <?php echo $statusCounts['New Applied'] > 0 ? 'has-data' : ''; ?>" style="--stat-color: var(--stat-pending);">
+            <i class="bi bi-send stat-icon" aria-hidden="true"></i>
             <div class="stat-value"><?php echo $statusCounts['New Applied']; ?></div>
             <div class="stat-label">New Applied</div>
             <div class="stat-detail">Awaiting review</div>
@@ -330,6 +366,7 @@ $conn->close();
 
         <!-- Under Review -->
         <div class="stat-card <?php echo $statusCounts['Reviewed'] > 0 ? 'has-data' : ''; ?>" style="--stat-color: var(--stat-review);">
+            <i class="bi bi-hourglass-split stat-icon" aria-hidden="true"></i>
             <div class="stat-value"><?php echo $statusCounts['Reviewed']; ?></div>
             <div class="stat-label">Under Review</div>
             <div class="stat-detail">Being evaluated</div>
@@ -337,6 +374,7 @@ $conn->close();
 
         <!-- Accepted -->
         <div class="stat-card <?php echo $statusCounts['Accepted'] > 0 ? 'has-data' : ''; ?>" style="--stat-color: var(--stat-accept);">
+            <i class="bi bi-check-circle stat-icon" aria-hidden="true"></i>
             <div class="stat-value"><?php echo $statusCounts['Accepted']; ?></div>
             <div class="stat-label">Accepted</div>
             <div class="stat-detail">Great progress!</div>
@@ -344,6 +382,7 @@ $conn->close();
 
         <!-- Rejected -->
         <div class="stat-card <?php echo $statusCounts['Rejected'] > 0 ? 'has-data' : ''; ?>" style="--stat-color: var(--stat-reject);">
+            <i class="bi bi-x-circle stat-icon" aria-hidden="true"></i>
             <div class="stat-value"><?php echo $statusCounts['Rejected']; ?></div>
             <div class="stat-label">Rejected</div>
             <div class="stat-detail">Applications declined</div>
@@ -351,6 +390,7 @@ $conn->close();
 
         <!-- Jobs Available -->
         <div class="stat-card" style="--stat-color: #8b5cf6;">
+            <i class="bi bi-briefcase stat-icon" aria-hidden="true"></i>
             <div class="stat-value"><?php echo $availableJobs; ?></div>
             <div class="stat-label">Opportunities</div>
             <div class="stat-detail">Active positions</div>

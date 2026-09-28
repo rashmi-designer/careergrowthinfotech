@@ -190,6 +190,63 @@ html,body{height:100dvh;margin:0;padding:0}
     .auth-shell{min-height:100dvh}
     .form-grid{grid-template-columns:1fr}
 }
+/* Match the login screens while allowing the longer form to scroll naturally. */
+html, body { height:auto; min-height:100%; }
+.auth-shell { position:relative; isolation:isolate; display:block; height:auto; min-height:100dvh; background:#0b4279; }
+.auth-left { position:absolute; inset:0; display:block; border:0; background-position:right center; background-size:145% auto; background-repeat:no-repeat; }
+.auth-left::before { background:linear-gradient(125deg,rgba(8,39,90,.93),rgba(13,101,153,.78) 55%,rgba(9,153,139,.68)); }
+.auth-left::after { content:""; position:absolute; width:360px; height:360px; right:-130px; top:-140px; bottom:auto; background:none; border:44px solid rgba(255,255,255,.13); border-radius:50%; box-shadow:0 0 0 48px rgba(255,255,255,.06); }
+.auth-left-inner { display:none; }
+.auth-right { position:relative; z-index:1; min-height:100dvh; padding:12px 20px; background:transparent; align-items:center; }
+.register-card {
+    position:relative;
+    isolation:isolate;
+    width:100%;
+    max-width:600px;
+    max-height:none;
+    padding:18px 26px;
+    overflow:hidden;
+    border:1px solid transparent;
+    border-radius:24px;
+    color:#eefaff;
+    background:linear-gradient(145deg,rgba(8,56,111,.66),rgba(8,87,121,.45)) padding-box,linear-gradient(145deg,rgba(173,244,255,.98),rgba(52,213,236,.72) 42%,rgba(38,180,207,.34) 78%,rgba(143,246,222,.9)) border-box;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 0 28px rgba(41,219,228,.2),0 20px 46px rgba(0,20,63,.4);
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+}
+.register-card::before { content:""; position:absolute; inset:1px; border-radius:23px; pointer-events:none; background:linear-gradient(115deg,rgba(255,255,255,.2),transparent 18%,transparent 72%,rgba(112,239,207,.14)); z-index:-1; }
+.register-card::after { content:""; position:absolute; inset:0; pointer-events:none; background:radial-gradient(ellipse 16px 80px at 0% 52%,rgba(77,224,250,.7),transparent),radial-gradient(ellipse 16px 80px at 100% 52%,rgba(77,224,250,.7),transparent); z-index:-1; }
+.register-card .card-header { width:fit-content; max-width:100%; margin:0 auto 8px; padding:4px 10px; gap:10px; border:1px solid rgba(181,243,255,.32); border-radius:12px; background:rgba(255,255,255,.12); }
+.register-card .card-logo-wrapper { width:36px; height:36px; flex-shrink:0; padding:4px; border:0; border-radius:50%; background:#fff; }
+.register-card .card-logo-wrapper img { width:100%; height:100%; object-fit:contain; }
+.register-card .portal-name { color:#d7fffa; font-size:.85rem; }
+.register-card .portal-sub { color:#c8e5f3; font-size:.75rem; }
+.register-title { color:#fff; text-align:center; font-size:1.5rem; margin:0 0 4px; letter-spacing:-.025em; }
+.register-subtitle { color:#d2e8f4; text-align:center; font-size:.84rem; margin-bottom:14px; }
+.register-card .form-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 14px; margin-bottom:0; }
+.register-card .form-group { min-width:0; margin-bottom:10px; }
+.register-card .form-label { color:#e9f8ff; font-size:.82rem; margin-bottom:5px; }
+.register-card .required { color:#9bfff0; }
+.register-card .form-control { height:42px; padding:.55rem .8rem; border:1px solid rgba(198,238,255,.5); border-radius:9px; background:#e8f0fd; color:#12213d; font-size:.92rem; }
+.register-card .form-control::placeholder { color:#66788e; opacity:1; }
+.register-card .form-control:focus { background:#f4f8ff; border-color:#72f0df; box-shadow:0 0 0 3px rgba(78,231,216,.2); color:#12213d; }
+.register-card .btn-create { height:42px; border:0; border-radius:9px; color:#fff; background:linear-gradient(135deg,#20cba6,#168dd8); box-shadow:0 9px 18px rgba(0,28,85,.32); }
+.register-card .btn-create:hover { background:linear-gradient(135deg,#17b597,#117abe); }
+.register-card .divider { color:#c7e5f3; margin:8px 0; font-size:.9rem; }
+.register-card .divider::before, .register-card .divider::after { background:rgba(211,243,255,.24); }
+.register-card .login-row { color:#eefaff; font-size:.88rem; }
+.register-card .login-row a[style] { color:#9bfff0 !important; }
+.register-card .back-home { color:#c7e5f3; margin-top:4px; font-size:.85rem; }
+.register-card .back-home:hover { color:#fff; }
+.register-card a:focus-visible, .register-card .btn:focus-visible { outline:3px solid #9bfff0; outline-offset:3px; }
+.register-card .alert { font-size:.9rem; border-radius:10px; }
+@media (max-width:575.98px) {
+    .auth-left { background-size:cover; }
+    .auth-right { padding:20px 14px; }
+    .register-card { padding:24px 20px; }
+    .register-card .form-grid { grid-template-columns:1fr; gap:0; }
+    .register-title { font-size:1.4rem; }
+}
 </style>
 
 <main class="auth-shell">

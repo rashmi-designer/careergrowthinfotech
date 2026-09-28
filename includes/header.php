@@ -24,3 +24,6 @@ $siteStylesheetVersion = (string) filemtime(__DIR__ . '/../assets/css/style.css'
     <link rel="stylesheet" href="<?php echo htmlspecialchars($basePath, ENT_QUOTES, 'UTF-8'); ?>assets/css/style.css?v=<?php echo htmlspecialchars($siteStylesheetVersion, ENT_QUOTES, 'UTF-8'); ?>">
 </head>
 <body class="d-flex flex-column min-vh-100">
+<?php if (strpos($scriptPath, '/admin/') !== false): ?>
+    <div class="admin-layout" aria-hidden="false">
+<?php endif; ?>

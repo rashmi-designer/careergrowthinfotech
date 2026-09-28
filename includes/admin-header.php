@@ -2,6 +2,178 @@
 // Admin header include (UI-only). Expects $pageH1 and $pageSubtitle set in the including page.
 $adminName = htmlspecialchars($_SESSION['admin_name'] ?? $_SESSION['user_name'] ?? 'Administrator', ENT_QUOTES, 'UTF-8');
 ?>
+<!-- Admin layout: fixed sidebar + right-side scroll area (scoped to admin pages) -->
+<style>
+    /* Layout wrapper for admin pages. This wrapper owns the left offset
+       so the right-area (header, main content, footer) aligns naturally
+       to the right of the fixed sidebar without per-footer hacks. */
+    .admin-layout {
+        /* define the sidebar width and a consistent gap to separate sidebar from content */
+        --admin-sidebar-width: 248px;
+        --admin-sidebar-gap: 24px; /* desktop gap; responsive fallbacks below */
+        box-sizing: border-box;
+        min-height: 100vh;
+        /* Create right-side content inset so children (main + footer)
+           naturally flow to the right of the fixed sidebar. */
+        padding-left: calc(var(--admin-sidebar-width) + var(--admin-sidebar-gap));
+    }
+
+    /* Keep existing admin-root pages functioning but avoid double-left offsets
+       when the global .admin-layout wrapper is present. */
+    .admin-layout .admin-root { padding-left: 0 !important; }
+
+    /* Fixed left sidebar that never scrolls away from the viewport top */
+    .admin-root .sidebar {
+        position:fixed;
+        left:0;
+        top:0;
+        bottom:0;
+        width: var(--admin-sidebar-width);
+        height:100vh;
+        display:flex;
+        flex-direction:column;
+        overflow:hidden;
+        -webkit-overflow-scrolling: touch;
+        box-shadow: 0 6px 20px rgba(16,24,40,0.06);
+        z-index: 1030;
+        box-sizing: border-box;
+    }
+    .admin-root .sidebar-branding {
+        flex-shrink:0;
+        display:flex;
+        align-items:center;
+        gap:10px;
+        padding:18px 14px 10px;
+        border-bottom:1px solid rgba(255,255,255,.12);
+    }
+    .admin-root .sidebar-branding .brand-copy {
+        min-width:0;
+        display:flex;
+        flex-direction:column;
+        justify-content:center;
+        line-height:1.15;
+    }
+    .admin-root .sidebar-branding .brand-title {
+        white-space:nowrap;
+        overflow:hidden;
+        text-overflow:ellipsis;
+        color:#fff;
+        font-size:0.82rem;
+        font-weight:800;
+        letter-spacing:-.02em;
+        line-height:1.2;
+    }
+    .admin-root .sidebar-branding .text-soft {
+        margin-top:2px;
+        font-size:0.7rem;
+        line-height:1.2;
+    }
+    .admin-root .sidebar-navigation {
+        flex:1 1 auto;
+        display:flex;
+        flex-direction:column;
+        overflow-y:auto;
+        overflow-x:hidden;
+        padding:10px 14px 8px;
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+    }
+    .admin-root .sidebar-navigation::-webkit-scrollbar { width: 0; height: 0; }
+
+    /* Right-side area (header + main content). Pages render inside this area.
+       Ensure the right area occupies the remaining viewport width and stacks vertically. */
+    .admin-root > *:not(.sidebar) { margin-left:0; }
+    .admin-root .dashboard-content,
+    .admin-root .main-panel,
+    .admin-root section.dashboard-content { box-sizing:border-box; }
+
+     /* Make the right-side content scrollable while the sidebar remains fixed.
+         Set vertical scrolling while preventing horizontal overflow.
+         Visually hide scrollbars but preserve scrolling functionality across browsers. */
+     .admin-root .dashboard-content,
+     .admin-root .main-panel {
+          height:100vh;
+          overflow-y:auto;
+          overflow-x:hidden;
+          -ms-overflow-style: none; /* IE and Edge */
+          scrollbar-width: none; /* Firefox */
+     }
+
+     /* WebKit browsers: hide the scrollbar track while preserving scroll interaction */
+     .admin-root .dashboard-content::-webkit-scrollbar,
+     .admin-root .main-panel::-webkit-scrollbar { width: 0; height: 0; }
+
+     /* Admin header should scroll naturally with the right-side content.
+         Only the sidebar remains fixed. Do NOT use fixed or sticky for the header. */
+     .admin-root .admin-topbar,
+     .admin-root .dashboard-content .admin-topbar { position: static; top: auto; z-index: auto; background:inherit; }
+
+     /* Footer will live inside the admin-layout wrapper and therefore
+         inherits the left inset. Keep the footer full-width of the
+         right-side area by using 100% width within the wrapper. */
+     .admin-footer { width: 100%; box-sizing: border-box; }
+
+    /* Responsive: on smaller screens fall back to a single-column stacked layout */
+    @media (max-width: 1199.98px) {
+        .admin-layout {
+            width: 100%;
+            max-width: 100%;
+            padding-left: 0;
+            overflow-x: hidden;
+        }
+        .admin-root {
+            width: 100%;
+            max-width: 100%;
+            padding-left: 0;
+            overflow-x: hidden;
+        }
+        .admin-root .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            z-index: 1045;
+            width: min(82vw, 290px);
+            max-width: 290px;
+            height: 100vh;
+            box-shadow: 0 18px 42px rgba(15, 23, 42, 0.26);
+            display: flex;
+            transform: translateX(-105%);
+            opacity: 0;
+            visibility: hidden;
+            transition: transform 0.25s ease, opacity 0.25s ease, visibility 0.25s ease;
+        }
+        .admin-sidebar-open .admin-root .sidebar {
+            transform: translateX(0);
+            opacity: 1;
+            visibility: visible;
+        }
+        .admin-root .dashboard-content,
+        .admin-root .main-panel {
+            width: 100%;
+            max-width: 100%;
+            height: auto !important;
+            min-height: 0;
+            overflow: visible !important;
+            overflow-x: hidden;
+        }
+        .admin-footer { margin-left:0; width:100%; max-width:100%; }
+    }
+
+    @media (max-width: 767.98px) {
+        .admin-layout,
+        .admin-root {
+            overflow-x: hidden;
+        }
+        .admin-root .dashboard-content,
+        .admin-root .main-panel {
+            height: auto !important;
+            min-height: 0;
+            overflow: visible !important;
+            overflow-x: hidden;
+        }
+    }
+</style>
 <style>
 /* Admin Dark Mode CSS Variables */
 html[data-theme="dark"] {
@@ -25,6 +197,8 @@ html[data-theme="dark"] .admin-topbar { border-bottom-color: rgba(255,255,255,0.
 .admin-topbar .title-area h1 { margin:0; font-size:1.15rem; font-weight:700; color: var(--cg-text); transition: color 0.25s ease; }
 .admin-topbar .title-area .subtitle { font-size:0.9rem; color:var(--cg-muted); transition: color 0.25s ease; }
 .admin-topbar .utils { display:flex; align-items:center; justify-self:end; gap:0.75rem; flex-wrap:nowrap; }
+.mobile-header-row { display:none; }
+.mobile-branding { display:none; }
 .header-search { width:260px; max-width:38vw; height:42px; display:inline-flex; align-items:center; gap:8px; padding:6px 10px; background:var(--cg-white); border:1px solid var(--cg-border); border-radius:10px; transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease; }
 .header-search input { border:0; outline:0; width:100%; font-size:0.95rem; background: transparent; color: var(--cg-text); transition: color 0.25s ease; }
 .header-search input::placeholder { color: var(--cg-muted); }
@@ -36,6 +210,30 @@ html[data-theme="dark"] .admin-topbar { border-bottom-color: rgba(255,255,255,0.
 .dark-toggle:hover { background: rgba(13,110,253,0.1); border-color: var(--cg-primary); color: var(--cg-primary); }
 .profile-control { min-height:42px; display:inline-flex; align-items:center; gap:8px; padding:4px 10px; border-radius:999px; border:1px solid var(--cg-border); background:var(--cg-white); transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease; color: var(--cg-text); }
 .profile-control .avatar { width:32px; height:32px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; background:rgba(13,110,253,0.08); color:var(--cg-primary); }
+.admin-mobile-menu-button {
+    display: none;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 1px solid var(--cg-border);
+    border-radius: 12px;
+    background: var(--cg-white);
+    color: var(--cg-text);
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+.admin-mobile-menu-button:hover,
+.admin-mobile-menu-button:focus-visible {
+    background: rgba(13, 110, 253, 0.08);
+    border-color: var(--cg-primary);
+    color: var(--cg-primary);
+    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.12);
+    outline: none;
+}
+.admin-mobile-menu-button i { font-size: 1.45rem; line-height: 1; }
 .dropdown-menu-admin { min-width:220px; border-radius:12px; background: var(--cg-white); border: 1px solid var(--cg-border); transition: background 0.25s ease, border-color 0.25s ease; }
 .dropdown-menu-admin { min-width:204px; padding:5px; border-radius:13px; background:rgba(255,255,255,.78); border-color:rgba(255,255,255,.72); box-shadow:0 14px 30px rgba(15,23,42,.14); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); }
 .dropdown-menu-admin.dropdown-menu-end { right:0; left:auto; }
@@ -80,17 +278,221 @@ html[data-theme="dark"] .search-result-item:hover { background: rgba(13,110,253,
 .search-result-meta { font-size:0.85rem; color:var(--cg-muted); transition: color 0.25s ease; }
 .search-no-results { padding:1.5rem; text-align:center; color:var(--cg-muted); font-size:0.9rem; transition: color 0.25s ease; }
 .search-container { position:relative; }
-@media (max-width: 991.98px){ .admin-topbar{display:flex; flex-wrap:wrap; row-gap:0.75rem;} .admin-topbar .utils{width:100%; justify-content:flex-end;} }
-@media (max-width: 768px){ .header-search{display:none} .header-clock{display:none} }
+@media (max-width: 991.98px){
+    .admin-topbar{display:flex; flex-wrap:wrap; row-gap:0.75rem;}
+    .admin-topbar .utils{width:100%; justify-content:flex-end;}
+}
+@media (max-width: 767.98px){
+    .admin-topbar {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.7rem;
+        min-height: 0;
+        padding: 0.55rem 0.75rem 0.7rem;
+        border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+    }
+    .admin-topbar .title-area {
+        width: 100%;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.15rem;
+    }
+    .mobile-header-row {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 0.6rem;
+        width: 100%;
+    }
+    .admin-mobile-menu-button {
+        display: inline-flex;
+        flex-shrink: 0;
+    }
+    .admin-sidebar-close-button {
+        display: inline-flex;
+        position: absolute;
+        top: 14px;
+        right: 14px;
+        width: 40px;
+        height: 40px;
+        border: 1px solid rgba(255,255,255,0.22);
+        border-radius: 12px;
+        background: rgba(15, 23, 42, 0.18);
+        color: #ffffff;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 2;
+        transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    }
+    .admin-sidebar-close-button:hover,
+    .admin-sidebar-close-button:focus-visible,
+    .admin-sidebar-close-button:active {
+        background: rgba(255,255,255,0.12);
+        border-color: rgba(255,255,255,0.42);
+        transform: translateY(-1px);
+        outline: none;
+    }
+    .admin-sidebar-close-button i {
+        font-size: 1.2rem;
+        line-height: 1;
+    }
+    .mobile-branding {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        min-width: 0;
+        overflow: hidden;
+    }
+    .mobile-brand-mark {
+        width: 26px;
+        height: 26px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        background: rgba(13, 110, 253, 0.08);
+        overflow: hidden;
+        flex-shrink: 0;
+    }
+    .mobile-brand-mark img {
+        width: 20px;
+        height: 20px;
+        object-fit: contain;
+    }
+    .mobile-brand-name {
+        display: inline-block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 0.72rem;
+        font-weight: 700;
+        color: var(--cg-text);
+    }
+    .admin-topbar .title-area h1 {
+        font-size: 1.08rem;
+        line-height: 1.2;
+        white-space: normal;
+        overflow-wrap: anywhere;
+        margin: 0;
+    }
+    .admin-topbar .title-area .subtitle {
+        display: block;
+        font-size: 0.74rem;
+        line-height: 1.4;
+        color: var(--cg-muted);
+    }
+    .admin-topbar .utils {
+        width: auto;
+        justify-content: flex-end;
+        gap: 0.45rem;
+        flex-wrap: nowrap;
+        flex-shrink: 0;
+    }
+    .desktop-utils {
+        display: none !important;
+    }
+    .header-search{display:none}
+    .header-clock{display:none}
+    .dark-toggle {
+        width:36px;
+        height:36px;
+        flex-shrink:0;
+    }
+    .profile-control {
+        min-height:36px;
+        padding:4px 8px;
+        flex-shrink:0;
+    }
+    .profile-control .fw-semibold {
+        display: none !important;
+    }
+}
+@media (max-width: 425.98px){
+    .admin-topbar {
+        gap: 0.5rem;
+        padding: 0.5rem 0.5rem 0.6rem;
+    }
+    .mobile-brand-mark {
+        width: 22px;
+        height: 22px;
+    }
+    .mobile-brand-mark img {
+        width: 18px;
+        height: 18px;
+    }
+    .mobile-brand-name {
+        font-size: 0.68rem;
+    }
+    .admin-topbar .title-area h1 {
+        font-size: 0.98rem;
+    }
+    .admin-topbar .title-area .subtitle {
+        font-size: 0.7rem;
+    }
+    .admin-topbar .utils {
+        gap: 0.35rem;
+    }
+    .profile-control {
+        padding:4px 6px;
+    }
+    .profile-control .avatar {
+        width:28px;
+        height:28px;
+    }
+}
 </style>
 
+<div id="adminSidebarOverlay" class="admin-sidebar-overlay" aria-hidden="true"></div>
+
 <header class="admin-topbar">
+    <div class="mobile-header-row">
+        <button type="button" class="admin-mobile-menu-button" id="adminMobileMenuToggle" aria-label="Open admin menu" aria-expanded="false">
+            <i class="bi bi-list" aria-hidden="true"></i>
+        </button>
+
+        <div class="mobile-branding" aria-label="Career Grow Infotech branding">
+            <span class="mobile-brand-mark"><img src="<?php echo htmlspecialchars($basePath ?? '../', ENT_QUOTES, 'UTF-8'); ?>assets/images/logo.webp" alt="Career Grow Infotech logo"></span>
+            <span class="mobile-brand-name">Career Grow Infotech</span>
+        </div>
+
+        <div class="utils">
+            <button class="dark-toggle" id="darkToggleMobile" aria-label="Toggle theme"><i class="bi bi-moon-fill"></i></button>
+
+            <div class="dropdown">
+                <button class="btn profile-control dropdown-toggle" id="adminProfileMenuMobile" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="avatar"><i class="bi bi-person-circle"></i></span>
+                    <span class="d-none d-sm-inline fw-semibold"><?php echo $adminName; ?></span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-admin" aria-labelledby="adminProfileMenuMobile">
+                    <li class="px-3 py-2">
+                        <div class="d-flex align-items-center">
+                            <div class="avatar me-2"><i class="bi bi-person-circle"></i></div>
+                            <div>
+                                <div class="fw-bold"><?php echo $adminName; ?></div>
+                                <div class="text-muted small">Admin</div>
+                            </div>
+                        </div>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="<?php echo htmlspecialchars($basePath ?? '', ENT_QUOTES, 'UTF-8'); ?>admin/dashboard.php"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a></li>
+                    <li><a class="dropdown-item" href="<?php echo htmlspecialchars($basePath ?? '', ENT_QUOTES, 'UTF-8'); ?>admin/profile.php"><i class="bi bi-person me-2"></i>Profile</a></li>
+                    <li><a class="dropdown-item" href="<?php echo htmlspecialchars($basePath ?? '', ENT_QUOTES, 'UTF-8'); ?>admin/settings.php"><i class="bi bi-gear me-2"></i>Settings</a></li>
+                    <li><a class="dropdown-item text-danger" href="<?php echo htmlspecialchars($basePath ?? '', ENT_QUOTES, 'UTF-8'); ?>logout.php"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
     <div class="title-area">
         <h1><?php echo $pageH1 ?? htmlspecialchars($pageTitle ?? '', ENT_QUOTES, 'UTF-8'); ?></h1>
         <?php if (!empty($pageSubtitle)): ?><div class="subtitle"><?php echo htmlspecialchars($pageSubtitle, ENT_QUOTES, 'UTF-8'); ?></div><?php endif; ?>
     </div>
 
-    <div class="utils">
+    <div class="utils desktop-utils">
         <div class="search-container">
             <div class="header-search" role="search" aria-label="Admin search">
                 <i class="bi bi-search" aria-hidden="true"></i>
@@ -147,24 +549,102 @@ function setAdminTheme(theme) {
     } catch (e) {
         // localStorage may be unavailable; theme still works for current session
     }
-    
+
+    const darkToggles = document.querySelectorAll('.dark-toggle');
+    darkToggles.forEach((toggle) => {
+        toggle.innerHTML = theme === 'dark' ? '<i class="bi bi-sun-fill"></i>' : '<i class="bi bi-moon-fill"></i>';
+    });
+
     if (theme === 'dark') {
         document.documentElement.setAttribute('data-theme', 'dark');
-        document.getElementById('darkToggle').innerHTML = '<i class="bi bi-sun-fill"></i>';
     } else {
         document.documentElement.removeAttribute('data-theme');
-        document.getElementById('darkToggle').innerHTML = '<i class="bi bi-moon-fill"></i>';
     }
 }
+
+function toggleAdminSidebar(forceOpen) {
+    const body = document.body;
+    const sidebarOpen = typeof forceOpen === 'boolean' ? forceOpen : !body.classList.contains('admin-sidebar-open');
+    body.classList.toggle('admin-sidebar-open', sidebarOpen);
+    document.body.style.overflow = sidebarOpen ? 'hidden' : '';
+    const overlay = document.getElementById('adminSidebarOverlay');
+    const menuToggle = document.getElementById('adminMobileMenuToggle');
+
+    if (overlay) {
+        overlay.classList.toggle('is-visible', sidebarOpen);
+        overlay.setAttribute('aria-hidden', sidebarOpen ? 'false' : 'true');
+    }
+
+    if (menuToggle) {
+        menuToggle.setAttribute('aria-expanded', sidebarOpen ? 'true' : 'false');
+        menuToggle.setAttribute('title', sidebarOpen ? 'Close admin menu' : 'Open admin menu');
+    }
+}
+
+const adminMobileMenuToggle = document.getElementById('adminMobileMenuToggle');
+const adminSidebarOverlay = document.getElementById('adminSidebarOverlay');
+
+function ensureSidebarCloseButton() {
+    const sidebars = document.querySelectorAll('.sidebar');
+
+    sidebars.forEach(function (sidebar) {
+        if (sidebar.querySelector('.admin-sidebar-close-button')) {
+            return;
+        }
+
+        const closeButton = document.createElement('button');
+        closeButton.type = 'button';
+        closeButton.className = 'admin-sidebar-close-button';
+        closeButton.setAttribute('aria-label', 'Close admin menu');
+        closeButton.innerHTML = '<i class="bi bi-x-lg" aria-hidden="true"></i>';
+        closeButton.addEventListener('click', function () {
+            toggleAdminSidebar(false);
+        });
+
+        if (sidebar.firstChild) {
+            sidebar.insertBefore(closeButton, sidebar.firstChild);
+        } else {
+            sidebar.appendChild(closeButton);
+        }
+    });
+}
+
+if (adminMobileMenuToggle) {
+    adminMobileMenuToggle.addEventListener('click', function () {
+        toggleAdminSidebar();
+    });
+}
+
+if (adminSidebarOverlay) {
+    adminSidebarOverlay.addEventListener('click', function () {
+        toggleAdminSidebar(false);
+    });
+}
+
+ensureSidebarCloseButton();
+
+document.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape') {
+        toggleAdminSidebar(false);
+    }
+});
+
+window.addEventListener('resize', function () {
+    if (window.innerWidth > 1199.98) {
+        toggleAdminSidebar(false);
+    }
+});
 
 // Apply saved theme on page load
 setAdminTheme(getAdminTheme());
 
 // Dark mode toggle handler
-document.getElementById('darkToggle').addEventListener('click', function(){
-    const currentTheme = getAdminTheme();
-    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-    setAdminTheme(newTheme);
+document.querySelectorAll('.dark-toggle').forEach((toggle) => {
+    toggle.addEventListener('click', function(){
+        const currentTheme = getAdminTheme();
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        setAdminTheme(newTheme);
+    });
 });
 
 // Admin Header Search

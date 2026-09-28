@@ -98,6 +98,21 @@ $conn->close();
 .quick-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
 .quick-actions .btn { padding: 0.75rem 1.25rem; font-size: 0.95rem; font-weight: 500; }
 
+/* Candidate Dashboard: ensure the header "My Apps" outline button text is always white
+   without changing background, size, padding, icon, or hover animation. Scope to
+   the header quick-actions to avoid affecting other outline buttons on this page. */
+.dashboard-header .quick-actions a.btn.btn-outline-primary[href="applications.php"] {
+    color: #ffffff !important;
+}
+.dashboard-header .quick-actions a.btn.btn-outline-primary[href="applications.php"] i {
+    color: #ffffff !important;
+}
+.dashboard-header .quick-actions a.btn.btn-outline-primary[href="applications.php"]:hover,
+.dashboard-header .quick-actions a.btn.btn-outline-primary[href="applications.php"]:focus,
+.dashboard-header .quick-actions a.btn.btn-outline-primary[href="applications.php"]:active {
+    color: #ffffff !important;
+}
+
 .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem; margin-bottom: 2.5rem; }
 
 .stat-card { background: var(--cg-white); border: 1px solid var(--cg-border); border-radius: 0.875rem; padding: 1.75rem; transition: box-shadow var(--cg-transition), transform var(--cg-transition); display: flex; flex-direction: column; }
@@ -128,6 +143,41 @@ $conn->close();
 .profile-value.empty { color: var(--cg-muted); font-style: italic; }
 
 .profile-actions { display: flex; gap: 0.75rem; margin-top: 1rem; }
+
+/* Candidate Dashboard: style only the "Change Password" quick-action button
+   to have a solid brand background and white text while preserving all other
+   visual behavior. Scoped to the profile-actions container and exact href. */
+.profile-actions a.btn.btn-outline-secondary[href="change-password.php"] {
+    background: #0d6efd !important;
+    border-color: #0d6efd !important;
+    color: #ffffff !important;
+}
+.profile-actions a.btn.btn-outline-secondary[href="change-password.php"] i {
+    color: #ffffff !important;
+}
+.profile-actions a.btn.btn-outline-secondary[href="change-password.php"]:hover,
+.profile-actions a.btn.btn-outline-secondary[href="change-password.php"]:focus,
+.profile-actions a.btn.btn-outline-secondary[href="change-password.php"]:active {
+    color: #ffffff !important;
+    border-color: #0d6efd !important;
+}
+
+/* Candidate Dashboard: style only the "Change Password" quick-action button
+   Keep size, padding, border-radius, hover animation and functionality unchanged. */
+.profile-actions a.btn.btn-outline-secondary[href="change-password.php"] {
+    background: #0d6efd !important;
+    border-color: #0d6efd !important;
+    color: #ffffff !important;
+}
+.profile-actions a.btn.btn-outline-secondary[href="change-password.php"] i {
+    color: #ffffff !important;
+}
+.profile-actions a.btn.btn-outline-secondary[href="change-password.php"]:hover,
+.profile-actions a.btn.btn-outline-secondary[href="change-password.php"]:focus,
+.profile-actions a.btn.btn-outline-secondary[href="change-password.php"]:active {
+    color: #ffffff !important;
+    border-color: #0d6efd !important;
+}
 
 .app-list { display: flex; flex-direction: column; gap: 0.75rem; }
 .app-item { display: flex; justify-content: space-between; align-items: flex-start; padding: 1.25rem; background: var(--cg-light); border-radius: 0.625rem; transition: background var(--cg-transition); }
@@ -169,6 +219,70 @@ $conn->close();
     .app-item { flex-direction: column; gap: 1rem; }
     .app-item-meta { display: flex; flex-direction: column; gap: 0.25rem; }
     .app-item-meta span { margin-right: 0; }
+}
+
+@media (max-width: 767.98px) {
+    .section-container {
+        padding: 1.1rem 0.9rem 1.15rem;
+    }
+    .section-container .app-list {
+        gap: 0.7rem;
+    }
+    .section-container .app-item {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.8rem;
+        padding: 0.9rem 0.85rem;
+        border-radius: 0.75rem;
+        width: 100%;
+        box-sizing: border-box;
+        min-width: 0;
+    }
+    .section-container .app-item-content {
+        width: 100%;
+        min-width: 0;
+    }
+    .section-container .app-item-title {
+        font-size: 0.97rem;
+        line-height: 1.45;
+        word-break: break-word;
+        overflow-wrap: anywhere;
+    }
+    .section-container .app-item-title a {
+        display: inline-block;
+        max-width: 100%;
+    }
+    .section-container .app-item-meta {
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+        font-size: 0.76rem;
+        line-height: 1.45;
+    }
+    .section-container .app-item-meta span {
+        display: block;
+        margin-right: 0;
+        white-space: normal;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+    }
+    .section-container .app-item-status {
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+    }
+    .section-container .status-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.45rem 0.7rem;
+        font-size: 0.72rem;
+        line-height: 1.2;
+        border-radius: 0.45rem;
+        white-space: normal;
+        text-align: center;
+    }
 }
 
 @media (max-width: 576px) {

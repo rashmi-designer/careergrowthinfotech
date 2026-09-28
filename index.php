@@ -660,7 +660,7 @@ require_once __DIR__ . '/includes/navbar.php';
                                     <?php endif; ?>
 
                                     <div class="mt-auto text-end">
-                                        <a href="job-details.php?id=<?php echo (int)$job['id']; ?>" class="btn btn-sm btn-outline-primary">View Details</a>
+                                        <a href="job-details.php?id=<?php echo (int)$job['id']; ?>" class="btn btn-sm btn-outline-primary latest-job-view-details">View Details</a>
                                     </div>
                                 </div>
                             </div>
@@ -681,6 +681,18 @@ require_once __DIR__ . '/includes/navbar.php';
             background-color: #0d6efd !important;
             border-color: #0d6efd !important;
             color: #fff !important;
+        }
+
+        .latest-jobs .job-card .latest-job-view-details,
+        .latest-jobs .job-card .latest-job-view-details:hover,
+        .latest-jobs .job-card .latest-job-view-details:focus,
+        .latest-jobs .job-card .latest-job-view-details:active,
+        .latest-jobs .job-card .latest-job-view-details:focus-visible {
+            background-color: #0d6efd !important;
+            border-color: #0d6efd !important;
+            color: #fff !important;
+            box-shadow: none !important;
+            opacity: 1 !important;
         }
 
         /* Ensure the About section primary CTA matches hero CTA buttons exactly

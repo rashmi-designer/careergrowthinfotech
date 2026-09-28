@@ -739,6 +739,27 @@ require_once __DIR__ . '/includes/navbar.php';
     .svc-hero .section-title { font-size: clamp(2.1rem, 10vw, 2.8rem); }
     .svc-hero-card .talent-visual { display: flex; flex-direction: column; }
     .svc-match-board { grid-template-columns: 1fr; }
+    .svc-hero .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: .75rem;
+        width: 100%;
+        margin-top: 1.25rem !important;
+    }
+    .svc-hero .hero-actions .btn {
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+        flex: 1 1 calc(50% - .375rem);
+        min-width: 0;
+        width: calc(50% - .375rem);
+        padding: .8rem .9rem;
+        font-size: .95rem;
+        line-height: 1.35;
+        white-space: normal;
+        text-align: center;
+        border-radius: .75rem;
+    }
 }
 </style>
 

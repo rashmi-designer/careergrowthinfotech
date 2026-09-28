@@ -25,7 +25,9 @@ $navItems = [
             </span>
         </a>
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+        <div class="mobile-header-actions d-lg-none" id="mobileHeaderActions" aria-label="Account actions"></div>
+
+        <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -103,4 +105,70 @@ $navItems = [
             </div>
         </div>
     </div>
+    <div class="mobile-nav-backdrop" id="mobileNavBackdrop" aria-hidden="true"></div>
 </nav>
+
+<script>
+    (function () {
+        const nav = document.getElementById('mainNavbar');
+        const toggle = document.querySelector('.navbar-toggler');
+        const backdrop = document.getElementById('mobileNavBackdrop');
+        const mobileActions = document.getElementById('mobileHeaderActions');
+        const profile = nav ? nav.querySelector('.nav-profile') : null;
+
+        function moveProfileControl() {
+            if (!nav || !profile || !mobileActions) return;
+
+            const isMobile = window.innerWidth < 992;
+            if (isMobile) {
+                if (!mobileActions.contains(profile)) {
+                    mobileActions.appendChild(profile);
+                }
+            } else {
+                const actions = nav.querySelector('.navbar-actions');
+                if (actions && !nav.contains(profile)) {
+                    actions.insertBefore(profile, actions.firstChild);
+                }
+            }
+        }
+
+        if (profile && mobileActions) {
+            moveProfileControl();
+            window.addEventListener('resize', moveProfileControl);
+        }
+
+        if (toggle && nav && backdrop) {
+            const closeDrawer = () => {
+                const collapse = bootstrap.Collapse.getInstance(nav);
+                if (collapse && nav.classList.contains('show')) {
+                    collapse.hide();
+                }
+                document.body.classList.remove('mobile-nav-open');
+            };
+
+            toggle.addEventListener('click', function () {
+                if (window.innerWidth >= 992) return;
+                const collapse = bootstrap.Collapse.getInstance(nav) || new bootstrap.Collapse(nav, { toggle: false });
+                if (nav.classList.contains('show')) {
+                    collapse.hide();
+                } else {
+                    collapse.show();
+                }
+            });
+
+            nav.addEventListener('show.bs.collapse', function () {
+                if (window.innerWidth < 992) {
+                    document.body.classList.add('mobile-nav-open');
+                }
+            });
+
+            nav.addEventListener('hide.bs.collapse', function () {
+                if (window.innerWidth < 992) {
+                    document.body.classList.remove('mobile-nav-open');
+                }
+            });
+
+            backdrop.addEventListener('click', closeDrawer);
+        }
+    })();
+</script>

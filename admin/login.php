@@ -120,6 +120,47 @@ html,body{height:100dvh;margin:0}
 .admin-login-card{max-width:500px;padding:clamp(26px,3vw,38px);border:1px solid rgba(181,203,236,.62);border-radius:28px;background:rgba(255,255,255,.86);box-shadow:0 26px 70px rgba(30,65,112,.12);backdrop-filter:blur(14px)}.card-brand{gap:11px;margin-bottom:26px}.card-brand img{height:42px;width:42px;object-fit:contain}.card-brand .brand-title{color:#102a50;font-weight:800;line-height:1.25}.login-title{gap:14px}.login-title .icon-circle{width:52px;height:52px;flex:0 0 52px;border-radius:16px;background:linear-gradient(135deg,#e9f0ff,#e0fbf3);font-size:1.2rem;color:#1467e8}.admin-login-card h4{color:#102a50;font-size:1.65rem;letter-spacing:-.035em}.form-label.small{color:#18365e;font-size:.82rem;font-weight:800;letter-spacing:.01em}.form-control{height:54px;border:1px solid #dbe4f1;padding:.6rem .95rem;background:#fbfdff;box-shadow:none}.form-control:focus{border-color:#3d81f5;box-shadow:0 0 0 4px rgba(61,129,245,.12);background:#fff}.input-group .form-control{border-radius:12px 0 0 12px}.show-pass{min-width:54px;border-color:#dbe4f1;border-radius:0 12px 12px 0;color:#52709a}.btn-sign{height:52px;padding:0 25px;border:0;border-radius:12px;background:linear-gradient(135deg,#1769e8,#148cbd);box-shadow:0 10px 22px rgba(23,105,232,.22)}.btn-sign:hover{background:linear-gradient(135deg,#125bc9,#107aa5);transform:translateY(-1px)}.back-link{color:#55708f;font-weight:600}.back-link:hover{color:#1769e8}
 
 @media (max-width:991.98px){.admin-login-wrap{padding:18px 12px}.admin-panel{min-height:0;grid-template-columns:1fr;gap:20px;padding:0;max-width:600px}.admin-right{order:1}.admin-left{order:2;min-height:390px}.admin-login-card{max-width:none;padding:clamp(28px,4vw,48px)}.admin-eyebrow{margin-top:22px}}
+@media (max-width:767.98px){
+    .admin-login-wrap{padding:12px 10px;align-items:stretch}
+    .admin-panel{max-width:100%;grid-template-columns:1fr;gap:14px;padding:0}
+    .admin-left{min-height:220px;border-radius:20px}
+    .admin-left-inner{padding:22px 20px}
+    .brand-pill{padding:7px 12px}
+    .admin-head{font-size:clamp(1.8rem,7vw,2.5rem);line-height:1.06;max-width:none;margin:10px 0 12px}
+    .admin-desc{max-width:none;font-size:.94rem;line-height:1.5;margin:0}
+    .admin-features{gap:8px}
+    .feature-text{font-size:.88rem}
+    .admin-login-card{padding:22px 18px;border-radius:22px;max-width:none}
+    .card-brand{margin-bottom:18px}
+    .login-title{gap:10px;align-items:center;margin-bottom:1rem}
+    .login-title .icon-circle{width:42px;height:42px;flex-basis:42px}
+    .admin-login-card h4{font-size:1.45rem}
+    form .mb-3{margin-bottom:0.9rem!important}
+    .form-control{height:48px}
+    .input-group .form-control{border-radius:12px 0 0 12px}
+    .show-pass{min-width:48px}
+    .d-flex.justify-content-between.align-items-center{flex-direction:column;align-items:stretch;gap:12px}
+    .back-link{display:inline-block;text-align:center;width:100%}
+    .btn-sign{width:100%;height:50px}
+}
+@media (max-width:430px){
+    .admin-login-wrap{padding:10px 8px}
+    .admin-left{min-height:190px;border-radius:18px}
+    .admin-left-inner{padding:18px 16px}
+    .brand-pill{gap:8px}
+    .brand-pill img{height:30px;width:30px}
+    .pill-text{font-size:.82rem}
+    .admin-head{font-size:clamp(1.6rem,8vw,2.1rem)}
+    .admin-desc{font-size:.88rem}
+    .admin-login-card{padding:20px 16px;border-radius:18px}
+    .login-title{margin-bottom:0.85rem}
+    .login-title .icon-circle{width:40px;height:40px;flex-basis:40px}
+    .admin-login-card h4{font-size:1.25rem}
+    .form-control{height:46px;padding:.7rem .8rem}
+    .btn-sign{height:48px}
+    .small-note-muted{font-size:.78rem}
+}
+@media (prefers-reduced-motion: reduce){*,*::before,*::after{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important;scroll-behavior:auto!important}}
 @media (max-width:575.98px){.admin-login-wrap{align-items:flex-start}.admin-login-card{padding:28px 22px;border-radius:22px}.admin-left{min-height:360px;border-radius:22px}.admin-left-inner{padding:28px}.admin-head{font-size:2.45rem}.card-brand{margin-bottom:26px}.login-title{align-items:flex-start}.login-title .icon-circle{width:46px;height:46px;flex-basis:46px}}
 
 /* Compact desktop height: both panels share this fixed grid height. */

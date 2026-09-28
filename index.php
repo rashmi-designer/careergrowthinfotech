@@ -70,8 +70,31 @@ require_once __DIR__ . '/includes/navbar.php';
                 .slide { align-items: flex-end; padding-bottom: 3.75rem; background-position: 58% center; }
                 .slide-content { max-width: 100%; padding: 1.5rem; border-radius: 1.15rem; }
                 .slide h2 { font-size: clamp(2rem, 9vw, 2.75rem); }
-                .slide .btn { min-width: 0; margin-bottom: .5rem; }
-                .hero-cta-button { min-width: 0; }
+                .slide .animate {
+                    display: flex;
+                    flex-wrap: wrap;
+                    align-items: stretch;
+                    gap: 12px;
+                    width: 100%;
+                }
+                .slide .btn,
+                .hero-cta-button {
+                    display: inline-flex !important;
+                    align-items: center;
+                    justify-content: center;
+                    min-width: 0;
+                    width: calc(50% - 6px);
+                    min-height: 48px;
+                    margin-bottom: 0;
+                    margin-right: 0;
+                    padding: 0.82rem 0.9rem;
+                    font-size: 0.96rem;
+                    line-height: 1.35;
+                    border-radius: 0.75rem;
+                    white-space: normal;
+                    text-align: center;
+                    flex: 1 1 0;
+                }
                 .slider-arrows { display: none; }
             }
             /* spacing between hero and next sections */
@@ -778,7 +801,28 @@ require_once __DIR__ . '/includes/navbar.php';
             outline-offset: 3px;
         }
         @media (max-width: 767.98px) {
-            .intro-trust .hero-cta-button { min-width: 0; }
+            .intro-trust .intro-content .d-flex {
+                display: flex;
+                flex-wrap: wrap;
+                gap: .75rem;
+                align-items: stretch;
+            }
+            .intro-trust .hero-cta-button,
+            .intro-trust .intro-content a.about-cta-button,
+            .intro-trust .intro-content .btn-outline-primary {
+                min-width: 0;
+                width: auto;
+                max-width: 100%;
+                white-space: normal;
+                text-align: center;
+                line-height: 1.35;
+                padding: .8rem 1rem;
+                flex: 1 1 180px;
+            }
+            .intro-trust .hero-cta-button,
+            .intro-trust .intro-content a.about-cta-button {
+                margin-right: 0;
+            }
         }
     </style>
     <section class="intro-trust py-5">

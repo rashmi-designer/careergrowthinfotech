@@ -559,6 +559,59 @@ $conn->close();
     }
 }
 
+@media (max-width: 767.98px) {
+    .toolbar-panel {
+        padding: 0.8rem;
+    }
+
+    .toolbar-row {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.7rem;
+        align-items: stretch;
+    }
+
+    .search-wrap,
+    .toolbar-row .form-select,
+    .toolbar-row .btn,
+    .result-count {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+    }
+
+    .search-wrap {
+        flex: 1 1 auto;
+    }
+
+    .toolbar-row .btn {
+        min-height: 46px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .result-count {
+        margin-left: 0;
+        text-align: left;
+        white-space: normal;
+        line-height: 1.45;
+    }
+}
+
+@media (max-width: 425.98px) {
+    .toolbar-panel {
+        padding: 0.7rem;
+    }
+
+    .search-wrap input,
+    .toolbar-row .form-select,
+    .toolbar-row .btn {
+        min-height: 46px;
+        font-size: 0.95rem;
+    }
+}
+
 @media (max-width: 575.98px) {
     .admin-root {
         padding: 1rem;
@@ -570,17 +623,6 @@ $conn->close();
 
     .kpi-grid {
         grid-template-columns: 1fr;
-    }
-
-    .toolbar-row {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .result-count {
-        width: 100%;
-        margin-left: 0;
-        text-align: left;
     }
 }
 /* Shared admin visual language: presentation-only overrides. */

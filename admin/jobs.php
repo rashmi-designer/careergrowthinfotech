@@ -687,6 +687,82 @@ $conn->close();
     }
 }
 
+@media (max-width: 767.98px) {
+    .toolbar-panel {
+        padding: 0.8rem;
+    }
+
+    .toolbar-row {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0.7rem;
+        align-items: stretch;
+    }
+
+    .search-wrap,
+    .toolbar-row .form-select,
+    .filter-actions,
+    .result-count {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+    }
+
+    .search-wrap {
+        flex: 1 1 auto;
+    }
+
+    .toolbar-row .form-select {
+        width: 100%;
+    }
+
+    .filter-actions {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.55rem;
+        width: 100%;
+    }
+
+    .filter-actions .btn {
+        width: 100%;
+        min-height: 46px;
+        flex: 1 1 auto;
+    }
+
+    .result-count {
+        margin-left: 0;
+        text-align: left;
+        white-space: normal;
+        line-height: 1.45;
+    }
+}
+
+@media (max-width: 425.98px) {
+    .toolbar-panel {
+        padding: 0.7rem;
+    }
+
+    .search-wrap input,
+    .toolbar-row .form-select {
+        min-height: 46px;
+        padding-left: 2.5rem;
+        font-size: 0.95rem;
+    }
+
+    .search-wrap .bi {
+        left: 0.8rem;
+        font-size: 0.95rem;
+    }
+
+    .filter-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .filter-actions .btn {
+        min-width: 0;
+    }
+}
+
 @media (max-width: 575.98px) {
     .admin-root {
         padding: 1rem;
@@ -698,25 +774,6 @@ $conn->close();
 
     .kpi-grid {
         grid-template-columns: 1fr;
-    }
-
-    .toolbar-row {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .filter-actions {
-        width: 100%;
-    }
-
-    .filter-actions .btn {
-        flex: 1 1 0;
-    }
-
-    .result-count {
-        width: 100%;
-        margin-left: 0;
-        text-align: left;
     }
 }
 /* Shared admin visual language: presentation-only overrides. */

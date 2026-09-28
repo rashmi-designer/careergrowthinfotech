@@ -10,8 +10,7 @@ $adminName = htmlspecialchars($_SESSION['admin_name'] ?? $_SESSION['user_name'] 
     .admin-layout {
         /* define the sidebar width and a consistent gap to separate sidebar from content */
         --admin-sidebar-width: 248px;
-        --admin-sidebar-gap: 24px; /* desktop gap; responsive fallbacks below */
-        box-sizing: border-box;
+        --admin-sidebar-gap: 24px; /* desktop gap; responsive fallbacks below */        --admin-mobile-gutter: 16px;        box-sizing: border-box;
         min-height: 100vh;
         /* Create right-side content inset so children (main + footer)
            naturally flow to the right of the fixed sidebar. */
@@ -111,29 +110,44 @@ $adminName = htmlspecialchars($_SESSION['admin_name'] ?? $_SESSION['user_name'] 
             width: 100%;
             max-width: 100%;
             padding-left: 0;
+            padding-right: 0;
             overflow-x: hidden;
         }
+        .admin-layout .admin-root,
         .admin-root {
             width: 100%;
             max-width: 100%;
-            padding-left: 0;
+            margin-left: 0;
+            margin-right: 0;
+            padding-left: var(--admin-mobile-gutter, 16px) !important;
+            padding-right: var(--admin-mobile-gutter, 16px) !important;
+            box-sizing: border-box;
             overflow-x: hidden;
         }
         .admin-root .sidebar {
             position: fixed;
             left: 0;
-            top: 0;
-            bottom: 0;
+            top: 12px;
+            bottom: auto;
             z-index: 1045;
             width: min(82vw, 290px);
             max-width: 290px;
-            height: 100vh;
+            height: auto;
+            max-height: calc(100vh - 24px);
+            min-height: 0;
             box-shadow: 0 18px 42px rgba(15, 23, 42, 0.26);
             display: flex;
             transform: translateX(-105%);
             opacity: 0;
             visibility: hidden;
             transition: transform 0.25s ease, opacity 0.25s ease, visibility 0.25s ease;
+        }
+        .admin-root .sidebar-navigation {
+            flex: 0 0 auto;
+            max-height: calc(100vh - 150px);
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding-bottom: 10px;
         }
         .admin-sidebar-open .admin-root .sidebar {
             transform: translateX(0);
@@ -156,6 +170,13 @@ $adminName = htmlspecialchars($_SESSION['admin_name'] ?? $_SESSION['user_name'] 
         .admin-layout,
         .admin-root {
             overflow-x: hidden;
+        }
+        .admin-layout .admin-root,
+        .admin-root {
+            padding-left: var(--admin-mobile-gutter, 16px) !important;
+            padding-right: var(--admin-mobile-gutter, 16px) !important;
+            margin-left: 0;
+            margin-right: 0;
         }
         .admin-root .dashboard-content,
         .admin-root .main-panel {

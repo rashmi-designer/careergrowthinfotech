@@ -300,7 +300,7 @@ if (!function_exists('cg_render_safe_text')) {
     .job-details-page a.btn.btn-primary {
         background: #0d6efd !important;
         border-color: #0d6efd !important;
-        color: #ffffff !important;
+        color: #fff ;
     }
 
     @media (min-width: 992px) {

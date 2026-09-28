@@ -76,12 +76,13 @@ $conn->close();
 /* Dashboard-only presentation layer. Queries, routes and controls remain unchanged. */
 .admin-root { --dash-ink:#12213d; --dash-navy:#102b52; --dash-blue:#2563eb; --dash-mint:#18a66a; --dash-surface:#ffffff; min-height:100vh; display:flex; gap:24px; padding:24px; background:#f4f7fb; color:var(--dash-ink); }
 .admin-root .sidebar { width:248px; min-height:calc(100vh - 48px); height:auto; align-self:flex-start; position:sticky; top:24px; display:flex; flex-direction:column; padding:18px 14px; border:1px solid rgba(255,255,255,.14); border-radius:20px; background:linear-gradient(155deg,#102c54 0%,#16497f 56%,#0c8879 130%); box-shadow:0 18px 42px rgba(20,57,102,.22); }
-.sidebar .brand { display:flex; gap:11px; align-items:center; padding:4px 8px 18px; border-bottom:1px solid rgba(255,255,255,.18); }
+.sidebar .brand { display:flex; gap:10px; align-items:center; padding:4px 8px 10px; border-bottom:1px solid rgba(255,255,255,.18); }
 .brand-mark-sm { width:42px; height:42px; padding:4px; display:inline-flex; align-items:center; justify-content:center; border-radius:12px; background:rgba(255,255,255,.96); }
 .brand-mark-sm img { max-width:100%; max-height:100%; object-fit:contain; }
-.brand-title { color:#fff; font-size:.92rem; font-weight:800; letter-spacing:-.02em; }
-.sidebar .text-soft { color:rgba(232,244,255,.72) !important; }
-.sidebar nav { display:grid; gap:4px; margin-top:20px !important; }
+.sidebar .brand > div { min-width:0; display:flex; flex-direction:column; justify-content:center; line-height:1.15; }
+.brand-title { color:#fff; font-size:.82rem; font-weight:800; letter-spacing:-.02em; line-height:1.2; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.sidebar .text-soft { color:rgba(232,244,255,.72) !important; font-size:.7rem; line-height:1.2; margin-top:2px; }
+.sidebar nav { display:grid; gap:4px; margin-top:10px !important; }
 .nav-link-admin { position:relative; display:flex; align-items:center; gap:12px; padding:11px 12px; border-radius:11px; color:rgba(235,246,255,.8); font-size:.92rem; font-weight:650; text-decoration:none; transition:background .2s ease,color .2s ease,transform .2s ease; }
 .nav-link-admin i { width:20px; font-size:1.08rem; text-align:center; }
 .nav-link-admin:hover { color:#fff; background:rgba(255,255,255,.12); transform:translateX(2px); }
@@ -131,14 +132,88 @@ $conn->close();
 .quick-actions { margin-top:22px; }.section-heading { margin:0 0 13px; color:var(--dash-ink); font-size:1rem; font-weight:800; }.quick-action { height:100%; display:flex; align-items:center; gap:13px; padding:16px; border:1px solid #e5ebf3; border-radius:14px; color:var(--dash-ink); background:#fff; box-shadow:0 7px 20px rgba(31,54,88,.04); text-decoration:none; transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease; }.quick-action:hover { border-color:#bdd3fa; color:var(--dash-ink); box-shadow:0 13px 24px rgba(31,54,88,.08); transform:translateY(-2px); }.quick-action-icon { width:40px; height:40px; display:inline-flex; flex:0 0 40px; align-items:center; justify-content:center; border-radius:11px; color:#2563eb; background:#eaf2ff; font-size:1.1rem; }.quick-action:nth-child(2) .quick-action-icon { color:#078b64; background:#e7f8f0; }.quick-action:nth-child(3) .quick-action-icon { color:#8a58d7; background:#f2ebff; }.quick-action:nth-child(4) .quick-action-icon { color:#ce7b22; background:#fff3df; }.quick-action-title { display:block; font-size:.87rem; font-weight:800; }.quick-action-copy { display:block; margin-top:2px; color:#7c899b; font-size:.76rem; }
 html[data-theme="dark"] .admin-root { --dash-ink:#e7edf8; --dash-surface:#172235; background:#0f172a; }.admin-root .sidebar, html[data-theme="dark"] .dashboard-panel, html[data-theme="dark"] .kpi, html[data-theme="dark"] .quick-action { background:var(--dash-surface); border-color:#2c3a50; }html[data-theme="dark"] .admin-root .sidebar { border-color:rgba(255,255,255,.32); }.sidebar .brand, .sidebar .mt-auto, html[data-theme="dark"] .jobs-table thead th, html[data-theme="dark"] .jobs-table tbody td, html[data-theme="dark"] .application-list .list-group-item, html[data-theme="dark"] .activity-list li { border-color:#2c3a50; }html[data-theme="dark"] .brand-title, html[data-theme="dark"] .dashboard-content .admin-topbar .title-area h1, html[data-theme="dark"] .kpi .num, html[data-theme="dark"] .panel-head h5, html[data-theme="dark"] .job-title, html[data-theme="dark"] .applicant-name, html[data-theme="dark"] .section-heading, html[data-theme="dark"] .quick-action { color:var(--dash-ink); }html[data-theme="dark"] .nav-link-admin { color:#aab7ca; }html[data-theme="dark"] .nav-link-admin.active { color:#9cc1ff; background:#1e3a61; }html[data-theme="dark"] .dashboard-content .header-search, html[data-theme="dark"] .dashboard-content .header-clock, html[data-theme="dark"] .dashboard-content .dark-toggle, html[data-theme="dark"] .dashboard-content .profile-control { background:#172235; border-color:#e0e8f2; }html[data-theme="dark"] .jobs-table { --bs-table-bg:#172235; --bs-table-color:#b9c6d9; --bs-table-border-color:#2c3a50; }html[data-theme="dark"] .jobs-table tbody tr:hover { background:#1c2a40; }
 .admin-root .sidebar { background:linear-gradient(155deg,#102c54 0%,#16497f 56%,#0c8879 130%) !important; }
-@media (max-width:1199.98px) { .admin-root { padding:16px; gap:0; }.admin-root .sidebar { display:none; }.dashboard-content { padding:2px 0 20px; }.kpi-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
-@media (max-width:767.98px) { .admin-root { padding:14px; }.dashboard-content .admin-topbar { align-items:flex-start; }.dashboard-hero { align-items:flex-start; flex-direction:column; padding:24px; }.hero-actions { justify-content:flex-start; }.dashboard-hero::before, .dashboard-hero::after { display:none; }.panel-head { padding:17px; }.jobs-table thead th, .jobs-table tbody td { padding-left:16px; padding-right:16px; }.kpi-grid { gap:12px; }.kpi { min-height:112px; padding:16px; } }
-@media (max-width:575.98px) { .kpi-grid { grid-template-columns:1fr; }.dashboard-content .admin-topbar .utils { width:100%; justify-content:space-between; }.dashboard-content .profile-control { margin-left:auto; }.hero-actions .btn { flex:1 1 auto; }.application-list .list-group-item { align-items:flex-start !important; }.application-list .text-end { text-align:left !important; } }
+@media (max-width:1199.98px) {
+    .admin-root { padding:16px; gap:0; }
+    .admin-root .sidebar { display:none; }
+    .dashboard-content { padding:2px 0 20px; }
+    .kpi-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .row.g-3 > [class*="col-"] { width:100%; }
+}
+@media (max-width:767.98px) {
+    .admin-root { padding:14px; }
+    .dashboard-content .admin-topbar { align-items:flex-start; }
+    .dashboard-hero { align-items:flex-start; flex-direction:column; padding:24px; }
+    .hero-actions { justify-content:flex-start; }
+    .dashboard-hero::before, .dashboard-hero::after { display:none; }
+    .panel-head { padding:17px; }
+    .jobs-table thead th, .jobs-table tbody td { padding-left:16px; padding-right:16px; }
+    .table-responsive { overflow-x:auto; -webkit-overflow-scrolling:touch; }
+    .kpi-grid { gap:12px; }
+    .kpi { min-height:112px; padding:16px; }
+}
+@media (max-width:575.98px) {
+    .kpi-grid { grid-template-columns:1fr; }
+    .dashboard-content .admin-topbar .utils { width:100%; justify-content:space-between; }
+    .dashboard-content .profile-control { margin-left:auto; }
+    .hero-actions .btn { flex:1 1 auto; }
+    .application-list .list-group-item { align-items:flex-start !important; }
+    .application-list .text-end { text-align:left !important; }
+}
+@media (max-width:425.98px) {
+    .admin-root { padding:12px; }
+    .dashboard-content { padding:0 0 16px; }
+    .dashboard-content .admin-topbar { gap:10px; padding:0 0 14px; }
+    .dashboard-content .admin-topbar .title-area h1 { font-size:1.3rem; }
+    .dashboard-content .admin-topbar .subtitle { font-size:0.8rem; }
+    .dashboard-hero { padding:18px 18px 20px; min-height:0; }
+    .hero-content { width:100%; }
+    .dashboard-hero h2 { max-width:100%; }
+    .dashboard-hero p { max-width:100%; }
+    .hero-actions { width:100%; display:grid; grid-template-columns:1fr; gap:8px; justify-content:stretch; }
+    .hero-actions .btn { width:100%; flex:1 1 auto; }
+    .kpi-grid { grid-template-columns:1fr; gap:10px; }
+    .kpi { min-height:104px; padding:14px; }
+    .kpi .num { font-size:1.55rem; }
+    .panel-head { padding:14px 14px 10px; }
+    .jobs-table { min-width: 460px; }
+    .jobs-table thead th,
+    .jobs-table tbody td { padding-left:12px; padding-right:12px; }
+    .jobs-table thead th { font-size:.64rem; }
+    .jobs-table tbody td { font-size:.76rem; }
+    .application-list { padding:0 8px 8px; }
+    .application-list .list-group-item { display:block !important; padding:12px 6px; }
+    .application-list .list-group-item > .d-flex { display:block !important; }
+    .application-list .list-group-item .gap-3 { gap:0.5rem !important; }
+    .application-list .applicant-role { max-width:none; white-space:normal; }
+    .application-list .text-end { text-align:left !important; margin-top:10px; }
+    .quick-actions { margin-top:18px; }
+    .quick-action { padding:12px; }
+    .quick-action .quick-action-copy { font-size:.72rem; }
+    .quick-action .quick-action-title { font-size:.8rem; }
+}
+</style>
+
+<style>
+/* Page-scoped fix: ensure Job Details (View) action icon is visible by default
+   Scoped to the Recent Job Postings table only; does not change button backgrounds,
+   sizes, padding, hrefs or other buttons. */
+.jobs-table .job-actions a.table-action[aria-label^="View"] i {
+    opacity: 1 !important;
+    visibility: visible !important;
+    color: #ffffff !important;
+}
+.jobs-table .job-actions a.table-action[aria-label^="View"]:hover i,
+.jobs-table .job-actions a.table-action[aria-label^="View"]:focus i,
+.jobs-table .job-actions a.table-action[aria-label^="View"]:active i {
+    opacity: 1 !important;
+    visibility: visible !important;
+    color: #ffffff !important;
+}
 </style>
 
 <main class="container-fluid admin-root">
     <aside class="sidebar">
-        <div class="brand">
+        <div class="sidebar-branding brand">
             <a class="brand-mark-sm" href="dashboard.php" aria-label="Admin dashboard"><img src="../assets/images/logo.webp" alt="logo" width="40" height="40"></a>
             <div>
                 <div class="brand-title">Career Grow Infotech</div>
@@ -146,18 +221,20 @@ html[data-theme="dark"] .admin-root { --dash-ink:#e7edf8; --dash-surface:#172235
             </div>
         </div>
 
-        <nav class="mt-3">
-            <a href="dashboard.php" class="nav-link-admin active"><i class="bi bi-speedometer2"></i> Dashboard</a>
-            <a href="jobs.php" class="nav-link-admin"><i class="bi bi-briefcase"></i> Jobs</a>
-            <a href="applicants.php" class="nav-link-admin"><i class="bi bi-people"></i> Applicants</a>
-            <a href="candidate-details.php" class="nav-link-admin"><i class="bi bi-person-badge"></i> Candidates</a>
-            <a href="contact-messages.php" class="nav-link-admin"><i class="bi bi-envelope-paper"></i> Contact Messages</a>
-            <a href="settings.php" class="nav-link-admin"><i class="bi bi-gear"></i> Settings</a>
-        </nav>
+        <div class="sidebar-navigation">
+            <nav class="mt-3">
+                <a href="dashboard.php" class="nav-link-admin active"><i class="bi bi-speedometer2"></i> Dashboard</a>
+                <a href="jobs.php" class="nav-link-admin"><i class="bi bi-briefcase"></i> Jobs</a>
+                <a href="applicants.php" class="nav-link-admin"><i class="bi bi-people"></i> Applicants</a>
+                <a href="candidate-details.php" class="nav-link-admin"><i class="bi bi-person-badge"></i> Candidates</a>
+                <a href="contact-messages.php" class="nav-link-admin"><i class="bi bi-envelope-paper"></i> Contact Messages</a>
+                <a href="settings.php" class="nav-link-admin"><i class="bi bi-gear"></i> Settings</a>
+            </nav>
 
-        <div class="mt-auto pt-3">
-            <a href="../index.php" class="d-block nav-link-admin"><i class="bi bi-house"></i> Back to Homepage</a>
-            <a href="../logout.php" class="d-block nav-link-admin"><i class="bi bi-box-arrow-right"></i> Logout</a>
+            <div class="mt-auto pt-3">
+                <a href="../index.php" class="d-block nav-link-admin"><i class="bi bi-house"></i> Back to Homepage</a>
+                <a href="../logout.php" class="d-block nav-link-admin"><i class="bi bi-box-arrow-right"></i> Logout</a>
+            </div>
         </div>
     </aside>
 

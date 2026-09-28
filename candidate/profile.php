@@ -422,6 +422,42 @@ $conn->close();
         font-size: 0.9rem;
     }
 }
+
+/* Page-scoped fixes for specific action buttons to ensure text visibility */
+.profile-header .profile-actions a.btn.btn-outline-primary[href="resume.php"] {
+    color: #ffffff !important;
+}
+.profile-header .profile-actions a.btn.btn-outline-primary[href="resume.php"]:hover,
+.profile-header .profile-actions a.btn.btn-outline-primary[href="resume.php"]:focus,
+.profile-header .profile-actions a.btn.btn-outline-primary[href="resume.php"]:active {
+    color: #ffffff !important;
+}
+
+.profile-actions-footer a.btn.btn-outline-secondary[href="change-password.php"] {
+    background-color: #0d6efd !important;
+    border-color: #0d6efd !important;
+    color: #ffffff !important;
+}
+.profile-actions-footer a.btn.btn-outline-secondary[href="change-password.php"]:hover,
+.profile-actions-footer a.btn.btn-outline-secondary[href="change-password.php"]:focus,
+.profile-actions-footer a.btn.btn-outline-secondary[href="change-password.php"]:active {
+    background-color: #0d6efd !important;
+    border-color: #0d6efd !important;
+    color: #ffffff !important;
+}
+
+.profile-actions-footer a.btn.btn-outline-secondary[href="dashboard.php"] {
+    background-color: #0d6efd !important;
+    border-color: #0d6efd !important;
+    color: #ffffff !important;
+}
+.profile-actions-footer a.btn.btn-outline-secondary[href="dashboard.php"]:hover,
+.profile-actions-footer a.btn.btn-outline-secondary[href="dashboard.php"]:focus,
+.profile-actions-footer a.btn.btn-outline-secondary[href="dashboard.php"]:active {
+    background-color: #0d6efd !important;
+    border-color: #0d6efd !important;
+    color: #ffffff !important;
+}
 </style>
 
 <div class="profile-wrapper">

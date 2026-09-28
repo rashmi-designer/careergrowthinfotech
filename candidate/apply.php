@@ -202,6 +202,50 @@ function formatDate(?string $value, string $fallback = 'N/A'): string {
     .form-actions { flex-direction: column; }
     .form-actions .btn { width: 100%; }
 }
+
+/* Page-scoped fixes: ensure specific action buttons show white text in normal and interactive states
+   without changing backgrounds, sizes, padding, or behavior. Targets only buttons rendered
+   by this apply page. */
+
+/* 1) Back to Job Details (outline-secondary) */
+.apply-page a.btn.btn-outline-secondary[href^="../job-details.php?id="] {
+    color: #ffffff !important;
+}
+.apply-page a.btn.btn-outline-secondary[href^="../job-details.php?id="] i {
+    color: #ffffff !important;
+}
+.apply-page a.btn.btn-outline-secondary[href^="../job-details.php?id="]:hover,
+.apply-page a.btn.btn-outline-secondary[href^="../job-details.php?id="]:focus,
+.apply-page a.btn.btn-outline-secondary[href^="../job-details.php?id="]:active {
+    color: #ffffff !important;
+}
+
+/* 2 & 3) Browse More Jobs / Browse Other Jobs (outline-primary) */
+.apply-page a.btn.btn-outline-primary[href="../jobs.php"] {
+    color: #ffffff !important;
+}
+.apply-page a.btn.btn-outline-primary[href="../jobs.php"] i {
+    color: #ffffff !important;
+}
+.apply-page a.btn.btn-outline-primary[href="../jobs.php"]:hover,
+.apply-page a.btn.btn-outline-primary[href="../jobs.php"]:focus,
+.apply-page a.btn.btn-outline-primary[href="../jobs.php"]:active {
+    color: #ffffff !important;
+}
+
+.apply-page a.btn.btn-outline-secondary[href^="../job-details.php?id="] {
+    background-color: #0d6efd !important;
+    border-color: #0d6efd !important;
+    color: #ffffff !important;
+}
+.apply-page a.btn.btn-outline-secondary[href^="../job-details.php?id="]:hover,
+.apply-page a.btn.btn-outline-secondary[href^="../job-details.php?id="]:focus,
+.apply-page a.btn.btn-outline-secondary[href^="../job-details.php?id="]:active {
+    background-color: #0d6efd !important;
+    border-color: #0d6efd !important;
+    color: #ffffff !important;
+}
+
 </style>
 
 <main class="apply-page">

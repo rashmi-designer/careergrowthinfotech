@@ -113,7 +113,7 @@ function val(array $fields, string $key): string { return htmlspecialchars($fiel
 ?>
 
 <style>
-/* Add Job form styles */
+/* Restore previous Add Job page layout (pre-redesign) - simple admin form */
 .admin-form { max-width:900px; margin: 1.5rem auto; }
 .section { background: var(--cg-white); border:1px solid var(--cg-border); padding:1rem; border-radius:.6rem; box-shadow: 0 10px 30px rgba(15,23,42,0.04); }
 .section + .section { margin-top:1rem; }
@@ -124,8 +124,8 @@ function val(array $fields, string $key): string { return htmlspecialchars($fiel
 <main class="container admin-form">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <div>
-            <h2 class="mb-0">Add New Job</h2>
-            <div class="text-soft small">Create a new job posting</div>
+            <h2 class="mb-0">Create New Job</h2>
+            <div class="text-soft small">Publish a new job posting</div>
         </div>
         <div>
             <a href="jobs.php" class="btn btn-outline-secondary">Back to Jobs</a>
@@ -146,18 +146,18 @@ function val(array $fields, string $key): string { return htmlspecialchars($fiel
             <div class="row g-3 mt-2">
                 <div class="col-md-8">
                     <label class="form-label">Job Title <span class="required">*</span></label>
-                        <input name="title" value="<?php echo val($fields,'title'); ?>" class="form-control" required>
+                    <input name="title" value="<?php echo val($fields,'title'); ?>" class="form-control" required>
                 </div>
 
-                    <div class="col-md-8">
-                        <label class="form-label">Company Name <span class="required">*</span></label>
-                        <input name="company" value="<?php echo val($fields,'company'); ?>" class="form-control" required>
-                    </div>
+                <div class="col-md-8">
+                    <label class="form-label">Company Name <span class="required">*</span></label>
+                    <input name="company" value="<?php echo val($fields,'company'); ?>" class="form-control" required>
+                </div>
 
-                    <div class="col-md-4">
-                        <label class="form-label">Location <span class="required">*</span></label>
-                        <input name="location" value="<?php echo val($fields,'location'); ?>" class="form-control" required>
-                    </div>
+                <div class="col-md-4">
+                    <label class="form-label">Location <span class="required">*</span></label>
+                    <input name="location" value="<?php echo val($fields,'location'); ?>" class="form-control" required>
+                </div>
 
                 <div class="col-md-4">
                     <label class="form-label">Job Type <span class="required">*</span></label>

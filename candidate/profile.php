@@ -41,7 +41,7 @@ $conn->close();
 
 <style>
 .profile-wrapper {
-    background: linear-gradient(135deg, var(--cg-primary-soft) 0%, #ffffff 100%);
+    background: linear-gradient(135deg, #eef4fb 0%, #f8fafc 65%, #f0f9f7 100%);
     padding: 3rem 0;
     min-height: calc(100vh - 200px);
 }
@@ -54,12 +54,12 @@ $conn->close();
 
 /* Header Section */
 .profile-header {
-    background: var(--cg-white);
-    border: 1px solid var(--cg-border);
+    background: linear-gradient(118deg, #102c54 0%, #16497f 56%, #0c8879 130%);
+    border: 1px solid rgba(255,255,255,0.18);
     border-radius: 1.25rem;
     padding: 2.5rem;
     margin-bottom: 2rem;
-    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+    box-shadow: 0 16px 36px rgba(20,57,102,0.16);
 }
 
 .profile-header-top {
@@ -72,17 +72,20 @@ $conn->close();
 
 .profile-header-title {
     flex: 1;
+    min-width: 0;
+    overflow-wrap: anywhere;
 }
 
 .profile-header-title h1 {
     font-size: 2rem;
     font-weight: 700;
     margin: 0 0 0.5rem 0;
-    color: var(--cg-text);
+    color: #fff;
+    letter-spacing: -0.035em;
 }
 
 .profile-header-subtitle {
-    color: var(--cg-muted);
+    color: #d2e5f5;
     font-size: 1rem;
     margin: 0;
 }
@@ -99,16 +102,45 @@ $conn->close();
     font-weight: 600;
 }
 
+.profile-header .btn-primary {
+    background: #fff;
+    border-color: #fff;
+    color: #16497f;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.profile-header .btn-primary:hover {
+    background: #e9f4fc;
+    border-color: #e9f4fc;
+    color: #102c54;
+}
+
+.profile-header .btn-outline-primary {
+    color: #fff;
+    border-color: rgba(255,255,255,0.45);
+    background: rgba(255,255,255,0.08);
+}
+
+.profile-header .btn-outline-primary:hover {
+    color: #fff;
+    border-color: #fff;
+    background: rgba(255,255,255,0.18);
+}
+
+.profile-wrapper .btn { border-radius: 0.7rem; }
+.profile-wrapper .btn:focus-visible { outline: 3px solid #279cb2; outline-offset: 3px; }
+.profile-header .btn:focus-visible { outline-color: #a7f3d0; }
+
 /* Profile Completion Bar */
 .completion-section {
     padding-top: 2rem;
-    border-top: 1px solid var(--cg-border);
+    border-top: 1px solid rgba(255,255,255,0.2);
     margin-top: 2rem;
 }
 
 .completion-label {
     font-size: 0.9rem;
-    color: var(--cg-muted);
+    color: #d2e5f5;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     margin-bottom: 0.75rem;
@@ -117,7 +149,7 @@ $conn->close();
 
 .completion-bar {
     height: 10px;
-    background: var(--cg-border);
+    background: rgba(255,255,255,0.18);
     border-radius: 5px;
     overflow: hidden;
     margin-bottom: 0.75rem;
@@ -125,7 +157,7 @@ $conn->close();
 
 .completion-fill {
     height: 100%;
-    background: linear-gradient(90deg, var(--cg-primary), #00a8e8);
+    background: linear-gradient(90deg, #62c8f5, #54e2a6);
     border-radius: 5px;
     transition: width 0.4s ease;
 }
@@ -139,12 +171,12 @@ $conn->close();
 
 .completion-percent-value {
     font-weight: 700;
-    color: var(--cg-primary);
+    color: #b9f8df;
     font-size: 1.25rem;
 }
 
 .completion-fields {
-    color: var(--cg-muted);
+    color: #d2e5f5;
     font-size: 0.9rem;
 }
 
@@ -155,7 +187,7 @@ $conn->close();
     border-radius: 1.25rem;
     padding: 2rem;
     margin-bottom: 2rem;
-    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+    box-shadow: 0 6px 20px rgba(20,57,102,0.045);
     transition: box-shadow 0.3s ease;
 }
 
@@ -171,17 +203,27 @@ $conn->close();
     font-weight: 700;
     margin-bottom: 1.75rem;
     color: var(--cg-text);
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e8eef5;
+    letter-spacing: -0.02em;
 }
 
 .profile-section-title i {
-    font-size: 1.5rem;
-    color: var(--cg-primary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: #edf5fc;
+    font-size: 1.2rem;
+    color: #21628f;
 }
 
 /* Information Grid */
 .info-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1.5rem;
     margin-bottom: 1.5rem;
 }
@@ -193,7 +235,17 @@ $conn->close();
 .info-item {
     display: flex;
     flex-direction: column;
+    min-width: 0;
 }
+
+.info-grid .info-item {
+    padding: 1rem 1.1rem;
+    background: #f8fafc;
+    border: 1px solid #edf1f6;
+    border-radius: 0.8rem;
+}
+
+.profile-section > .info-grid:last-child { margin-bottom: 0; }
 
 .info-label {
     font-size: 0.8rem;
@@ -205,6 +257,7 @@ $conn->close();
 }
 
 .info-value {
+    overflow-wrap: anywhere;
     font-size: 1.05rem;
     color: var(--cg-text);
     font-weight: 500;
@@ -251,7 +304,7 @@ $conn->close();
     align-items: center;
     gap: 1rem;
     padding: 1.25rem;
-    background: var(--cg-light);
+    background: #f3f8fc;
     border-radius: 0.75rem;
     border-left: 4px solid var(--cg-primary);
 }
@@ -259,7 +312,10 @@ $conn->close();
 .resume-icon {
     font-size: 2rem;
     color: var(--cg-primary);
+    flex-shrink: 0;
 }
+
+.resume-info { min-width: 0; overflow-wrap: anywhere; }
 
 .resume-info h3 {
     margin: 0 0 0.25rem 0;
@@ -304,6 +360,8 @@ $conn->close();
     flex-wrap: wrap;
     justify-content: center;
     margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #dce5ef;
 }
 
 .profile-actions-footer .btn {

@@ -1,4 +1,9 @@
 <?php
+// Start the session before any HTML is sent to the browser.
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 $scriptPath = $_SERVER['SCRIPT_NAME'] ?? '';
 if (strpos($scriptPath, '/candidate/') !== false || strpos($scriptPath, '/admin/') !== false) {
     $basePath = '../';

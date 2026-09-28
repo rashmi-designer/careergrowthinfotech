@@ -44,19 +44,49 @@ $navItems = [
             <style>
                 /* Profile dropdown styles */
                 .nav-profile { position: relative; }
-                .nav-profile .avatar { width:40px;height:40px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.06);color:var(--bs-body-color);font-size:1.25rem }
+                .nav-profile .avatar { width:40px;height:40px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.06);color:var(--cg-primary);font-size:1.25rem }
                 .nav-profile .profile-btn{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;border:1px solid rgba(0,0,0,0.06);background:#fff}
                 .nav-profile .profile-name{font-weight:600}
-                .nav-profile .dropdown-menu{min-width:220px;border-radius:12px}
-                .nav-profile .dropdown-item .bi{width:1.25rem}
+                .nav-profile .dropdown-menu {
+                    min-width: 220px;
+                    padding: 5px;
+                    border-radius: 13px;
+                    background: rgba(220,235,239,0.9);
+                    border: 1px solid rgba(255,255,255,0.72);
+                    box-shadow: 0 14px 30px rgba(15,23,42,0.14);
+                    backdrop-filter: blur(12px);
+                    -webkit-backdrop-filter: blur(12px);
+                }
+                .nav-profile .dropdown-menu > li:first-child {
+                    margin: -5px -5px 4px;
+                    border-radius: 13px 13px 8px 8px;
+                    background: rgba(239,246,255,0.7);
+                }
+                .nav-profile .dropdown-menu .avatar {
+                    border-radius: 10px;
+                    background: #dbeafe;
+                    color: #2563eb;
+                }
+                .nav-profile .dropdown-divider { margin: 3px 6px 4px; border-color: #cbd5e1; opacity: 0.65; }
+                .nav-profile .dropdown-item {
+                    border-radius: 8px;
+                    color: #1f2937;
+                    font-weight: 600;
+                }
+                .nav-profile .dropdown-item .bi { width: 1.25rem; color: #64748b; }
+                .nav-profile .dropdown-item:hover,
+                .nav-profile .dropdown-item:focus { background: #eef5ff; color: #1d4ed8; }
+                .nav-profile .dropdown-item:hover .bi,
+                .nav-profile .dropdown-item:focus .bi { color: #2563eb; }
+                .nav-profile .dropdown-item.text-danger .bi { color: #dc2626; }
+                .nav-profile .dropdown-item.text-danger:hover,
+                .nav-profile .dropdown-item.text-danger:focus { background: #fff1f2; }
+                .nav-profile .dropdown-item.text-danger:hover .bi,
+                .nav-profile .dropdown-item.text-danger:focus .bi { color: #b91c1c; }
             </style>
 
             <div class="navbar-actions d-flex align-items-center gap-2 mt-3 mt-lg-0">
                 <?php
-                if (session_status() === PHP_SESSION_NONE) {
-                    session_start();
-                }
-
                 $userRole = $_SESSION['user_role'] ?? '';
                 $isCandidate = !empty($_SESSION['user_id']) && $userRole === 'candidate';
                 $isAdmin = !empty($_SESSION['user_id']) && $userRole === 'admin';

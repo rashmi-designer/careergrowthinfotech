@@ -113,11 +113,11 @@ $conn->close();
 
 .sidebar {
     width: 260px;
-    background: var(--cg-white);
-    border: 1px solid var(--cg-border);
+    background: linear-gradient(155deg, #102c54 0%, #16497f 56%, #0c8879 130%);
+    border: 1px solid rgba(255,255,255,0.14);
     border-radius: 1rem;
     padding: 1rem;
-    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.05);
+    box-shadow: 0 18px 42px rgba(20,57,102,0.22);
     position: sticky;
     top: 1rem;
     height: fit-content;
@@ -128,7 +128,15 @@ $conn->close();
     align-items: center;
     gap: 0.8rem;
     padding: 0.25rem 0 1rem;
-    border-bottom: 1px solid rgba(15, 23, 42, 0.04);
+    border-bottom: 1px solid rgba(255,255,255,0.18);
+}
+
+.sidebar .brand-title {
+    color: #fff;
+}
+
+.sidebar .brand-subtitle {
+    color: rgba(232,244,255,0.72);
 }
 
 .sidebar-nav {
@@ -139,32 +147,54 @@ $conn->close();
 }
 
 .nav-link-admin {
+    position: relative;
     display: flex;
     align-items: center;
     gap: 0.7rem;
     padding: 0.7rem 0.8rem;
     border-radius: 0.65rem;
     font-weight: 600;
-    color: var(--cg-accent);
+    color: rgba(235,246,255,0.8);
     text-decoration: none;
 }
 
 .nav-link-admin:hover,
 .nav-link-admin:focus {
-    color: var(--cg-primary);
-    background: rgba(13,110,253,0.04);
+    color: #fff;
+    background: rgba(255,255,255,0.12);
     text-decoration: none;
 }
 
 .nav-link-admin.active {
-    background: rgba(13,110,253,0.07);
-    color: var(--cg-primary);
+    background: rgba(255,255,255,0.18);
+    color: #fff;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.12);
+}
+
+.nav-link-admin.active::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 4px;
+    height: 24px;
+    border-radius: 0 5px 5px 0;
+    background: #54e2a6;
 }
 
 .sidebar-footer {
     margin-top: 1rem;
     padding-top: 1rem;
-    border-top: 1px solid rgba(15, 23, 42, 0.04);
+    border-top: 1px solid rgba(255,255,255,0.18);
+}
+
+.sidebar-footer .nav-link-admin:last-child {
+    color: #ffd0cd;
+}
+
+.sidebar-footer .nav-link-admin:last-child:hover,
+.sidebar-footer .nav-link-admin:last-child:focus {
+    color: #fff;
+    background: rgba(220,38,38,0.2);
 }
 
 .main-panel {
@@ -182,13 +212,17 @@ $conn->close();
 .header-panel {
     padding: 1.1rem 1.4rem;
     margin-bottom: 1rem;
+    color: #fff;
+    border-color: transparent;
+    background: linear-gradient(118deg, #102c54 0%, #16497f 56%, #0c8879 130%);
+    box-shadow: 0 18px 34px rgba(20,57,102,0.18);
 }
 
 .page-kicker {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    color: var(--cg-primary);
+    color: #c7ece4;
     font-size: 0.78rem;
     text-transform: uppercase;
     letter-spacing: 0.08em;
@@ -198,12 +232,13 @@ $conn->close();
 
 .header-panel h2 {
     margin: 0;
+    color: #fff;
     font-size: clamp(1.6rem, 2.4vw, 2.2rem);
     letter-spacing: -0.03em;
 }
 
 .header-panel p {
-    color: var(--cg-muted);
+    color: rgba(235,247,255,0.82);
     margin-top: 0.35rem;
 }
 

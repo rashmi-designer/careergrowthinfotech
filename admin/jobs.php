@@ -549,13 +549,19 @@ $conn->close();
 
 .table-actions {
     display: flex;
+    align-items: center;
     justify-content: flex-end;
     gap: 0.35rem;
     white-space: nowrap;
 }
 
+.table-actions > form {
+    flex: 0 0 auto;
+}
+
 .table-actions .btn {
     display: inline-flex;
+    flex: 0 0 auto;
     align-items: center;
     justify-content: center;
     width: 2.25rem;
@@ -592,7 +598,7 @@ $conn->close();
     .table-wrap .table th:nth-child(7),
     .table-wrap .table td:nth-child(7) { width: 8%; }
     .table-wrap .table th:nth-child(8),
-    .table-wrap .table td:nth-child(8) { width: 11%; }
+    .table-wrap .table td:nth-child(8) { width: 9rem; }
 
     .table-wrap .table td:nth-child(2),
     .table-wrap .table td:nth-child(3),

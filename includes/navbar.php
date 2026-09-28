@@ -1,17 +1,18 @@
 <?php
 $basePath = $basePath ?? '';
 $currentPage = basename($_SERVER['SCRIPT_NAME'] ?? 'index.php');
+$isCandidateSession = !empty($_SESSION['user_id']) && (($_SESSION['user_role'] ?? '') === 'candidate');
 
 // Allow pages to hide the public header/navbar when rendering standalone auth pages.
 if (!empty($hidePublicLayout)) {
     return;
 }
 $navItems = [
-    ['label' => 'Home', 'file' => 'index.php', 'href' => $basePath . 'index.php'],
-    ['label' => 'About', 'file' => 'about.php', 'href' => $basePath . 'about.php'],
-    ['label' => 'Services', 'file' => 'services.php', 'href' => $basePath . 'services.php'],
-    ['label' => 'Jobs', 'file' => 'jobs.php', 'href' => $basePath . 'jobs.php'],
-    ['label' => 'Contact', 'file' => 'contact.php', 'href' => $basePath . 'contact.php'],
+    ['label' => 'Home', 'file' => 'index.php', 'href' => $basePath . 'index.php', 'icon' => 'bi-house-door'],
+    ['label' => 'About', 'file' => 'about.php', 'href' => $basePath . 'about.php', 'icon' => 'bi-info-circle'],
+    ['label' => 'Services', 'file' => 'services.php', 'href' => $basePath . 'services.php', 'icon' => 'bi-grid'],
+    ['label' => 'Jobs', 'file' => 'jobs.php', 'href' => $basePath . 'jobs.php', 'icon' => 'bi-briefcase'],
+    ['label' => 'Contact', 'file' => 'contact.php', 'href' => $basePath . 'contact.php', 'icon' => 'bi-envelope'],
 ];
 ?>
 <nav class="navbar navbar-expand-lg sticky-top" aria-label="Main navigation">
@@ -31,12 +32,22 @@ $navItems = [
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="mainNavbar">
+        <div class="collapse navbar-collapse branded-mobile-drawer" id="mainNavbar">
+            <div class="mobile-drawer-header d-lg-none mobile-brand-header">
+                <a class="mobile-drawer-brand" href="<?php echo htmlspecialchars($basePath, ENT_QUOTES, 'UTF-8'); ?><?php echo $isCandidateSession ? 'candidate/dashboard.php' : 'index.php'; ?>">
+                    <span class="mobile-drawer-logo"><img src="<?php echo htmlspecialchars($basePath, ENT_QUOTES, 'UTF-8'); ?>assets/images/logo.webp" alt=""></span>
+                    <span class="mobile-drawer-brand-copy"><strong>Career Grow Infotech</strong><small><?php echo $isCandidateSession ? 'Candidate Portal' : 'Career Portal'; ?></small></span>
+                </a>
+                <button class="mobile-nav-close" type="button" aria-label="Close navigation menu">
+                    <i class="bi bi-x-lg" aria-hidden="true"></i>
+                </button>
+            </div>
             <ul class="navbar-nav mx-auto align-items-lg-center">
                 <?php foreach ($navItems as $item): ?>
                     <?php $isActive = ($currentPage === $item['file']); ?>
                     <li class="nav-item">
                         <a class="nav-link <?php echo $isActive ? 'active' : ''; ?>" href="<?php echo htmlspecialchars($item['href'], ENT_QUOTES, 'UTF-8'); ?>" <?php echo $isActive ? 'aria-current="page"' : ''; ?>>
+                            <i class="bi <?php echo htmlspecialchars($item['icon'] ?? 'bi-circle', ENT_QUOTES, 'UTF-8'); ?>" aria-hidden="true"></i>
                             <?php echo htmlspecialchars($item['label'], ENT_QUOTES, 'UTF-8'); ?>
                         </a>
                     </li>
@@ -120,14 +131,14 @@ $navItems = [
                         </ul>
                     </div>
                 <?php else: ?>
-                    <a href="<?php echo htmlspecialchars($basePath, ENT_QUOTES, 'UTF-8'); ?>login.php" class="btn btn-primary btn-sm" aria-label="Login to Career Grow Infotech">
+                    <a href="<?php echo htmlspecialchars($basePath, ENT_QUOTES, 'UTF-8'); ?>login.php" class="btn btn-primary btn-sm" data-mobile-header-action aria-label="Login to Career Grow Infotech">
                         <i class="bi bi-box-arrow-in-right" aria-hidden="true"></i>
                         <span class="d-none d-sm-inline ms-1">Login</span>
                     </a>
                 <?php endif; ?>
 
                 <?php if (!$isCandidate): // Do not show Admin link to candidates; visible to guests and admins ?>
-                    <a href="<?php echo htmlspecialchars($basePath, ENT_QUOTES, 'UTF-8'); ?>admin/login.php" class="btn btn-primary btn-sm" aria-label="Admin login">
+                    <a href="<?php echo htmlspecialchars($basePath, ENT_QUOTES, 'UTF-8'); ?>admin/login.php" class="btn btn-primary btn-sm" data-mobile-header-action aria-label="Admin login">
                         <i class="bi bi-shield-lock" aria-hidden="true"></i>
                         <span class="d-none d-lg-inline ms-1">Admin</span>
                     </a>
@@ -144,25 +155,34 @@ $navItems = [
         const toggle = document.querySelector('.navbar-toggler');
         const backdrop = document.getElementById('mobileNavBackdrop');
         const mobileActions = document.getElementById('mobileHeaderActions');
+        const closeButton = nav ? nav.querySelector('.mobile-nav-close') : null;
         const profile = nav ? nav.querySelector('.nav-profile') : null;
+        const headerActionLinks = nav ? nav.querySelectorAll('[data-mobile-header-action]') : [];
 
         function moveProfileControl() {
-            if (!nav || !profile || !mobileActions) return;
+            if (!nav || !mobileActions) return;
 
             const isMobile = window.innerWidth < 992;
-            if (isMobile) {
+            const actions = nav.querySelector('.navbar-actions');
+            headerActionLinks.forEach(function (action) {
+                if (isMobile && !mobileActions.contains(action)) {
+                    mobileActions.appendChild(action);
+                } else if (!isMobile && actions && !actions.contains(action)) {
+                    actions.appendChild(action);
+                }
+            });
+            if (profile && isMobile) {
                 if (!mobileActions.contains(profile)) {
                     mobileActions.appendChild(profile);
                 }
-            } else {
-                const actions = nav.querySelector('.navbar-actions');
+            } else if (profile) {
                 if (actions && !nav.contains(profile)) {
                     actions.insertBefore(profile, actions.firstChild);
                 }
             }
         }
 
-        if (profile && mobileActions) {
+        if (mobileActions) {
             moveProfileControl();
             window.addEventListener('resize', moveProfileControl);
         }
@@ -199,6 +219,7 @@ $navItems = [
             });
 
             backdrop.addEventListener('click', closeDrawer);
+            if (closeButton) closeButton.addEventListener('click', closeDrawer);
         }
     })();
 </script>

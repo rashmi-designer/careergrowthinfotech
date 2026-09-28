@@ -219,6 +219,24 @@ html,body{height:100dvh;margin:0}
     .admin-login-card > *{position:relative;z-index:1}
 }
 
+/* Match the desktop glass login card on mobile without changing the responsive form layout. */
+@media (max-width:767.98px){
+    .admin-login-wrap{align-items:stretch;background:radial-gradient(circle at 12% 84%,rgba(35,207,166,.2),transparent 24%),radial-gradient(circle at 88% 18%,rgba(136,92,246,.16),transparent 22%),linear-gradient(135deg,#0b3371 0%,#1266aa 48%,#0b9e90 100%)}
+    .admin-login-wrap>.container{display:flex;align-items:center}
+    .admin-panel{width:100%;margin:auto}
+    .admin-left{display:none}
+    .admin-login-card{position:relative;isolation:isolate;overflow:hidden;border:1px solid transparent;background:linear-gradient(145deg,rgba(8,56,111,.68),rgba(8,87,121,.48)) padding-box,linear-gradient(145deg,rgba(173,244,255,.98),rgba(52,213,236,.72) 42%,rgba(38,180,207,.34) 78%,rgba(143,246,222,.9)) border-box;box-shadow:inset 0 1px 0 rgba(255,255,255,.28),inset 0 0 22px rgba(101,220,255,.08),0 0 0 1px rgba(20,216,218,.14),0 0 28px rgba(41,219,228,.2),0 20px 46px rgba(0,20,63,.4);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+    .admin-login-card::before{content:'';position:absolute;inset:1px;border-radius:inherit;pointer-events:none;background:linear-gradient(115deg,rgba(255,255,255,.2),transparent 18%,transparent 72%,rgba(112,239,207,.14));opacity:.85;z-index:-1}
+    .admin-login-card::after{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:radial-gradient(ellipse 20px 82px at 1.5% 52%,rgba(194,249,255,1) 0%,rgba(77,224,250,.92) 20%,rgba(45,194,232,.38) 58%,transparent 100%),radial-gradient(ellipse 20px 82px at 98.5% 52%,rgba(194,249,255,1) 0%,rgba(77,224,250,.92) 20%,rgba(45,194,232,.38) 58%,transparent 100%),radial-gradient(ellipse 170px 46px at 50% 0%,rgba(149,242,255,.24),transparent 72%);filter:blur(4px);mix-blend-mode:screen;opacity:.98;z-index:0}
+    .admin-login-card>*{position:relative;z-index:1}
+    .login-brand{display:flex;align-items:center;justify-content:center;gap:11px;margin-bottom:18px;color:#fff;font-size:.94rem;font-weight:750}.login-brand>a{display:flex;width:76px;height:76px;flex:0 0 76px;align-items:center;justify-content:center;overflow:hidden;border-radius:50%;background:#fff}.login-brand img{display:block;width:62px;height:auto;max-height:62px;padding:0;border-radius:0;background:transparent;object-fit:contain}.login-brand span{color:#a9ffe5}
+    .login-title{justify-content:center;text-align:center}.login-title .icon-circle{display:none}.admin-login-card h4{color:#fff}.admin-login-card .small-note-muted{color:rgba(232,244,255,.76)}
+    .admin-login-card .form-label.small{color:#eaf5ff}.admin-login-card .form-control{border-color:rgba(199,229,255,.38);background:rgba(255,255,255,.94);color:#133765}.admin-login-card .form-control:focus{border-color:#83d9ff;box-shadow:0 0 0 4px rgba(109,209,255,.2)}
+    .admin-login-card .input-group>.form-control{min-width:0;flex:1 1 auto}.admin-login-card .show-pass,.admin-login-card .show-pass:hover,.admin-login-card .show-pass:focus,.admin-login-card .show-pass:focus-visible,.admin-login-card .show-pass:active{display:inline-flex;position:relative;top:0;flex:0 0 48px;width:48px;min-width:48px;max-width:48px;height:46px;min-height:46px;align-self:stretch;align-items:center;justify-content:center;margin:0;padding:0;transform:none;transition:background-color .15s ease,border-color .15s ease,color .15s ease,box-shadow .15s ease;border-color:rgba(199,229,255,.38);background:rgba(255,255,255,.94);color:#1768a8}.admin-login-card .text-primary{color:#a8eaff!important}
+    .admin-login-card .btn-sign{background:linear-gradient(135deg,#1fcfa3,#1997dc);box-shadow:0 8px 18px rgba(7,15,69,.28)}.admin-login-card .back-link{color:#d6ecff}.admin-login-card .text-muted{color:rgba(232,244,255,.7)!important}
+    .admin-login-card form .back-link{order:2;margin-top:0}.admin-login-card form .btn-sign{order:1}
+}
+
 </style>
 
 <main class="admin-login-wrap">

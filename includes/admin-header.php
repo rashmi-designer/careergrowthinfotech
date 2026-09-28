@@ -316,7 +316,7 @@ html[data-theme="dark"] .search-result-item:hover { background: rgba(13,110,253,
     }
     .mobile-header-row {
         display: grid;
-        grid-template-columns: auto minmax(0, 1fr) auto;
+        grid-template-columns: minmax(0, 1fr) auto auto;
         align-items: center;
         gap: 0.6rem;
         width: 100%;
@@ -324,6 +324,16 @@ html[data-theme="dark"] .search-result-item:hover { background: rgba(13,110,253,
     .admin-mobile-menu-button {
         display: inline-flex;
         flex-shrink: 0;
+        grid-column: 3;
+        grid-row: 1;
+    }
+    .mobile-branding {
+        grid-column: 1;
+        grid-row: 1;
+    }
+    .mobile-header-row > .utils {
+        grid-column: 2;
+        grid-row: 1;
     }
     .admin-sidebar-close-button {
         display: inline-flex;
@@ -362,19 +372,19 @@ html[data-theme="dark"] .search-result-item:hover { background: rgba(13,110,253,
         overflow: hidden;
     }
     .mobile-brand-mark {
-        width: 26px;
-        height: 26px;
+        width: 36px;
+        height: 36px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        border-radius: 8px;
+        border-radius: 10px;
         background: rgba(13, 110, 253, 0.08);
         overflow: hidden;
         flex-shrink: 0;
     }
     .mobile-brand-mark img {
-        width: 20px;
-        height: 20px;
+        width: 29px;
+        height: 29px;
         object-fit: contain;
     }
     .mobile-brand-name {
@@ -382,8 +392,8 @@ html[data-theme="dark"] .search-result-item:hover { background: rgba(13,110,253,
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        font-size: 0.72rem;
-        font-weight: 700;
+        font-size: 0.84rem;
+        font-weight: 750;
         color: var(--cg-text);
     }
     .admin-topbar .title-area h1 {
@@ -431,15 +441,15 @@ html[data-theme="dark"] .search-result-item:hover { background: rgba(13,110,253,
         padding: 0.5rem 0.5rem 0.6rem;
     }
     .mobile-brand-mark {
-        width: 22px;
-        height: 22px;
+        width: 32px;
+        height: 32px;
     }
     .mobile-brand-mark img {
-        width: 18px;
-        height: 18px;
+        width: 26px;
+        height: 26px;
     }
     .mobile-brand-name {
-        font-size: 0.68rem;
+        font-size: 0.76rem;
     }
     .admin-topbar .title-area h1 {
         font-size: 0.98rem;

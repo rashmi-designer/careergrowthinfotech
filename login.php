@@ -174,6 +174,34 @@ html,body{height:100%;}
   .card-header{gap:5px;margin-bottom:16px}.card-logo-wrapper{padding:4px 8px;background:rgba(255,255,255,.12);border-color:rgba(181,243,255,.32)}.card-logo-wrapper span{color:#d7fffa;font-size:.78rem}.card-logo-mark{width:32px;height:32px}.card-logo-mark img{width:72%;height:auto;padding:0;border-radius:0;background:transparent}
   .welcome{color:#fff;font-size:1.42rem;margin:3px 0 0}.subtitle{color:rgba(229,246,255,.8);font-size:.88rem}.form-label{color:#e9f8ff;font-size:.76rem}.form-control{height:44px;padding:.6rem .75rem;border-color:rgba(198,238,255,.4);border-radius:9px;background:rgba(255,255,255,.12);color:#fff}.form-control::placeholder{color:rgba(231,247,255,.66)}.form-control:focus{border-color:#72f0df;background:rgba(255,255,255,.17);box-shadow:0 0 0 3px rgba(78,231,216,.18);color:#fff}.form-group{margin-bottom:10px}.forgot-row{margin-top:0;margin-bottom:11px}.forgot-row a{color:#9bfff0;font-size:.82rem}.btn-login{height:44px;border-radius:9px;background:linear-gradient(135deg,#20cba6,#168dd8);box-shadow:0 9px 18px rgba(0,28,85,.32)}.divider{color:rgba(231,247,255,.7);margin:13px 0}.divider::before,.divider::after{background:rgba(211,243,255,.24)}.register-row{color:#eefaff;font-size:.84rem}.register-row a[style]{color:#9bfff0!important}.back-home{margin-top:8px;color:rgba(231,247,255,.8);font-size:.82rem}
 }
+
+/* Keep the candidate login panel's glass styling on mobile while preserving its compact layout. */
+@media (max-width:768px){
+  .auth-right{position:relative;isolation:isolate;min-height:100dvh;padding:22px 16px;background:linear-gradient(145deg,#0b4279 0%,#126da0 55%,#0c8879 100%)}
+  .login-card{position:relative;isolation:isolate;width:min(100%,430px);max-width:430px;padding:24px 22px;overflow:hidden;border:1px solid transparent;border-radius:22px;background:linear-gradient(145deg,rgba(8,56,111,.72),rgba(8,87,121,.56)) padding-box,linear-gradient(145deg,rgba(173,244,255,.95),rgba(52,213,236,.68) 42%,rgba(38,180,207,.32) 78%,rgba(143,246,222,.86)) border-box;box-shadow:inset 0 1px 0 rgba(255,255,255,.26),inset 0 0 22px rgba(101,220,255,.08),0 0 0 1px rgba(20,216,218,.12),0 0 24px rgba(41,219,228,.18),0 20px 46px rgba(0,20,63,.38);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+  .login-card::before{content:'';position:absolute;inset:1px;border-radius:21px;pointer-events:none;background:linear-gradient(115deg,rgba(255,255,255,.18),transparent 18%,transparent 72%,rgba(112,239,207,.13));opacity:.85;z-index:-1}
+  .login-card::after{content:'';position:absolute;inset:0;border-radius:21px;pointer-events:none;background:radial-gradient(ellipse 18px 72px at 1.5% 52%,rgba(194,249,255,.95),rgba(77,224,250,.68) 24%,transparent 100%),radial-gradient(ellipse 18px 72px at 98.5% 52%,rgba(194,249,255,.95),rgba(77,224,250,.68) 24%,transparent 100%),radial-gradient(ellipse 170px 46px at 50% 0%,rgba(149,242,255,.2),transparent 72%);filter:blur(4px);mix-blend-mode:screen;opacity:.95;z-index:0}
+  .login-card>*{position:relative;z-index:1}
+  .card-header{align-items:center;gap:5px;margin-bottom:16px;text-align:center}
+  .card-logo-wrapper{padding:4px 8px;background:rgba(255,255,255,.12);border-color:rgba(181,243,255,.32)}
+  .card-logo-wrapper span{color:#d7fffa;font-size:.78rem}
+  .card-logo-mark{width:32px;height:32px}
+  .welcome{color:#fff;font-size:1.42rem;margin:3px 0 0}
+  .subtitle{color:rgba(229,246,255,.8);font-size:.88rem}
+  .form-label{color:#e9f8ff;font-size:.76rem}
+  .form-control{height:44px;padding:.6rem .75rem;border-color:rgba(198,238,255,.4);border-radius:9px;background:rgba(255,255,255,.12);color:#fff}
+  .form-control::placeholder{color:rgba(231,247,255,.66)}
+  .form-control:focus{border-color:#72f0df;background:rgba(255,255,255,.17);box-shadow:0 0 0 3px rgba(78,231,216,.18);color:#fff}
+  .form-group{margin-bottom:10px}
+  .forgot-row{margin-top:0;margin-bottom:11px}
+  .forgot-row a{color:#9bfff0;font-size:.82rem}
+  .btn-login{height:44px;border-radius:9px;background:linear-gradient(135deg,#20cba6,#168dd8);box-shadow:0 9px 18px rgba(0,28,85,.32)}
+  .divider{color:rgba(231,247,255,.7);margin:13px 0}
+  .divider::before,.divider::after{background:rgba(211,243,255,.24)}
+  .register-row{color:#eefaff;font-size:.84rem}
+  .register-row a[style]{color:#9bfff0!important}
+  .back-home{margin-top:8px;color:rgba(231,247,255,.8);font-size:.82rem}
+}
 </style>
 
 <main class="auth-shell">

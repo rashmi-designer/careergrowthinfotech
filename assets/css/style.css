@@ -387,8 +387,7 @@ body.scrolled .navbar {
 
 .btn-outline-primary {
     border-color: rgba(13, 110, 253, 0.25);
-    color: var(--cg-primary);
-    background-color: var(--cg-white);
+    background-color: #0d6efd;
 }
 
 .btn-outline-primary:hover,
@@ -396,6 +395,7 @@ body.scrolled .navbar {
     background-color: var(--cg-primary);
     border-color: var(--cg-primary);
     color: var(--cg-white);
+    
 }
 
 .btn-outline-secondary {
@@ -1096,7 +1096,7 @@ body.scrolled .navbar {
 .latest-jobs .job-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(15,23,42,0.08); }
 .latest-jobs .job-card .btn { transition: transform .18s ease; }
 .latest-jobs .job-card .btn:hover { transform: translateY(-2px); }
-.latest-jobs .job-card .btn-outline-primary { color: var(--cg-primary) !important; }
+.latest-jobs .job-card .btn-outline-primary { color: #ffffff !important; }
 .latest-jobs .job-card .btn-outline-primary:hover,
 .latest-jobs .job-card .btn-outline-primary:focus,
 .latest-jobs .job-card .btn-outline-primary:active { color: var(--cg-white) !important; }

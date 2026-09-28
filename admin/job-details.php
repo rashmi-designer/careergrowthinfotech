@@ -402,7 +402,7 @@ function admin_badge(string $status): string
 
 <main class="container-fluid admin-root">
     <aside class="sidebar">
-        <div class="brand-wrap">
+        <div class="sidebar-branding brand-wrap">
             <span class="brand-mark brand-mark-sm">
                 <a href="dashboard.php" aria-label="Admin dashboard"><img src="../assets/images/logo.webp" alt="Career Grow Infotech logo" width="34" height="34" loading="lazy"></a>
             </span>
@@ -412,18 +412,20 @@ function admin_badge(string $status): string
             </div>
         </div>
 
-        <nav class="sidebar-nav" aria-label="Sidebar navigation">
-            <a href="dashboard.php" class="nav-link-admin"><i class="bi bi-speedometer2"></i> Dashboard</a>
-            <a href="jobs.php" class="nav-link-admin active"><i class="bi bi-briefcase"></i> Jobs</a>
-            <a href="applicants.php" class="nav-link-admin"><i class="bi bi-people"></i> Applicants</a>
-            <a href="candidate-details.php" class="nav-link-admin"><i class="bi bi-person-badge"></i> Candidates</a>
-            <a href="contact-messages.php" class="nav-link-admin"><i class="bi bi-envelope-paper"></i> Contact Messages</a>
-            <a href="settings.php" class="nav-link-admin"><i class="bi bi-gear"></i> Settings</a>
-        </nav>
+        <div class="sidebar-navigation">
+            <nav class="sidebar-nav" aria-label="Sidebar navigation">
+                <a href="dashboard.php" class="nav-link-admin"><i class="bi bi-speedometer2"></i> Dashboard</a>
+                <a href="jobs.php" class="nav-link-admin active"><i class="bi bi-briefcase"></i> Jobs</a>
+                <a href="applicants.php" class="nav-link-admin"><i class="bi bi-people"></i> Applicants</a>
+                <a href="candidate-details.php" class="nav-link-admin"><i class="bi bi-person-badge"></i> Candidates</a>
+                <a href="contact-messages.php" class="nav-link-admin"><i class="bi bi-envelope-paper"></i> Contact Messages</a>
+                <a href="settings.php" class="nav-link-admin"><i class="bi bi-gear"></i> Settings</a>
+            </nav>
 
-        <div class="sidebar-footer">
-            <a href="../index.php" class="nav-link-admin"><i class="bi bi-house"></i> Back to Homepage</a>
-            <a href="../logout.php" class="nav-link-admin"><i class="bi bi-box-arrow-right"></i> Logout</a>
+            <div class="sidebar-footer">
+                <a href="../index.php" class="nav-link-admin"><i class="bi bi-house"></i> Back to Homepage</a>
+                <a href="../logout.php" class="nav-link-admin"><i class="bi bi-box-arrow-right"></i> Logout</a>
+            </div>
         </div>
     </aside>
 

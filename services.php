@@ -742,6 +742,18 @@ require_once __DIR__ . '/includes/navbar.php';
 }
 </style>
 
+<style>
+    /* Services page: ensure visible CTA buttons use #0d6efd as their default background
+       Scoped to this page only. Keeps existing hover/active/focus rules intact. */
+    main .btn.btn-outline-primary,
+    main .btn.btn-outline-secondary,
+    main .btn.btn-outline-light {
+        background-color: #0d6efd !important;
+        border-color: #0d6efd !important;
+        color: #ffffff !important;
+    }
+</style>
+
 <main class="flex-grow-1">
 
     <!-- HERO -->

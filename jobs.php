@@ -193,15 +193,10 @@ if ($categoryFilter !== '') {
     }
 
     .jobs-hero {
-        overflow: hidden;
-        background:
-            radial-gradient(circle at 82% 38%, rgba(255,255,255,.42), transparent 25%),
-            radial-gradient(circle at 100% 0%, rgba(13,110,253,.24), transparent 36%),
-            linear-gradient(118deg, #f9fbff 0%, #edf4ff 36%, #c9e0ff 70%, #9bc7ff 100%);
-        border: 1px solid rgba(13, 110, 253, 0.16);
-        border-radius: 1.5rem;
-        padding: 1rem;
-        box-shadow: 0 18px 42px rgba(13, 110, 253, 0.08);
+        background: rgba(13, 110, 253, 0.04);
+        border: 1px solid rgba(13, 110, 253, 0.1);
+        border-radius: 1.25rem;
+        padding: 1.5rem 1.25rem;
         margin-bottom: 1.5rem;
     }
 
@@ -216,55 +211,17 @@ if ($categoryFilter !== '') {
 
     .jobs-hero h1 {
         margin: 0;
-        font-size: clamp(2.2rem, 4vw, 3.5rem);
+        font-size: clamp(2rem, 4vw, 3rem);
         font-weight: 800;
         letter-spacing: -0.04em;
-        color: #102b50;
-        line-height: 1.12;
+        color: var(--cg-accent);
     }
 
     .jobs-hero p {
-        color: #4a607a;
+        color: var(--cg-muted);
         margin-top: 0.75rem;
-        max-width: 52ch;
-        font-size: 1.08rem;
-        line-height: 1.65;
+        max-width: 42rem;
     }
-
-    .jobs-hero-card {
-        padding: clamp(1.25rem, 2.5vw, 1.75rem);
-        background: rgba(255,255,255,.9);
-        border: 1px solid rgba(13,110,253,.1);
-        border-radius: 1.1rem;
-        box-shadow: 0 18px 40px rgba(15,23,42,.08);
-    }
-
-    .jobs-hero-card-title { color: #18375e; font-size: 1.05rem; font-weight: 700; }
-    .jobs-hero-icon {
-        width: 52px;
-        height: 52px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 1rem;
-        background: linear-gradient(145deg, rgba(18,103,232,.08), rgba(18,103,232,.18));
-        color: #1267e8;
-        font-size: 1.35rem;
-    }
-
-    .jobs-hero-stat {
-        margin: 1.35rem 0 1rem;
-        padding: 1rem;
-        border: 1px solid #d9e7fa;
-        border-radius: .85rem;
-        background: #f6faff;
-    }
-
-    .jobs-hero-stat strong { display: block; color: #0d6efd; font-size: 1.85rem; line-height: 1; }
-    .jobs-hero-stat span { color: #506b89; font-size: .88rem; }
-
-    .jobs-hero-actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.5rem; }
-    .jobs-hero-actions .btn { min-width: 145px; }
 
     .jobs-toolbar {
         background: var(--cg-white);
@@ -282,20 +239,147 @@ if ($categoryFilter !== '') {
         border-color: rgba(13, 110, 253, 0.12);
     }
 
-    .job-card {
+    .home-cta-btn {
         position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.55rem;
+        min-height: 2.9rem;
+        padding: 0.8rem 1.35rem;
+        border-radius: 0.8rem;
+        border: 1px solid var(--cg-primary);
+        font-size: 0.95rem;
+        font-weight: 700;
+        line-height: 1.1;
+        letter-spacing: 0.01em;
+        text-align: center;
+        background: linear-gradient(135deg, var(--cg-primary), #1d78ff 56%, #0d63dd);
+        color: var(--cg-white);
+        box-shadow: 0 12px 26px rgba(13, 110, 253, 0.18);
+        transition: transform 0.22s ease, box-shadow 0.22s ease, background-color 0.22s ease, border-color 0.22s ease, color 0.22s ease, filter 0.22s ease;
+        overflow: hidden;
+        white-space: nowrap;
+        will-change: transform, box-shadow;
+    }
+
+    /* Specific transparent outline button on the Jobs page: set its background to #0d6efd without affecting other buttons. */
+    .jobs-page-shell a.btn.btn-outline-primary[href="contact.php"] {
+        background: #0d6efd !important;
+        border-color: #0d6efd !important;
+        color: #ffffff !important;
+    }
+
+    .jobs-page-shell a.btn.btn-outline-primary[href="contact.php"] {
+        background: #0d6efd !important;
+        border-color: #0d6efd !important;
+        color: #ffffff !important;
+    }
+
+    /* Ensure any outline-style buttons on Jobs page (transparent by default)
+       render with the brand blue background and white text so they remain
+       visible. Scoped to `.jobs-page-shell` only and targets only anchors
+       using Bootstrap outline classes used on this page. */
+    .jobs-page-shell a.btn.btn-outline-primary,
+    .jobs-page-shell a.btn.btn-outline-secondary,
+    .jobs-page-shell a.btn.btn-outline-light {
+        background: #0d6efd !important;
+        border-color: #0d6efd !important;
+        color: #ffffff !important;
+    }
+
+    .jobs-page-shell a.btn.btn-outline-primary:hover,
+    .jobs-page-shell a.btn.btn-outline-primary:focus,
+    .jobs-page-shell a.btn.btn-outline-primary:active,
+    .jobs-page-shell a.btn.btn-outline-secondary:hover,
+    .jobs-page-shell a.btn.btn-outline-secondary:focus,
+    .jobs-page-shell a.btn.btn-outline-secondary:active,
+    .jobs-page-shell a.btn.btn-outline-light:hover,
+    .jobs-page-shell a.btn.btn-outline-light:focus,
+    .jobs-page-shell a.btn.btn-outline-light:active {
+        background: linear-gradient(135deg, #0b5acc, #126df3 58%, #0d63dd) !important;
+        border-color: #0b5acc !important;
+        color: #ffffff ;
+        transform: translateY(-2px);
+        box-shadow: 0 16px 32px rgba(13, 110, 253, 0.26) !important;
+        filter: saturate(1.06) !important;
+    }
+
+    .home-cta-btn::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(120deg, transparent 0%, rgba(255, 255, 255, 0.91) 35%, transparent 65%);
+        transform: translateX(-120%);
+        transition: transform 0.7s ease;
+    }
+
+    .home-cta-btn:hover::before,
+    .home-cta-btn:focus::before,
+    .home-cta-btn:active::before {
+        transform: translateX(120%);
+    }
+
+    .home-cta-btn:hover,
+    .home-cta-btn:focus,
+    .home-cta-btn:active {
+        background: linear-gradient(135deg, #0b5acc, #126df3 58%, #0d63dd);
+        border-color: #0b5acc;
+        color: var(--cg-white);
+        transform: translateY(-2px);
+        box-shadow: 0 16px 32px rgba(13, 110, 253, 0.26);
+        filter: saturate(1.06);
+    }
+
+    .home-cta-btn .bi,
+    .home-cta-btn i {
+        transition: transform 0.22s ease;
+    }
+
+    .home-cta-btn:hover .bi,
+    .home-cta-btn:focus .bi,
+    .home-cta-btn:hover i,
+    .home-cta-btn:focus i {
+        transform: translateX(3px);
+    }
+
+    .home-cta-btn:focus-visible {
+        outline: 3px solid rgba(151, 204, 255, 0.92);
+        outline-offset: 3px;
+    }
+
+    @media (max-width: 767.98px) {
+        .home-cta-btn {
+            min-height: 2.75rem;
+            padding: 0.75rem 1.1rem;
+            font-size: 0.9rem;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .home-cta-btn,
+        .home-cta-btn::before,
+        .home-cta-btn .bi,
+        .home-cta-btn i {
+            transition: none !important;
+            animation: none !important;
+        }
+
+        .home-cta-btn:hover,
+        .home-cta-btn:focus,
+        .home-cta-btn:active {
+            transform: none;
+        }
+    }
+
+    .job-card {
         background: var(--cg-white);
         border: 1px solid var(--cg-border);
         border-radius: 1rem;
         box-shadow: 0 12px 28px rgba(15, 23, 42, 0.04);
-        padding: 1.5rem;
+        padding: 1.25rem;
         margin-bottom: 1rem;
-        transition: box-shadow .2s ease, border-color .2s ease;
     }
-
-    .job-card::before { display: none; }
-    .job-card:hover { border-color: rgba(13,110,253,.24); box-shadow: 0 16px 34px rgba(15, 23, 42, .07); }
-    .job-card-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
 
     .job-company {
         display: inline-flex;
@@ -331,25 +415,22 @@ if ($categoryFilter !== '') {
     .job-meta {
         display: flex;
         flex-wrap: wrap;
-        gap: .65rem 1.35rem;
-        margin-top: .9rem;
+        gap: 0.9rem 1.2rem;
+        margin-top: 1rem;
+        color: var(--cg-muted);
+        font-size: 0.93rem;
     }
 
     .job-meta span {
         display: inline-flex;
         align-items: center;
         gap: 0.45rem;
-        color: var(--cg-muted);
-        font-size: .93rem;
     }
 
     .job-meta i {
-        color: #1267e8;
+        color: var(--cg-primary);
         font-size: 0.95rem;
     }
-
-    .job-meta span:nth-child(2) i { color: #e56f16; }
-    .job-meta span:nth-child(3) i { color: #7456d9; }
 
     .job-card .badge {
         border-radius: 999px;
@@ -360,13 +441,20 @@ if ($categoryFilter !== '') {
         text-transform: uppercase;
     }
 
+    /* Specific View Details button: set only this jobs page button to #0d6efd. */
+    .jobs-page-shell a.home-cta-btn.view-details-btn {
+        background: #0d6efd !important;
+        border-color: #0d6efd !important;
+        color: #ffffff !important;
+    }
+
     .job-card .badge-soft {
         background: rgba(13, 110, 253, 0.08);
         color: var(--cg-primary);
     }
 
     .job-card .salary {
-        margin-top: .9rem;
+        margin-top: 1rem;
         font-weight: 700;
         color: var(--cg-accent);
         display: inline-flex;
@@ -375,10 +463,8 @@ if ($categoryFilter !== '') {
     }
 
     .job-card .salary i {
-        color: #078b68;
+        color: var(--cg-primary);
     }
-
-    .job-status i { color: #e56f16; }
 
     .job-actions {
         display: flex;
@@ -386,7 +472,7 @@ if ($categoryFilter !== '') {
         align-items: center;
         gap: 0.85rem;
         flex-wrap: wrap;
-        margin-top: 1rem;
+        margin-top: 1.2rem;
         padding-top: 1rem;
         border-top: 1px solid rgba(15, 23, 42, 0.06);
     }
@@ -397,40 +483,11 @@ if ($categoryFilter !== '') {
     }
 
     .job-actions .btn {
-        min-width: 145px;
-        padding: .7rem 1.2rem;
-        font-weight: 600;
+        min-width: 150px;
     }
 
-    /* Match the shared primary and outline CTA buttons used across the site. */
-    .job-actions .btn-primary {
-        background: var(--cg-primary);
-        border-color: var(--cg-primary);
-        color: var(--cg-white);
-        box-shadow: 0 10px 20px rgba(13, 110, 253, .18);
-    }
-
-    .job-actions .btn-outline-primary {
-        border-color: var(--cg-primary);
-        color: var(--cg-primary);
-        background: transparent;
-    }
-
-    .job-actions .btn-primary:hover,
-    .job-actions .btn-primary:focus,
-    .job-actions .btn-outline-primary:hover,
-    .job-actions .btn-outline-primary:focus {
-        background: var(--cg-primary);
-        border-color: var(--cg-primary);
-        color: var(--cg-white);
-    }
-
-    @media (max-width: 767.98px) {
-        .job-card-header { flex-direction: column; }
-        .job-meta { gap: .65rem 1rem; }
-        .job-actions { align-items: stretch; }
-        .job-actions > .d-flex { width: 100%; }
-        .job-actions .btn { flex: 1; min-width: 0; }
+    .job-actions .home-cta-btn {
+        min-width: 150px;
     }
 
     .empty-state {
@@ -482,6 +539,25 @@ if ($categoryFilter !== '') {
         color: var(--cg-white);
     }
 
+    /* Jobs page pagination: non-selected page numbers should be white with dark text
+       (keep layout/spacing unchanged; subtle border for contrast) */
+    .jobs-page-shell .pagination .page-item:not(.active) .page-link {
+        background: #ffffff !important;
+        border: 1px solid rgba(15, 23, 42, 0.06) !important;
+        color: #212529 !important;
+    }
+
+    /* Apply Now: force white text only for Apply links on Jobs page. Uses href
+       attribute to avoid affecting other `.home-cta-btn` instances. */
+    .jobs-page-shell a.home-cta-btn[href^="candidate/apply.php?job_id="] {
+        color: #ffffff !important;
+    }
+    .jobs-page-shell a.home-cta-btn[href^="candidate/apply.php?job_id="]:hover,
+    .jobs-page-shell a.home-cta-btn[href^="candidate/apply.php?job_id="]:focus,
+    .jobs-page-shell a.home-cta-btn[href^="candidate/apply.php?job_id="]:active {
+        color: #ffffff !important;
+    }
+
     @media (max-width: 767.98px) {
         .jobs-page-shell {
             padding-top: 2rem;
@@ -507,36 +583,20 @@ if ($categoryFilter !== '') {
     <div class="row justify-content-center">
         <div class="col-xl-10">
             <div class="jobs-hero">
-                <div class="row g-4 align-items-center p-2 p-lg-4">
-                    <div class="col-lg-7">
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end gap-3">
+                    <div>
                         <div class="eyebrow">Career Opportunities</div>
                         <h1>Find the right role for your next step</h1>
-                        <p>Explore current openings from Career Grow Infotech and discover roles that match your skills, location, and career goals.</p>
-                        <div class="jobs-hero-actions">
-                            <a href="#job-search" class="btn btn-primary">Explore openings</a>
+                    </div>
                             <a href="contact.php" class="btn btn-outline-primary">Talk to our team</a>
-                        </div>
-                    </div>
-                    <div class="col-lg-5">
-                        <div class="jobs-hero-card">
-                            <div class="d-flex align-items-center justify-content-between gap-3">
-                                <div>
-                                    <div class="eyebrow mb-1">Your job search</div>
-                                    <div class="jobs-hero-card-title">Opportunities curated for you</div>
-                                </div>
-                                <div class="jobs-hero-icon"><i class="bi bi-briefcase"></i></div>
-                            </div>
-                            <div class="jobs-hero-stat">
-                                <strong><?php echo (int) $totalJobs; ?></strong>
-                                <span>active <?php echo $totalJobs === 1 ? 'opportunity' : 'opportunities'; ?> available now</span>
-                            </div>
-                            <div class="small text-muted">Filter openings by role, location, or experience to find your best match.</div>
-                        </div>
-                    </div>
+                    <a href="index.php" class="badge bg-primary-subtle text-primary px-3 py-2 rounded-pill text-decoration-none">
+                        <i class="bi bi-briefcase me-2"></i>Career Grow Infotech
+                    </a>
                 </div>
+                <p>Explore current openings from Career Grow Infotech and discover roles that match your skills, location, and career goals.</p>
             </div>
 
-            <div class="jobs-toolbar" id="job-search">
+            <div class="jobs-toolbar">
                 <form method="get" class="row g-3 align-items-center">
                     <div class="col-lg-3 col-md-6">
                         <label class="form-label visually-hidden" for="search">Search jobs</label>
@@ -545,7 +605,7 @@ if ($categoryFilter !== '') {
                     <div class="col-lg-2 col-md-6">
                         <label class="form-label visually-hidden" for="jobType">Job type</label>
                         <select id="jobType" name="job_type" class="form-select">
-                            <option value="">Job Types</option>
+                            <option value="">All job types</option>
                             <?php foreach ($jobTypes as $type): ?>
                                 <option value="<?php echo htmlspecialchars((string)$type, ENT_QUOTES, 'UTF-8'); ?>" <?php echo $jobTypeFilter === (string)$type ? 'selected' : ''; ?>><?php echo htmlspecialchars((string)$type, ENT_QUOTES, 'UTF-8'); ?></option>
                             <?php endforeach; ?>
@@ -570,8 +630,8 @@ if ($categoryFilter !== '') {
                         </select>
                     </div>
                     <div class="col-lg-3 col-md-12 d-flex gap-2">
-                        <button type="submit" class="btn btn-primary flex-fill">Search</button>
-                        <a href="jobs.php" class="btn btn-outline-secondary">Clear</a>
+                        <button type="submit" class="home-cta-btn flex-fill">Search</button>
+                        <a href="jobs.php" class="home-cta-btn">Clear</a>
                     </div>
                 </form>
             </div>
@@ -581,9 +641,9 @@ if ($categoryFilter !== '') {
                     <h3><?php echo htmlspecialchars($emptyStateTitle, ENT_QUOTES, 'UTF-8'); ?></h3>
                     <p><?php echo htmlspecialchars($emptyStateText, ENT_QUOTES, 'UTF-8'); ?></p>
                     <?php if ($hasFilters): ?>
-                        <a href="jobs.php" class="btn btn-primary">Clear Filters</a>
+                        <a href="jobs.php" class="home-cta-btn">Clear Filters</a>
                     <?php else: ?>
-                        <a href="contact.php" class="btn btn-primary">Contact Us</a>
+                        <a href="contact.php" class="home-cta-btn">Contact Us</a>
                     <?php endif; ?>
                 </div>
             <?php else: ?>
@@ -607,7 +667,7 @@ if ($categoryFilter !== '') {
                     $cardCompany = cg_get_job_company_name($job['company'] ?? '');
                     ?>
                     <article class="job-card">
-                        <div class="job-card-header">
+                        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-start gap-3">
                             <div class="flex-grow-1">
                                 <span class="job-company"><?php echo htmlspecialchars($cardCompany, ENT_QUOTES, 'UTF-8'); ?></span>
                                 <h3><a href="job-details.php?id=<?php echo $jobId; ?>"><?php echo htmlspecialchars($jobTitle, ENT_QUOTES, 'UTF-8'); ?></a></h3>
@@ -637,8 +697,8 @@ if ($categoryFilter !== '') {
                                 <i class="bi bi-clock-history me-1"></i>Posted <?php echo htmlspecialchars(cg_format_date((string)($job['created_at'] ?? '')), ENT_QUOTES, 'UTF-8'); ?>
                             </div>
                             <div class="d-flex gap-2">
-                                <a href="job-details.php?id=<?php echo $jobId; ?>" class="btn btn-outline-primary">View Details</a>
-                                <a href="job-details.php?id=<?php echo $jobId; ?>" class="btn btn-primary">Apply Now</a>
+                                <a href="job-details.php?id=<?php echo $jobId; ?>" class="home-cta-btn view-details-btn">View Details</a>
+                                <a href="candidate/apply.php?job_id=<?php echo $jobId; ?>" class="home-cta-btn">Apply Now</a>
                             </div>
                         </div>
                     </article>

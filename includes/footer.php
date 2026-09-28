@@ -76,9 +76,79 @@ if (strpos($scriptPath, '/admin/') !== false && !empty($_SESSION['user_role']) &
         html[data-theme="dark"] .admin-footer .right-block .dev-link { color:#7fb0ff; }
         html[data-theme="dark"] .admin-footer .right-block .dev-link:hover { color:#b8d4ff; }
         @media (max-width: 767.98px) {
-            .admin-footer .footer-inner { padding:14px 16px; }
-            .admin-footer .footer-inner .container > .d-flex { flex-direction:column; gap:12px; align-items:flex-start !important; }
-            .admin-footer .right-block{text-align:left}
+            .admin-footer {
+                width: 100%;
+                max-width: 100vw;
+                overflow: hidden;
+                box-sizing: border-box;
+            }
+            .admin-footer .footer-inner {
+                padding: 10px 10px 12px;
+            }
+            .admin-footer .footer-inner .container {
+                max-width: 100%;
+                width: 100%;
+                padding-left: 0;
+                padding-right: 0;
+            }
+            .admin-footer .footer-inner .container > .d-flex {
+                display: flex !important;
+                flex-direction: column;
+                gap: 10px;
+                align-items: stretch !important;
+                width: 100%;
+            }
+            .admin-footer .left-block,
+            .admin-footer .right-block {
+                width: 100%;
+                max-width: 100%;
+            }
+            .admin-footer .left-block {
+                display: flex;
+                justify-content: center;
+                text-align: center;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            .admin-footer .left-block img {
+                width: 32px;
+                height: 32px;
+                flex-shrink: 0;
+            }
+            .admin-footer .left-block .copyright {
+                min-width: 0;
+                max-width: 100%;
+                line-height: 1.45;
+                text-align: center;
+                word-break: break-word;
+                overflow-wrap: anywhere;
+            }
+            .admin-footer .copyright > div:first-child {
+                font-size: 0.78rem;
+            }
+            .admin-footer .copyright .small-muted {
+                display: block;
+                margin-top: 2px;
+                font-size: 0.7rem;
+                word-break: break-word;
+                overflow-wrap: anywhere;
+            }
+            .admin-footer .right-block {
+                text-align: center;
+            }
+            .admin-footer .right-block .label {
+                font-size: 0.62rem;
+                letter-spacing: 0.08em;
+                margin-bottom: 4px;
+                line-height: 1.4;
+            }
+            .admin-footer .right-block .dev-link {
+                display: inline-block;
+                max-width: 100%;
+                line-height: 1.4;
+                word-break: break-word;
+                overflow-wrap: anywhere;
+            }
         }
     </style>
 
@@ -108,6 +178,7 @@ if (strpos($scriptPath, '/admin/') !== false && !empty($_SESSION['user_role']) &
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="<?php echo htmlspecialchars($basePath, ENT_QUOTES, 'UTF-8'); ?>assets/js/main.js"></script>
+    </div> <!-- .admin-layout -->
 </body>
 </html>
     <?php

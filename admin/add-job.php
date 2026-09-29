@@ -88,6 +88,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($ok) {
                 $stmt->close();
                 $conn->close();
+                $_SESSION['job_status_message'] = 'Job Added Successfully. The new job has been created successfully.';
+                $_SESSION['job_status_type'] = 'success';
                 // regenerate token to prevent resubmission
                 unset($_SESSION['add_job_token']);
                 header('Location: jobs.php');

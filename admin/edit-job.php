@@ -119,6 +119,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($ok) {
                 $stmt->close();
                 $conn->close();
+                $_SESSION['job_status_message'] = 'Job Updated Successfully. The job details have been updated successfully.';
+                $_SESSION['job_status_type'] = 'success';
                 unset($_SESSION['edit_job_token']);
                 header('Location: jobs.php');
                 exit;

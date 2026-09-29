@@ -836,10 +836,11 @@ $conn->close();
             </div>
 
             <?php if (!empty($_SESSION['job_status_message'])): ?>
-                <div class="alert alert-info mx-3 mb-3">
+                <?php $jobStatusType = $_SESSION['job_status_type'] ?? 'info'; ?>
+                <div class="alert <?php echo $jobStatusType === 'success' ? 'alert-success' : 'alert-info'; ?> mx-3 mb-3">
                     <?php echo htmlspecialchars((string)$_SESSION['job_status_message'], ENT_QUOTES, 'UTF-8'); ?>
                 </div>
-                <?php unset($_SESSION['job_status_message']); ?>
+                <?php unset($_SESSION['job_status_message'], $_SESSION['job_status_type']); ?>
             <?php endif; ?>
 
             <div class="kpi-grid">

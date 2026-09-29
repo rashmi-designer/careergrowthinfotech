@@ -255,6 +255,9 @@ if (strpos($scriptPath, '/admin/') !== false && !empty($_SESSION['user_role']) &
 <?php endif; ?>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<?php if (strpos($scriptPath, '/admin/') === false): ?>
+    <script src="<?php echo htmlspecialchars($basePath, ENT_QUOTES, 'UTF-8'); ?>assets/js/theme-public.js"></script>
+<?php endif; ?>
 <script src="<?php echo htmlspecialchars($basePath, ENT_QUOTES, 'UTF-8'); ?>assets/js/main.js"></script>
 </body>
 </html>

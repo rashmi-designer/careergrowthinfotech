@@ -233,6 +233,104 @@ $conn->close();
 .browse-section h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.75rem; }
 .browse-section p { color: var(--cg-muted); margin-bottom: 1.5rem; }
 
+html[data-theme="dark"] {
+    --stat-pending: #60a5fa;
+    --stat-review: #fbbf24;
+    --stat-accept: #34d399;
+    --stat-reject: #f87171;
+}
+
+html[data-theme="dark"] .dashboard-welcome h1,
+html[data-theme="dark"] .section-header h2,
+html[data-theme="dark"] .profile-label,
+html[data-theme="dark"] .profile-value,
+html[data-theme="dark"] .app-item-title,
+html[data-theme="dark"] .empty-state-title,
+html[data-theme="dark"] .browse-section h3 {
+    color: var(--cg-text);
+}
+
+html[data-theme="dark"] .dashboard-welcome p,
+html[data-theme="dark"] .stat-card .stat-detail,
+html[data-theme="dark"] .completion-label,
+html[data-theme="dark"] .profile-value.empty,
+html[data-theme="dark"] .app-item-meta,
+html[data-theme="dark"] .empty-state-text,
+html[data-theme="dark"] .browse-section p,
+html[data-theme="dark"] .browse-section p strong {
+    color: var(--cg-muted);
+}
+
+html[data-theme="dark"] .stat-card,
+html[data-theme="dark"] .section-container,
+html[data-theme="dark"] .app-item,
+html[data-theme="dark"] .browse-section {
+    background: var(--cg-white);
+    border-color: var(--cg-border);
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.26);
+}
+
+html[data-theme="dark"] .stat-card .stat-icon {
+    background: rgba(148, 163, 184, 0.12);
+}
+
+html[data-theme="dark"] .completion-bar {
+    background: rgba(148, 163, 184, 0.18);
+}
+
+html[data-theme="dark"] .app-item:hover {
+    background: rgba(148, 163, 184, 0.08);
+}
+
+html[data-theme="dark"] .status-badge.new,
+html[data-theme="dark"] .status-badge.new-applied {
+    background-color: rgba(59, 130, 246, 0.18);
+    color: #bfdbfe;
+}
+
+html[data-theme="dark"] .status-badge.reviewed {
+    background-color: rgba(245, 158, 11, 0.18);
+    color: #fcd34d;
+}
+
+html[data-theme="dark"] .status-badge.accepted {
+    background-color: rgba(16, 185, 129, 0.18);
+    color: #6ee7b7;
+}
+
+html[data-theme="dark"] .status-badge.rejected {
+    background-color: rgba(239, 68, 68, 0.18);
+    color: #fca5a5;
+}
+
+html[data-theme="dark"] .browse-section {
+    background: linear-gradient(135deg, rgba(13, 110, 253, 0.18), rgba(15, 23, 42, 0.92));
+    border-color: rgba(96, 165, 250, 0.4);
+}
+
+html[data-theme="dark"] .section-header .action-link,
+html[data-theme="dark"] .app-item-title a,
+html[data-theme="dark"] .completion-percent {
+    color: var(--cg-primary);
+}
+
+html[data-theme="dark"] .profile-actions a.btn.btn-outline-secondary[href="change-password.php"] {
+    background: #0d6efd !important;
+    border-color: #0d6efd !important;
+    color: #ffffff !important;
+}
+
+html[data-theme="dark"] .profile-actions a.btn.btn-outline-secondary[href="change-password.php"] i {
+    color: #ffffff !important;
+}
+
+html[data-theme="dark"] .profile-actions a.btn.btn-outline-secondary[href="change-password.php"]:hover,
+html[data-theme="dark"] .profile-actions a.btn.btn-outline-secondary[href="change-password.php"]:focus,
+html[data-theme="dark"] .profile-actions a.btn.btn-outline-secondary[href="change-password.php"]:active {
+    color: #ffffff !important;
+    border-color: #0d6efd !important;
+}
+
 @media (max-width: 768px) {
     .dashboard-header { flex-direction: column-reverse; margin-bottom: 2rem; }
     .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }

@@ -145,6 +145,88 @@ function val(array $fields, string $key): string { return htmlspecialchars($fiel
 .section { background: var(--cg-white); border:1px solid var(--cg-border); padding:1rem; border-radius:.6rem; box-shadow: 0 10px 30px rgba(15,23,42,0.04); }
 .section + .section { margin-top:1rem; }
 .required { color: #d63384; }
+
+/* Admin Edit Job Dark Mode Support */
+html[data-theme="dark"] .admin-form {
+    color: var(--cg-text, #e5e7eb);
+}
+
+html[data-theme="dark"] .admin-form h2 {
+    color: var(--cg-text, #e5e7eb);
+}
+
+html[data-theme="dark"] .admin-form .text-soft {
+    color: var(--cg-muted, #9ca3af) !important;
+}
+
+html[data-theme="dark"] .section {
+    background: var(--cg-white, #1f2937);
+    border-color: var(--cg-border, #374151);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+html[data-theme="dark"] .section h5 {
+    color: var(--cg-text, #e5e7eb);
+}
+
+html[data-theme="dark"] .form-label {
+    color: var(--cg-text, #e5e7eb);
+}
+
+html[data-theme="dark"] .form-control,
+html[data-theme="dark"] .form-select {
+    background: #0f172a;
+    color: var(--cg-text, #e5e7eb);
+    border-color: var(--cg-border, #374151);
+}
+
+html[data-theme="dark"] .form-control::placeholder,
+html[data-theme="dark"] .form-select::placeholder {
+    color: var(--cg-muted, #9ca3af);
+}
+
+html[data-theme="dark"] .form-control:focus,
+html[data-theme="dark"] .form-select:focus {
+    border-color: var(--cg-primary, #60a5fa);
+    box-shadow: 0 8px 20px rgba(96, 165, 250, 0.12);
+    color: var(--cg-text, #e5e7eb);
+}
+
+html[data-theme="dark"] .alert-danger {
+    background: rgba(220, 38, 38, 0.15);
+    border-color: rgba(220, 38, 38, 0.3);
+    color: #fca5a5;
+}
+
+html[data-theme="dark"] .btn-primary {
+    background: var(--cg-primary, #60a5fa);
+    border-color: var(--cg-primary, #60a5fa);
+    box-shadow: 0 12px 28px rgba(96, 165, 250, 0.15);
+}
+
+html[data-theme="dark"] .btn-primary:hover,
+html[data-theme="dark"] .btn-primary:focus,
+html[data-theme="dark"] .btn-primary:active {
+    background: #3b82f6 !important;
+    border-color: #3b82f6 !important;
+    box-shadow: 0 16px 32px rgba(59, 130, 246, 0.28) !important;
+}
+
+html[data-theme="dark"] .btn-outline-secondary {
+    border-color: rgba(96, 165, 250, 0.2);
+    background: rgba(96, 165, 250, 0.08);
+    color: var(--cg-text, #e5e7eb);
+}
+
+html[data-theme="dark"] .btn-outline-secondary:hover,
+html[data-theme="dark"] .btn-outline-secondary:focus,
+html[data-theme="dark"] .btn-outline-secondary:active {
+    background: rgba(96, 165, 250, 0.16) !important;
+    border-color: rgba(96, 165, 250, 0.3) !important;
+    color: var(--cg-text, #e5e7eb) !important;
+}
+
+.required { color: #d63384; }
 @media (max-width:767.98px) { .admin-form { padding: .5rem; } }
 </style>
 

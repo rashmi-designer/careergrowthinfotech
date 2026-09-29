@@ -371,6 +371,181 @@ $conn->close();
     min-width: 150px;
 }
 
+html[data-theme="dark"] {
+    --profile-shell: #0f172a;
+    --profile-panel: #111827;
+    --profile-panel-alt: rgba(31, 41, 55, 0.9);
+    --profile-line: rgba(148, 163, 184, 0.22);
+    --profile-soft: rgba(148, 163, 184, 0.1);
+}
+
+html[data-theme="dark"] body {
+    background: var(--profile-shell);
+    color: var(--cg-text);
+}
+
+html[data-theme="dark"] .profile-wrapper {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.96) 0%, rgba(17, 24, 39, 1) 58%, rgba(12, 21, 36, 1) 100%);
+}
+
+html[data-theme="dark"] .profile-header {
+    background: linear-gradient(118deg, rgba(16, 44, 84, 0.98) 0%, rgba(22, 73, 127, 0.98) 56%, rgba(8, 72, 62, 0.96) 130%);
+    border-color: rgba(148, 163, 184, 0.22);
+    box-shadow: 0 16px 36px rgba(2, 6, 23, 0.42);
+}
+
+html[data-theme="dark"] .profile-header-title h1,
+html[data-theme="dark"] .profile-header-subtitle,
+html[data-theme="dark"] .completion-label,
+html[data-theme="dark"] .completion-fields,
+html[data-theme="dark"] .completion-percent-value,
+html[data-theme="dark"] .profile-section-title,
+html[data-theme="dark"] .info-label,
+html[data-theme="dark"] .info-value,
+html[data-theme="dark"] .skill-tag,
+html[data-theme="dark"] .resume-info h3,
+html[data-theme="dark"] .empty-field p,
+html[data-theme="dark"] .resume-info p,
+html[data-theme="dark"] .profile-actions-footer a,
+html[data-theme="dark"] .profile-header .btn-outline-primary {
+    color: var(--cg-text);
+}
+
+html[data-theme="dark"] .profile-header-subtitle,
+html[data-theme="dark"] .completion-label,
+html[data-theme="dark"] .completion-fields,
+html[data-theme="dark"] .info-label,
+html[data-theme="dark"] .info-value.empty,
+html[data-theme="dark"] .resume-info p,
+html[data-theme="dark"] .empty-field p,
+html[data-theme="dark"] .profile-header .profile-header-subtitle {
+    color: var(--cg-muted);
+}
+
+html[data-theme="dark"] .profile-section {
+    background: var(--profile-panel);
+    border-color: var(--cg-border);
+    box-shadow: 0 10px 24px rgba(2, 6, 23, 0.38);
+}
+
+html[data-theme="dark"] .profile-section-title {
+    border-bottom-color: var(--profile-line);
+}
+
+html[data-theme="dark"] .profile-section-title i,
+html[data-theme="dark"] .resume-icon {
+    color: #8ec5ff;
+    background: rgba(96, 165, 250, 0.12);
+}
+
+html[data-theme="dark"] .info-grid .info-item {
+    background: rgba(148, 163, 184, 0.06);
+    border-color: var(--profile-line);
+}
+
+html[data-theme="dark"] .info-value a,
+html[data-theme="dark"] .empty-field a,
+html[data-theme="dark"] .profile-actions a,
+html[data-theme="dark"] .profile-actions-footer a {
+    color: var(--cg-primary);
+}
+
+html[data-theme="dark"] .info-value a:hover,
+html[data-theme="dark"] .empty-field a:hover,
+html[data-theme="dark"] .profile-actions a:hover,
+html[data-theme="dark"] .profile-actions-footer a:hover {
+    color: #8ec5ff;
+}
+
+html[data-theme="dark"] .skill-tag {
+    background: rgba(59, 130, 246, 0.16);
+    border-color: rgba(96, 165, 250, 0.32);
+    color: #dbeafe;
+}
+
+html[data-theme="dark"] .resume-item,
+html[data-theme="dark"] .empty-field,
+html[data-theme="dark"] .resume-item.empty {
+    background: rgba(15, 23, 42, 0.7);
+    border-color: var(--profile-line);
+}
+
+html[data-theme="dark"] .resume-item {
+    border-left-color: rgba(96, 165, 250, 0.9);
+}
+
+html[data-theme="dark"] .resume-item.empty {
+    background: rgba(31, 41, 55, 0.8);
+    border-left-color: rgba(148, 163, 184, 0.8);
+}
+
+html[data-theme="dark"] .resume-info p {
+    color: var(--cg-muted);
+}
+
+html[data-theme="dark"] .profile-actions-footer {
+    border-top-color: var(--profile-line);
+}
+
+html[data-theme="dark"] .profile-header .btn-primary,
+html[data-theme="dark"] .profile-actions-footer .btn-primary,
+html[data-theme="dark"] .profile-actions .btn-primary,
+html[data-theme="dark"] .resume-item a.btn.btn-primary,
+html[data-theme="dark"] .resume-item.empty a.btn.btn-primary {
+    background: var(--cg-primary);
+    border-color: var(--cg-primary);
+    color: #ffffff;
+}
+
+html[data-theme="dark"] .profile-header .btn-primary:hover,
+html[data-theme="dark"] .profile-actions-footer .btn-primary:hover,
+html[data-theme="dark"] .profile-actions .btn-primary:hover,
+html[data-theme="dark"] .resume-item a.btn.btn-primary:hover,
+html[data-theme="dark"] .resume-item.empty a.btn.btn-primary:hover,
+html[data-theme="dark"] .profile-header .btn-primary:focus,
+html[data-theme="dark"] .profile-actions-footer .btn-primary:focus,
+html[data-theme="dark"] .profile-actions .btn-primary:focus,
+html[data-theme="dark"] .resume-item a.btn.btn-primary:focus,
+html[data-theme="dark"] .resume-item.empty a.btn.btn-primary:focus {
+    background: var(--cg-primary-dark);
+    border-color: var(--cg-primary-dark);
+    color: #ffffff;
+}
+
+html[data-theme="dark"] .profile-header .btn-outline-primary,
+html[data-theme="dark"] .profile-actions-footer .btn-outline-secondary,
+html[data-theme="dark"] .profile-actions .btn-outline-secondary,
+html[data-theme="dark"] .resume-item a.btn.btn-outline-secondary,
+html[data-theme="dark"] .profile-actions-footer a.btn.btn-outline-secondary[href="dashboard.php"] {
+    background: rgba(15, 23, 42, 0.8);
+    border-color: rgba(148, 163, 184, 0.38);
+    color: var(--cg-text);
+}
+
+html[data-theme="dark"] .profile-header .btn-outline-primary:hover,
+html[data-theme="dark"] .profile-actions-footer .btn-outline-secondary:hover,
+html[data-theme="dark"] .profile-actions .btn-outline-secondary:hover,
+html[data-theme="dark"] .resume-item a.btn.btn-outline-secondary:hover,
+html[data-theme="dark"] .profile-actions-footer a.btn.btn-outline-secondary[href="dashboard.php"]:hover,
+html[data-theme="dark"] .profile-header .btn-outline-primary:focus,
+html[data-theme="dark"] .profile-actions-footer .btn-outline-secondary:focus,
+html[data-theme="dark"] .profile-actions .btn-outline-secondary:focus,
+html[data-theme="dark"] .resume-item a.btn.btn-outline-secondary:focus,
+html[data-theme="dark"] .profile-actions-footer a.btn.btn-outline-secondary[href="dashboard.php"]:focus {
+    background: rgba(30, 41, 59, 0.95);
+    border-color: rgba(96, 165, 250, 0.4);
+    color: #e5e7eb;
+}
+
+html[data-theme="dark"] .resume-item .btn.btn-primary,
+html[data-theme="dark"] .resume-item.empty .btn.btn-primary {
+    color: #ffffff;
+}
+
+html[data-theme="dark"] .profile-wrapper .btn:focus-visible {
+    outline-color: rgba(96, 165, 250, 0.9);
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .profile-header {

@@ -87,6 +87,132 @@ require_once __DIR__ . '/../includes/navbar.php';
     margin-bottom: 2rem;
 }
 
+html[data-theme="dark"] {
+    --edit-surface: #111827;
+    --edit-surface-alt: rgba(31, 41, 55, 0.9);
+    --edit-line: rgba(148, 163, 184, 0.22);
+    --edit-input: rgba(15, 23, 42, 0.8);
+}
+
+html[data-theme="dark"] body {
+    background: #0f172a;
+    color: var(--cg-text);
+}
+
+html[data-theme="dark"] .edit-wrapper {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.96) 0%, rgba(17, 24, 39, 1) 100%);
+}
+
+html[data-theme="dark"] .edit-section {
+    background: var(--edit-surface);
+    border-color: var(--cg-border);
+    box-shadow: 0 10px 24px rgba(2, 6, 23, 0.38);
+}
+
+html[data-theme="dark"] .edit-section h2,
+html[data-theme="dark"] .form-label,
+html[data-theme="dark"] .back-link,
+html[data-theme="dark"] .alert-success,
+html[data-theme="dark"] .alert-danger {
+    color: var(--cg-text);
+}
+
+html[data-theme="dark"] .edit-section-subtitle,
+html[data-theme="dark"] .form-label-hint,
+html[data-theme="dark"] .alert-success,
+html[data-theme="dark"] .alert-danger,
+html[data-theme="dark"] .alert-success strong,
+html[data-theme="dark"] .alert-danger strong,
+html[data-theme="dark"] .alert-success ul,
+html[data-theme="dark"] .alert-danger ul,
+html[data-theme="dark"] .alert-success li,
+html[data-theme="dark"] .alert-danger li {
+    color: var(--cg-muted);
+}
+
+html[data-theme="dark"] .alert-success {
+    background-color: rgba(16, 185, 129, 0.12);
+    border-left-color: rgba(52, 211, 153, 0.9);
+}
+
+html[data-theme="dark"] .alert-danger {
+    background-color: rgba(239, 68, 68, 0.12);
+    border-left-color: rgba(248, 113, 113, 0.9);
+}
+
+html[data-theme="dark"] .back-link {
+    color: var(--cg-primary);
+}
+
+html[data-theme="dark"] .back-link:hover,
+html[data-theme="dark"] .back-link:focus {
+    color: #8ec5ff;
+}
+
+html[data-theme="dark"] input.form-control,
+html[data-theme="dark"] select.form-control,
+html[data-theme="dark"] textarea.form-control {
+    background: var(--edit-input);
+    border-color: var(--cg-border);
+    color: #e5e7eb;
+    box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.2);
+}
+
+html[data-theme="dark"] input.form-control::placeholder,
+html[data-theme="dark"] select.form-control::placeholder,
+html[data-theme="dark"] textarea.form-control::placeholder {
+    color: #9ca3af;
+}
+
+html[data-theme="dark"] input.form-control:focus,
+html[data-theme="dark"] select.form-control:focus,
+html[data-theme="dark"] textarea.form-control:focus {
+    background: var(--edit-input);
+    border-color: rgba(96, 165, 250, 0.7);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.18);
+    color: #e5e7eb;
+}
+
+html[data-theme="dark"] .form-label .required,
+html[data-theme="dark"] .form-label i {
+    color: #8ec5ff;
+}
+
+html[data-theme="dark"] .form-actions {
+    border-top-color: var(--cg-border);
+}
+
+html[data-theme="dark"] .form-actions .btn-primary {
+    background: var(--cg-primary);
+    border-color: var(--cg-primary);
+    color: #ffffff;
+}
+
+html[data-theme="dark"] .form-actions .btn-primary:hover,
+html[data-theme="dark"] .form-actions .btn-primary:focus {
+    background: var(--cg-primary-dark);
+    border-color: var(--cg-primary-dark);
+    color: #ffffff;
+}
+
+html[data-theme="dark"] .form-actions .btn-outline-secondary {
+    background: rgba(15, 23, 42, 0.8);
+    border-color: rgba(148, 163, 184, 0.38);
+    color: var(--cg-text);
+}
+
+html[data-theme="dark"] .form-actions .btn-outline-secondary:hover,
+html[data-theme="dark"] .form-actions .btn-outline-secondary:focus {
+    background: rgba(30, 41, 59, 0.95);
+    border-color: rgba(96, 165, 250, 0.4);
+    color: #e5e7eb;
+}
+
+html[data-theme="dark"] .alert-success strong,
+html[data-theme="dark"] .alert-danger strong {
+    color: var(--cg-text);
+}
+
 /* Form Styling */
 .form-group {
     margin-bottom: 1.75rem;

@@ -773,6 +773,356 @@ require_once __DIR__ . '/includes/navbar.php';
         border-color: #0d6efd !important;
         color: #ffffff !important;
     }
+
+    /* Public/Candidate dark mode polish for the Services page only.
+       Keeps light mode unchanged and avoids any admin/theme changes. */
+    html[data-theme="dark"] body {
+        background: linear-gradient(180deg, #0b1220 0%, #111827 100%) !important;
+        color: #e5edf8 !important;
+    }
+
+    html[data-theme="dark"] .svc-hero {
+        background: linear-gradient(180deg, rgba(7, 12, 20, 0.72) 0%, rgba(11, 18, 30, 0.96) 100%) !important;
+    }
+
+    html[data-theme="dark"] .svc-hero-panel {
+        background:
+            radial-gradient(circle at 82% 38%, rgba(96, 165, 250, 0.12), transparent 26%),
+            radial-gradient(circle at 100% 0%, rgba(13, 110, 253, 0.22), transparent 38%),
+            linear-gradient(118deg, rgba(15, 23, 42, 0.98) 0%, rgba(17, 24, 39, 0.96) 34%, rgba(8, 12, 20, 0.94) 100%) !important;
+        border-color: rgba(148, 163, 184, 0.18) !important;
+        box-shadow: 0 20px 46px rgba(0, 0, 0, 0.46) !important;
+    }
+
+    html[data-theme="dark"] .svc-hero .section-title,
+    html[data-theme="dark"] .svc-hero .svc-eyebrow,
+    html[data-theme="dark"] .svc-hero .lead-muted,
+    html[data-theme="dark"] .svc-hero .breadcrumb,
+    html[data-theme="dark"] .svc-hero .breadcrumb a,
+    html[data-theme="dark"] .section-title,
+    html[data-theme="dark"] .employer-services h3,
+    html[data-theme="dark"] .job-seeker-services .job-seeker-copy h3,
+    html[data-theme="dark"] .final-cta-card h3,
+    html[data-theme="dark"] .svc-match-primary h3,
+    html[data-theme="dark"] .svc-match-process h4,
+    html[data-theme="dark"] .svc-service-card h5,
+    html[data-theme="dark"] .why-cards h6,
+    html[data-theme="dark"] .employer-services li,
+    html[data-theme="dark"] .job-seeker-services .job-seeker-copy li,
+    html[data-theme="dark"] .job-seeker-services .job-profile-summary .fw-semibold,
+    html[data-theme="dark"] .job-seeker-services .job-role-card .fw-semibold,
+    html[data-theme="dark"] .job-seeker-services .job-role-label,
+    html[data-theme="dark"] .svc-match-primary .fw-semibold {
+        color: #f8fafc !important;
+    }
+
+    html[data-theme="dark"] .svc-hero .lead-muted,
+    html[data-theme="dark"] .lead-muted,
+    html[data-theme="dark"] .text-soft,
+    html[data-theme="dark"] .svc-service-card p,
+    html[data-theme="dark"] .svc-intro-highlights .card p,
+    html[data-theme="dark"] .employer-services .col-lg-6 > p,
+    html[data-theme="dark"] .job-seeker-services .job-seeker-copy > p,
+    html[data-theme="dark"] .job-seeker-services .job-profile-summary .text-soft,
+    html[data-theme="dark"] .svc-match-primary > p,
+    html[data-theme="dark"] .svc-match-process-item,
+    html[data-theme="dark"] .svc-match-meter-label,
+    html[data-theme="dark"] .svc-match-primary .text-muted,
+    html[data-theme="dark"] .why-cards .text-soft,
+    html[data-theme="dark"] .final-cta-card .text-soft,
+    html[data-theme="dark"] .final-cta-card p,
+    html[data-theme="dark"] .location-card p,
+    html[data-theme="dark"] .locations-section p,
+    html[data-theme="dark"] .contact-strip .contact-strip-label,
+    html[data-theme="dark"] .contact-strip .contact-strip-link,
+    html[data-theme="dark"] .contact-strip .btn-outline-primary {
+        color: #dfe7f4 !important;
+    }
+
+    html[data-theme="dark"] .svc-hero .svc-eyebrow {
+        background: rgba(13, 110, 253, 0.12) !important;
+        color: #dfeeff !important;
+        border: 1px solid rgba(128, 174, 255, 0.2) !important;
+    }
+
+    html[data-theme="dark"] .svc-hero .breadcrumb {
+        background: rgba(15, 23, 42, 0.62) !important;
+        border-color: rgba(148, 163, 184, 0.18) !important;
+    }
+
+    html[data-theme="dark"] .svc-hero-card,
+    html[data-theme="dark"] .svc-match-primary,
+    html[data-theme="dark"] .svc-match-process,
+    html[data-theme="dark"] .svc-service-card,
+    html[data-theme="dark"] .svc-intro-highlights .card,
+    html[data-theme="dark"] .process-node,
+    html[data-theme="dark"] .why-cards .card,
+    html[data-theme="dark"] .employer-services .container,
+    html[data-theme="dark"] .job-seeker-services .container,
+    html[data-theme="dark"] .final-cta-card,
+    html[data-theme="dark"] .location-card,
+    html[data-theme="dark"] .contact-strip {
+        background: linear-gradient(180deg, rgba(15, 23, 42, 0.9) 0%, rgba(17, 24, 39, 0.95) 100%) !important;
+        border-color: rgba(148, 163, 184, 0.18) !important;
+        box-shadow: 0 18px 42px rgba(0, 0, 0, 0.38) !important;
+    }
+
+    html[data-theme="dark"] .svc-service-card,
+    html[data-theme="dark"] .svc-intro-highlights .card,
+    html[data-theme="dark"] .process-node,
+    html[data-theme="dark"] .why-cards .card,
+    html[data-theme="dark"] .location-card,
+    html[data-theme="dark"] .contact-strip {
+        background-clip: padding-box;
+    }
+
+    html[data-theme="dark"] .svc-service-card,
+    html[data-theme="dark"] .svc-intro-highlights .card,
+    html[data-theme="dark"] .process-node,
+    html[data-theme="dark"] .why-cards .card,
+    html[data-theme="dark"] .employer-services li,
+    html[data-theme="dark"] .job-seeker-services .job-seeker-copy li,
+    html[data-theme="dark"] .svc-match-primary,
+    html[data-theme="dark"] .svc-match-process,
+    html[data-theme="dark"] .svc-feature-visual,
+    html[data-theme="dark"] .job-seeker-services .job-role-card,
+    html[data-theme="dark"] .svc-match-process-item {
+        border-color: rgba(148, 163, 184, 0.18) !important;
+    }
+
+    html[data-theme="dark"] .svc-service-card::before,
+    html[data-theme="dark"] .svc-intro-highlights .card::before,
+    html[data-theme="dark"] .process-node::before,
+    html[data-theme="dark"] .why-cards .card::before,
+    html[data-theme="dark"] .svc-feature-visual::before,
+    html[data-theme="dark"] .service-card::before {
+        background: linear-gradient(90deg, rgba(96, 165, 250, 0.9), rgba(59, 130, 246, 0.55)) !important;
+    }
+
+    html[data-theme="dark"] .svc-service-card .icon-wrap,
+    html[data-theme="dark"] .svc-service-badge,
+    html[data-theme="dark"] .svc-match-process .bi-briefcase,
+    html[data-theme="dark"] .why-cards .why-card-icon,
+    html[data-theme="dark"] .location-icon,
+    html[data-theme="dark"] .contact-strip-icon,
+    html[data-theme="dark"] .job-seeker-services .job-role-icon {
+        background: linear-gradient(145deg, rgba(59, 130, 246, 0.12), rgba(59, 130, 246, 0.18)) !important;
+        border: 1px solid rgba(148, 163, 184, 0.14) !important;
+        color: #8ec5ff !important;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+    }
+
+    html[data-theme="dark"] .svc-service-card .icon-wrap i,
+    html[data-theme="dark"] .svc-service-badge i,
+    html[data-theme="dark"] .svc-match-process .bi-briefcase,
+    html[data-theme="dark"] .why-cards .why-card-icon i,
+    html[data-theme="dark"] .location-icon i,
+    html[data-theme="dark"] .contact-strip-icon,
+    html[data-theme="dark"] .job-seeker-services .job-role-icon i {
+        color: #8ec5ff !important;
+    }
+
+    html[data-theme="dark"] .svc-service-card:hover,
+    html[data-theme="dark"] .svc-intro-highlights .card:hover,
+    html[data-theme="dark"] .process-node:hover,
+    html[data-theme="dark"] .why-cards .card:hover,
+    html[data-theme="dark"] .location-card:hover {
+        box-shadow: 0 24px 52px rgba(0, 0, 0, 0.52) !important;
+    }
+
+    html[data-theme="dark"] .svc-service-footer a,
+    html[data-theme="dark"] .svc-service-card a,
+    html[data-theme="dark"] .employer-services .svc-feature-visual a,
+    html[data-theme="dark"] .job-seeker-services .job-profile-actions a,
+    html[data-theme="dark"] .contact-strip .contact-strip-link,
+    html[data-theme="dark"] .contact-strip a {
+        color: #8ec5ff !important;
+    }
+
+    html[data-theme="dark"] .employer-services .container,
+    html[data-theme="dark"] .job-seeker-services .container {
+        background:
+            radial-gradient(circle at 82% 16%, rgba(59, 130, 246, 0.12), transparent 24%),
+            linear-gradient(130deg, rgba(15, 23, 42, 0.96) 0%, rgba(17, 24, 39, 0.96) 55%, rgba(11, 18, 30, 0.94) 100%) !important;
+    }
+
+    html[data-theme="dark"] .employer-services li,
+    html[data-theme="dark"] .job-seeker-services .job-seeker-copy li {
+        background: rgba(17, 24, 39, 0.92) !important;
+    }
+
+    html[data-theme="dark"] .employer-services li::before,
+    html[data-theme="dark"] .job-seeker-services .job-seeker-copy li::before {
+        background: rgba(96, 165, 250, 0.18) !important;
+        color: #dfeeff !important;
+    }
+
+    html[data-theme="dark"] .employer-services .svc-feature-visual,
+    html[data-theme="dark"] .job-seeker-services .job-seeker-visual,
+    html[data-theme="dark"] .job-seeker-services .job-role-card,
+    html[data-theme="dark"] .job-seeker-services .job-seeker-copy li {
+        background: rgba(17, 24, 39, 0.9) !important;
+    }
+
+    html[data-theme="dark"] .job-seeker-services .job-seeker-copy li:nth-child(2)::before { background: rgba(249, 115, 22, 0.16) !important; color: #fbbf8d !important; }
+    html[data-theme="dark"] .job-seeker-services .job-seeker-copy li:nth-child(3)::before { background: rgba(168, 85, 247, 0.15) !important; color: #d9b8ff !important; }
+    html[data-theme="dark"] .job-seeker-services .job-seeker-copy li:nth-child(4)::before { background: rgba(16, 185, 129, 0.15) !important; color: #9fe7cc !important; }
+
+    html[data-theme="dark"] .process-node {
+        background: linear-gradient(150deg, rgba(59, 130, 246, 0.08), rgba(17, 24, 39, 0.94) 58%) !important;
+    }
+
+    html[data-theme="dark"] .process-node .step-num {
+        background: linear-gradient(145deg, rgba(96, 165, 250, 0.1), rgba(59, 130, 246, 0.18)) !important;
+        color: #dfeeff !important;
+        border: 1px solid rgba(148, 163, 184, 0.12) !important;
+    }
+
+    html[data-theme="dark"] .process-line {
+        background: linear-gradient(90deg, rgba(96, 165, 250, 0.18), rgba(96, 165, 250, 0.4), rgba(96, 165, 250, 0.18)) !important;
+    }
+
+    html[data-theme="dark"] .why-cards .card {
+        background: linear-gradient(145deg, rgba(59, 130, 246, 0.07), rgba(17, 24, 39, 0.98) 58%) !important;
+    }
+
+    html[data-theme="dark"] .final-cta {
+        background: linear-gradient(180deg, rgba(7, 12, 20, 0.8), rgba(11, 18, 30, 0.96)) !important;
+    }
+
+    html[data-theme="dark"] .final-cta-card {
+        background:
+            linear-gradient(90deg, rgba(11, 18, 30, 0.82) 0%, rgba(11, 18, 30, 0.76) 54%, rgba(11, 18, 30, 0.9) 100%),
+            linear-gradient(120deg, rgba(59,130,246,0.15), rgba(17,24,39,0.8)) !important;
+        border-color: rgba(148, 163, 184, 0.18) !important;
+        box-shadow: 0 18px 42px rgba(0, 0, 0, 0.44) !important;
+    }
+
+    html[data-theme="dark"] .final-cta .cta-eyebrow {
+        color: #d8eaff !important;
+    }
+
+    html[data-theme="dark"] .final-cta-card .text-soft,
+    html[data-theme="dark"] .final-cta-card p {
+        color: #dfe7f4 !important;
+    }
+
+    html[data-theme="dark"] .btn-primary,
+    html[data-theme="dark"] .btn-outline-primary,
+    html[data-theme="dark"] .btn-outline-secondary,
+    html[data-theme="dark"] .btn-outline-light,
+    html[data-theme="dark"] main .btn.btn-outline-primary,
+    html[data-theme="dark"] main .btn.btn-outline-secondary,
+    html[data-theme="dark"] main .btn.btn-outline-light {
+        transition: background-color .2s ease, border-color .2s ease, color .2s ease, box-shadow .2s ease, transform .2s ease;
+    }
+
+    html[data-theme="dark"] .btn-primary {
+        background-color: var(--cg-primary) !important;
+        border-color: var(--cg-primary) !important;
+        color: #ffffff !important;
+        box-shadow: 0 10px 22px rgba(13, 110, 253, 0.28) !important;
+    }
+
+    html[data-theme="dark"] .btn-primary:hover,
+    html[data-theme="dark"] .btn-primary:focus,
+    html[data-theme="dark"] .btn-primary:active {
+        background-color: var(--cg-primary-dark) !important;
+        border-color: var(--cg-primary-dark) !important;
+        color: #ffffff !important;
+    }
+
+    html[data-theme="dark"] .btn-outline-primary {
+        background: rgba(13, 110, 253, 0.08) !important;
+        border-color: rgba(96, 165, 250, 0.42) !important;
+        color: #dfeeff !important;
+    }
+
+    html[data-theme="dark"] .btn-outline-primary:hover,
+    html[data-theme="dark"] .btn-outline-primary:focus,
+    html[data-theme="dark"] .btn-outline-primary:active {
+        background-color: var(--cg-primary) !important;
+        border-color: var(--cg-primary) !important;
+        color: #ffffff !important;
+    }
+
+    html[data-theme="dark"] .btn-outline-secondary {
+        background: rgba(148, 163, 184, 0.06) !important;
+        border-color: rgba(148, 163, 184, 0.3) !important;
+        color: #edf4ff !important;
+    }
+
+    html[data-theme="dark"] .btn-outline-secondary:hover,
+    html[data-theme="dark"] .btn-outline-secondary:focus,
+    html[data-theme="dark"] .btn-outline-secondary:active {
+        background-color: rgba(148, 163, 184, 0.16) !important;
+        border-color: rgba(148, 163, 184, 0.5) !important;
+        color: #ffffff !important;
+    }
+
+    html[data-theme="dark"] .btn-outline-light {
+        background: rgba(255,255,255,0.04) !important;
+        border-color: rgba(255,255,255,0.18) !important;
+        color: #f8fafc !important;
+    }
+
+    html[data-theme="dark"] .btn-outline-light:hover,
+    html[data-theme="dark"] .btn-outline-light:focus,
+    html[data-theme="dark"] .btn-outline-light:active {
+        background: rgba(255,255,255,0.08) !important;
+        border-color: rgba(255,255,255,0.28) !important;
+        color: #ffffff !important;
+    }
+
+    html[data-theme="dark"] .bg-soft {
+        background: rgba(15, 23, 42, 0.72) !important;
+    }
+
+    html[data-theme="dark"] .contact-strip {
+        background: linear-gradient(115deg, rgba(17,24,39,0.92) 0%, rgba(15,23,42,0.96) 100%) !important;
+        border-color: rgba(148, 163, 184, 0.18) !important;
+    }
+
+    html[data-theme="dark"] .contact-strip .contact-strip-label {
+        color: #b8c5d8 !important;
+    }
+
+    html[data-theme="dark"] .contact-strip .contact-strip-link {
+        color: #f8fafc !important;
+    }
+
+    html[data-theme="dark"] .contact-strip .btn-primary {
+        background-color: var(--cg-primary) !important;
+        border-color: var(--cg-primary) !important;
+        color: #ffffff !important;
+    }
+
+    html[data-theme="dark"] .contact-strip .btn-outline-primary {
+        background: rgba(13,110,253,0.08) !important;
+        border-color: rgba(96,165,250,0.42) !important;
+        color: #dfeeff !important;
+    }
+
+    html[data-theme="dark"] .contact-strip .btn-outline-primary:hover,
+    html[data-theme="dark"] .contact-strip .btn-outline-primary:focus {
+        background: var(--cg-primary) !important;
+        border-color: var(--cg-primary) !important;
+        color: #ffffff !important;
+    }
+
+    @media (max-width: 575.98px) {
+        html[data-theme="dark"] .svc-hero .hero-actions,
+        html[data-theme="dark"] .final-cta .cta-actions {
+            width: 100%;
+        }
+
+        html[data-theme="dark"] .svc-hero .hero-actions .btn,
+        html[data-theme="dark"] .final-cta .cta-actions .btn {
+            width: 100%;
+            min-width: 0;
+            justify-content: center;
+        }
+    }
 </style>
 
 <main class="flex-grow-1">

@@ -303,6 +303,139 @@ if (!function_exists('cg_render_safe_text')) {
         color: #fff ;
     }
 
+    html[data-theme="dark"] .job-details-page {
+        background: transparent;
+    }
+
+    html[data-theme="dark"] .job-detail-shell {
+        background: var(--cg-white);
+        border-color: var(--cg-border);
+        box-shadow: 0 22px 48px rgba(2, 6, 23, 0.44);
+    }
+
+    html[data-theme="dark"] .job-detail-header {
+        background:
+            radial-gradient(circle at 88% 18%, rgba(96, 165, 250, 0.15), transparent 26%),
+            linear-gradient(120deg, rgba(15, 23, 42, 0.98) 0%, rgba(17, 24, 39, 0.98) 55%, rgba(12, 24, 36, 0.98) 100%);
+        border-bottom-color: var(--cg-border);
+    }
+
+    html[data-theme="dark"] .job-detail-header::after {
+        border-color: rgba(96, 165, 250, 0.2);
+    }
+
+    html[data-theme="dark"] .job-company-tag {
+        background: rgba(59, 130, 246, 0.12);
+        border-color: rgba(96, 165, 250, 0.2);
+        color: #bfdbfe;
+    }
+
+    html[data-theme="dark"] .job-detail-header h1,
+    html[data-theme="dark"] .detail-section h3,
+    html[data-theme="dark"] .sidebar-card h4,
+    html[data-theme="dark"] .quick-list strong,
+    html[data-theme="dark"] .breadcrumb-item.active,
+    html[data-theme="dark"] .breadcrumb-item a,
+    html[data-theme="dark"] .job-detail-header .job-header-meta span,
+    html[data-theme="dark"] .breadcrumb,
+    html[data-theme="dark"] .breadcrumb-item {
+        color: var(--cg-text);
+    }
+
+    html[data-theme="dark"] .job-header-meta {
+        color: var(--cg-muted);
+    }
+
+    html[data-theme="dark"] .job-header-meta span {
+        background: rgba(17, 24, 39, 0.7);
+        border-color: var(--cg-border);
+        color: var(--cg-muted);
+    }
+
+    html[data-theme="dark"] .job-header-meta i,
+    html[data-theme="dark"] .job-company-tag i {
+        color: #8ec5ff;
+    }
+
+    html[data-theme="dark"] .detail-section,
+    html[data-theme="dark"] .sidebar-card,
+    html[data-theme="dark"] .alert-light {
+        background: rgba(17, 24, 39, 0.9);
+        border-color: var(--cg-border);
+    }
+
+    html[data-theme="dark"] .detail-section h3::before {
+        background: linear-gradient(180deg, #60a5fa, #93c5fd);
+    }
+
+    html[data-theme="dark"] .detail-section p,
+    html[data-theme="dark"] .detail-section li,
+    html[data-theme="dark"] .quick-list li,
+    html[data-theme="dark"] .quick-list span,
+    html[data-theme="dark"] .breadcrumb-item,
+    html[data-theme="dark"] .breadcrumb-item a,
+    html[data-theme="dark"] .text-muted,
+    html[data-theme="dark"] .alert-light p,
+    html[data-theme="dark"] .alert-light .text-muted {
+        color: var(--cg-muted);
+    }
+
+    html[data-theme="dark"] .quick-list li {
+        border-bottom-color: var(--cg-border);
+    }
+
+    html[data-theme="dark"] .apply-panel {
+        background: linear-gradient(145deg, rgba(30, 41, 59, 0.9) 0%, rgba(17, 24, 39, 0.96) 72%);
+        border-color: rgba(96, 165, 250, 0.22);
+    }
+
+    html[data-theme="dark"] .alert-light {
+        background: rgba(16, 185, 129, 0.12);
+        border-color: rgba(52, 211, 153, 0.38);
+        color: #d1fae5;
+    }
+
+    html[data-theme="dark"] .alert-light strong,
+    html[data-theme="dark"] .alert-light h3 {
+        color: #d1fae5;
+    }
+
+    html[data-theme="dark"] .alert-light .btn-primary,
+    html[data-theme="dark"] .job-details-page .btn.btn-primary,
+    html[data-theme="dark"] .job-details-page a.btn.btn-primary {
+        background: var(--cg-primary) !important;
+        border-color: var(--cg-primary) !important;
+        color: #ffffff !important;
+    }
+
+    html[data-theme="dark"] .alert-light .btn-primary:hover,
+    html[data-theme="dark"] .job-details-page .btn.btn-primary:hover,
+    html[data-theme="dark"] .job-details-page a.btn.btn-primary:hover,
+    html[data-theme="dark"] .alert-light .btn-primary:focus,
+    html[data-theme="dark"] .job-details-page .btn.btn-primary:focus,
+    html[data-theme="dark"] .job-details-page a.btn.btn-primary:focus {
+        background: var(--cg-primary-dark) !important;
+        border-color: var(--cg-primary-dark) !important;
+        color: #ffffff !important;
+    }
+
+    html[data-theme="dark"] .breadcrumb {
+        background: transparent;
+    }
+
+    html[data-theme="dark"] .breadcrumb-item + .breadcrumb-item::before {
+        color: var(--cg-muted);
+    }
+
+    html[data-theme="dark"] a {
+        color: var(--cg-primary);
+    }
+
+    html[data-theme="dark"] a:hover,
+    html[data-theme="dark"] a:focus {
+        color: #8ec5ff;
+    }
+
     @media (min-width: 992px) {
         .job-detail-body aside {
             position: sticky;

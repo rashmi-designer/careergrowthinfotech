@@ -373,6 +373,271 @@ require_once __DIR__ . '/includes/navbar.php';
     .contact-cta .btn-outline-light:hover,
     .contact-cta .btn-outline-light:focus { background: #0d6efd; border-color: #0d6efd; color: #fff; }
 
+    /* Public/Candidate dark-mode polish for the Contact page only.
+       Keeps light mode unchanged and follows the existing public theme variables. */
+    html[data-theme="dark"] body {
+        background: linear-gradient(180deg, #0b1220 0%, #111827 100%) !important;
+        color: #e5edf8 !important;
+    }
+
+    html[data-theme="dark"] .contact-hero {
+        background:
+            radial-gradient(circle at 82% 38%, rgba(96, 165, 250, 0.12), transparent 26%),
+            radial-gradient(circle at 100% 0%, rgba(13, 110, 253, 0.22), transparent 38%),
+            linear-gradient(118deg, rgba(15, 23, 42, 0.98) 0%, rgba(17, 24, 39, 0.96) 34%, rgba(8, 12, 20, 0.94) 100%) !important;
+        border-color: rgba(148, 163, 184, 0.18) !important;
+        box-shadow: 0 20px 46px rgba(0, 0, 0, 0.46) !important;
+    }
+
+    html[data-theme="dark"] .contact-badge {
+        background: rgba(13, 110, 253, 0.12) !important;
+        color: #dfeeff !important;
+        border: 1px solid rgba(128, 174, 255, 0.2) !important;
+    }
+
+    html[data-theme="dark"] .contact-hero h1,
+    html[data-theme="dark"] .contact-hero h3,
+    html[data-theme="dark"] .contact-hero-card h3,
+    html[data-theme="dark"] .contact-card h4,
+    html[data-theme="dark"] .form-shell h2,
+    html[data-theme="dark"] .reason-card h3,
+    html[data-theme="dark"] .faq-item h6,
+    html[data-theme="dark"] .contact-cta h2,
+    html[data-theme="dark"] .contact-card .fw-semibold,
+    html[data-theme="dark"] .contact-hero-card .fw-semibold,
+    html[data-theme="dark"] .contact-hero-points li {
+        color: #f8fafc !important;
+    }
+
+    html[data-theme="dark"] .contact-hero-copy > p,
+    html[data-theme="dark"] .contact-hero-points,
+    html[data-theme="dark"] .text-muted,
+    html[data-theme="dark"] .reason-card .text-muted,
+    html[data-theme="dark"] .faq-item p,
+    html[data-theme="dark"] .reason-next-item span,
+    html[data-theme="dark"] .contact-cta .text-white-50,
+    html[data-theme="dark"] .contact-cta p,
+    html[data-theme="dark"] .contact-card p,
+    html[data-theme="dark"] .contact-card li,
+    html[data-theme="dark"] .contact-card a,
+    html[data-theme="dark"] .form-shell label,
+    html[data-theme="dark"] .form-shell .small,
+    html[data-theme="dark"] .alert,
+    html[data-theme="dark"] .alert-success,
+    html[data-theme="dark"] .alert-danger,
+    html[data-theme="dark"] .contact-hero-card .text-primary,
+    html[data-theme="dark"] .faq-item .text-muted {
+        color: #dfe7f4 !important;
+    }
+
+    html[data-theme="dark"] .contact-hero-card,
+    html[data-theme="dark"] .contact-card,
+    html[data-theme="dark"] .form-shell,
+    html[data-theme="dark"] .reason-card,
+    html[data-theme="dark"] .faq-item,
+    html[data-theme="dark"] .contact-cta {
+        background: linear-gradient(180deg, rgba(15, 23, 42, 0.9) 0%, rgba(17, 24, 39, 0.95) 100%) !important;
+        border-color: rgba(148, 163, 184, 0.18) !important;
+        box-shadow: 0 18px 42px rgba(0, 0, 0, 0.38) !important;
+    }
+
+    html[data-theme="dark"] .contact-card,
+    html[data-theme="dark"] .form-shell,
+    html[data-theme="dark"] .reason-card,
+    html[data-theme="dark"] .faq-item,
+    html[data-theme="dark"] .contact-cta {
+        background-clip: padding-box;
+    }
+
+    html[data-theme="dark"] .contact-card:hover,
+    html[data-theme="dark"] .faq-item:hover {
+        box-shadow: 0 24px 52px rgba(0, 0, 0, 0.52) !important;
+    }
+
+    html[data-theme="dark"] .contact-icon,
+    html[data-theme="dark"] .contact-hero-card-icon,
+    html[data-theme="dark"] .faq-marker,
+    html[data-theme="dark"] .reason-next-item i,
+    html[data-theme="dark"] .reason-list i {
+        background: linear-gradient(145deg, rgba(59, 130, 246, 0.12), rgba(59, 130, 246, 0.18)) !important;
+        border: 1px solid rgba(148, 163, 184, 0.15) !important;
+        color: #8ec5ff !important;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+    }
+
+    html[data-theme="dark"] .contact-info-grid > div:nth-child(2) .contact-icon,
+    html[data-theme="dark"] .contact-hero-points li:nth-child(2) i,
+    html[data-theme="dark"] .faq-grid > [class*="col-"]:nth-child(2) .faq-marker {
+        background: linear-gradient(145deg, rgba(249, 115, 22, 0.12), rgba(249, 115, 22, 0.18)) !important;
+        color: #fbbf8d !important;
+    }
+
+    html[data-theme="dark"] .contact-info-grid > div:nth-child(3) .contact-icon,
+    html[data-theme="dark"] .contact-hero-points li:nth-child(3) i,
+    html[data-theme="dark"] .faq-grid > [class*="col-"]:nth-child(3) .faq-marker {
+        background: linear-gradient(145deg, rgba(168, 85, 247, 0.12), rgba(168, 85, 247, 0.18)) !important;
+        color: #d9b8ff !important;
+    }
+
+    html[data-theme="dark"] .faq-grid > [class*="col-"]:nth-child(4) .faq-marker {
+        background: linear-gradient(145deg, rgba(16, 185, 129, 0.12), rgba(16, 185, 129, 0.18)) !important;
+        color: #9fe7cc !important;
+    }
+
+    html[data-theme="dark"] .reason-visual,
+    html[data-theme="dark"] .reason-visual::after {
+        background: rgba(15, 23, 42, 0.92) !important;
+    }
+
+    html[data-theme="dark"] .form-shell .form-control,
+    html[data-theme="dark"] .form-shell .form-select,
+    html[data-theme="dark"] input,
+    html[data-theme="dark"] textarea,
+    html[data-theme="dark"] select {
+        background-color: rgba(15, 23, 42, 0.88) !important;
+        border-color: rgba(148, 163, 184, 0.22) !important;
+        color: #f8fafc !important;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02) !important;
+    }
+
+    html[data-theme="dark"] .form-shell .form-control::placeholder,
+    html[data-theme="dark"] .form-shell .form-select::placeholder,
+    html[data-theme="dark"] textarea::placeholder,
+    html[data-theme="dark"] input::placeholder {
+        color: #aebed5 !important;
+        opacity: 1 !important;
+    }
+
+    html[data-theme="dark"] .form-shell .form-control:focus,
+    html[data-theme="dark"] .form-shell .form-select:focus,
+    html[data-theme="dark"] textarea:focus,
+    html[data-theme="dark"] input:focus,
+    html[data-theme="dark"] select:focus {
+        background-color: rgba(15, 23, 42, 0.94) !important;
+        border-color: rgba(96, 165, 250, 0.72) !important;
+        box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.22) !important;
+        color: #f8fafc !important;
+    }
+
+    html[data-theme="dark"] .form-shell .alert-danger,
+    html[data-theme="dark"] .alert-danger {
+        background-color: rgba(239, 68, 68, 0.12) !important;
+        border-color: rgba(239, 68, 68, 0.35) !important;
+        color: #fecaca !important;
+    }
+
+    html[data-theme="dark"] .form-shell .alert-success,
+    html[data-theme="dark"] .alert-success {
+        background-color: rgba(16, 185, 129, 0.12) !important;
+        border-color: rgba(16, 185, 129, 0.35) !important;
+        color: #d1fae5 !important;
+    }
+
+    html[data-theme="dark"] .btn-primary,
+    html[data-theme="dark"] .btn-outline-primary,
+    html[data-theme="dark"] .btn-outline-light,
+    html[data-theme="dark"] .contact-cta .btn-light,
+    html[data-theme="dark"] .contact-cta .btn-outline-light {
+        transition: background-color .2s ease, border-color .2s ease, color .2s ease, box-shadow .2s ease, transform .2s ease;
+    }
+
+    html[data-theme="dark"] .btn-primary {
+        background-color: var(--cg-primary) !important;
+        border-color: var(--cg-primary) !important;
+        color: var(--cg-white) !important;
+        box-shadow: 0 10px 22px rgba(13, 110, 253, 0.28) !important;
+    }
+
+    html[data-theme="dark"] .btn-primary:hover,
+    html[data-theme="dark"] .btn-primary:focus,
+    html[data-theme="dark"] .btn-primary:active {
+        background-color: var(--cg-primary-dark) !important;
+        border-color: var(--cg-primary-dark) !important;
+        color: #ffffff !important;
+    }
+
+    html[data-theme="dark"] .btn-outline-primary {
+        background: rgba(13, 110, 253, 0.08) !important;
+        border-color: rgba(96, 165, 250, 0.42) !important;
+        color: #dfeeff !important;
+    }
+
+    html[data-theme="dark"] .btn-outline-primary:hover,
+    html[data-theme="dark"] .btn-outline-primary:focus,
+    html[data-theme="dark"] .btn-outline-primary:active {
+        background-color: var(--cg-primary) !important;
+        border-color: var(--cg-primary) !important;
+        color: #ffffff !important;
+    }
+
+    html[data-theme="dark"] .contact-cta {
+        background:
+            linear-gradient(90deg, rgba(11, 18, 30, 0.82) 0%, rgba(11, 18, 30, 0.76) 54%, rgba(11, 18, 30, 0.9) 100%),
+            linear-gradient(120deg, rgba(59,130,246,0.15), rgba(17,24,39,0.8)) !important;
+        border-color: rgba(148, 163, 184, 0.18) !important;
+        box-shadow: 0 18px 42px rgba(0, 0, 0, 0.44) !important;
+    }
+
+    html[data-theme="dark"] .contact-cta .text-white-50,
+    html[data-theme="dark"] .contact-cta p {
+        color: #dfe7f4 !important;
+    }
+
+    html[data-theme="dark"] .contact-cta .btn-light,
+    html[data-theme="dark"] .contact-cta .btn-outline-light {
+        background-color: var(--cg-primary) !important;
+        border-color: var(--cg-primary) !important;
+        color: #ffffff !important;
+    }
+
+    html[data-theme="dark"] .contact-cta .btn-outline-light:hover,
+    html[data-theme="dark"] .contact-cta .btn-outline-light:focus,
+    html[data-theme="dark"] .contact-cta .btn-light:hover,
+    html[data-theme="dark"] .contact-cta .btn-light:focus {
+        background-color: var(--cg-primary-dark) !important;
+        border-color: var(--cg-primary-dark) !important;
+        color: #ffffff !important;
+    }
+
+    html[data-theme="dark"] .site-footer {
+        background-color: #0b1220 !important;
+    }
+
+    html[data-theme="dark"] .footer-intro,
+    html[data-theme="dark"] .footer-links a,
+    html[data-theme="dark"] .footer-links li,
+    html[data-theme="dark"] .footer-legal,
+    html[data-theme="dark"] .footer-developer {
+        color: rgba(255,255,255,0.8) !important;
+    }
+
+    html[data-theme="dark"] .footer-developer a {
+        color: #8ec5ff !important;
+    }
+
+    html[data-theme="dark"] .footer-developer a:hover,
+    html[data-theme="dark"] .footer-developer a:focus {
+        color: #dfeeff !important;
+    }
+
+    html[data-theme="dark"] .faq-item {
+        background: linear-gradient(145deg, rgba(59, 130, 246, 0.04), rgba(17, 24, 39, 0.96) 58%) !important;
+    }
+
+    html[data-theme="dark"] .faq-item p,
+    html[data-theme="dark"] .faq-item .text-muted {
+        color: #dfe7f4 !important;
+    }
+
+    @media (max-width: 767.98px) {
+        html[data-theme="dark"] .form-shell,
+        html[data-theme="dark"] .reason-card,
+        html[data-theme="dark"] .contact-card,
+        html[data-theme="dark"] .faq-item {
+            padding: 1.1rem !important;
+        }
+    }
+
     .breadcrumb {
         margin-bottom: 1rem;
         font-size: 0.92rem;

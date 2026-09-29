@@ -18,9 +18,9 @@ if (empty($_SESSION['user_id']) || empty($_SESSION['user_role']) || $_SESSION['u
     $requestUri = $_SERVER['REQUEST_URI'] ?? '/';
     $next = rawurlencode($requestUri);
     if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin') {
-        header('Location: admin/login.php');
+        header('Location: ../admin/login.php');
     } else {
-        header('Location: login.php?next=' . $next);
+        header('Location: ../login.php?next=' . $next);
     }
     exit;
 }
@@ -52,13 +52,13 @@ if ($stmt) {
             );
         }
         session_destroy();
-        // Preserve return target if available (use relative path to support subfolder installs)
+        // Preserve return target if available (use the project root login page from candidate routes)
         $requestUri = $_SERVER['REQUEST_URI'] ?? '/';
-        header('Location: login.php?next=' . rawurlencode($requestUri));
+        header('Location: ../login.php?next=' . rawurlencode($requestUri));
         exit;
     }
 } else {
-    header('Location: /login.php');
+    header('Location: ../login.php');
     exit;
 }
 $conn->close();

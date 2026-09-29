@@ -599,6 +599,26 @@ html[data-theme="dark"] .profile-wrapper .btn:focus-visible {
 }
 
 @media (max-width: 576px) {
+    .profile-actions {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .profile-actions .btn {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .profile-actions a[href="resume.php"] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        white-space: normal;
+        text-align: center;
+        line-height: 1.2;
+        min-width: 0;
+    }
+
     .profile-wrapper {
         padding: 2rem 0;
     }

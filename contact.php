@@ -200,6 +200,95 @@ require_once __DIR__ . '/includes/navbar.php';
         box-shadow: var(--cg-shadow-soft);
     }
 
+    .contact-success-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 1060;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1.25rem;
+        background: rgba(15, 23, 42, 0.38);
+        backdrop-filter: blur(2px);
+    }
+
+    .contact-success-card {
+        position: relative;
+        width: min(100%, 34rem);
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        padding: 1.5rem 1.4rem;
+        border: 1px solid rgba(16, 185, 129, 0.22);
+        border-radius: 1.25rem;
+        background: rgba(255, 255, 255, 0.97);
+        box-shadow: 0 24px 60px rgba(15, 23, 42, 0.2);
+    }
+
+    .contact-success-close {
+        position: absolute;
+        top: 0.8rem;
+        right: 0.8rem;
+        width: 2.25rem;
+        height: 2.25rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        border: 1px solid rgba(148, 163, 184, 0.28);
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.82);
+        color: #475569;
+        font-size: 1.15rem;
+        line-height: 1;
+        cursor: pointer;
+        transition: background-color .2s ease, border-color .2s ease, color .2s ease, transform .2s ease, box-shadow .2s ease;
+    }
+
+    .contact-success-close:hover,
+    .contact-success-close:focus-visible {
+        background: rgba(15, 23, 42, 0.04);
+        border-color: rgba(15, 23, 42, 0.12);
+        color: #0f172a;
+        box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.12);
+        transform: translateY(-1px);
+        outline: none;
+    }
+
+    .contact-success-icon {
+        flex: 0 0 auto;
+        width: 3rem;
+        height: 3rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0.9rem;
+        background: rgba(16, 185, 129, 0.12);
+        color: #0f9f6e;
+        font-size: 1.35rem;
+    }
+
+    .contact-success-body {
+        flex: 1 1 auto;
+        min-width: 0;
+    }
+
+    .contact-success-label {
+        margin: 0 0 0.35rem;
+        color: #0b6f4d;
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+    }
+
+    .contact-success-card p {
+        margin: 0;
+        color: #1e3b2b;
+        line-height: 1.65;
+        word-break: break-word;
+    }
+
     .reason-card {
         padding: 1.5rem;
         height: 100%;
@@ -346,6 +435,10 @@ require_once __DIR__ . '/includes/navbar.php';
     .contact-cta .btn-outline-light { border-color: #0d6efd; color: #0a58ca; }
     .contact-cta .btn-outline-light:hover,
     .contact-cta .btn-outline-light:focus { background: #0d6efd; border-color: #0d6efd; color: #fff; }
+
+    .contact-cta a[href="register.php"].btn.btn-outline-light {
+        color: #ffffff !important;
+    }
 
     /* Ensure outline-style CTA on Contact page has #0d6efd background by default
        Only changing the background-color as requested; text and border colors left unchanged. */
@@ -526,11 +619,41 @@ require_once __DIR__ . '/includes/navbar.php';
         color: #fecaca !important;
     }
 
-    html[data-theme="dark"] .form-shell .alert-success,
-    html[data-theme="dark"] .alert-success {
-        background-color: rgba(16, 185, 129, 0.12) !important;
-        border-color: rgba(16, 185, 129, 0.35) !important;
-        color: #d1fae5 !important;
+    html[data-theme="dark"] .contact-success-overlay {
+        background: rgba(2, 6, 23, 0.62) !important;
+    }
+
+    html[data-theme="dark"] .contact-success-card {
+        background: rgba(15, 23, 42, 0.96) !important;
+        border-color: rgba(110, 231, 183, 0.3) !important;
+        box-shadow: 0 24px 60px rgba(3, 7, 18, 0.62) !important;
+    }
+
+    html[data-theme="dark"] .contact-success-close {
+        background: rgba(15, 23, 42, 0.75) !important;
+        border-color: rgba(148, 163, 184, 0.2) !important;
+        color: #dfe7f4 !important;
+    }
+
+    html[data-theme="dark"] .contact-success-close:hover,
+    html[data-theme="dark"] .contact-success-close:focus-visible {
+        background: rgba(30, 41, 59, 0.92) !important;
+        border-color: rgba(148, 163, 184, 0.34) !important;
+        color: #f8fafc !important;
+        box-shadow: 0 0 0 0.2rem rgba(96, 165, 250, 0.18) !important;
+    }
+
+    html[data-theme="dark"] .contact-success-icon {
+        background: rgba(16, 185, 129, 0.18) !important;
+        color: #93f7c5 !important;
+    }
+
+    html[data-theme="dark"] .contact-success-label {
+        color: #a7f3d0 !important;
+    }
+
+    html[data-theme="dark"] .contact-success-card p {
+        color: #e8fff5 !important;
     }
 
     html[data-theme="dark"] .btn-primary,
@@ -733,8 +856,19 @@ require_once __DIR__ . '/includes/navbar.php';
                         <?php endif; ?>
 
                         <?php if ($successMessage !== ''): ?>
-                            <div class="alert alert-success" role="alert" aria-live="polite">
-                                <?php echo htmlspecialchars($successMessage, ENT_QUOTES, 'UTF-8'); ?>
+                            <div class="contact-success-overlay" role="alertdialog" aria-modal="true" aria-live="polite" aria-labelledby="contactSuccessTitle">
+                                <div class="contact-success-card">
+                                    <button class="contact-success-close" type="button" aria-label="Close" title="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <div class="contact-success-icon" aria-hidden="true">
+                                        <i class="bi bi-check-circle-fill"></i>
+                                    </div>
+                                    <div class="contact-success-body">
+                                        <div id="contactSuccessTitle" class="contact-success-label">Message Sent Successfully</div>
+                                        <p><?php echo htmlspecialchars($successMessage, ENT_QUOTES, 'UTF-8'); ?></p>
+                                    </div>
+                                </div>
                             </div>
                         <?php endif; ?>
 
@@ -885,6 +1019,30 @@ require_once __DIR__ . '/includes/navbar.php';
     if (window.ResizeObserver) {
         new ResizeObserver(matchPanelHeight).observe(formShell);
     }
+})();
+</script>
+
+<script>
+(function () {
+    var closeButtons = document.querySelectorAll('.contact-success-close');
+
+    closeButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+            var overlay = button.closest('.contact-success-overlay');
+            if (overlay) {
+                overlay.style.display = 'none';
+            }
+        });
+    });
+
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape') {
+            var overlay = document.querySelector('.contact-success-overlay');
+            if (overlay && overlay.style.display !== 'none') {
+                overlay.style.display = 'none';
+            }
+        }
+    });
 })();
 </script>
 

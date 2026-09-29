@@ -558,7 +558,7 @@ if (!function_exists('cg_render_safe_text')) {
                                             <a href="candidate/apply.php?job_id=<?php echo (int)$job['id']; ?>" class="btn btn-primary">Apply Now</a>
                                         <?php endif; ?>
                                     <?php else: ?>
-                                        <a href="login.php?job_id=<?php echo (int)$job['id']; ?>" class="btn btn-primary">Login to Apply</a>
+                                        <a href="login.php?job_id=<?php echo (int)$job['id']; ?>&next=<?php echo rawurlencode($_SERVER['REQUEST_URI'] ?? '/job-details.php?id=' . (int)$job['id']); ?>" class="btn btn-primary">Login to Apply</a>
                                     <?php endif; ?>
                                 </div>
 

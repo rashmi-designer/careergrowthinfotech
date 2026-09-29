@@ -450,6 +450,7 @@ $conn->close();
                                                          data-subject="<?php echo htmlspecialchars((string)($message['subject'] ?? '-'), ENT_QUOTES, 'UTF-8'); ?>"
                                                          data-created="<?php echo htmlspecialchars((string)($message['created_at'] ?? '-'), ENT_QUOTES, 'UTF-8'); ?>"
                                                          data-message="<?php echo htmlspecialchars((string)($message['message'] ?? ''), ENT_QUOTES, 'UTF-8'); ?>"
+                                                         data-is-read="<?php echo (int)($message['is_read'] ?? 0); ?>"
                                                      >View</a>
                                     </td>
                                 </tr>
@@ -489,15 +490,65 @@ $conn->close();
         const metaEl = document.getElementById('cg-modal-meta');
         const messageEl = document.getElementById('cg-modal-message');
 
+        function syncUnreadBadge(count){
+            const badge = document.querySelector('.unread-badge');
+            const nextCount = Math.max(0, Number(count) || 0);
+
+            if (nextCount <= 0) {
+                if (badge) badge.remove();
+                return;
+            }
+
+            if (!badge) {
+                return;
+            }
+
+            badge.innerHTML = '<i class="bi bi-dot"></i> ' + nextCount + ' unread';
+        }
+
+        function updateReadState(row, isRead){
+            if (!row) return;
+
+            row.classList.toggle('unread', !isRead);
+            row.classList.toggle('read', isRead);
+
+            const statusNode = row.querySelector('.read-status');
+            if (statusNode) {
+                statusNode.classList.toggle('unread', !isRead);
+                statusNode.classList.toggle('read', isRead);
+                statusNode.textContent = isRead ? 'Read' : 'Unread';
+            }
+        }
+
         function openModal(data){
             subjectEl.textContent = data.subject || 'Message';
             metaEl.textContent = (data.name ? data.name + ' — ' : '') + (data.email ? data.email + ' • ' : '') + (data.created || '');
             messageEl.innerHTML = nl2br(data.message || '');
             modal.style.display = 'flex';
             document.body.style.overflow = 'hidden';
-            // mark as read via background fetch to preserve server-side behavior
-            if (data.href) {
-                fetch(data.href, { credentials: 'same-origin' }).catch(()=>{});
+
+            const btn = document.querySelector('.view-message-btn[data-id="' + (data.id || '') + '"]');
+            const row = btn?.closest('tr');
+            const shouldDecreaseUnread = Number(data.isRead || 0) === 0;
+
+            if (shouldDecreaseUnread && data.href) {
+                if (btn) {
+                    btn.setAttribute('data-is-read', '1');
+                }
+                if (row) {
+                    updateReadState(row, true);
+                }
+
+                fetch(data.href, { credentials: 'same-origin' })
+                    .then(() => {
+                        const badge = document.querySelector('.unread-badge');
+                        const currentCount = badge ? parseInt((badge.textContent || '').match(/\d+/)?.[0] || '0', 10) : 0;
+                        const nextCount = Math.max(0, currentCount - 1);
+                        syncUnreadBadge(nextCount);
+                    })
+                    .catch(() => {
+                        // Keep the row and badge state consistent even if the background request is interrupted.
+                    });
             }
         }
 
@@ -516,7 +567,8 @@ $conn->close();
                     subject: this.getAttribute('data-subject'),
                     created: this.getAttribute('data-created'),
                     message: this.getAttribute('data-message'),
-                    href: this.getAttribute('href')
+                    href: this.getAttribute('href'),
+                    isRead: this.getAttribute('data-is-read') || '0'
                 };
                 openModal(data);
             });

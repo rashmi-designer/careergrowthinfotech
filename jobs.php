@@ -588,7 +588,6 @@ if ($categoryFilter !== '') {
                         <div class="eyebrow">Career Opportunities</div>
                         <h1>Find the right role for your next step</h1>
                     </div>
-                            <a href="contact.php" class="btn btn-outline-primary">Talk to our team</a>
                     <a href="index.php" class="badge bg-primary-subtle text-primary px-3 py-2 rounded-pill text-decoration-none">
                         <i class="bi bi-briefcase me-2"></i>Career Grow Infotech
                     </a>

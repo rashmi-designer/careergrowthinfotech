@@ -536,6 +536,97 @@ $conn->close();
     color: #065f46;
 }
 
+/* Admin Profile Dark Mode Support */
+html[data-theme="dark"] .admin-root {
+    --dash-ink: #e5e7eb;
+    --dash-navy: #1f2937;
+    --dash-blue: #60a5fa;
+    --dash-mint: #10b981;
+    --dash-surface: #1f2937;
+    --dash-bg: #111827;
+    --dash-border: #374151;
+    --dash-muted: #9ca3af;
+    --cg-white: #1f2937;
+    --cg-border: #374151;
+    --cg-primary: #60a5fa;
+    --cg-accent: #10b981;
+    --cg-muted: #9ca3af;
+    --cg-text: #e5e7eb;
+}
+
+html[data-theme="dark"] .admin-root {
+    background: var(--dash-bg);
+    color: var(--dash-ink);
+}
+
+html[data-theme="dark"] .card-panel {
+    background: var(--dash-surface);
+    border-color: var(--dash-border);
+}
+
+html[data-theme="dark"] .form-control,
+html[data-theme="dark"] .form-select {
+    background: #0f172a;
+    color: var(--dash-ink);
+    border-color: var(--dash-border);
+}
+
+html[data-theme="dark"] .form-control::placeholder,
+html[data-theme="dark"] .form-select::placeholder {
+    color: var(--dash-muted);
+}
+
+html[data-theme="dark"] .form-control:focus,
+html[data-theme="dark"] .form-select:focus {
+    border-color: var(--dash-blue);
+    box-shadow: 0 8px 20px rgba(96, 165, 250, 0.12);
+}
+
+html[data-theme="dark"] .btn-primary {
+    background: var(--dash-blue);
+    border-color: var(--dash-blue);
+    box-shadow: 0 12px 28px rgba(96, 165, 250, 0.15);
+}
+
+html[data-theme="dark"] .btn-primary:hover,
+html[data-theme="dark"] .btn-primary:focus,
+html[data-theme="dark"] .btn-primary:active {
+    background: #3b82f6 !important;
+    border-color: #3b82f6 !important;
+    box-shadow: 0 16px 32px rgba(59, 130, 246, 0.28) !important;
+}
+
+html[data-theme="dark"] .btn-outline-secondary {
+    border-color: rgba(96, 165, 250, 0.2);
+    background: rgba(96, 165, 250, 0.08);
+    color: var(--dash-ink);
+}
+
+html[data-theme="dark"] .btn-outline-secondary:hover,
+html[data-theme="dark"] .btn-outline-secondary:focus,
+html[data-theme="dark"] .btn-outline-secondary:active {
+    background: rgba(96, 165, 250, 0.16) !important;
+    border-color: rgba(96, 165, 250, 0.3) !important;
+    color: var(--dash-ink) !important;
+}
+
+html[data-theme="dark"] .alert-danger {
+    background: rgba(220, 38, 38, 0.15);
+    border-color: rgba(220, 38, 38, 0.3);
+    color: #fca5a5;
+}
+
+html[data-theme="dark"] .alert-success {
+    background: rgba(16, 185, 129, 0.15);
+    border-color: rgba(16, 185, 129, 0.3);
+    color: #86efac;
+}
+
+html[data-theme="dark"] .status-badge {
+    background: rgba(16, 185, 129, 0.2);
+    color: #86efac;
+}
+
 @media (max-width: 991.98px) {
     .admin-root {
         flex-direction: column;

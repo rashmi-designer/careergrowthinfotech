@@ -1,0 +1,10 @@
+FILE: C:\xampp\htdocs\careergrowthinfotech\admin\applicants.php
+
+Parse error: syntax error, unexpected identifier "container" in C:\xampp\htdocs\careergrowthinfotech\admin\applicants.php on line 517
+Errors parsing C:\xampp\htdocs\careergrowthinfotech\admin\applicants.php
+PHP Parse error:  syntax error, unexpected identifier "container" in C:\xampp\htdocs\careergrowthinfotech\admin\applicants.php on line 517
+FILE: C:\xampp\htdocs\careergrowthinfotech\admin\candidate-details.php
+
+Parse error: Unmatched '}' in C:\xampp\htdocs\careergrowthinfotech\admin\candidate-details.php on line 41
+Errors parsing C:\xampp\htdocs\careergrowthinfotech\admin\candidate-details.php
+PHP Parse error:  Unmatched '}' in C:\xampp\htdocs\careergrowthinfotech\admin\candidate-details.php on line 41

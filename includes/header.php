@@ -27,6 +27,24 @@ $siteStylesheetVersion = (string) filemtime(__DIR__ . '/../assets/css/style.css'
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="<?php echo htmlspecialchars($basePath, ENT_QUOTES, 'UTF-8'); ?>assets/css/style.css?v=<?php echo htmlspecialchars($siteStylesheetVersion, ENT_QUOTES, 'UTF-8'); ?>">
+    <?php if (strpos($scriptPath, '/admin/') === false): ?>
+    <script>
+        // Public/Candidate theme initialization to prevent FOUC.
+        // Uses localStorage key 'site-theme'. Values: 'light' or 'dark'.
+        (function(){
+            try {
+                var t = localStorage.getItem('site-theme');
+                if (t === 'dark') {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                } else {
+                    document.documentElement.removeAttribute('data-theme');
+                }
+            } catch (e) {
+                // silent fallback
+            }
+        })();
+    </script>
+    <?php endif; ?>
 </head>
 <body class="d-flex flex-column min-vh-100">
 <?php if (strpos($scriptPath, '/admin/') !== false): ?>

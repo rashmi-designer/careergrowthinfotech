@@ -104,6 +104,175 @@ $conn->close();
 .status-reviewed { background-color: #fff3e0; color: #e65100; }
 .status-accepted { background-color: #e8f5e9; color: #2e7d32; }
 .status-rejected { background-color: #ffebee; color: #c62828; }
+
+html[data-theme="dark"] {
+    --app-surface: rgba(17, 24, 39, 0.96);
+    --app-surface-alt: rgba(31, 41, 55, 0.95);
+    --app-line: rgba(148, 163, 184, 0.22);
+    --app-text: #e5e7eb;
+    --app-muted: #9ca3af;
+    --app-soft: rgba(148, 163, 184, 0.12);
+}
+
+html[data-theme="dark"] body {
+    background: #0f172a;
+    color: var(--app-text);
+}
+
+html[data-theme="dark"] .applications-container,
+html[data-theme="dark"] .applications-section,
+html[data-theme="dark"] .app-card {
+    background: var(--cg-white);
+    border-color: var(--cg-border);
+}
+
+html[data-theme="dark"] .applications-section {
+    box-shadow: 0 10px 26px rgba(2, 6, 23, 0.38);
+}
+
+html[data-theme="dark"] .applications-section h2,
+html[data-theme="dark"] .app-title,
+html[data-theme="dark"] .app-title a,
+html[data-theme="dark"] .status-filter .filter-btn,
+html[data-theme="dark"] .applications-section .text-muted,
+html[data-theme="dark"] .app-card .app-meta,
+html[data-theme="dark"] .app-card .app-meta span,
+html[data-theme="dark"] .empty-state p,
+html[data-theme="dark"] .empty-state .text-muted {
+    color: var(--cg-text);
+}
+
+html[data-theme="dark"] .app-meta,
+html[data-theme="dark"] .app-card .app-meta,
+html[data-theme="dark"] .applications-section .text-muted,
+html[data-theme="dark"] .empty-state p,
+html[data-theme="dark"] .empty-state .text-muted {
+    color: var(--cg-muted);
+}
+
+html[data-theme="dark"] .app-card {
+    background: rgba(17, 24, 39, 0.9);
+    border-color: var(--cg-border);
+    box-shadow: 0 8px 20px rgba(2, 6, 23, 0.36);
+}
+
+html[data-theme="dark"] .app-card:hover {
+    box-shadow: 0 12px 28px rgba(2, 6, 23, 0.52);
+    border-color: rgba(96, 165, 250, 0.38);
+}
+
+html[data-theme="dark"] .app-title a {
+    color: var(--cg-text);
+}
+
+html[data-theme="dark"] .app-title a:hover,
+html[data-theme="dark"] .app-title a:focus,
+html[data-theme="dark"] .app-title a:active {
+    color: var(--cg-primary);
+}
+
+html[data-theme="dark"] .status-filter .filter-btn {
+    background: rgba(15, 23, 42, 0.8);
+    border-color: var(--cg-border);
+    color: var(--cg-text);
+}
+
+html[data-theme="dark"] .status-filter .filter-btn:hover,
+html[data-theme="dark"] .status-filter .filter-btn:focus {
+    background: rgba(30, 41, 59, 0.95);
+    border-color: rgba(96, 165, 250, 0.5);
+    color: var(--cg-text);
+}
+
+html[data-theme="dark"] .status-filter .filter-btn.active {
+    background: var(--cg-primary);
+    border-color: var(--cg-primary);
+    color: #ffffff;
+}
+
+html[data-theme="dark"] .status-badge {
+    border: 1px solid transparent;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04);
+}
+
+html[data-theme="dark"] .status-new,
+html[data-theme="dark"] .status-new-applied {
+    background-color: rgba(59, 130, 246, 0.18);
+    border-color: rgba(96, 165, 250, 0.28);
+    color: #bfdbfe;
+}
+
+html[data-theme="dark"] .status-reviewed {
+    background-color: rgba(245, 158, 11, 0.18);
+    border-color: rgba(251, 191, 36, 0.24);
+    color: #fcd34d;
+}
+
+html[data-theme="dark"] .status-accepted {
+    background-color: rgba(16, 185, 129, 0.18);
+    border-color: rgba(52, 211, 153, 0.28);
+    color: #a7f3d0;
+}
+
+html[data-theme="dark"] .status-rejected {
+    background-color: rgba(239, 68, 68, 0.18);
+    border-color: rgba(248, 113, 113, 0.3);
+    color: #fecaca;
+}
+
+html[data-theme="dark"] .empty-state {
+    background: rgba(15, 23, 42, 0.45);
+    border: 1px solid var(--cg-border);
+    border-radius: 0.75rem;
+    color: var(--cg-text);
+}
+
+html[data-theme="dark"] .empty-state .btn-primary,
+html[data-theme="dark"] .empty-state a.btn.btn-primary {
+    color: #ffffff;
+    background: var(--cg-primary);
+    border-color: var(--cg-primary);
+}
+
+html[data-theme="dark"] .empty-state .btn-primary:hover,
+html[data-theme="dark"] .empty-state a.btn.btn-primary:hover,
+html[data-theme="dark"] .empty-state .btn-primary:focus,
+html[data-theme="dark"] .empty-state a.btn.btn-primary:focus {
+    background: var(--cg-primary-dark);
+    border-color: var(--cg-primary-dark);
+    color: #ffffff;
+}
+
+@media (max-width: 576px) {
+    html[data-theme="dark"] .applications-section {
+        padding: 1.1rem 0.9rem;
+    }
+
+    html[data-theme="dark"] .status-filter {
+        gap: 0.45rem;
+    }
+
+    html[data-theme="dark"] .status-filter .filter-btn {
+        flex: 1 1 calc(50% - 0.45rem);
+        text-align: center;
+        white-space: normal;
+    }
+
+    html[data-theme="dark"] .app-card {
+        padding: 1rem 0.9rem;
+    }
+
+    html[data-theme="dark"] .app-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+
+    html[data-theme="dark"] .app-meta {
+        flex-direction: column;
+        gap: 0.35rem;
+    }
+}
 </style>
 
 <main class="applications-container py-5">

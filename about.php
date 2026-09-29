@@ -143,6 +143,108 @@
         color: #ffffff;
     }
 
+    /* Public/Candidate dark mode overrides for the two requested About-page sections only. */
+    html[data-theme="dark"] .about-hero {
+        background:
+            radial-gradient(circle at 82% 38%, rgba(255, 255, 255, 0.08), transparent 25%),
+            radial-gradient(circle at 100% 0%, rgba(13, 110, 253, 0.22), transparent 36%),
+            linear-gradient(118deg, rgba(15, 23, 42, 0.98) 0%, rgba(17, 24, 39, 0.96) 38%, rgba(15, 23, 42, 0.92) 100%) !important;
+        border-color: rgba(148, 163, 184, 0.2) !important;
+        box-shadow: 0 20px 46px rgba(0, 0, 0, 0.4) !important;
+    }
+
+    html[data-theme="dark"] .about-hero h1,
+    html[data-theme="dark"] .about-hero h3,
+    html[data-theme="dark"] .about-hero h6,
+    html[data-theme="dark"] .about-value h5,
+    html[data-theme="dark"] .about-hero .fw-semibold,
+    html[data-theme="dark"] .about-hero .text-dark,
+    html[data-theme="dark"] .about-hero .d-flex.align-items-center.gap-2 {
+        color: #f8fafc !important;
+    }
+
+    html[data-theme="dark"] .about-hero .text-muted,
+    html[data-theme="dark"] .about-hero small,
+    html[data-theme="dark"] .about-value .text-muted,
+    html[data-theme="dark"] .about-hero .small,
+    html[data-theme="dark"] .about-hero p,
+    html[data-theme="dark"] .about-hero .about-hero-card p,
+    html[data-theme="dark"] .about-hero .about-hero-card small,
+    html[data-theme="dark"] .about-hero .d-flex.align-items-center.gap-2 {
+        color: #dfe7f4 !important;
+    }
+
+    html[data-theme="dark"] .about-badge {
+        background: rgba(13, 110, 253, 0.12) !important;
+        color: #dfeeff !important;
+        border: 1px solid rgba(120, 168, 255, 0.2) !important;
+    }
+
+    html[data-theme="dark"] .about-hero-card {
+        background: rgba(17, 24, 39, 0.9) !important;
+        border-color: rgba(148, 163, 184, 0.18) !important;
+        box-shadow: 0 18px 40px rgba(2, 6, 23, 0.5) !important;
+    }
+
+    html[data-theme="dark"] .about-value {
+        background: rgba(17, 24, 39, 0.9) !important;
+        border-color: rgba(148, 163, 184, 0.18) !important;
+        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35) !important;
+    }
+
+    html[data-theme="dark"] .about-icon--blue { background: rgba(59, 130, 246, 0.12) !important; color: #8ec5ff !important; }
+    html[data-theme="dark"] .about-icon--orange { background: rgba(249, 115, 22, 0.12) !important; color: #fbbf8d !important; }
+    html[data-theme="dark"] .about-icon--purple { background: rgba(168, 85, 247, 0.12) !important; color: #d9b8ff !important; }
+    html[data-theme="dark"] .about-icon--green { background: rgba(16, 185, 129, 0.12) !important; color: #9fe7cc !important; }
+
+    html[data-theme="dark"] .about-check--blue,
+    html[data-theme="dark"] .about-check--orange {
+        color: var(--cg-primary) !important;
+    }
+
+    html[data-theme="dark"] .about-cta-banner {
+        background: linear-gradient(112deg, rgba(15, 23, 42, 0.96) 0%, rgba(17, 24, 39, 0.96) 52%, rgba(17, 24, 39, 0.92) 100%) !important;
+        border-color: rgba(148, 163, 184, 0.16) !important;
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.42) !important;
+    }
+
+    html[data-theme="dark"] .about-cta-banner h2 {
+        color: #f8fafc !important;
+    }
+
+    html[data-theme="dark"] .about-cta-banner .text-white-50,
+    html[data-theme="dark"] .about-cta-banner p,
+    html[data-theme="dark"] .about-cta-banner .text-white-50.mb-0 {
+        color: #dfe7f4 !important;
+    }
+
+    html[data-theme="dark"] .about-cta-banner .btn-light {
+        background-color: var(--cg-primary) !important;
+        border-color: var(--cg-primary) !important;
+        color: var(--cg-white) !important;
+        box-shadow: 0 10px 22px rgba(13, 110, 253, 0.24) !important;
+    }
+
+    html[data-theme="dark"] .about-cta-banner .btn-outline-light {
+        background-color: transparent !important;
+        border-color: rgba(148, 163, 184, 0.28) !important;
+        color: var(--cg-white) !important;
+    }
+
+    html[data-theme="dark"] .about-cta-banner .btn-outline-light:hover,
+    html[data-theme="dark"] .about-cta-banner .btn-outline-light:focus {
+        background: var(--cg-primary) !important;
+        border-color: var(--cg-primary) !important;
+        color: var(--cg-white) !important;
+    }
+
+    @media (max-width: 767.98px) {
+        html[data-theme="dark"] .about-hero .d-flex.flex-wrap,
+        html[data-theme="dark"] .about-cta-banner .d-flex.flex-wrap {
+            gap: 0.75rem;
+        }
+    }
+
 </style>
 
 <main>

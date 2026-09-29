@@ -101,6 +101,220 @@ require_once __DIR__ . '/includes/navbar.php';
             .hero-bottom-spacing { padding-bottom: 2.5rem; }
         </style>
 
+        <style>
+            /* Home-page scoped dark mode overrides.
+               These rules only apply when the public theme sets html[data-theme="dark"].
+               They are intentionally scoped to the Home page to avoid touching Admin styles.
+            */
+            html[data-theme="dark"] .navbar {
+                background-color: var(--cg-dark) !important;
+                border-bottom-color: var(--cg-border) !important;
+                box-shadow: 0 1px 6px rgba(0,0,0,0.6) !important;
+            }
+
+            html[data-theme="dark"] .navbar-collapse {
+                background: rgba(17,24,39,0.98) !important;
+                box-shadow: -12px 0 38px rgba(0,0,0,0.6) !important;
+                border-radius: 1rem 0 0 1rem;
+                border-color: rgba(255,255,255,0.03) !important;
+            }
+
+            html[data-theme="dark"] .theme-toggle {
+                color: var(--cg-white) !important;
+                border-color: rgba(255,255,255,0.06) !important;
+                background: transparent !important;
+            }
+
+            /* Search area: make the section and inputs read as dark surfaces */
+            html[data-theme="dark"] .search-section {
+                background: linear-gradient(180deg, rgba(6,12,20,0.75) 0%, rgba(8,14,24,0.95) 100%) !important;
+            }
+            html[data-theme="dark"] .search-card {
+                background: var(--cg-white) !important;
+                border-color: var(--cg-border) !important;
+                box-shadow: 0 18px 46px rgba(0,0,0,0.6) !important;
+            }
+            html[data-theme="dark"] .search-form .input-group {
+                background: rgba(255,255,255,0.02) !important;
+                border-color: #374151 !important;
+            }
+            html[data-theme="dark"] .search-form .input-group-text {
+                background: rgba(255,255,255,0.03) !important;
+                color: var(--cg-primary) !important;
+                border-right: 1px solid rgba(255,255,255,0.04) !important;
+            }
+
+            /* Category and card surfaces */
+            html[data-theme="dark"] .categories-section {
+                background: radial-gradient(circle at 50% 0, rgba(13,110,253,0.03), transparent 34rem), var(--cg-dark) !important;
+            }
+            html[data-theme="dark"] .category-card,
+            html[data-theme="dark"] .why-choose-card,
+            html[data-theme="dark"] .service-card,
+            html[data-theme="dark"] .trust-card,
+            html[data-theme="dark"] .job-card,
+            html[data-theme="dark"] .career-point {
+                background: var(--cg-white) !important;
+                border-color: var(--cg-border) !important;
+                box-shadow: 0 12px 34px rgba(0,0,0,0.5) !important;
+            }
+
+            html[data-theme="dark"] .category-card h5,
+            html[data-theme="dark"] .why-choose-card h5,
+            html[data-theme="dark"] .job-card h5,
+            html[data-theme="dark"] .trust-card h5 {
+                color: var(--cg-white) !important;
+            }
+
+            html[data-theme="dark"] .category-card p,
+            html[data-theme="dark"] .why-choose-card p,
+            html[data-theme="dark"] .service-card p,
+            html[data-theme="dark"] .trust-feature p,
+            html[data-theme="dark"] .career-point p,
+            html[data-theme="dark"] .search-header p,
+            html[data-theme="dark"] .text-muted {
+                color: var(--cg-muted) !important;
+            }
+
+            /* CTA / panels */
+            html[data-theme="dark"] .cta-dual-section {
+                background: linear-gradient(118deg, rgba(6,10,18,0.6), rgba(10,14,22,0.88)) !important;
+            }
+            html[data-theme="dark"] .cta-panel {
+                background: rgba(31,41,55,0.85) !important;
+                border-color: var(--cg-border) !important;
+                box-shadow: 0 22px 48px rgba(0,0,0,0.6) !important;
+            }
+            html[data-theme="dark"] .cta-panel h4 { color: var(--cg-white) !important; }
+            html[data-theme="dark"] .cta-panel p { color: var(--cg-muted) !important; }
+
+            /* Career Growth media labels and overlays */
+            html[data-theme="dark"] .career-growth-media::after { background: linear-gradient(180deg, rgba(0,0,0,0.36), transparent 42%, rgba(0,0,0,0.48)); }
+            html[data-theme="dark"] .career-growth-media-label {
+                background: rgba(255,255,255,0.03) !important;
+                border: 1px solid rgba(255,255,255,0.04) !important;
+                color: var(--cg-white) !important;
+            }
+
+            /* Hero content adjustments where inline styles used light backgrounds */
+            html[data-theme="dark"] .slide .slide-content {
+                background: linear-gradient(135deg, rgba(10,20,34,0.56), rgba(12,20,34,0.28)) !important;
+                border-color: rgba(255,255,255,0.06) !important;
+                color: var(--cg-white) !important;
+            }
+
+            /* Ensure buttons in dark mode keep readable contrast */
+            html[data-theme="dark"] .btn-primary { background-color: var(--cg-primary) !important; border-color: var(--cg-primary) !important; color: var(--cg-white) !important; }
+            html[data-theme="dark"] .btn-outline-primary { background-color: transparent !important; color: var(--cg-primary) !important; border-color: rgba(13,110,253,0.18) !important; }
+            html[data-theme="dark"] .btn-outline-light { background: rgba(255,255,255,0.04) !important; border-color: rgba(255,255,255,0.12) !important; color: var(--cg-white) !important; }
+
+            /* Footer uses existing vars; ensure contrast on small elements */
+            html[data-theme="dark"] .footer-links a,
+            html[data-theme="dark"] .footer-intro { color: rgba(255,255,255,0.78) !important; }
+
+            /* Minor hover/focus tweaks suitable for dark surfaces */
+            html[data-theme="dark"] .category-card:hover { box-shadow: 0 26px 56px rgba(0,0,0,0.6) !important; }
+            html[data-theme="dark"] .latest-jobs .job-card:hover { box-shadow: 0 26px 56px rgba(0,0,0,0.6) !important; }
+
+            /* Targeted fixes for requested sections: Get Started (cta-dual-section),
+               Build Your Career (career-growth) and Our Locations (locations-section).
+               These are intentionally specific to avoid changing other pages.
+            */
+            /* 1) GET STARTED - cta-dual-section */
+            html[data-theme="dark"] .cta-dual-section { color: var(--cg-white) !important; }
+            html[data-theme="dark"] .cta-dual-section .text-center p { color: var(--cg-muted) !important; }
+            html[data-theme="dark"] .cta-dual-section .container { background: linear-gradient(180deg, rgba(6,10,18,0.6), rgba(8,12,20,0.8)) !important; border-color: rgba(255,255,255,0.04) !important; }
+            html[data-theme="dark"] .cta-panel { background: rgba(30,41,59,0.88) !important; border-color: rgba(255,255,255,0.04) !important; }
+            html[data-theme="dark"] .cta-panel p { color: var(--cg-muted) !important; }
+            html[data-theme="dark"] .cta-panel .btn { box-shadow: 0 10px 22px rgba(0,0,0,0.5) !important; }
+
+            /* 2) BUILD YOUR CAREER - career-growth */
+            html[data-theme="dark"] .career-growth { background: linear-gradient(180deg, rgba(6,10,18,0.72), rgba(8,12,20,0.95)) !important; }
+            html[data-theme="dark"] .career-growth-shell { background: rgba(20,28,40,0.86) !important; border-color: rgba(255,255,255,0.04) !important; box-shadow: 0 20px 46px rgba(0,0,0,0.6) !important; }
+            html[data-theme="dark"] .career-growth-heading h2 { color: var(--cg-white) !important; }
+            html[data-theme="dark"] .career-growth-heading p { color: var(--cg-muted) !important; }
+            html[data-theme="dark"] .career-growth-visual { background: rgba(10,14,22,0.6) !important; border: 1px solid rgba(255,255,255,0.04) !important; }
+            html[data-theme="dark"] .career-growth-media-label { color: var(--cg-white) !important; background: rgba(255,255,255,0.03) !important; border-color: rgba(255,255,255,0.04) !important; }
+            html[data-theme="dark"] .career-point { background: rgba(255,255,255,0.02) !important; border-color: rgba(255,255,255,0.04) !important; }
+            html[data-theme="dark"] .career-point:hover { background: rgba(255,255,255,0.03) !important; box-shadow: 0 18px 40px rgba(0,0,0,0.55) !important; }
+
+            /* 3) OUR LOCATIONS - locations-section */
+            html[data-theme="dark"] .locations-section { background: linear-gradient(180deg, rgba(6,10,18,0.7), rgba(10,14,22,0.92)) !important; }
+            html[data-theme="dark"] .location-card { background: linear-gradient(115deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0.01) 100%) !important; border-color: rgba(255,255,255,0.04) !important; box-shadow: 0 12px 34px rgba(0,0,0,0.5) !important; }
+            html[data-theme="dark"] .location-icon { background: linear-gradient(145deg, rgba(255,255,255,0.02), rgba(255,255,255,0.03)) !important; box-shadow: inset 0 1px 0 rgba(255,255,255,0.02) !important; }
+            html[data-theme="dark"] .locations-section h5, html[data-theme="dark"] .location-card h5 { color: var(--cg-white) !important; }
+            html[data-theme="dark"] .locations-section p, html[data-theme="dark"] .location-card p { color: var(--cg-muted) !important; }
+            html[data-theme="dark"] .office-map { background: rgba(255,255,255,0.02) !important; border: 1px solid rgba(255,255,255,0.03) !important; }
+
+            /* Ensure responsive behavior remains good on small screens */
+            @media (max-width: 767.98px) {
+                html[data-theme="dark"] .cta-dual-section .container,
+                html[data-theme="dark"] .career-growth-shell {
+                    padding: 1rem !important;
+                }
+            }
+
+            /* CONTACT STRIP (immediately below Our Locations) - dark mode fixes */
+            html[data-theme="dark"] .contact-strip {
+                background: linear-gradient(115deg, rgba(17,24,39,0.86) 0%, rgba(15,23,42,0.95) 48%, rgba(17,24,39,0.9) 100%) !important;
+                border: 1px solid rgba(148,163,184,0.18) !important;
+                box-shadow: 0 12px 28px rgba(0,0,0,0.55) !important;
+                color: var(--cg-white) !important;
+            }
+
+            html[data-theme="dark"] .contact-strip-item { min-height: 48px; }
+
+            html[data-theme="dark"] .contact-strip-icon {
+                background: rgba(96,165,250,0.12) !important;
+                color: #93c5fd !important;
+                box-shadow: inset 0 1px 0 rgba(255,255,255,0.02) !important;
+            }
+
+            html[data-theme="dark"] .contact-strip-label {
+                color: #cbd5e1 !important;
+            }
+
+            html[data-theme="dark"] .contact-strip .contact-strip-link {
+                color: #f8fafc !important;
+                font-weight: 700;
+            }
+
+            html[data-theme="dark"] .contact-strip .contact-strip-link:hover,
+            html[data-theme="dark"] .contact-strip .contact-strip-link:focus {
+                color: #93c5fd !important;
+            }
+
+            html[data-theme="dark"] .contact-strip .btn-primary {
+                background: var(--cg-primary) !important;
+                border-color: var(--cg-primary) !important;
+                color: var(--cg-white) !important;
+            }
+            html[data-theme="dark"] .contact-strip .btn-primary:hover,
+            html[data-theme="dark"] .contact-strip .btn-primary:focus,
+            html[data-theme="dark"] .contact-strip .btn-primary:active {
+                background: #2563eb !important;
+                border-color: #2563eb !important;
+                color: var(--cg-white) !important;
+            }
+
+            html[data-theme="dark"] .contact-strip .btn-outline-primary {
+                background: rgba(59,130,246,0.12) !important;
+                border-color: rgba(96,165,250,0.38) !important;
+                color: #e0f2fe !important;
+            }
+            html[data-theme="dark"] .contact-strip .btn-outline-primary:hover,
+            html[data-theme="dark"] .contact-strip .btn-outline-primary:focus,
+            html[data-theme="dark"] .contact-strip .btn-outline-primary:active {
+                background: rgba(59,130,246,0.18) !important;
+                border-color: rgba(96,165,250,0.52) !important;
+                color: #f8fafc !important;
+            }
+
+            @media (max-width: 767.98px) {
+                html[data-theme="dark"] .contact-strip-item { justify-content: center; }
+                html[data-theme="dark"] .contact-strip-actions { margin-top: 0.3rem; }
+            }
+        </style>
         <div class="slider" role="region" aria-label="Homepage hero slider">
             <div class="slide" data-index="0" style="background-image: url('assets/images/hero4.jpg');">
                 <div class="slide-bg-zoom" style="position:absolute;inset:0;background-image:linear-gradient(0deg, rgba(13,110,253,0.15), rgba(13,110,253,0.05));"></div>

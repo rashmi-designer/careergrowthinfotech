@@ -26,7 +26,12 @@ $navItems = [
             </span>
         </a>
 
-        <div class="mobile-header-actions d-lg-none" id="mobileHeaderActions" aria-label="Account actions"></div>
+        <div class="mobile-header-actions d-lg-none" id="mobileHeaderActions" aria-label="Account actions">
+            <!-- Public theme toggle (mobile) -->
+            <button id="publicThemeToggleMobile" class="btn theme-toggle d-inline-flex align-items-center justify-content-center" type="button" aria-label="Toggle site theme" title="Toggle site theme">
+                <i class="bi bi-moon-fill" aria-hidden="true"></i>
+            </button>
+        </div>
 
         <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -96,9 +101,59 @@ $navItems = [
                 .nav-profile .dropdown-item.text-danger:focus { background: #fff1f2; }
                 .nav-profile .dropdown-item.text-danger:hover .bi,
                 .nav-profile .dropdown-item.text-danger:focus .bi { color: #b91c1c; }
+
+                html[data-theme="dark"] .nav-profile .profile-btn {
+                    background: rgba(59,130,246,0.12);
+                    border-color: rgba(148,163,184,0.22);
+                    color: #e5e7eb;
+                }
+                html[data-theme="dark"] .nav-profile .profile-name,
+                html[data-theme="dark"] .nav-profile .dropdown-item,
+                html[data-theme="dark"] .nav-profile .dropdown-menu .fw-bold,
+                html[data-theme="dark"] .nav-profile .text-muted.small {
+                    color: #e5e7eb;
+                }
+                html[data-theme="dark"] .nav-profile .dropdown-menu {
+                    background: rgba(17,24,39,0.96);
+                    border-color: rgba(148,163,184,0.2);
+                    box-shadow: 0 18px 34px rgba(2, 6, 23, 0.38);
+                }
+                html[data-theme="dark"] .nav-profile .dropdown-menu > li:first-child {
+                    background: rgba(30,41,59,0.9);
+                }
+                html[data-theme="dark"] .nav-profile .dropdown-menu .avatar {
+                    background: rgba(96,165,250,0.14);
+                    color: #8ec5ff;
+                }
+                html[data-theme="dark"] .nav-profile .dropdown-divider { border-color: rgba(148,163,184,0.2); }
+                html[data-theme="dark"] .nav-profile .dropdown-item .bi { color: #a5b4fc; }
+                html[data-theme="dark"] .nav-profile .dropdown-item:hover,
+                html[data-theme="dark"] .nav-profile .dropdown-item:focus {
+                    background: rgba(59,130,246,0.12);
+                    color: #dbeafe;
+                }
+                html[data-theme="dark"] .nav-profile .dropdown-item:hover .bi,
+                html[data-theme="dark"] .nav-profile .dropdown-item:focus .bi { color: #dbeafe; }
+                html[data-theme="dark"] .nav-profile .dropdown-item.text-danger {
+                    color: #fca5a5;
+                }
+                html[data-theme="dark"] .nav-profile .dropdown-item.text-danger:hover,
+                html[data-theme="dark"] .nav-profile .dropdown-item.text-danger:focus {
+                    background: rgba(239,68,68,0.12);
+                    color: #fecaca;
+                }
+                html[data-theme="dark"] .nav-profile .dropdown-item.text-danger .bi,
+                html[data-theme="dark"] .nav-profile .dropdown-item.text-danger:hover .bi,
+                html[data-theme="dark"] .nav-profile .dropdown-item.text-danger:focus .bi {
+                    color: #fca5a5;
+                }
             </style>
 
             <div class="navbar-actions d-flex align-items-center gap-2 mt-3 mt-lg-0">
+                <!-- Public theme toggle (desktop) -->
+                <button id="publicThemeToggle" class="btn theme-toggle btn-sm d-inline-flex align-items-center justify-content-center" type="button" aria-label="Toggle site theme" title="Toggle site theme">
+                    <i class="bi bi-moon-fill" aria-hidden="true"></i>
+                </button>
                 <?php
                 $userRole = $_SESSION['user_role'] ?? '';
                 $isCandidate = !empty($_SESSION['user_id']) && $userRole === 'candidate';

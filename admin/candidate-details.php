@@ -4,6 +4,7 @@ declare(strict_types=1);
 session_start();
 
 require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../includes/notifications.php';
 require_once __DIR__ . '/../includes/admin-auth.php';
 require_admin();
 
@@ -35,14 +36,55 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     ];
 
     $statusUpdated = false;
+    $oldStatus = '';
+    $candidateUserId = 0;
+    $jobId = 0;
     if ($postedAppId > 0 && in_array($postedStatus, $allowedStatuses, true)) {
-        $updateStmt = $conn->prepare('UPDATE applications SET status = ? WHERE id = ? LIMIT 1');
-        if ($updateStmt) {
-            $updateStmt->bind_param('si', $postedStatus, $postedAppId);
-            $statusUpdated = $updateStmt->execute();
-            $updateStmt->close();
-        } else {
-            error_log('candidate-details status update prepare failed: ' . $conn->error);
+        $statusLookupStmt = $conn->prepare('SELECT a.user_id, a.job_id, a.status, j.title FROM applications a LEFT JOIN jobs j ON j.id = a.job_id WHERE a.id = ? LIMIT 1');
+        if ($statusLookupStmt) {
+            $statusLookupStmt->bind_param('i', $postedAppId);
+            $statusLookupStmt->execute();
+            $statusLookupResult = $statusLookupStmt->get_result();
+            $appStatusRow = $statusLookupResult->fetch_assoc();
+            $statusLookupStmt->close();
+
+            if ($appStatusRow) {
+                $oldStatus = trim((string)($appStatusRow['status'] ?? ''));
+                $candidateUserId = (int)($appStatusRow['user_id'] ?? 0);
+                $jobId = (int)($appStatusRow['job_id'] ?? 0);
+            }
+        }
+
+        if ($oldStatus !== $postedStatus) {
+            $updateStmt = $conn->prepare('UPDATE applications SET status = ? WHERE id = ? LIMIT 1');
+            if ($updateStmt) {
+                $updateStmt->bind_param('si', $postedStatus, $postedAppId);
+                $statusUpdated = $updateStmt->execute();
+                $updateStmt->close();
+            } else {
+                error_log('candidate-details status update prepare failed: ' . $conn->error);
+            }
+
+            if ($statusUpdated && $candidateUserId > 0) {
+                $jobTitle = trim((string)($appStatusRow['title'] ?? ''));
+                if ($jobTitle === '') {
+                    $jobNameStmt = $conn->prepare('SELECT title FROM jobs WHERE id = ? LIMIT 1');
+                    if ($jobNameStmt) {
+                        $jobNameStmt->bind_param('i', $jobId);
+                        $jobNameStmt->execute();
+                        $jobTitleRow = $jobNameStmt->get_result()->fetch_assoc();
+                        $jobNameStmt->close();
+                        if ($jobTitleRow) {
+                            $jobTitle = trim((string)($jobTitleRow['title'] ?? ''));
+                        }
+                    }
+                }
+                if ($jobTitle === '') {
+                    $jobTitle = 'your application';
+                }
+                $notificationMessage = 'Your application for ' . $jobTitle . ' has been updated to ' . $postedStatus . '.';
+                cg_create_candidate_notification($candidateUserId, $postedAppId, $jobId, 'Application Status Updated', $notificationMessage);
+            }
         }
     }
 

@@ -7,6 +7,8 @@ $isCandidateSession = !empty($_SESSION['user_id']) && (($_SESSION['user_role'] ?
 if (!empty($hidePublicLayout)) {
     return;
 }
+require_once __DIR__ . '/notifications.php';
+
 $navItems = [
     ['label' => 'Home', 'file' => 'index.php', 'href' => $basePath . 'index.php', 'icon' => 'bi-house-door'],
     ['label' => 'About', 'file' => 'about.php', 'href' => $basePath . 'about.php', 'icon' => 'bi-info-circle'],
@@ -14,6 +16,13 @@ $navItems = [
     ['label' => 'Jobs', 'file' => 'jobs.php', 'href' => $basePath . 'jobs.php', 'icon' => 'bi-briefcase'],
     ['label' => 'Contact', 'file' => 'contact.php', 'href' => $basePath . 'contact.php', 'icon' => 'bi-envelope'],
 ];
+
+$candidateNotificationCount = 0;
+$candidateNotifications = [];
+if ($isCandidateSession) {
+    $candidateNotificationCount = cg_candidate_notification_count((int)($_SESSION['user_id'] ?? 0));
+    $candidateNotifications = cg_candidate_notifications((int)($_SESSION['user_id'] ?? 0), 8);
+}
 ?>
 <nav class="navbar navbar-expand-lg sticky-top" aria-label="Main navigation">
     <div class="container">
@@ -60,6 +69,223 @@ $navItems = [
             </ul>
 
             <style>
+                .nav-notifications {
+                    position: relative;
+                }
+                .notification-btn {
+                    position: relative;
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    border: 1px solid rgba(15, 23, 42, 0.08);
+                    background: rgba(255, 255, 255, 0.8);
+                    color: var(--cg-accent);
+                    padding: 0;
+                    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+                    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+                }
+                .notification-btn:hover,
+                .notification-btn:focus,
+                .notification-btn:active {
+                    background: rgba(13, 110, 253, 0.08);
+                    border-color: rgba(13, 110, 253, 0.18);
+                    color: var(--cg-primary);
+                    box-shadow: 0 4px 12px rgba(13, 110, 253, 0.08);
+                }
+                .notification-btn .bi-bell {
+                    font-size: 1.08rem;
+                    line-height: 1;
+                }
+                .notification-btn::after {
+                    display: none !important;
+                }
+                .notification-badge {
+                    position: absolute;
+                    top: -4px;
+                    right: -3px;
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    min-width: 17px;
+                    height: 17px;
+                    padding: 0 4px;
+                    border-radius: 999px;
+                    background: #ef4444;
+                    color: #ffffff;
+                    font-size: 0.64rem;
+                    font-weight: 700;
+                    line-height: 1;
+                    box-shadow: 0 0 0 2px rgba(255,255,255,0.9);
+                }
+                .notification-dropdown-menu {
+                    width: min(360px, calc(100vw - 1rem));
+                    max-width: calc(100vw - 1rem);
+                    max-height: min(420px, 72vh);
+                    overflow: auto;
+                    overflow-x: hidden;
+                    padding: 0.35rem;
+                    margin-top: 0.55rem;
+                    border-radius: 14px;
+                    background: rgba(255,255,255,0.98);
+                    border: 1px solid rgba(148,163,184,0.22);
+                    box-shadow: 0 18px 36px rgba(15,23,42,0.14);
+                    right: 0;
+                    left: auto;
+                    transform-origin: top right;
+                    animation: notificationDropdownSlide 0.18s ease;
+                    box-sizing: border-box;
+                }
+                @keyframes notificationDropdownSlide {
+                    from {
+                        opacity: 0;
+                        transform: translateY(-4px);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+                .notification-header {
+                    padding: 0.8rem 0.8rem 0.6rem;
+                    border-bottom: 1px solid rgba(148,163,184,0.18);
+                    margin-bottom: 0.25rem;
+                    color: var(--cg-text);
+                    font-size: 0.8rem;
+                    letter-spacing: 0.02em;
+                }
+                .notification-mark-all-read {
+                    font-size: 0.72rem;
+                    color: var(--cg-primary);
+                    text-decoration: none;
+                    padding: 0;
+                    border: 0;
+                    background: transparent;
+                }
+                .notification-mark-all-read:hover,
+                .notification-mark-all-read:focus {
+                    color: var(--cg-primary-dark);
+                    text-decoration: none;
+                }
+                .notification-item {
+                    display: block;
+                    width: 100%;
+                    max-width: 100%;
+                    min-width: 0;
+                    box-sizing: border-box;
+                    padding: 0.8rem 0.75rem;
+                    border-radius: 10px;
+                    color: var(--cg-text);
+                    text-decoration: none;
+                    border: 1px solid transparent;
+                    white-space: normal !important;
+                    overflow-wrap: anywhere;
+                    word-break: break-word;
+                    transition: background-color 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+                }
+                .notification-item:hover,
+                .notification-item:focus {
+                    background: rgba(239,246,255,0.8);
+                    border-color: rgba(96,165,250,0.18);
+                }
+                .notification-item.read {
+                    opacity: 0.82;
+                }
+                .notification-item.unread {
+                    background: rgba(239,246,255,0.7);
+                }
+                .notification-item-header {
+                    display: flex;
+                    align-items: flex-start;
+                    justify-content: space-between;
+                    gap: 0.5rem;
+                    min-width: 0;
+                    margin-bottom: 0.3rem;
+                }
+                .notification-title {
+                    display: block;
+                    flex: 1 1 auto;
+                    min-width: 0;
+                    max-width: 100%;
+                    font-size: 0.82rem;
+                    font-weight: 700;
+                    color: inherit;
+                    line-height: 1.4;
+                    overflow-wrap: anywhere;
+                    word-break: break-word;
+                }
+                .notification-message {
+                    font-size: 0.76rem;
+                    line-height: 1.5;
+                    color: inherit;
+                    margin-bottom: 0.35rem;
+                    white-space: normal;
+                    overflow-wrap: anywhere;
+                    word-break: break-word;
+                    max-width: 100%;
+                }
+                .notification-time {
+                    display: block;
+                    font-size: 0.7rem;
+                    color: var(--cg-muted);
+                    line-height: 1.4;
+                    white-space: normal;
+                    overflow-wrap: anywhere;
+                    word-break: break-word;
+                }
+                .notification-dot {
+                    display: inline-block;
+                    width: 8px;
+                    height: 8px;
+                    border-radius: 50%;
+                    background: var(--cg-primary);
+                    flex: 0 0 auto;
+                    margin-top: 0.2rem;
+                    transform: translateY(2px);
+                }
+                .notification-empty {
+                    padding: 0.9rem 0.8rem;
+                    color: var(--cg-muted);
+                    font-size: 0.82rem;
+                }
+                @media (max-width: 991.98px) {
+                    .notification-btn {
+                        width: 38px;
+                        height: 38px;
+                    }
+                    .notification-dropdown-menu {
+                        left: 50% !important;
+                        right: auto !important;
+                        transform: translateX(-50%);
+                        width: min(360px, calc(100vw - 0.9rem));
+                        max-width: calc(100vw - 0.9rem);
+                    }
+                }
+                @media (max-width: 575.98px) {
+                    .notification-dropdown-menu {
+                        width: min(320px, calc(100vw - 0.75rem));
+                        max-width: calc(100vw - 0.75rem);
+                    }
+                    .notification-item {
+                        padding: 0.7rem 0.7rem;
+                    }
+                    .notification-message {
+                        font-size: 0.75rem;
+                    }
+                    .notification-item-header {
+                        gap: 0.35rem;
+                    }
+                }
+                @media (prefers-reduced-motion: reduce) {
+                    .notification-btn,
+                    .notification-item,
+                    .notification-dropdown-menu {
+                        transition: none;
+                        animation: none;
+                    }
+                }
                 /* Profile dropdown styles */
                 .nav-profile { position: relative; }
                 .nav-profile .avatar { width:40px;height:40px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.06);color:var(--cg-primary);font-size:1.25rem }
@@ -102,6 +328,42 @@ $navItems = [
                 .nav-profile .dropdown-item.text-danger:hover .bi,
                 .nav-profile .dropdown-item.text-danger:focus .bi { color: #b91c1c; }
 
+                html[data-theme="dark"] .notification-btn {
+                    background: rgba(15,23,42,0.78);
+                    border-color: rgba(148,163,184,0.2);
+                    color: #e5e7eb;
+                    box-shadow: inset 0 0 0 1px rgba(148,163,184,0.08);
+                }
+                html[data-theme="dark"] .notification-btn:hover,
+                html[data-theme="dark"] .notification-btn:focus,
+                html[data-theme="dark"] .notification-btn:active {
+                    background: rgba(59,130,246,0.12);
+                    border-color: rgba(96,165,250,0.38);
+                    color: #dbeafe;
+                }
+                html[data-theme="dark"] .notification-dropdown-menu {
+                    background: rgba(15,23,42,0.98);
+                    border-color: rgba(148,163,184,0.2);
+                    box-shadow: 0 18px 34px rgba(2, 6, 23, 0.42);
+                }
+                html[data-theme="dark"] .notification-header,
+                html[data-theme="dark"] .notification-item,
+                html[data-theme="dark"] .notification-empty {
+                    color: #e5e7eb;
+                }
+                html[data-theme="dark"] .notification-item:hover,
+                html[data-theme="dark"] .notification-item:focus {
+                    background: rgba(59,130,246,0.12);
+                }
+                html[data-theme="dark"] .notification-item.unread {
+                    background: rgba(59,130,246,0.12);
+                }
+                html[data-theme="dark"] .notification-item .notification-time {
+                    color: #a8b5c8;
+                }
+                html[data-theme="dark"] .notification-mark-all-read {
+                    color: #93c5fd;
+                }
                 html[data-theme="dark"] .nav-profile .profile-btn {
                     background: rgba(59,130,246,0.12);
                     border-color: rgba(148,163,184,0.22);
@@ -162,6 +424,51 @@ $navItems = [
                 if ($isCandidate):
                     $userName = trim((string)($_SESSION['user_name'] ?? $_SESSION['user_email'] ?? ''));
                 ?>
+                    <div class="nav-notifications dropdown">
+                        <button type="button" class="btn notification-btn" id="candidateNotificationsMenu" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Notifications" title="Notifications">
+                            <i class="bi bi-bell" aria-hidden="true"></i>
+                            <?php if ($candidateNotificationCount > 0): ?>
+                                <span class="notification-badge" id="candidateNotificationBadge"><?php echo (int)$candidateNotificationCount; ?></span>
+                            <?php else: ?>
+                                <span class="notification-badge d-none" id="candidateNotificationBadge">0</span>
+                            <?php endif; ?>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end notification-dropdown-menu" aria-labelledby="candidateNotificationsMenu">
+                            <li class="notification-header d-flex justify-content-between align-items-center">
+                                <span class="fw-semibold">Recent Notifications</span>
+                                <?php if ($candidateNotificationCount > 0): ?>
+                                    <button type="button" class="btn btn-link btn-sm p-0 notification-mark-all-read" data-mark-all-read="1">Mark all as read</button>
+                                <?php endif; ?>
+                            </li>
+                            <?php if (!empty($candidateNotifications)): ?>
+                                <?php foreach ($candidateNotifications as $notification): ?>
+                                    <?php
+                                    $notificationUrl = cg_candidate_notification_target_url(
+                                        !empty($notification['application_id']) ? (int)$notification['application_id'] : null,
+                                        !empty($notification['job_id']) ? (int)$notification['job_id'] : null,
+                                        $basePath
+                                    );
+                                    $notificationRead = !empty($notification['is_read']);
+                                    $notificationDate = trim((string)($notification['created_at'] ?? ''));
+                                    ?>
+                                    <li>
+                                        <a class="dropdown-item notification-item <?php echo $notificationRead ? 'read' : 'unread'; ?>" href="<?php echo htmlspecialchars($notificationUrl, ENT_QUOTES, 'UTF-8'); ?>" data-notification-id="<?php echo (int)($notification['id'] ?? 0); ?>" data-read="<?php echo $notificationRead ? '1' : '0'; ?>">
+                                            <div class="notification-item-header d-flex justify-content-between align-items-start gap-2">
+                                                <span class="notification-title"><?php echo htmlspecialchars((string)($notification['title'] ?? ''), ENT_QUOTES, 'UTF-8'); ?></span>
+                                                <?php if (!$notificationRead): ?>
+                                                    <span class="notification-dot" aria-label="Unread notification"></span>
+                                                <?php endif; ?>
+                                            </div>
+                                            <div class="notification-message"><?php echo htmlspecialchars((string)($notification['message'] ?? ''), ENT_QUOTES, 'UTF-8'); ?></div>
+                                            <div class="notification-time"><?php echo htmlspecialchars($notificationDate !== '' ? date('M j, Y g:i A', strtotime($notificationDate)) : 'Just now', ENT_QUOTES, 'UTF-8'); ?></div>
+                                        </a>
+                                    </li>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <li><div class="notification-empty">No notifications yet.</div></li>
+                            <?php endif; ?>
+                        </ul>
+                    </div>
                     <div class="nav-profile dropdown">
                         <button class="btn profile-btn dropdown-toggle" id="accountMenu" data-bs-toggle="dropdown" aria-expanded="false">
                             <span class="avatar"><i class="bi bi-person-circle" aria-hidden="true"></i></span>
@@ -214,6 +521,8 @@ $navItems = [
         const profile = nav ? nav.querySelector('.nav-profile') : null;
         const headerActionLinks = nav ? nav.querySelectorAll('[data-mobile-header-action]') : [];
 
+        const notificationControl = document.querySelector('.nav-notifications');
+
         function moveProfileControl() {
             if (!nav || !mobileActions) return;
 
@@ -226,6 +535,15 @@ $navItems = [
                     actions.appendChild(action);
                 }
             });
+            if (notificationControl && isMobile) {
+                if (!mobileActions.contains(notificationControl)) {
+                    mobileActions.appendChild(notificationControl);
+                }
+            } else if (notificationControl && actions) {
+                if (!actions.contains(notificationControl)) {
+                    actions.insertBefore(notificationControl, actions.firstChild);
+                }
+            }
             if (profile && isMobile) {
                 if (!mobileActions.contains(profile)) {
                     mobileActions.appendChild(profile);
@@ -240,6 +558,98 @@ $navItems = [
         if (mobileActions) {
             moveProfileControl();
             window.addEventListener('resize', moveProfileControl);
+        }
+
+        const notificationBadge = document.getElementById('candidateNotificationBadge');
+        const markAllReadButton = document.querySelector('[data-mark-all-read]');
+
+        function updateNotificationBadge(count) {
+            const unreadCount = Number(count) || 0;
+            if (!notificationBadge) return;
+            if (unreadCount > 0) {
+                notificationBadge.textContent = String(unreadCount);
+                notificationBadge.classList.remove('d-none');
+            } else {
+                notificationBadge.textContent = '0';
+                notificationBadge.classList.add('d-none');
+            }
+        }
+
+        async function markNotificationRead(notificationId, item) {
+            if (!notificationId || !item || item.dataset.read === '1') {
+                return;
+            }
+
+            item.dataset.read = '1';
+            item.classList.remove('unread');
+            item.classList.add('read');
+            const dot = item.querySelector('.notification-dot');
+            if (dot) dot.remove();
+
+            try {
+                const response = await fetch('<?php echo htmlspecialchars($basePath, ENT_QUOTES, 'UTF-8'); ?>includes/notifications.php?action=mark_read&notification_id=' + encodeURIComponent(String(notificationId)), {
+                    method: 'GET',
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                });
+                if (!response.ok) {
+                    item.dataset.read = '0';
+                    item.classList.remove('read');
+                    item.classList.add('unread');
+                    return;
+                }
+                const data = await response.json();
+                updateNotificationBadge(data.unread_count ?? 0);
+                if (Number(data.unread_count ?? 0) <= 0 && markAllReadButton) {
+                    markAllReadButton.remove();
+                }
+            } catch (error) {
+                item.dataset.read = '0';
+                item.classList.remove('read');
+                item.classList.add('unread');
+            }
+        }
+
+        document.querySelectorAll('.notification-item').forEach(function (item) {
+            item.addEventListener('click', function (event) {
+                const itemId = Number(this.dataset.notificationId || 0);
+                if (!itemId || this.dataset.read === '1') {
+                    return;
+                }
+
+                event.preventDefault();
+                const targetUrl = this.getAttribute('href');
+                markNotificationRead(itemId, this).finally(function () {
+                    window.location.href = targetUrl;
+                });
+            });
+        });
+
+        if (markAllReadButton) {
+            markAllReadButton.addEventListener('click', async function (event) {
+                event.preventDefault();
+                event.stopPropagation();
+                try {
+                    const response = await fetch('<?php echo htmlspecialchars($basePath, ENT_QUOTES, 'UTF-8'); ?>includes/notifications.php?action=mark_all_read', {
+                        method: 'GET',
+                        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                    });
+                    if (!response.ok) {
+                        return;
+                    }
+                    const data = await response.json();
+                    document.querySelectorAll('.notification-item.unread').forEach(function (item) {
+                        item.dataset.read = '1';
+                        item.classList.remove('unread');
+                        item.classList.add('read');
+                        const dot = item.querySelector('.notification-dot');
+                        if (dot) dot.remove();
+                    });
+                    updateNotificationBadge(data.unread_count ?? 0);
+                    markAllReadButton.remove();
+                } catch (error) {
+                    // no-op
+                }
+            });
         }
 
         if (toggle && nav && backdrop) {

@@ -8,11 +8,97 @@ $pageTitle = 'My Applications - Career Grow Infotech';
 
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/db.php';
+
+$userId = (int)($_SESSION['user_id'] ?? 0);
+$statusFilter = isset($_GET['status']) ? trim((string)$_GET['status']) : '';
+
+if (empty($_SESSION['candidate_withdraw_token'])) {
+    $_SESSION['candidate_withdraw_token'] = bin2hex(random_bytes(16));
+}
+
+$withdrawFlashMessage = $_SESSION['candidate_withdraw_message'] ?? '';
+$withdrawFlashType = $_SESSION['candidate_withdraw_type'] ?? 'success';
+if ($withdrawFlashMessage !== '') {
+    unset($_SESSION['candidate_withdraw_message'], $_SESSION['candidate_withdraw_type']);
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && (($_POST['action'] ?? '') === 'withdraw_application')) {
+    $submittedToken = isset($_POST['withdraw_application_token']) ? (string)$_POST['withdraw_application_token'] : '';
+    if (!hash_equals($_SESSION['candidate_withdraw_token'] ?? '', $submittedToken)) {
+        $_SESSION['candidate_withdraw_message'] = 'This application could not be withdrawn. Please try again.';
+        $_SESSION['candidate_withdraw_type'] = 'danger';
+        unset($_SESSION['candidate_withdraw_token']);
+        $_SESSION['candidate_withdraw_token'] = bin2hex(random_bytes(16));
+        header('Location: applications.php');
+        exit;
+    }
+
+    $applicationId = isset($_POST['application_id']) ? (int)$_POST['application_id'] : 0;
+    if ($applicationId <= 0) {
+        $_SESSION['candidate_withdraw_message'] = 'This application could not be withdrawn. Please try again.';
+        $_SESSION['candidate_withdraw_type'] = 'danger';
+        unset($_SESSION['candidate_withdraw_token']);
+        $_SESSION['candidate_withdraw_token'] = bin2hex(random_bytes(16));
+        header('Location: applications.php');
+        exit;
+    }
+
+    $conn = getDbConnection();
+    $appStmt = $conn->prepare('SELECT id, status FROM applications WHERE id = ? AND user_id = ? LIMIT 1');
+    $canWithdraw = false;
+    $currentStatus = '';
+    if ($appStmt) {
+        $appStmt->bind_param('ii', $applicationId, $userId);
+        $appStmt->execute();
+        $appResult = $appStmt->get_result();
+        $appRow = $appResult->fetch_assoc();
+        $appStmt->close();
+
+        if ($appRow) {
+            $currentStatus = trim((string)($appRow['status'] ?? ''));
+            $normalizedStatus = strtolower(str_replace(['-', '_'], ' ', $currentStatus));
+            $canWithdraw = in_array($normalizedStatus, ['new applied', 'applied', 'pending'], true);
+        }
+    }
+
+    if (!$canWithdraw) {
+        $_SESSION['candidate_withdraw_message'] = 'This application can no longer be withdrawn.';
+        $_SESSION['candidate_withdraw_type'] = 'danger';
+        unset($_SESSION['candidate_withdraw_token']);
+        $_SESSION['candidate_withdraw_token'] = bin2hex(random_bytes(16));
+        $conn->close();
+        header('Location: applications.php');
+        exit;
+    }
+
+    $updateStmt = $conn->prepare('UPDATE applications SET status = ? WHERE id = ? AND user_id = ? LIMIT 1');
+    $withdrawnStatus = 'Withdrawn';
+    $withdrawSucceeded = false;
+    if ($updateStmt) {
+        $updateStmt->bind_param('sii', $withdrawnStatus, $applicationId, $userId);
+        $withdrawSucceeded = $updateStmt->execute();
+        $updateStmt->close();
+    }
+
+    unset($_SESSION['candidate_withdraw_token']);
+    $_SESSION['candidate_withdraw_token'] = bin2hex(random_bytes(16));
+    $conn->close();
+
+    if ($withdrawSucceeded) {
+        $_SESSION['candidate_withdraw_message'] = 'Application Withdrawn Successfully';
+        $_SESSION['candidate_withdraw_type'] = 'success';
+        header('Location: applications.php');
+        exit;
+    }
+
+    $_SESSION['candidate_withdraw_message'] = 'Unable to withdraw this application. Please try again.';
+    $_SESSION['candidate_withdraw_type'] = 'danger';
+    header('Location: applications.php');
+    exit;
+}
+
 require_once __DIR__ . '/../includes/header.php';
 require_once __DIR__ . '/../includes/navbar.php';
-
-$userId = (int)$_SESSION['user_id'];
-$statusFilter = isset($_GET['status']) ? trim((string)$_GET['status']) : '';
 
 $conn = getDbConnection();
 
@@ -104,12 +190,76 @@ $conn->close();
 .status-reviewed { background-color: #fff3e0; color: #e65100; }
 .status-accepted { background-color: #e8f5e9; color: #2e7d32; }
 .status-rejected { background-color: #ffebee; color: #c62828; }
+    .status-withdrawn { background-color: #fef2f2; color: #b91c1c; }
 
-html[data-theme="dark"] {
-    --app-surface: rgba(17, 24, 39, 0.96);
-    --app-surface-alt: rgba(31, 41, 55, 0.95);
-    --app-line: rgba(148, 163, 184, 0.22);
-    --app-text: #e5e7eb;
+    .withdraw-application-btn {
+        background: linear-gradient(180deg, #f97316 0%, #ea580c 100%);
+        border: 1px solid rgba(234, 88, 12, 0.75);
+        color: #ffffff;
+        border-radius: 0.625rem;
+        padding: 0.55rem 0.9rem;
+        font-weight: 600;
+        transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+        white-space: nowrap;
+    }
+
+    .withdraw-application-btn:hover,
+    .withdraw-application-btn:focus,
+    .withdraw-application-btn:active {
+        background: linear-gradient(180deg, #ea580c 0%, #c2410c 100%);
+        color: #ffffff;
+        box-shadow: 0 0 0 0.2rem rgba(249, 115, 22, 0.18);
+        transform: translateY(-1px);
+    }
+
+    .withdraw-confirm-modal {
+        position: fixed;
+        inset: 0;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+        z-index: 1200;
+    }
+
+    .withdraw-confirm-modal.visible {
+        display: flex;
+    }
+
+    .withdraw-confirm-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(15, 23, 42, 0.65);
+    }
+
+    .withdraw-confirm-dialog {
+        position: relative;
+        z-index: 1201;
+        width: min(100%, 420px);
+        background: #ffffff;
+        border: 1px solid rgba(15, 23, 42, 0.08);
+        border-radius: 1rem;
+        box-shadow: 0 18px 40px rgba(15, 23, 42, 0.22);
+        padding: 1.25rem;
+    }
+
+    .withdraw-confirm-dialog h4 {
+        color: #0f172a;
+        margin-bottom: 0.5rem;
+    }
+
+    .withdraw-confirm-dialog p {
+        color: #475569;
+        margin-bottom: 1rem;
+        line-height: 1.6;
+    }
+
+    .withdraw-confirm-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+    }
     --app-muted: #9ca3af;
     --app-soft: rgba(148, 163, 184, 0.12);
 }
@@ -220,6 +370,39 @@ html[data-theme="dark"] .status-rejected {
     color: #fecaca;
 }
 
+html[data-theme="dark"] .status-withdrawn {
+    background-color: rgba(239, 68, 68, 0.18);
+    border-color: rgba(248, 113, 113, 0.28);
+    color: #fecaca;
+}
+
+html[data-theme="dark"] .withdraw-application-btn {
+    background: linear-gradient(180deg, #f97316 0%, #c2410c 100%);
+    border-color: rgba(251, 146, 60, 0.7);
+    color: #fff7ed;
+}
+
+html[data-theme="dark"] .withdraw-application-btn:hover,
+html[data-theme="dark"] .withdraw-application-btn:focus,
+html[data-theme="dark"] .withdraw-application-btn:active {
+    background: linear-gradient(180deg, #ea580c 0%, #9a3d0b 100%);
+    color: #fff7ed;
+    box-shadow: 0 0 0 0.2rem rgba(249, 115, 22, 0.2);
+}
+
+html[data-theme="dark"] .withdraw-confirm-dialog {
+    background: rgba(15, 23, 42, 0.98);
+    border-color: rgba(148, 163, 184, 0.2);
+}
+
+html[data-theme="dark"] .withdraw-confirm-dialog h4 {
+    color: #f8fafc;
+}
+
+html[data-theme="dark"] .withdraw-confirm-dialog p {
+    color: #cbd5e1;
+}
+
 html[data-theme="dark"] .empty-state {
     background: rgba(15, 23, 42, 0.45);
     border: 1px solid var(--cg-border);
@@ -272,11 +455,32 @@ html[data-theme="dark"] .empty-state a.btn.btn-primary:focus {
         flex-direction: column;
         gap: 0.35rem;
     }
+
+    .withdraw-confirm-actions {
+        flex-direction: column-reverse;
+    }
+
+    .withdraw-confirm-actions .btn,
+    .withdraw-confirm-actions form,
+    .withdraw-confirm-actions button {
+        width: 100%;
+    }
+
+    .withdraw-confirm-actions form {
+        display: block;
+    }
 }
 </style>
 
 <main class="applications-container py-5">
     <div class="applications-section">
+        <?php if ($withdrawFlashMessage !== ''): ?>
+            <div class="alert <?php echo $withdrawFlashType === 'danger' ? 'alert-danger' : 'alert-success'; ?> mb-3" role="alert" aria-live="polite">
+                <div class="fw-semibold"><?php echo $withdrawFlashType === 'danger' ? 'Unable to Withdraw Application' : 'Application Withdrawn Successfully'; ?></div>
+                <div><?php echo htmlspecialchars($withdrawFlashMessage, ENT_QUOTES, 'UTF-8'); ?></div>
+            </div>
+        <?php endif; ?>
+
         <h2 style="margin-bottom: 1.5rem; font-weight: 700;">My Applications</h2>
 
         <!-- Status Filter -->
@@ -291,6 +495,11 @@ html[data-theme="dark"] .empty-state a.btn.btn-primary:focus {
         <?php if (!empty($applications)): ?>
             <div>
                 <?php foreach ($applications as $app): ?>
+                    <?php
+                    $currentStatus = trim((string)($app['status'] ?? ''));
+                    $normalizedStatus = strtolower(str_replace(['-', '_'], ' ', $currentStatus));
+                    $canWithdraw = in_array($normalizedStatus, ['new applied', 'applied', 'pending'], true);
+                    ?>
                     <div class="app-card">
                         <div class="app-header">
                             <div>
@@ -305,6 +514,13 @@ html[data-theme="dark"] .empty-state a.btn.btn-primary:focus {
                         <div class="app-meta">
                             <span>Applied: <?php echo date('d M Y', strtotime($app['applied_at'])); ?></span>
                         </div>
+                        <?php if ($canWithdraw): ?>
+                            <div class="mt-3 d-flex justify-content-end">
+                                <button type="button" class="withdraw-application-btn" data-application-id="<?php echo (int)$app['id']; ?>">
+                                    <i class="bi bi-x-circle me-1"></i> Withdraw Application
+                                </button>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 <?php endforeach; ?>
             </div>
@@ -316,5 +532,60 @@ html[data-theme="dark"] .empty-state a.btn.btn-primary:focus {
         <?php endif; ?>
     </div>
 </main>
+
+<div id="withdraw-confirm-modal" class="withdraw-confirm-modal" aria-hidden="true">
+    <div class="withdraw-confirm-backdrop" id="withdraw-confirm-backdrop"></div>
+    <div class="withdraw-confirm-dialog" role="dialog" aria-modal="true" aria-labelledby="withdraw-confirm-title">
+        <h4 id="withdraw-confirm-title">Withdraw Application?</h4>
+        <p>Are you sure you want to withdraw this application?</p>
+        <div class="withdraw-confirm-actions">
+            <button type="button" class="btn btn-secondary" id="withdraw-cancel">Cancel</button>
+            <form method="post" action="applications.php" class="d-inline" id="withdraw-form">
+                <input type="hidden" name="action" value="withdraw_application">
+                <input type="hidden" name="application_id" id="withdraw-application-id" value="0">
+                <input type="hidden" name="withdraw_application_token" value="<?php echo htmlspecialchars($_SESSION['candidate_withdraw_token'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
+                <button type="submit" class="btn btn-danger">Withdraw Application</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function(){
+        const modal = document.getElementById('withdraw-confirm-modal');
+        const cancelBtn = document.getElementById('withdraw-cancel');
+        const backdrop = document.getElementById('withdraw-confirm-backdrop');
+        const applicationIdInput = document.getElementById('withdraw-application-id');
+        const buttons = document.querySelectorAll('.withdraw-application-btn');
+
+        function closeModal(){
+            modal.classList.remove('visible');
+            modal.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = 'auto';
+        }
+
+        function openModal(appId){
+            applicationIdInput.value = String(appId || '0');
+            modal.classList.add('visible');
+            modal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+        }
+
+        buttons.forEach((button) => {
+            button.addEventListener('click', function(){
+                openModal(this.getAttribute('data-application-id'));
+            });
+        });
+
+        cancelBtn.addEventListener('click', closeModal);
+        backdrop.addEventListener('click', closeModal);
+
+        document.addEventListener('keydown', function(event){
+            if (event.key === 'Escape' && modal.classList.contains('visible')) {
+                closeModal();
+            }
+        });
+    })();
+</script>
 
 <?php require_once __DIR__ . '/../includes/footer.php'; ?>

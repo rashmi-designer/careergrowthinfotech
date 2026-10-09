@@ -365,6 +365,12 @@ html[data-theme="dark"] .brand-subtitle {
     transition: color var(--cg-transition), background-color var(--cg-transition);
 }
 
+@media (min-width: 992px) {
+    .navbar .navbar-nav .nav-link .bi {
+        display: none !important;
+    }
+}
+
 html[data-theme="dark"] .nav-link {
     color: #e5e7eb;
 }

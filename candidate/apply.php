@@ -8,6 +8,7 @@ $pageTitle = 'Apply for Job - Career Grow Infotech';
 
 require_once __DIR__ . '/../includes/auth.php';
 require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../includes/notifications.php';
 require_once __DIR__ . '/../includes/header.php';
 require_once __DIR__ . '/../includes/navbar.php';
 
@@ -118,6 +119,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !$alreadyApplied) {
             if ($appStmt->execute()) {
                 $applicationId = $conn->insert_id;
                 $success = true;
+                if ($applicationId > 0) {
+                    $jobTitle = trim((string)($job['title'] ?? ''));
+                    $jobTitle = $jobTitle !== '' ? $jobTitle : 'the role';
+                    $notificationMessage = 'Your application for ' . $jobTitle . ' has been submitted successfully.';
+                    cg_create_candidate_notification($userId, $applicationId, (int)$jobId, 'Application Submitted', $notificationMessage);
+                }
             } else {
                 // Check if it's a duplicate application error
                 if (strpos($appStmt->error, 'Duplicate entry') !== false || strpos($appStmt->error, 'uq_applications_user_job') !== false) {

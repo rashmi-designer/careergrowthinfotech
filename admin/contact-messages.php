@@ -9,10 +9,47 @@ require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/admin-auth.php';
 require_admin();
 
+$contactFlashMessage = $_SESSION['contact_message_flash'] ?? '';
+$contactFlashType = $_SESSION['contact_message_type'] ?? 'success';
+if ($contactFlashMessage !== '') {
+    unset($_SESSION['contact_message_flash'], $_SESSION['contact_message_type']);
+}
+
 $pageTitle = 'Contact Messages - Admin';
 require_once __DIR__ . '/../includes/header.php';
 
 $conn = getDbConnection();
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'delete_contact_message') {
+    $deleteId = isset($_POST['message_id']) ? (int)$_POST['message_id'] : 0;
+
+    if ($deleteId <= 0) {
+        $_SESSION['contact_message_flash'] = 'Unable to delete this message. Please try again.';
+        $_SESSION['contact_message_type'] = 'danger';
+        header('Location: contact-messages.php');
+        exit;
+    }
+
+    $deleteStmt = $conn->prepare('DELETE FROM contact_messages WHERE id = ? LIMIT 1');
+    $deleteSucceeded = false;
+    if ($deleteStmt) {
+        $deleteStmt->bind_param('i', $deleteId);
+        $deleteSucceeded = $deleteStmt->execute();
+        $deleteStmt->close();
+    }
+
+    if ($deleteSucceeded) {
+        $_SESSION['contact_message_flash'] = 'The contact message has been deleted successfully.';
+        $_SESSION['contact_message_type'] = 'success';
+        header('Location: contact-messages.php');
+        exit;
+    }
+
+    $_SESSION['contact_message_flash'] = 'Unable to delete this message. Please try again.';
+    $_SESSION['contact_message_type'] = 'danger';
+    header('Location: contact-messages.php?id=' . urlencode((string)$deleteId));
+    exit;
+}
 
 // Handle mark as read when viewing a message
 $detailId = isset($_GET['id']) ? (int)$_GET['id'] : 0;
@@ -288,6 +325,95 @@ $conn->close();
         color: var(--cg-muted);
     }
 
+    .detail-actions {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+    }
+
+    .btn-close-modal {
+        background: linear-gradient(180deg, #475569 0%, #334155 100%);
+        border: 1px solid rgba(51, 65, 85, 0.95);
+        color: #ffffff;
+        border-radius: 0.625rem;
+        padding: 0.5rem 1rem;
+        font-weight: 600;
+        transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    }
+
+    .btn-close-modal:hover,
+    .btn-close-modal:focus,
+    .btn-close-modal:active {
+        background: linear-gradient(180deg, #334155 0%, #1e293b 100%);
+        border-color: rgba(30, 41, 59, 0.95);
+        color: #ffffff;
+        box-shadow: 0 0 0 0.2rem rgba(71, 85, 105, 0.18);
+        transform: translateY(-1px);
+    }
+
+    .btn-danger-soft {
+        background: #fff1f2;
+        border: 1px solid rgba(220, 38, 38, 0.2);
+        color: #b42318;
+    }
+
+    .btn-danger-soft:hover,
+    .btn-danger-soft:focus {
+        background: #fee4e2;
+        border-color: rgba(220, 38, 38, 0.3);
+        color: #991b1b;
+    }
+
+    .cg-confirm-modal {
+        position: fixed;
+        inset: 0;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+        z-index: 1200;
+    }
+
+    .cg-confirm-modal.visible {
+        display: flex;
+    }
+
+    .cg-confirm-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(15, 23, 42, 0.64);
+    }
+
+    .cg-confirm-dialog {
+        position: relative;
+        z-index: 1201;
+        width: min(100%, 420px);
+        background: #ffffff;
+        border: 1px solid rgba(15, 23, 42, 0.08);
+        border-radius: 1rem;
+        box-shadow: 0 18px 40px rgba(15, 23, 42, 0.22);
+        padding: 1.25rem;
+    }
+
+    .cg-confirm-dialog h4 {
+        color: #0f172a;
+        margin-bottom: 0.5rem;
+    }
+
+    .cg-confirm-dialog p {
+        color: #475569;
+        margin-bottom: 1rem;
+        line-height: 1.6;
+    }
+
+    .cg-confirm-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+    }
+
     @media (max-width: 991.98px) {
         .admin-root {
             flex-direction: column;
@@ -297,6 +423,18 @@ $conn->close();
         .sidebar {
             width: 100%;
             position: static;
+        }
+    }
+
+    @media (max-width: 575.98px) {
+        .detail-actions,
+        .cg-confirm-actions {
+            width: 100%;
+        }
+
+        .detail-actions .btn,
+        .cg-confirm-actions .btn {
+            flex: 1 1 100%;
         }
     }
 /* Shared admin visual language: presentation-only overrides. */
@@ -340,6 +478,13 @@ $conn->close();
         require_once __DIR__ . '/../includes/admin-header.php';
         ?>
 
+        <?php if ($contactFlashMessage !== ''): ?>
+            <div class="alert <?php echo $contactFlashType === 'danger' ? 'alert-danger' : 'alert-success'; ?> mx-3 mt-3 mb-0" role="alert" aria-live="polite">
+                <div class="fw-semibold mb-1"><?php echo $contactFlashType === 'danger' ? 'Unable to Delete Message' : 'Message Deleted Successfully'; ?></div>
+                <div><?php echo htmlspecialchars($contactFlashMessage, ENT_QUOTES, 'UTF-8'); ?></div>
+            </div>
+        <?php endif; ?>
+
         <div class="card-panel page-intro-panel">
             <div class="page-kicker"><i class="bi bi-envelope-paper"></i> Admin / Contact Messages</div>
             <div class="d-flex justify-content-between align-items-center gap-3 flex-wrap">
@@ -363,7 +508,9 @@ $conn->close();
                         <div class="page-kicker"><i class="bi bi-envelope-open"></i> Message Details</div>
                         <h3 class="mb-0">Message #<?php echo (int)($selectedMessage['id'] ?? 0); ?></h3>
                     </div>
-                    <a href="contact-messages.php" class="btn btn-outline-secondary">Back to Messages</a>
+                    <div class="detail-actions">
+                        <a href="contact-messages.php" class="btn btn-outline-secondary">Back to Messages</a>
+                    </div>
                 </div>
 
                 <div class="detail-grid">
@@ -472,10 +619,33 @@ $conn->close();
                 <div id="cg-modal-subject" style="font-weight:800;font-size:1.05rem"></div>
                 <div id="cg-modal-meta" style="font-size:0.9rem;color:#6b7280"></div>
             </div>
-            <div><button type="button" id="cg-modal-close" class="btn btn-outline-secondary">Close</button></div>
         </div>
         <div style="max-height:60vh;overflow:auto;padding-top:8px;">
             <div id="cg-modal-message" class="message-box"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:16px;">
+            <button type="button" id="cg-modal-delete" class="btn btn-danger">
+                <i class="bi bi-trash3"></i> Delete
+            </button>
+            <button type="button" id="cg-modal-close" class="btn btn-close-modal">Close</button>
+        </div>
+    </div>
+</div>
+
+<div id="cg-delete-confirm-modal" class="cg-confirm-modal" aria-hidden="true">
+    <div class="cg-confirm-backdrop" id="cg-delete-confirm-backdrop"></div>
+    <div class="cg-confirm-dialog" role="dialog" aria-modal="true" aria-labelledby="cg-delete-confirm-title">
+        <h4 id="cg-delete-confirm-title">Delete Message?</h4>
+        <p>Are you sure you want to delete this message?</p>
+        <div class="cg-confirm-actions">
+            <button type="button" class="btn btn-outline-secondary" id="cg-delete-cancel">Cancel</button>
+            <form method="post" action="contact-messages.php" class="d-inline" id="cg-delete-form">
+                <input type="hidden" name="action" value="delete_contact_message">
+                <input type="hidden" name="message_id" id="cg-delete-message-id" value="0">
+                <button type="submit" class="btn btn-danger" id="cg-delete-submit">
+                    <i class="bi bi-trash3"></i> Delete
+                </button>
+            </form>
         </div>
     </div>
 </div>
@@ -486,76 +656,62 @@ $conn->close();
         const modal = document.getElementById('cg-message-modal');
         const backdrop = document.getElementById('cg-modal-backdrop');
         const closeBtn = document.getElementById('cg-modal-close');
+        const deleteBtn = document.getElementById('cg-modal-delete');
         const subjectEl = document.getElementById('cg-modal-subject');
         const metaEl = document.getElementById('cg-modal-meta');
         const messageEl = document.getElementById('cg-modal-message');
 
-        function syncUnreadBadge(count){
-            const badge = document.querySelector('.unread-badge');
-            const nextCount = Math.max(0, Number(count) || 0);
-
-            if (nextCount <= 0) {
-                if (badge) badge.remove();
-                return;
-            }
-
-            if (!badge) {
-                return;
-            }
-
-            badge.innerHTML = '<i class="bi bi-dot"></i> ' + nextCount + ' unread';
-        }
-
-        function updateReadState(row, isRead){
-            if (!row) return;
-
-            row.classList.toggle('unread', !isRead);
-            row.classList.toggle('read', isRead);
-
-            const statusNode = row.querySelector('.read-status');
-            if (statusNode) {
-                statusNode.classList.toggle('unread', !isRead);
-                statusNode.classList.toggle('read', isRead);
-                statusNode.textContent = isRead ? 'Read' : 'Unread';
-            }
-        }
+        const deleteModal = document.getElementById('cg-delete-confirm-modal');
+        const deleteBackdrop = document.getElementById('cg-delete-confirm-backdrop');
+        const deleteCancelBtn = document.getElementById('cg-delete-cancel');
+        const deleteMessageId = document.getElementById('cg-delete-message-id');
+        let currentMessageId = null;
 
         function openModal(data){
+            currentMessageId = data.id || null;
             subjectEl.textContent = data.subject || 'Message';
             metaEl.textContent = (data.name ? data.name + ' — ' : '') + (data.email ? data.email + ' • ' : '') + (data.created || '');
             messageEl.innerHTML = nl2br(data.message || '');
             modal.style.display = 'flex';
             document.body.style.overflow = 'hidden';
-
-            const btn = document.querySelector('.view-message-btn[data-id="' + (data.id || '') + '"]');
-            const row = btn?.closest('tr');
-            const shouldDecreaseUnread = Number(data.isRead || 0) === 0;
-
-            if (shouldDecreaseUnread && data.href) {
-                if (btn) {
-                    btn.setAttribute('data-is-read', '1');
-                }
-                if (row) {
-                    updateReadState(row, true);
-                }
-
-                fetch(data.href, { credentials: 'same-origin' })
-                    .then(() => {
-                        const badge = document.querySelector('.unread-badge');
-                        const currentCount = badge ? parseInt((badge.textContent || '').match(/\d+/)?.[0] || '0', 10) : 0;
-                        const nextCount = Math.max(0, currentCount - 1);
-                        syncUnreadBadge(nextCount);
-                    })
-                    .catch(() => {
-                        // Keep the row and badge state consistent even if the background request is interrupted.
-                    });
+            if (data.href) {
+                fetch(data.href, { credentials: 'same-origin' }).catch(()=>{});
             }
         }
 
-        function closeModal(){ modal.style.display='none'; document.body.style.overflow='auto'; }
+        function closeModal(){
+            modal.style.display='none';
+            document.body.style.overflow='auto';
+            deleteModal.classList.remove('visible');
+            deleteModal.setAttribute('aria-hidden', 'true');
+        }
+
+        function closeDeleteModal(){
+            deleteModal.classList.remove('visible');
+            deleteModal.setAttribute('aria-hidden', 'true');
+            if (currentMessageId) {
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function openDeleteModal(messageId){
+            deleteMessageId.value = String(messageId || '0');
+            deleteModal.classList.add('visible');
+            deleteModal.setAttribute('aria-hidden', 'false');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
 
         closeBtn.addEventListener('click', closeModal);
         backdrop.addEventListener('click', closeModal);
+        deleteCancelBtn.addEventListener('click', closeDeleteModal);
+        deleteBackdrop.addEventListener('click', closeDeleteModal);
+        deleteBtn.addEventListener('click', function () {
+            if (currentMessageId) {
+                openDeleteModal(currentMessageId);
+            }
+        });
 
         document.querySelectorAll('.view-message-btn').forEach(btn=>{
             btn.addEventListener('click', function(e){
@@ -567,8 +723,7 @@ $conn->close();
                     subject: this.getAttribute('data-subject'),
                     created: this.getAttribute('data-created'),
                     message: this.getAttribute('data-message'),
-                    href: this.getAttribute('href'),
-                    isRead: this.getAttribute('data-is-read') || '0'
+                    href: this.getAttribute('href')
                 };
                 openModal(data);
             });

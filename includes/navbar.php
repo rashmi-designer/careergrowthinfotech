@@ -412,10 +412,6 @@ if ($isCandidateSession) {
             </style>
 
             <div class="navbar-actions d-flex align-items-center gap-2 mt-3 mt-lg-0">
-                <!-- Public theme toggle (desktop) -->
-                <button id="publicThemeToggle" class="btn theme-toggle btn-sm d-inline-flex align-items-center justify-content-center" type="button" aria-label="Toggle site theme" title="Toggle site theme">
-                    <i class="bi bi-moon-fill" aria-hidden="true"></i>
-                </button>
                 <?php
                 $userRole = $_SESSION['user_role'] ?? '';
                 $isCandidate = !empty($_SESSION['user_id']) && $userRole === 'candidate';

@@ -30,7 +30,7 @@ $applicationId = 0;
 
 // Fetch job details (only active jobs available)
 $publicStatus = 'active';
-$jobStmt = $conn->prepare('SELECT id, title, description, skills_required, location, job_type, experience_level, salary_min, salary_max, openings, last_date, status, created_at FROM jobs WHERE id = ? AND status = ? AND (last_date IS NULL OR last_date >= CURDATE()) LIMIT 1');
+$jobStmt = $conn->prepare("SELECT id, title, description, skills_required, location, job_type, experience_level, salary_min, salary_max, openings, last_date, status, created_at FROM jobs WHERE id = ? AND LOWER(TRIM(status)) = LOWER(TRIM(?)) LIMIT 1");
 if ($jobStmt) {
     $jobStmt->bind_param('is', $jobId, $publicStatus);
     $jobStmt->execute();

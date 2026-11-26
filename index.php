@@ -836,7 +836,7 @@ require_once __DIR__ . '/includes/navbar.php';
                     $conn = getDbConnection();
                     $status = 'active';
                     $limit = 6;
-                    $stmt = $conn->prepare("SELECT id, title, location, job_type, experience_level, salary_min, salary_max, last_date, created_at FROM jobs WHERE status = ? AND (last_date IS NULL OR last_date >= CURDATE()) ORDER BY created_at DESC LIMIT ?");
+                    $stmt = $conn->prepare("SELECT id, title, company, category, location, job_type, experience_level, salary_min, salary_max, last_date, created_at FROM jobs WHERE LOWER(TRIM(status)) = LOWER(TRIM(?)) ORDER BY created_at DESC, id DESC LIMIT ?");
                     if ($stmt) {
                         $stmt->bind_param('si', $status, $limit);
                         $stmt->execute();
@@ -846,9 +846,9 @@ require_once __DIR__ . '/includes/navbar.php';
                             while ($row = $res->fetch_assoc()) { $latestJobs[] = $row; }
                         } else {
                             $stmt->store_result();
-                            $stmt->bind_result($id, $title, $location, $job_type, $experience_level, $salary_min, $salary_max, $last_date, $created_at);
+                            $stmt->bind_result($id, $title, $company, $category, $location, $job_type, $experience_level, $salary_min, $salary_max, $last_date, $created_at);
                             while ($stmt->fetch()) {
-                                $latestJobs[] = compact('id','title','location','job_type','experience_level','salary_min','salary_max','last_date','created_at');
+                                $latestJobs[] = compact('id','title','company','category','location','job_type','experience_level','salary_min','salary_max','last_date','created_at');
                             }
                         }
                         $stmt->close();
@@ -881,6 +881,10 @@ require_once __DIR__ . '/includes/navbar.php';
 
                                     <div class="text-muted small mb-2">
                                         <i class="bi bi-geo-alt me-1"></i><?php echo htmlspecialchars($job['location'] ?? '', ENT_QUOTES, 'UTF-8'); ?> • <?php echo htmlspecialchars($job['experience_level'] ?? '', ENT_QUOTES, 'UTF-8'); ?>
+                                    </div>
+
+                                    <div class="text-muted small mb-2">
+                                        <i class="bi bi-building me-1"></i><?php echo htmlspecialchars(!empty($job['company']) ? $job['company'] : 'Career Grow Infotech', ENT_QUOTES, 'UTF-8'); ?>
                                     </div>
 
                                     <?php

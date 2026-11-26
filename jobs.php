@@ -24,7 +24,7 @@ $jobTypes = [];
 $locations = [];
 $experiences = [];
 
-$metaStmt = $conn->prepare('SELECT DISTINCT job_type FROM jobs WHERE status = ? AND job_type IS NOT NULL AND job_type <> "" ORDER BY job_type ASC');
+$metaStmt = $conn->prepare("SELECT DISTINCT job_type FROM jobs WHERE LOWER(TRIM(status)) = LOWER(TRIM(?)) AND job_type IS NOT NULL AND job_type <> '' ORDER BY job_type ASC");
 if ($metaStmt) {
     $metaStmt->bind_param('s', $publicStatus);
     $metaStmt->execute();
@@ -35,7 +35,7 @@ if ($metaStmt) {
     $metaStmt->close();
 }
 
-$locationStmt = $conn->prepare('SELECT DISTINCT location FROM jobs WHERE status = ? AND location IS NOT NULL AND location <> "" ORDER BY location ASC');
+$locationStmt = $conn->prepare("SELECT DISTINCT location FROM jobs WHERE LOWER(TRIM(status)) = LOWER(TRIM(?)) AND location IS NOT NULL AND location <> '' ORDER BY location ASC");
 if ($locationStmt) {
     $locationStmt->bind_param('s', $publicStatus);
     $locationStmt->execute();
@@ -46,7 +46,7 @@ if ($locationStmt) {
     $locationStmt->close();
 }
 
-$experienceStmt = $conn->prepare('SELECT DISTINCT experience_level FROM jobs WHERE status = ? AND experience_level IS NOT NULL AND experience_level <> "" ORDER BY experience_level ASC');
+$experienceStmt = $conn->prepare("SELECT DISTINCT experience_level FROM jobs WHERE LOWER(TRIM(status)) = LOWER(TRIM(?)) AND experience_level IS NOT NULL AND experience_level <> '' ORDER BY experience_level ASC");
 if ($experienceStmt) {
     $experienceStmt->bind_param('s', $publicStatus);
     $experienceStmt->execute();
@@ -57,7 +57,7 @@ if ($experienceStmt) {
     $experienceStmt->close();
 }
 
-$where = ['status = ?'];
+$where = ['LOWER(TRIM(status)) = LOWER(TRIM(?))'];
 $params = [$publicStatus];
 $types = 's';
 
@@ -95,7 +95,7 @@ if ($experienceFilter !== '') {
 }
 
 $whereSql = 'WHERE ' . implode(' AND ', $where);
-$countSql = 'SELECT COUNT(*) FROM jobs ' . $whereSql . ' AND (last_date IS NULL OR last_date >= CURDATE())';
+$countSql = 'SELECT COUNT(*) FROM jobs ' . $whereSql;
 $countStmt = $conn->prepare($countSql);
 $totalJobs = 0;
 if ($countStmt) {
@@ -116,7 +116,7 @@ if ($page > $totalPages) {
 }
 
 $jobs = [];
-$sql = 'SELECT id, title, company, location, job_type, experience_level, salary_min, salary_max, last_date, created_at FROM jobs ' . $whereSql . ' AND (last_date IS NULL OR last_date >= CURDATE()) ORDER BY created_at DESC LIMIT ? OFFSET ?';
+$sql = 'SELECT id, title, company, location, job_type, experience_level, salary_min, salary_max, last_date, created_at FROM jobs ' . $whereSql . ' ORDER BY created_at DESC, id DESC LIMIT ? OFFSET ?';
 $stmt = $conn->prepare($sql);
 if ($stmt) {
     $bindValues = $params;

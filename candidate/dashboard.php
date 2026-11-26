@@ -71,7 +71,7 @@ while ($row = $recentResult->fetch_assoc()) {
 $recentStmt->close();
 
 // Get count of active public jobs available for browsing
-$jobCountStmt = $conn->prepare('SELECT COUNT(*) as count FROM jobs WHERE status = ? AND (last_date IS NULL OR last_date >= CURDATE())');
+$jobCountStmt = $conn->prepare('SELECT COUNT(*) as count FROM jobs WHERE LOWER(TRIM(status)) = LOWER(TRIM(?))');
 $activeStatus = 'active';
 $jobCountStmt->bind_param('s', $activeStatus);
 $jobCountStmt->execute();
@@ -164,7 +164,7 @@ $conn->close();
 
 .profile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
 .profile-field { display: flex; flex-direction: column; }
-.profile-label { font-size: 0.8rem; color: var(--cg-muted); text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 0.4rem; font-weight: 600; }
+.profile-label {
 .profile-value { font-size: 1rem; color: var(--cg-text); font-weight: 500; }
 .profile-value.empty { color: var(--cg-muted); font-style: italic; }
 

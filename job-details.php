@@ -27,7 +27,7 @@ $salaryText = 'Not disclosed';
 
 if ($jobId > 0) {
     $publicStatus = 'active';
-    $stmt = $conn->prepare('SELECT id, title, company, description, skills_required, location, job_type, experience_level, salary_min, salary_max, openings, last_date, status, created_at FROM jobs WHERE id = ? AND status = ? AND (last_date IS NULL OR last_date >= CURDATE()) LIMIT 1');
+    $stmt = $conn->prepare("SELECT id, title, company, description, skills_required, location, job_type, experience_level, salary_min, salary_max, openings, last_date, status, created_at FROM jobs WHERE id = ? AND LOWER(TRIM(status)) = LOWER(TRIM(?)) LIMIT 1");
     if ($stmt) {
         $stmt->bind_param('is', $jobId, $publicStatus);
         $stmt->execute();
